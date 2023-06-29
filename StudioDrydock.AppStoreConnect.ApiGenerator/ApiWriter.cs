@@ -10,6 +10,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
 
         Dictionary<string, OpenApiSchema> schemas = new Dictionary<string, OpenApiSchema>();
         Dictionary<string, OpenApiSchema> enums = new Dictionary<string, OpenApiSchema>();
+        HashSet<string> methodNames = new HashSet<string>();
 
         public ApiWriter(TextWriter writer)
         {
@@ -32,7 +33,21 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
 
         public void GenerateClass(string name, OpenApiSchema schema)
         {
-            cs.BeginBlock($"public class {name}");
+            var isNextLink = name == "Links" && schema.Properties.ContainsKey("next");
+            var hasNextLink = schema.Properties.ContainsKey("links") && schema.Properties["links"].Properties.ContainsKey("next");
+
+            cs.WriteLine($"public class {name}");
+
+            if (hasNextLink)
+            {
+                cs.WriteLine("    : IHasNextLink");
+            }
+            else if (isNextLink)
+            {
+                cs.WriteLine("    : INextLink");
+            }
+
+            cs.BeginBlock();
 
             // Generate inner classes required by properties
             foreach (var kv in schema.Properties)
@@ -42,6 +57,11 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             var requiredProperties = new HashSet<string>(schema.Required);
             foreach (var kv in schema.Properties)
                 GenerateProperty(kv.Key, kv.Value, required: requiredProperties.Contains(kv.Key));
+
+            if (hasNextLink)
+            {
+                cs.WriteLine("INextLink IHasNextLink.links => links;");
+            }
 
             cs.EndBlock();
         }
@@ -69,7 +89,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
         {
             if (schema.Type == "array")
                 return GenerateEnum(nameHint, schema.Items);
-            
+
             if (schema.Type == "string" && schema.Enum != null && schema.Enum.Count > 1)
             {
                 cs.WriteLine("[JsonConverter(typeof(JsonStringEnumMemberConverter))]");
@@ -210,7 +230,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                     throw new NotSupportedException($"Schema type {schema.Type} not supported");
             }
         }
-        
+
         void GenerateAnonymousPropertyTypes(string nameHint, OpenApiSchema schema)
         {
             if (schema.Type == null && schema.OneOf.Count >= 1)
@@ -311,12 +331,22 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             var response = operation.Responses.FirstOrDefault(x => IsSuccessStatusCode(int.Parse(x.Key))).Value;
             if (response == null)
                 throw new NotSupportedException($"No response with success status code for {operation.OperationId}");
-            
+
             string methodName = FormatRequestMethodName(operationType, operation.OperationId);
-            
+            string methodNameSuffix = "";
+
+            // check if we already have a method with the same name, if we do, append the version number as a suffix:
+            if (!methodNames.Add($"{operationType}{operation.OperationId}"))
+            {
+                var splits = path.Split("/");
+                if (splits.Length < 2)
+                    throw new NotSupportedException($"Path {path} is not supported");
+                methodNameSuffix = splits[1].TitleCase();
+            }
+
             // Request type
             OpenApiSchema? requestSchema = null;
-            string requestSchemaName = $"{methodName}Request";
+            string requestSchemaName = $"{methodName}Request{methodNameSuffix}";
             if (operation.RequestBody != null && operation.RequestBody.Content.TryGetValue("application/json", out var requestBodyContent))
             {
                 requestSchema = requestBodyContent.Schema;
@@ -324,10 +354,10 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                     requestSchemaName = requestSchema.Title;
                 GenerateTopLevelClass(requestSchemaName, requestSchema);
             }
-            
+
             // Response type
             OpenApiSchema? responseSchema = null;
-            string responseSchemaName = $"{methodName}Response";
+            string responseSchemaName = $"{methodName}Response{methodNameSuffix}";
             if (response.Content.TryGetValue("application/json", out var responseContent))
             {
                 responseSchema = responseContent.Schema;
@@ -344,9 +374,15 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
 
             // Enums required for query parameters
             foreach (var param in queryParameters)
-                GenerateTopLevelEnum($"{methodName}{param.Name.MakeValidIdentifier().TitleCase()}", param.Schema);
+                GenerateTopLevelEnum($"{methodName}{param.Name.MakeValidIdentifier().TitleCase()}{methodNameSuffix}", param.Schema);
 
             cs.Comment(path);
+            if (operation.Deprecated)
+            {
+                cs.BeginLine();
+                cs.Write("[Obsolete]");
+                cs.EndLine();
+            }
             cs.BeginLine();
             cs.Write("public ");
             if (responseSchema != null)
@@ -359,7 +395,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             {
                 cs.Write("Task");
             }
-            cs.Write($" {methodName}(");
+            cs.Write($" {methodName}{methodNameSuffix}(");
             cs.BeginCommaDelimitedList();
 
             // Path parameters
@@ -369,7 +405,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                 WriteType("???", param.Schema);
                 cs.Write($" {param.Name.MakeValidIdentifier()}");
             }
-            
+
             // Request body
             if (requestSchema != null)
             {
@@ -382,7 +418,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             foreach (var param in queryParameters)
             {
                 cs.WriteCommaIfRequired();
-                WriteType($"{methodName}{param.Name.MakeValidIdentifier().TitleCase()}", param.Schema);
+                WriteType($"{methodName}{param.Name.MakeValidIdentifier().TitleCase()}{methodNameSuffix}", param.Schema);
                 if (!param.Required)
                     cs.Write("?");
                 cs.Write($" {param.Name.MakeValidIdentifier()}");
@@ -391,7 +427,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             }
             cs.Write(")");
             cs.EndLine();
-            
+
             cs.BeginBlock();
             cs.WriteLine($"string path = \"{path}\";");
             foreach (var param in pathItem.Parameters)

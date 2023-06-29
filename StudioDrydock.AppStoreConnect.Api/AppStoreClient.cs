@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -111,6 +112,28 @@ namespace StudioDrydock.AppStoreConnect.Api
             }
 
             return responseObject;
+        }
+
+        public Task<T> GetNextPage<T>(T prevPage)
+            where T : IHasNextLink
+        {
+            if (prevPage.links.next == null)
+            {
+                throw new Exception("No next page");
+            }
+
+            var message = new HttpRequestMessage(HttpMethod.Get, prevPage.links.next);
+            return SendAsync<T>(message);
+        }
+
+        public interface IHasNextLink
+        {
+            INextLink links { get; }
+        }
+
+        public interface INextLink
+        {
+            string? next { get; }
         }
     }
 }

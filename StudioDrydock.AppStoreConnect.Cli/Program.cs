@@ -2,13 +2,16 @@
 using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using StudioDrydock.AppStoreConnect.Api;
 using StudioDrydock.AppStoreConnect.Cli.Models;
 
 var rootCommand = new RootCommand();
-rootCommand.Description = 
+rootCommand.Description =
 @"Demonstration of AppStoreConnect. To set up authorization, you will need a config.json
 (by default in ~/.config/AppStoreConnect.json) with the following structure:
 
@@ -22,7 +25,7 @@ You can obtain these values, and the key file, from the Keys section in
 https://appstoreconnect.apple.com/access/api";
 
 // --config=<config.json>
-var configOption = new Option<FileInfo>("--config", 
+var configOption = new Option<FileInfo>("--config",
     getDefaultValue: () => new FileInfo(Environment.ExpandEnvironmentVariables("%USERPROFILE%/.config/AppStoreConnect.json")),
     description: "JSON configuration file for authorization");
 rootCommand.AddOption(configOption);
@@ -64,12 +67,21 @@ setAppVersionsCommand.AddOption(inputOption);
 setAppVersionsCommand.SetHandler(SetAppVersions);
 rootCommand.AddCommand(setAppVersionsCommand);
 
+// get-app-iaps --appId=xxx
+var getAppIapsCommand = new Command("get-app-iaps", "Get information about specific app in-app purchases");
+var iapStateOption = new Option<AppStoreClient.GetAppsInAppPurchasesV2FilterState?>("--state");
+getAppIapsCommand.AddOption(appIdOption);
+getAppIapsCommand.AddOption(iapStateOption);
+getAppIapsCommand.AddOption(outputOption);
+getAppIapsCommand.SetHandler(GetAppIaps);
+rootCommand.AddCommand(getAppIapsCommand);
+
 await rootCommand.InvokeAsync(args);
 
 AppStoreClient CreateClient(InvocationContext context)
 {
     if (context.ParseResult.GetValueForOption(verboseOption))
-        Trace.Listeners.Add(new ConsoleTraceListener(useErrorStream: true));  
+        Trace.Listeners.Add(new ConsoleTraceListener(useErrorStream: true));
 
     // Read config.json
     FileInfo configFile = context.ParseResult.GetValueForOption(configOption);
@@ -103,7 +115,11 @@ T Input<T>(InvocationContext context)
 
 void Output(InvocationContext context, object result)
 {
-    string text = JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true });
+    string text = JsonSerializer.Serialize(result, new JsonSerializerOptions()
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+        WriteIndented = true
+    });
     FileInfo output = context.ParseResult.GetValueForOption(outputOption);
     if (output == null)
         Console.WriteLine(text);
@@ -112,10 +128,10 @@ void Output(InvocationContext context, object result)
 }
 
 // Convenience for creating array of one item if the value is defined; otherwise null.
-T[] Filter<T>(T? t) 
+T[] Filter<T>(T? t)
     where T : struct
 {
-    if (t.HasValue)   
+    if (t.HasValue)
         return new T[] { t.Value };
     else
         return null;
@@ -124,10 +140,20 @@ T[] Filter<T>(T? t)
 // get-apps
 async Task GetApps(InvocationContext context)
 {
+    var apps = new List<App>();
+
     var api = CreateClient(context);
+
     var response = await api.GetApps();
-    var apps = response.data.Select(x => new App(x)).ToArray();
-    Output(context, new Apps { apps = apps });
+    apps.AddRange(response.data.Select(x => new App(x)));
+
+    while (response.links.next != null)
+    {
+        response = await api.GetNextPage(response);
+        apps.AddRange(response.data.Select(x => new App(x)));
+    }
+
+    Output(context, new Apps { apps = apps.ToArray() });
 }
 
 // get-app-versions
@@ -137,19 +163,39 @@ async Task GetAppVersions(InvocationContext context)
     var platform = context.ParseResult.GetValueForOption(platformOption);
     var appStoreState = context.ParseResult.GetValueForOption(appStoreStateOption);
 
+    var versions = new List<AppVersion>();
+
     var api = CreateClient(context);
-    var response = await api.GetAppsAppStoreVersions(appId, 
-        filterAppStoreState: Filter(appStoreState), 
+    var response = await api.GetAppsAppStoreVersions(appId,
+        filterAppStoreState: Filter(appStoreState),
         filterPlatform: Filter(platform));
 
-    var versions = response.data.Select(x => new AppVersion(x)).ToArray();
-    foreach (var version in versions)
+    versions.AddRange(response.data.Select(x => new AppVersion(x)));
+
+    while (response.links.next != null)
     {
-        var localizationResponse = await api.GetAppStoreVersionsAppStoreVersionLocalizations(version.id);
-        version.localizations = localizationResponse.data.Select(x => new AppVersionLocalization(x)).ToArray();
+        response = await api.GetNextPage(response);
+        versions.AddRange(response.data.Select(x => new AppVersion(x)));
     }
 
-    Output(context, new AppVersions() { appVersions = versions });
+    foreach (var version in versions)
+    {
+        var localizations = new List<AppVersionLocalization>();
+
+        var localizationResponse = await api.GetAppStoreVersionsAppStoreVersionLocalizations(version.id);
+        localizations.AddRange(localizationResponse.data.Select(x => new AppVersionLocalization(x)));
+
+        // API bug: pagination doesn't seem to work for this endpoint
+        //while (localizationResponse.links.next != null)
+        //{
+        //    localizationResponse = await api.GetNextPage(localizationResponse);
+        //    localizations.AddRange(localizationResponse.data.Select(x => new AppVersionLocalization(x)));
+        //}
+
+        version.localizations = localizations.ToArray();
+    }
+
+    Output(context, new AppVersions() { appVersions = versions.ToArray() });
 }
 
 // set-app-versions
@@ -162,4 +208,44 @@ async Task SetAppVersions(InvocationContext context)
         foreach (var localization in version.localizations)
             await api.PatchAppStoreVersionLocalizations(localization.id, localization.CreateUpdateRequest());
     }
+}
+
+// get-app-iaps
+async Task GetAppIaps(InvocationContext context)
+{
+    string appId = context.ParseResult.GetValueForOption(appIdOption);
+    var state = context.ParseResult.GetValueForOption(iapStateOption);
+
+    var api = CreateClient(context);
+    var response = await api.GetAppsInAppPurchasesV2(appId,
+        filterState: Filter(state));
+
+    var iaps = new List<Iap>();
+
+    iaps.AddRange(response.data.Select(x => new Iap(x)));
+
+    while (response.links.next != null)
+    {
+        response = await api.GetNextPage(response);
+        iaps.AddRange(response.data.Select(x => new Iap(x)));
+    }
+
+    foreach (var iap in iaps)
+    {
+        var ss = await api.GetInAppPurchasesAppStoreReviewScreenshot(iap.id);
+
+        var iapLocalizations = new List<IapLocalization>();
+        var localizationResponse = await api.GetInAppPurchasesInAppPurchaseLocalizations(iap.id);
+        iapLocalizations.AddRange(localizationResponse.data.Select(x => new IapLocalization(x)));
+
+        while (localizationResponse.links.next != null)
+        {
+            localizationResponse = await api.GetNextPage(localizationResponse);
+            iapLocalizations.AddRange(localizationResponse.data.Select(x => new IapLocalization(x)));
+        }
+
+        iap.localizations = iapLocalizations.ToArray();
+    }
+
+    Output(context, new Iaps() { iaps = iaps.ToArray() });
 }
