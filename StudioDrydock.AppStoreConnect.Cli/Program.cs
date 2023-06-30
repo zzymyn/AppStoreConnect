@@ -153,7 +153,7 @@ async Task GetApps(InvocationContext context)
         apps.AddRange(response.data.Select(x => new App(x)));
     }
 
-    Output(context, new Apps { apps = apps.ToArray() });
+    Output(context, new Apps { apps = apps.OrderBy(a => a.bundleId).ToArray() });
 }
 
 // get-app-versions
@@ -192,7 +192,7 @@ async Task GetAppVersions(InvocationContext context)
         //    localizations.AddRange(localizationResponse.data.Select(x => new AppVersionLocalization(x)));
         //}
 
-        version.localizations = localizations.ToArray();
+        version.localizations = localizations.OrderBy(a => a.locale).ToArray();
     }
 
     Output(context, new AppVersions() { appVersions = versions.ToArray() });
