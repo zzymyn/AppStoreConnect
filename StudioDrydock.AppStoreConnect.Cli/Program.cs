@@ -76,6 +76,14 @@ getAppIapsCommand.AddOption(outputOption);
 getAppIapsCommand.SetHandler(GetAppIaps);
 rootCommand.AddCommand(getAppIapsCommand);
 
+// set-app-iaps --appId=xxx --input=file.json
+var setAppIapsCommand = new Command("set-app-iaps", "Update information about specific app in-app purchases. The input format matches the output of get-app-iaps.");
+setAppIapsCommand.AddOption(appIdOption);
+setAppIapsCommand.AddOption(inputOption);
+setAppIapsCommand.AddOption(outputOption);
+setAppIapsCommand.SetHandler(SetAppIaps);
+rootCommand.AddCommand(setAppIapsCommand);
+
 await rootCommand.InvokeAsync(args);
 
 AppStoreClient CreateClient(InvocationContext context)
@@ -203,6 +211,7 @@ async Task SetAppVersions(InvocationContext context)
 {
     var api = CreateClient(context);
     var versions = Input<AppVersions>(context);
+
     foreach (var version in versions.appVersions)
     {
         foreach (var localization in version.localizations)
@@ -213,10 +222,10 @@ async Task SetAppVersions(InvocationContext context)
 // get-app-iaps
 async Task GetAppIaps(InvocationContext context)
 {
+    var api = CreateClient(context);
     string appId = context.ParseResult.GetValueForOption(appIdOption);
     var state = context.ParseResult.GetValueForOption(iapStateOption);
 
-    var api = CreateClient(context);
     var response = await api.GetAppsInAppPurchasesV2(appId,
         filterState: Filter(state));
 
@@ -232,8 +241,6 @@ async Task GetAppIaps(InvocationContext context)
 
     foreach (var iap in iaps)
     {
-        var ss = await api.GetInAppPurchasesAppStoreReviewScreenshot(iap.id);
-
         var iapLocalizations = new List<IapLocalization>();
         var localizationResponse = await api.GetInAppPurchasesInAppPurchaseLocalizations(iap.id);
         iapLocalizations.AddRange(localizationResponse.data.Select(x => new IapLocalization(x)));
@@ -248,4 +255,42 @@ async Task GetAppIaps(InvocationContext context)
     }
 
     Output(context, new Iaps() { iaps = iaps.ToArray() });
+}
+
+// set-app-iaps
+async Task SetAppIaps(InvocationContext context)
+{
+    var api = CreateClient(context);
+    string appId = context.ParseResult.GetValueForOption(appIdOption);
+    var iaps = Input<Iaps>(context);
+
+    foreach (var iap in iaps.iaps)
+    {
+        if (string.IsNullOrEmpty(iap.id))
+        {
+            var response = await api.PostInAppPurchases(iap.CreateCreateRequest(appId));
+            iap.UpdateWithResponse(response.data);
+        }
+        else
+        {
+            var response = await api.PatchInAppPurchases(iap.id, iap.CreateUpdateRequest());
+            iap.UpdateWithResponse(response.data);
+        }
+
+        foreach (var localization in iap.localizations)
+        {
+            if (string.IsNullOrEmpty(localization.id))
+            {
+                var response = await api.PostInAppPurchaseLocalizations(localization.CreateCreateRequest(iap.id));
+                localization.UpdateWithResponse(response.data);
+            }
+            else
+            {
+                var response = await api.PatchInAppPurchaseLocalizations(localization.id, localization.CreateUpdateRequest());
+                localization.UpdateWithResponse(response.data);
+            }
+        }
+    }
+
+    Output(context, iaps);
 }

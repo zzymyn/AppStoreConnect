@@ -22,25 +22,56 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.state = EnumExtensions<InAppPurchaseLocaliztionState>.Convert(data.attributes.state.Value);
         }
 
-        //internal AppStoreClient.AppStoreVersionLocalizationUpdateRequest CreateUpdateRequest()
-        //{
-        //    return new AppStoreClient.AppStoreVersionLocalizationUpdateRequest()
-        //    {
-        //        data = new AppStoreClient.AppStoreVersionLocalizationUpdateRequest.Data()
-        //        {
-        //            id = this.id,
-        //            attributes = new AppStoreClient.AppStoreVersionLocalizationUpdateRequest.Data.Attributes()
-        //            {
-        //                description = this.description,
-        //                keywords = this.keywords,
-        //                marketingUrl = this.marketingUrl,
-        //                promotionalText = this.promotionalText,
-        //                supportUrl = this.supportUrl,
-        //                whatsNew = this.whatsNew
-        //            }
-        //        }
-        //    };
-        //}
+        internal void UpdateWithResponse(AppStoreClient.InAppPurchaseLocalizationResponse.Data data)
+        {
+            this.id = data.id;
+            this.name = data.attributes.name;
+            this.locale = data.attributes.locale;
+            this.description = data.attributes.description;
+            this.state = EnumExtensions<InAppPurchaseLocaliztionState>.Convert(data.attributes.state.Value);
+        }
+
+        public AppStoreClient.InAppPurchaseLocalizationCreateRequest CreateCreateRequest(string iapId)
+        {
+            return new()
+            {
+                data = new()
+                {
+                    attributes = new()
+                    {
+                        name = this.name,
+                        locale = this.locale,
+                        description = this.description
+                    },
+                    relationships = new()
+                    {
+                        inAppPurchaseV2 = new()
+                        {
+                            data = new()
+                            {
+                                id = iapId,
+                            }
+                        }
+                    },
+                }
+            };
+        }
+
+        public AppStoreClient.InAppPurchaseLocalizationUpdateRequest CreateUpdateRequest()
+        {
+            return new()
+            {
+                data = new()
+                {
+                    id = this.id,
+                    attributes = new()
+                    {
+                        name = this.name,
+                        description = this.description
+                    },
+                }
+            };
+        }
     }
 
 }

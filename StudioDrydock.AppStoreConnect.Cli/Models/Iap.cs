@@ -36,5 +36,65 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.contentHosting = data.attributes.contentHosting;
             this.availableInAllTerritories = data.attributes.availableInAllTerritories;
         }
+
+        internal void UpdateWithResponse(AppStoreClient.InAppPurchaseV2Response.Data data)
+        {
+            this.id = data.id;
+            this.name = data.attributes.name;
+            this.productId = data.attributes.productId;
+            this.inAppPurchaseType = EnumExtensions<InAppPurchaseType>.Convert(data.attributes.inAppPurchaseType.Value);
+            this.state = EnumExtensions<InAppPurchaseState>.Convert(data.attributes.state.Value);
+            this.reviewNote = data.attributes.reviewNote;
+            this.familySharable = data.attributes.familySharable;
+            this.contentHosting = data.attributes.contentHosting;
+            this.availableInAllTerritories = data.attributes.availableInAllTerritories;
+        }
+
+        internal AppStoreClient.InAppPurchaseV2CreateRequest CreateCreateRequest(string appId)
+        {
+            return new()
+            {
+                data = new()
+                {
+                    attributes = new()
+                    {
+                        name = this.name,
+                        productId = this.productId,
+                        inAppPurchaseType = EnumExtensions<AppStoreClient.InAppPurchaseV2CreateRequest.Data.Attributes.InAppPurchaseType>.Convert(this.inAppPurchaseType),
+                        reviewNote = this.reviewNote,
+                        familySharable = this.familySharable,
+                        availableInAllTerritories = this.availableInAllTerritories
+                    },
+                    relationships = new()
+                    {
+                        app = new()
+                        {
+                            data = new()
+                            {
+                                id = appId,
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        internal AppStoreClient.InAppPurchaseV2UpdateRequest CreateUpdateRequest()
+        {
+            return new()
+            {
+                data = new()
+                {
+                    id = this.id,
+                    attributes = new()
+                    {
+                        name = this.name,
+                        reviewNote = this.reviewNote,
+                        familySharable = this.familySharable,
+                        availableInAllTerritories = this.availableInAllTerritories
+                    }
+                }
+            };
+        }
     }
 }
