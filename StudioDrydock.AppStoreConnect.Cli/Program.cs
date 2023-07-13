@@ -251,10 +251,10 @@ async Task GetAppIaps(InvocationContext context)
             iapLocalizations.AddRange(localizationResponse.data.Select(x => new IapLocalization(x)));
         }
 
-        iap.localizations = iapLocalizations.ToArray();
+        iap.localizations = iapLocalizations.OrderBy(a => a.locale).ToArray();
     }
 
-    Output(context, new Iaps() { iaps = iaps.ToArray() });
+    Output(context, new Iaps() { iaps = iaps.OrderBy(a => a.productId).ToArray() });
 }
 
 // set-app-iaps
@@ -266,6 +266,10 @@ async Task SetAppIaps(InvocationContext context)
 
     foreach (var iap in iaps.iaps)
     {
+        // TODO: make this a cli switch:
+        if (iap.state == InAppPurchaseState.APPROVED)
+            continue;
+
         if (string.IsNullOrEmpty(iap.id))
         {
             var response = await api.PostInAppPurchases(iap.CreateCreateRequest(appId));
