@@ -63,7 +63,9 @@ rootCommand.AddCommand(getAppVersionsCommand);
 
 // set-app-versions --input=file.json
 var setAppVersionsCommand = new Command("set-app-versions", "Update localizations for specific app versions. The input format matches the output of get-app-versions.");
+setAppVersionsCommand.AddOption(appIdOption);
 setAppVersionsCommand.AddOption(inputOption);
+setAppVersionsCommand.AddOption(outputOption);
 setAppVersionsCommand.SetHandler(SetAppVersions);
 rootCommand.AddCommand(setAppVersionsCommand);
 
@@ -148,32 +150,37 @@ T[] Filter<T>(T? t)
 // get-apps
 async Task GetApps(InvocationContext context)
 {
-    var apps = new List<App>();
+    var apps = new List<AppInfo>();
 
     var api = CreateClient(context);
 
     var response = await api.GetApps();
-    apps.AddRange(response.data.Select(x => new App(x)));
+    apps.AddRange(response.data.Select(x => new AppInfo(x)));
 
     while (response.links.next != null)
     {
         response = await api.GetNextPage(response);
-        apps.AddRange(response.data.Select(x => new App(x)));
+        apps.AddRange(response.data.Select(x => new AppInfo(x)));
     }
 
-    Output(context, new Apps { apps = apps.OrderBy(a => a.bundleId).ToArray() });
+    Output(context, new AppInfoList { apps = apps.OrderBy(a => a.bundleId).ToArray() });
 }
 
 // get-app-versions
 async Task GetAppVersions(InvocationContext context)
 {
-    string appId = context.ParseResult.GetValueForOption(appIdOption);
+    var api = CreateClient(context);
+    var appId = context.ParseResult.GetValueForOption(appIdOption);
     var platform = context.ParseResult.GetValueForOption(platformOption);
     var appStoreState = context.ParseResult.GetValueForOption(appStoreStateOption);
 
+    var info = await api.GetApps(appId);
+    var appInfo = new AppInfo(info.data);
+
+    var infoLocs = await api.GetAppInfoLocalizations(appId);
+
     var versions = new List<AppVersion>();
 
-    var api = CreateClient(context);
     var response = await api.GetAppsAppStoreVersions(appId,
         filterAppStoreState: Filter(appStoreState),
         filterPlatform: Filter(platform));
@@ -203,27 +210,65 @@ async Task GetAppVersions(InvocationContext context)
         version.localizations = localizations.OrderBy(a => a.locale).ToArray();
     }
 
-    Output(context, new AppVersions() { appVersions = versions.ToArray() });
+    Output(context, new App()
+    {
+        appInfo = appInfo,
+        appVersions = versions.ToArray()
+    });
 }
 
 // set-app-versions
 async Task SetAppVersions(InvocationContext context)
 {
     var api = CreateClient(context);
-    var versions = Input<AppVersions>(context);
+    var appId = context.ParseResult.GetValueForOption(appIdOption);
+    var versions = Input<App>(context);
 
     foreach (var version in versions.appVersions)
     {
+        // TODO: make this a cli switch:
+        switch (version.appStoreState)
+        {
+            case AppStoreState.READY_FOR_SALE:
+            case AppStoreState.REPLACED_WITH_NEW_VERSION:
+            case AppStoreState.REMOVED_FROM_SALE:
+                continue;
+        }
+
+        if (string.IsNullOrEmpty(version.id))
+        {
+            var response = await api.PostAppStoreVersions(version.CreateCreateRequest(appId));
+            version.UpdateWithResponse(response.data);
+        }
+        else
+        {
+            var response = await api.PatchAppStoreVersions(version.id, version.CreateUpdateRequest());
+            version.UpdateWithResponse(response.data);
+        }
+
         foreach (var localization in version.localizations)
-            await api.PatchAppStoreVersionLocalizations(localization.id, localization.CreateUpdateRequest());
+        {
+            if (string.IsNullOrEmpty(localization.id))
+            {
+                var response = await api.PostAppStoreVersionLocalizations(localization.CreateCreateRequest(version.id));
+                localization.UpdateWithResponse(response.data);
+            }
+            else
+            {
+                var response = await api.PatchAppStoreVersionLocalizations(localization.id, localization.CreateUpdateRequest());
+                localization.UpdateWithResponse(response.data);
+            }
+        }
     }
+
+    Output(context, versions);
 }
 
 // get-app-iaps
 async Task GetAppIaps(InvocationContext context)
 {
     var api = CreateClient(context);
-    string appId = context.ParseResult.GetValueForOption(appIdOption);
+    var appId = context.ParseResult.GetValueForOption(appIdOption);
     var state = context.ParseResult.GetValueForOption(iapStateOption);
 
     var response = await api.GetAppsInAppPurchasesV2(appId,
@@ -254,15 +299,15 @@ async Task GetAppIaps(InvocationContext context)
         iap.localizations = iapLocalizations.OrderBy(a => a.locale).ToArray();
     }
 
-    Output(context, new Iaps() { iaps = iaps.OrderBy(a => a.productId).ToArray() });
+    Output(context, new IapList() { iaps = iaps.OrderBy(a => a.productId).ToArray() });
 }
 
 // set-app-iaps
 async Task SetAppIaps(InvocationContext context)
 {
     var api = CreateClient(context);
-    string appId = context.ParseResult.GetValueForOption(appIdOption);
-    var iaps = Input<Iaps>(context);
+    var appId = context.ParseResult.GetValueForOption(appIdOption);
+    var iaps = Input<IapList>(context);
 
     foreach (var iap in iaps.iaps)
     {

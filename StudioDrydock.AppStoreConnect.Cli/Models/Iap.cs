@@ -2,11 +2,6 @@
 
 namespace StudioDrydock.AppStoreConnect.Cli.Models
 {
-    public class Iaps
-    {
-        public Iap[] iaps { get; set; }
-    }
-
     public class Iap
     {
         public string id { get; set; }

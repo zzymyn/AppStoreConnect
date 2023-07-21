@@ -28,14 +28,56 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.whatsNew = data.attributes.whatsNew;
         }
 
+        internal void UpdateWithResponse(AppStoreClient.AppStoreVersionLocalizationResponse.Data data)
+        {
+            this.id = data.id;
+            this.locale = data.attributes.locale;
+            this.description = data.attributes.description;
+            this.keywords = data.attributes.keywords;
+            this.promotionalText = data.attributes.promotionalText;
+            this.marketingUrl = data.attributes.marketingUrl;
+            this.supportUrl = data.attributes.supportUrl;
+            this.whatsNew = data.attributes.whatsNew;
+        }
+
+        internal AppStoreClient.AppStoreVersionLocalizationCreateRequest CreateCreateRequest(string versionId)
+        {
+            return new()
+            {
+                data = new()
+                {
+                    attributes = new()
+                    {
+                        description = this.description,
+                        locale = this.locale,
+                        keywords = this.keywords,
+                        marketingUrl = this.marketingUrl,
+                        promotionalText = this.promotionalText,
+                        supportUrl = this.supportUrl,
+                        whatsNew = this.whatsNew
+                    },
+                    relationships = new()
+                    {
+                        appStoreVersion = new()
+                        {
+                            data = new()
+                            {
+                                id = versionId,
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
         internal AppStoreClient.AppStoreVersionLocalizationUpdateRequest CreateUpdateRequest()
         {
-            return new AppStoreClient.AppStoreVersionLocalizationUpdateRequest()
+            return new()
             {
-                data = new AppStoreClient.AppStoreVersionLocalizationUpdateRequest.Data()
+                data = new()
                 {
                     id = this.id,
-                    attributes = new AppStoreClient.AppStoreVersionLocalizationUpdateRequest.Data.Attributes()
+                    attributes = new()
                     {
                         description = this.description,
                         keywords = this.keywords,
