@@ -52,6 +52,22 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             };
         }
 
+        internal AppStoreClient.AppPreviewUpdateRequest CreateUploadCompleteRequest(string fileHash)
+        {
+            return new()
+            {
+                data = new()
+                {
+                    id = this.id,
+                    attributes = new()
+                    {
+                        uploaded = true,
+                        sourceFileChecksum = fileHash,
+                    }
+                }
+            };
+        }
+
         internal AppStoreClient.AppPreviewCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
         {
             return new()

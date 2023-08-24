@@ -35,6 +35,8 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
         {
             var isNextLink = name == "Links" && schema.Properties.ContainsKey("next");
             var hasNextLink = schema.Properties.ContainsKey("links") && schema.Properties["links"].Properties.ContainsKey("next");
+            var isUploadOperations = name == "UploadOperations";
+            var isRequestHeaders = name == "RequestHeaders";
 
             cs.WriteLine($"public class {name}");
 
@@ -45,6 +47,14 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             else if (isNextLink)
             {
                 cs.WriteLine("    : INextLink");
+            }
+            else if (isUploadOperations)
+            {
+                cs.WriteLine("    : IUploadOperations");
+            }
+            else if (isRequestHeaders)
+            {
+                cs.WriteLine("    : IRequestHeaders");
             }
 
             cs.BeginBlock();
@@ -61,6 +71,10 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             if (hasNextLink)
             {
                 cs.WriteLine("INextLink IHasNextLink.links => links;");
+            }
+            if (isUploadOperations)
+            {
+                cs.WriteLine("IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;");
             }
 
             cs.EndBlock();

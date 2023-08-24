@@ -178,5 +178,21 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string? next { get; }
         }
+
+        public interface IRequestHeaders
+        {
+            public string? name { get; }
+            public string? value { get; }
+        }
+
+        public interface IUploadOperations
+        {
+            public string? method { get; }
+            public string? url { get; }
+            public int? length { get; }
+            public int? offset { get; }
+            public IReadOnlyList<IRequestHeaders>? requestHeaders { get; }
+        }
+
     }
 }

@@ -287,120 +287,211 @@ async Task SetAppVersions(InvocationContext context)
     var appId = context.ParseResult.GetValueForOption(appIdOption);
     var versions = Input<App>(context);
 
-    foreach (var version in versions.appVersions)
+    try
     {
-        // TODO: make this a cli switch:
-        switch (version.appStoreState)
+        foreach (var version in versions.appVersions)
         {
-            case AppStoreState.READY_FOR_SALE:
-            case AppStoreState.REPLACED_WITH_NEW_VERSION:
-            case AppStoreState.REMOVED_FROM_SALE:
-                continue;
-        }
-
-        if (string.IsNullOrEmpty(version.id))
-        {
-            var response = await api.PostAppStoreVersions(version.CreateCreateRequest(appId));
-            version.UpdateWithResponse(response.data);
-        }
-        else
-        {
-            var response = await api.PatchAppStoreVersions(version.id, version.CreateUpdateRequest());
-            version.UpdateWithResponse(response.data);
-        }
-
-        foreach (var localization in version.localizations)
-        {
-            if (string.IsNullOrEmpty(localization.id))
+            // TODO: make this a cli switch:
+            switch (version.appStoreState)
             {
-                var response = await api.PostAppStoreVersionLocalizations(localization.CreateCreateRequest(version.id));
-                localization.UpdateWithResponse(response.data);
+                case AppStoreState.READY_FOR_SALE:
+                case AppStoreState.REPLACED_WITH_NEW_VERSION:
+                case AppStoreState.REMOVED_FROM_SALE:
+                    continue;
+            }
+
+            if (string.IsNullOrEmpty(version.id))
+            {
+                var response = await api.PostAppStoreVersions(version.CreateCreateRequest(appId));
+                version.UpdateWithResponse(response.data);
             }
             else
             {
-                var response = await api.PatchAppStoreVersionLocalizations(localization.id, localization.CreateUpdateRequest());
-                localization.UpdateWithResponse(response.data);
+                var response = await api.PatchAppStoreVersions(version.id, version.CreateUpdateRequest());
+                version.UpdateWithResponse(response.data);
             }
 
-            if (localization.appPreviewSets != null)
+            foreach (var localization in version.localizations)
             {
-                foreach (var apSet in localization.appPreviewSets)
+                if (string.IsNullOrEmpty(localization.id))
                 {
-                    if (string.IsNullOrEmpty(apSet.id))
-                    {
-                        var response = await api.PostAppPreviewSets(apSet.CreateCreateRequest(localization.id));
-                        apSet.UpdateWithResponse(response.data);
-                    }
+                    var response = await api.PostAppStoreVersionLocalizations(localization.CreateCreateRequest(version.id));
+                    localization.UpdateWithResponse(response.data);
+                }
+                else
+                {
+                    var response = await api.PatchAppStoreVersionLocalizations(localization.id, localization.CreateUpdateRequest());
+                    localization.UpdateWithResponse(response.data);
+                }
 
-                    if (apSet.appPreviews != null)
+                if (localization.screenshotSets != null && localization.screenshotSets.Length > 0)
+                {
+                    // delete sets that no longer exist:
                     {
-                        foreach (var ap in apSet.appPreviews)
+                        var ssSetsResponse = await api.GetAppStoreVersionLocalizationsAppScreenshotSets(localization.id);
+
+                        foreach (var ssSetResponse in ssSetsResponse.data)
                         {
-                            var fi = ad.GetFileByName(ap.fileName, out var fileHash);
+                            var ssSet = localization.screenshotSets.FirstOrDefault(a => a.id == ssSetResponse.id);
 
-                            if (string.IsNullOrEmpty(ap.id))
+                            if (ssSet == null)
                             {
-                                var previewFrameTimeCode = ap.previewFrameTimeCode;
-
-                                var response = await api.PostAppPreviews(ap.CreateCreateRequest(apSet.id, (int)fi.Length, fi.Name));
-                                ap.UpdateWithResponse(response.data);
-
-                                using (var stream = fi.OpenRead())
-                                {
-                                    foreach (var op in response.data.attributes.uploadOperations)
-                                    {
-                                        var data = new byte[op.length.Value];
-                                        stream.Seek(op.offset.Value, SeekOrigin.Begin);
-                                        var bytesRead = await stream.ReadAsync(data);
-                                        if (bytesRead != data.Length)
-                                            throw new Exception("Failed to read all bytes from file.");
-                                        await api.UploadPortion(op.method, op.url, data, op.requestHeaders.ToDictionary(a => a.name, a => a.value));
-                                    }
-                                }
-
-                                response = await api.PatchAppPreviews(ap.id, new()
-                                {
-                                    data = new()
-                                    {
-                                        id = ap.id,
-                                        attributes = new()
-                                        {
-                                            uploaded = true,
-                                            sourceFileChecksum = fileHash,
-                                        },
-                                    }
-                                });
-                                ap.UpdateWithResponse(response.data);
-
-                                // API doesn't give us this back:
-                                ap.sourceFileChecksum = fileHash;
-                            }
-                            else
-                            {
-                                var response = await api.PatchAppPreviews(ap.id, ap.CreateUpdateRequest());
-                                ap.UpdateWithResponse(response.data);
-                            }
-
-                            {
-                                var file = ad.FindFileByHashOrName(ap.sourceFileChecksum, ap.fileName);
-
-                                if (file.Exists)
-                                {
-                                    ap.fileName = file.Name;
-                                }
+                                await api.DeleteAppScreenshotSets(ssSetResponse.id);
                             }
                         }
                     }
 
+                    foreach (var ssSet in localization.screenshotSets)
                     {
+                        if (string.IsNullOrEmpty(ssSet.id))
+                        {
+                            var response = await api.PostAppScreenshotSets(ssSet.CreateCreateRequest(localization.id));
+                            ssSet.UpdateWithResponse(response.data);
+                        }
+
+                        if (ssSet.screenshots != null && ssSet.screenshots.Length > 0)
+                        {
+                            // delete screenshots that are no longer in the set:
+                            {
+                                var ssSetResponse = await api.GetAppScreenshotSetsAppScreenshots(ssSet.id, include: default);
+
+                                foreach (var ssResponse in ssSetResponse.data)
+                                {
+                                    var ss = ssSet.screenshots.FirstOrDefault(a => a.id == ssResponse.id);
+
+                                    if (ss == null)
+                                    {
+                                        await api.DeleteAppScreenshots(ssResponse.id);
+                                    }
+                                }
+                            }
+
+                            foreach (var ss in ssSet.screenshots)
+                            {
+                                var fi = ad.GetFileByName(ss.fileName, out var fileHash);
+
+                                if (string.IsNullOrEmpty(ss.id))
+                                {
+                                    var response = await api.PostAppScreenshots(ss.CreateCreateRequest(ssSet.id, (int)fi.Length, fi.Name));
+                                    ss.UpdateWithResponse(response.data);
+
+                                    await UploadFile(api, fi, response.data.attributes.uploadOperations);
+
+                                    response = await api.PatchAppScreenshots(ss.id, ss.CreateUploadCompleteRequest(fileHash));
+                                    ss.UpdateWithResponse(response.data);
+
+                                    // API doesn't give us these back:
+                                    ss.sourceFileChecksum = fileHash;
+                                }
+
+                                {
+                                    var file = ad.FindFileByHashOrName(ss.sourceFileChecksum, ss.fileName);
+
+                                    if (file.Exists)
+                                    {
+                                        ss.fileName = file.Name;
+                                    }
+                                }
+                            }
+                        }
+
+                        await api.PatchAppScreenshotSetsAppScreenshots(ssSet.id, ssSet.CreateUpdateRequest());
+                    }
+                }
+
+                if (localization.appPreviewSets != null && localization.appPreviewSets.Length > 0)
+                {
+                    // delete sets that no longer exist:
+                    {
+                        var apSetsResponse = await api.GetAppStoreVersionLocalizationsAppPreviewSets(localization.id);
+
+                        foreach (var apSetResponse in apSetsResponse.data)
+                        {
+                            var apSet = localization.appPreviewSets.FirstOrDefault(a => a.id == apSetResponse.id);
+
+                            if (apSet == null)
+                            {
+                                await api.DeleteAppPreviewSets(apSetResponse.id);
+                            }
+                        }
+                    }
+
+                    foreach (var apSet in localization.appPreviewSets)
+                    {
+                        if (string.IsNullOrEmpty(apSet.id))
+                        {
+                            var response = await api.PostAppPreviewSets(apSet.CreateCreateRequest(localization.id));
+                            apSet.UpdateWithResponse(response.data);
+                        }
+
+                        if (apSet.appPreviews != null && apSet.appPreviews.Length > 0)
+                        {
+                            // delete app previews that are no longer in the set:
+                            {
+                                var apSetResponse = await api.GetAppPreviewSetsAppPreviews(apSet.id, include: default);
+
+                                foreach (var apResponse in apSetResponse.data)
+                                {
+                                    var ap = apSet.appPreviews.FirstOrDefault(a => a.id == apResponse.id);
+
+                                    if (ap == null)
+                                    {
+                                        await api.DeleteAppPreviews(apResponse.id);
+                                    }
+                                }
+                            }
+
+                            foreach (var ap in apSet.appPreviews)
+                            {
+                                var fi = ad.GetFileByName(ap.fileName, out var fileHash);
+
+                                if (string.IsNullOrEmpty(ap.id))
+                                {
+                                    var previewFrameTimeCode = ap.previewFrameTimeCode;
+
+                                    var response = await api.PostAppPreviews(ap.CreateCreateRequest(apSet.id, (int)fi.Length, fi.Name));
+                                    ap.UpdateWithResponse(response.data);
+
+                                    await UploadFile(api, fi, response.data.attributes.uploadOperations);
+
+                                    response = await api.PatchAppPreviews(ap.id, ap.CreateUploadCompleteRequest(fileHash));
+                                    ap.UpdateWithResponse(response.data);
+
+                                    // API doesn't give us these back:
+                                    ap.sourceFileChecksum = fileHash;
+                                    ap.previewFrameTimeCode = previewFrameTimeCode;
+                                }
+                                else if (!string.IsNullOrEmpty(ap.sourceFileChecksum))
+                                {
+                                    var response = await api.PatchAppPreviews(ap.id, ap.CreateUpdateRequest());
+                                    ap.UpdateWithResponse(response.data);
+                                }
+                                else
+                                {
+                                    // if sourceFileChecksum is null it means it hasn't finished processing yet and we can't change anything on it
+                                }
+
+                                {
+                                    var file = ad.FindFileByHashOrName(ap.sourceFileChecksum, ap.fileName);
+
+                                    if (file.Exists)
+                                    {
+                                        ap.fileName = file.Name;
+                                    }
+                                }
+                            }
+                        }
+
                         await api.PatchAppPreviewSetsAppPreviews(apSet.id, apSet.CreateUpdateRequest());
                     }
                 }
             }
         }
     }
-
-    Output(context, versions);
+    finally
+    {
+        Output(context, versions);
+    }
 }
 
 // get-app-iaps
@@ -481,4 +572,20 @@ async Task SetAppIaps(InvocationContext context)
     }
 
     Output(context, iaps);
+}
+
+static async Task UploadFile(AppStoreClient api, FileInfo fi, IReadOnlyList<AppStoreClient.IUploadOperations> ops)
+{
+    using (var stream = fi.OpenRead())
+    {
+        foreach (var op in ops)
+        {
+            var data = new byte[op.length.Value];
+            stream.Seek(op.offset.Value, SeekOrigin.Begin);
+            var bytesRead = await stream.ReadAsync(data);
+            if (bytesRead != data.Length)
+                throw new Exception("Failed to read all bytes from file.");
+            await api.UploadPortion(op.method, op.url, data, op.requestHeaders.ToDictionary(a => a.name, a => a.value));
+        }
+    }
 }

@@ -1158,8 +1158,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -1170,6 +1172,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -2681,8 +2684,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -2693,6 +2698,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -6753,8 +6759,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                 public class Attributes
                 {
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -6765,6 +6773,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -8469,8 +8478,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -8481,6 +8492,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -8753,8 +8765,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -8765,6 +8779,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -9784,8 +9799,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -9796,6 +9813,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -10128,8 +10146,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -10140,6 +10160,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -12924,8 +12945,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -12936,6 +12959,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -13544,8 +13568,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -13556,6 +13582,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -26301,8 +26328,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -26313,6 +26342,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -26965,8 +26995,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -26977,6 +27009,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -27378,8 +27411,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                 public class Attributes
                 {
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -27390,6 +27425,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -27870,8 +27906,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                 public class Attributes
                 {
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -27882,6 +27920,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -32651,8 +32690,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                 public class Attributes
                 {
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -32663,6 +32704,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -52563,8 +52605,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -52575,6 +52619,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
@@ -56280,8 +56325,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -56292,6 +56339,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public int? fileSize { get; set; }
@@ -56837,8 +56885,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -56849,6 +56899,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public int? fileSize { get; set; }
@@ -59203,8 +59254,10 @@ namespace StudioDrydock.AppStoreConnect.Api
                     }
 
                     public class UploadOperations
+                        : IUploadOperations
                     {
                         public class RequestHeaders
+                            : IRequestHeaders
                         {
                             public string? name { get; set; }
                             public string? value { get; set; }
@@ -59215,6 +59268,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                         public int? length { get; set; }
                         public int? offset { get; set; }
                         public RequestHeaders[]? requestHeaders { get; set; }
+                        IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;
                     }
 
                     public class AssetDeliveryState
