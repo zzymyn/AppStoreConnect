@@ -12,6 +12,8 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string marketingUrl { get; set; }
         public string supportUrl { get; set; }
         public string whatsNew { get; set; }
+        public ScreenshotSet[] screenshotSets { get; set; }
+        public AppPreviewSet[] appPreviewSets { get; set; }
 
         public AppVersionLocalization()
         { }

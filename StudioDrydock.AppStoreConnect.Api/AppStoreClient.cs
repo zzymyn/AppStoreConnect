@@ -14,6 +14,7 @@ namespace StudioDrydock.AppStoreConnect.Api
     {
         readonly Uri baseUri = new Uri("https://api.appstoreconnect.apple.com");
         HttpClient client;
+        HttpClient uploadClient;
 
         readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
         {
@@ -29,6 +30,8 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            uploadClient = new HttpClient();
         }
 
         // https://github.com/dersia/AppStoreConnect/blob/main/src/AppStoreConnect.Jwt/KeyUtils.cs
@@ -114,6 +117,41 @@ namespace StudioDrydock.AppStoreConnect.Api
             return responseObject;
         }
 
+        public async Task UploadPortion(string method, string url, byte[] data, Dictionary<string, string> requestHeaders)
+        {
+            HttpMethod httpMethod;
+            switch (method.ToUpperInvariant())
+            {
+                case "POST":
+                    httpMethod = HttpMethod.Post;
+                    break;
+                case "PUT":
+                    httpMethod = HttpMethod.Put;
+                    break;
+                default:
+                    throw new Exception($"Unknown method {method}");
+            }
+
+            var request = new HttpRequestMessage(httpMethod, url);
+            request.Content = new ByteArrayContent(data);
+            foreach (var header in requestHeaders)
+            {
+                if (header.Key == "Content-Type")
+                {
+                    request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(header.Value);
+                    continue;
+                }
+                request.Headers.Add(header.Key, header.Value);
+            }
+            Trace.TraceInformation($"{request.Method} {request.RequestUri}");
+            var response = await uploadClient.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                Trace.TraceError(await response.Content.ReadAsStringAsync());
+                throw new Exception($"Status code {response.StatusCode}");
+            }
+        }
+
         public Task<T> GetNextPage<T>(T prevPage)
             where T : IHasNextLink
         {
@@ -124,6 +162,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Get, prevPage.links.next);
             return SendAsync<T>(message);
+        }
+
+        public Task PostAppPreviewSets(object v)
+        {
+            throw new NotImplementedException();
         }
 
         public interface IHasNextLink
