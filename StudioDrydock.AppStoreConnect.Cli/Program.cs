@@ -368,10 +368,9 @@ async Task SetAppVersions(InvocationContext context)
 
                             foreach (var ss in ssSet.screenshots)
                             {
-                                var fi = ad.GetFileByName(ss.fileName, out var fileHash);
-
                                 if (string.IsNullOrEmpty(ss.id))
                                 {
+                                    var fi = ad.GetFileByName(ss.fileName, out var fileHash);
                                     var response = await api.PostAppScreenshots(ss.CreateCreateRequest(ssSet.id, (int)fi.Length, fi.Name));
                                     ss.UpdateWithResponse(response.data);
 
@@ -443,10 +442,9 @@ async Task SetAppVersions(InvocationContext context)
 
                             foreach (var ap in apSet.appPreviews)
                             {
-                                var fi = ad.GetFileByName(ap.fileName, out var fileHash);
-
                                 if (string.IsNullOrEmpty(ap.id))
                                 {
+                                    var fi = ad.GetFileByName(ap.fileName, out var fileHash);
                                     var previewFrameTimeCode = ap.previewFrameTimeCode;
 
                                     var response = await api.PostAppPreviews(ap.CreateCreateRequest(apSet.id, (int)fi.Length, fi.Name));
@@ -539,39 +537,44 @@ async Task SetAppIaps(InvocationContext context)
     var appId = context.ParseResult.GetValueForOption(appIdOption);
     var iaps = Input<IapList>(context);
 
-    foreach (var iap in iaps.iaps)
+    try
     {
-        // TODO: make this a cli switch:
-        if (iap.state == InAppPurchaseState.APPROVED)
-            continue;
+        foreach (var iap in iaps.iaps)
+        {
+            // TODO: make this a cli switch:
+            if (iap.state == InAppPurchaseState.APPROVED)
+                continue;
 
-        if (string.IsNullOrEmpty(iap.id))
-        {
-            var response = await api.PostInAppPurchases(iap.CreateCreateRequest(appId));
-            iap.UpdateWithResponse(response.data);
-        }
-        else
-        {
-            var response = await api.PatchInAppPurchases(iap.id, iap.CreateUpdateRequest());
-            iap.UpdateWithResponse(response.data);
-        }
-
-        foreach (var localization in iap.localizations)
-        {
-            if (string.IsNullOrEmpty(localization.id))
+            if (string.IsNullOrEmpty(iap.id))
             {
-                var response = await api.PostInAppPurchaseLocalizations(localization.CreateCreateRequest(iap.id));
-                localization.UpdateWithResponse(response.data);
+                var response = await api.PostInAppPurchases(iap.CreateCreateRequest(appId));
+                iap.UpdateWithResponse(response.data);
             }
             else
             {
-                var response = await api.PatchInAppPurchaseLocalizations(localization.id, localization.CreateUpdateRequest());
-                localization.UpdateWithResponse(response.data);
+                var response = await api.PatchInAppPurchases(iap.id, iap.CreateUpdateRequest());
+                iap.UpdateWithResponse(response.data);
+            }
+
+            foreach (var localization in iap.localizations)
+            {
+                if (string.IsNullOrEmpty(localization.id))
+                {
+                    var response = await api.PostInAppPurchaseLocalizations(localization.CreateCreateRequest(iap.id));
+                    localization.UpdateWithResponse(response.data);
+                }
+                else
+                {
+                    var response = await api.PatchInAppPurchaseLocalizations(localization.id, localization.CreateUpdateRequest());
+                    localization.UpdateWithResponse(response.data);
+                }
             }
         }
     }
-
-    Output(context, iaps);
+    finally
+    {
+        Output(context, iaps);
+    }
 }
 
 static async Task UploadFile(AppStoreClient api, FileInfo fi, IReadOnlyList<AppStoreClient.IUploadOperations> ops)

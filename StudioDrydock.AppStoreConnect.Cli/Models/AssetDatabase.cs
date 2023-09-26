@@ -24,7 +24,14 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
 
         public FileInfo FindFileByHashOrName(string hash, string name)
         {
-            var file = m_Files.FirstOrDefault(x => x.Hash.Equals(hash, StringComparison.OrdinalIgnoreCase));
+            var file = m_Files.FirstOrDefault(x => x.FileInfo.Name == name && x.Hash.Equals(hash, StringComparison.OrdinalIgnoreCase));
+
+            if (file.FileInfo != null)
+            {
+                return file.FileInfo;
+            }
+
+            file = m_Files.FirstOrDefault(x => x.Hash.Equals(hash, StringComparison.OrdinalIgnoreCase));
 
             if (file.FileInfo != null)
             {
