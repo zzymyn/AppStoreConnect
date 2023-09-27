@@ -143,4 +143,58 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         DESKTOP,
         APPLE_TV,
     }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum Badge
+    {
+        LIVE_EVENT,
+        PREMIERE,
+        CHALLENGE,
+        COMPETITION,
+        NEW_SEASON,
+        MAJOR_UPDATE,
+        SPECIAL_EVENT,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum EventState
+    {
+        DRAFT,
+        READY_FOR_REVIEW,
+        WAITING_FOR_REVIEW,
+        IN_REVIEW,
+        REJECTED,
+        ACCEPTED,
+        APPROVED,
+        PUBLISHED,
+        PAST,
+        ARCHIVED,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum PurchaseRequirement
+    {
+        NO_COST_ASSOCIATED,
+        IN_APP_PURCHASE,
+        SUBSCRIPTION,
+        IN_APP_PURCHASE_AND_SUBSCRIPTION,
+        IN_APP_PURCHASE_OR_SUBSCRIPTION,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum Priority
+    {
+        HIGH,
+        NORMAL,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum Purpose
+    {
+        APPROPRIATE_FOR_ALL_USERS,
+        ATTRACT_NEW_USERS,
+        KEEP_ACTIVE_USERS_INFORMED,
+        BRING_BACK_LAPSED_USERS,
+    }
+
 }

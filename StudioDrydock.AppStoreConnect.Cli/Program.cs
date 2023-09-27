@@ -86,6 +86,21 @@ setAppIapsCommand.AddOption(outputOption);
 setAppIapsCommand.SetHandler(SetAppIaps);
 rootCommand.AddCommand(setAppIapsCommand);
 
+// get-app-events --appId=xxx
+var getEventsCommand = new Command("get-app-events", "Get information about specific app events");
+getEventsCommand.AddOption(appIdOption);
+getEventsCommand.AddOption(outputOption);
+getEventsCommand.SetHandler(GetAppEvents);
+rootCommand.AddCommand(getEventsCommand);
+
+// set-app-events --appId=xxx --input=file.json
+var setEventsCommand = new Command("set-app-events", "Update information about specific app events. The input format matches the output of get-events.");
+setEventsCommand.AddOption(appIdOption);
+setEventsCommand.AddOption(inputOption);
+setEventsCommand.AddOption(outputOption);
+setEventsCommand.SetHandler(SetAppEvents);
+rootCommand.AddCommand(setEventsCommand);
+
 await rootCommand.InvokeAsync(args);
 
 AppStoreClient CreateClient(InvocationContext context)
@@ -574,6 +589,98 @@ async Task SetAppIaps(InvocationContext context)
     finally
     {
         Output(context, iaps);
+    }
+}
+
+// get-app-events
+async Task GetAppEvents(InvocationContext context)
+{
+    var api = CreateClient(context);
+    var appId = context.ParseResult.GetValueForOption(appIdOption);
+
+    var response = await api.GetAppsAppEvents(appId);
+
+    var events = new List<Event>();
+
+    events.AddRange(response.data.Select(x => new Event(x)));
+
+    while (response.links.next != null)
+    {
+        response = await api.GetNextPage(response);
+        events.AddRange(response.data.Select(x => new Event(x)));
+    }
+
+    foreach (var ev in events)
+    {
+        var evLocalizations = new List<EventLocalization>();
+        var localizationResponse = await api.GetAppEventsLocalizations(ev.id);
+        evLocalizations.AddRange(localizationResponse.data.Select(x => new EventLocalization(x)));
+
+        while (localizationResponse.links.next != null)
+        {
+            localizationResponse = await api.GetNextPage(localizationResponse);
+            evLocalizations.AddRange(localizationResponse.data.Select(x => new EventLocalization(x)));
+        }
+
+        ev.localizations = evLocalizations.OrderBy(a => a.locale).ToArray();
+    }
+
+    Output(context, new EventList() { events = events.OrderBy(a => a.id).ToArray() });
+}
+
+// set-app-events
+async Task SetAppEvents(InvocationContext context)
+{
+    var api = CreateClient(context);
+    var appId = context.ParseResult.GetValueForOption(appIdOption);
+    var events = Input<EventList>(context);
+
+    try
+    {
+        foreach (var ev in events.events)
+        {
+            // TODO: make this a cli switch:
+            switch (ev.eventState)
+            {
+                case EventState.WAITING_FOR_REVIEW:
+                case EventState.IN_REVIEW:
+                case EventState.ACCEPTED:
+                case EventState.APPROVED:
+                case EventState.PUBLISHED:
+                case EventState.PAST:
+                case EventState.ARCHIVED:
+                    continue;
+            }
+
+            if (string.IsNullOrEmpty(ev.id))
+            {
+                var response = await api.PostAppEvents(ev.CreateCreateRequest(appId));
+                ev.UpdateWithResponse(response.data);
+            }
+            else
+            {
+                var response = await api.PatchAppEvents(ev.id, ev.CreateUpdateRequest());
+                ev.UpdateWithResponse(response.data);
+            }
+
+            foreach (var localization in ev.localizations)
+            {
+                if (string.IsNullOrEmpty(localization.id))
+                {
+                    var response = await api.PostAppEventLocalizations(localization.CreateCreateRequest(ev.id));
+                    localization.UpdateWithResponse(response.data);
+                }
+                else
+                {
+                    var response = await api.PatchAppEventLocalizations(localization.id, localization.CreateUpdateRequest());
+                    localization.UpdateWithResponse(response.data);
+                }
+            }
+        }
+    }
+    finally
+    {
+        Output(context, events);
     }
 }
 
