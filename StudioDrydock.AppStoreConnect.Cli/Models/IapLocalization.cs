@@ -13,7 +13,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public IapLocalization()
         { }
 
-        public IapLocalization(AppStoreClient.InAppPurchaseLocalizationsResponse.Data data)
+        public IapLocalization(AppStoreClient.InAppPurchaseLocalization data)
         {
             this.id = data.id;
             this.name = data.attributes.name;
@@ -22,7 +22,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.state = EnumExtensions<InAppPurchaseLocaliztionState>.Convert(data.attributes.state.Value);
         }
 
-        internal void UpdateWithResponse(AppStoreClient.InAppPurchaseLocalizationResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.InAppPurchaseLocalization data)
         {
             this.id = data.id;
             this.name = data.attributes.name;

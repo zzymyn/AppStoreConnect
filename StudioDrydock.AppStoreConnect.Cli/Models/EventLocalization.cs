@@ -14,7 +14,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public EventLocalization()
         { }
 
-        public EventLocalization(AppStoreClient.AppEventLocalizationsResponse.Data data)
+        public EventLocalization(AppStoreClient.AppEventLocalization data)
         {
             this.id = data.id;
             this.name = data.attributes.name;
@@ -23,7 +23,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.longDescription = data.attributes.longDescription;
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppEventLocalizationResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppEventLocalization data)
         {
             this.id = data.id;
             this.name = data.attributes.name;

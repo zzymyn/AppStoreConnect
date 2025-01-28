@@ -12,14 +12,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string reviewNote { get; set; }
         public bool? familySharable { get; set; }
         public bool? contentHosting { get; set; }
-        public bool? availableInAllTerritories { get; set; }
 
         public IapLocalization[] localizations { get; set; }
 
         public Iap()
         { }
 
-        public Iap(AppStoreClient.InAppPurchasesV2Response.Data data)
+        public Iap(AppStoreClient.InAppPurchaseV2 data)
         {
             this.id = data.id;
             this.name = data.attributes.name;
@@ -29,10 +28,9 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.reviewNote = data.attributes.reviewNote;
             this.familySharable = data.attributes.familySharable;
             this.contentHosting = data.attributes.contentHosting;
-            this.availableInAllTerritories = data.attributes.availableInAllTerritories;
         }
 
-        internal void UpdateWithResponse(AppStoreClient.InAppPurchaseV2Response.Data data)
+        internal void UpdateWithResponse(AppStoreClient.InAppPurchaseV2 data)
         {
             this.id = data.id;
             this.name = data.attributes.name;
@@ -42,7 +40,6 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.reviewNote = data.attributes.reviewNote;
             this.familySharable = data.attributes.familySharable;
             this.contentHosting = data.attributes.contentHosting;
-            this.availableInAllTerritories = data.attributes.availableInAllTerritories;
         }
 
         internal AppStoreClient.InAppPurchaseV2CreateRequest CreateCreateRequest(string appId)
@@ -58,7 +55,6 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
                         inAppPurchaseType = EnumExtensions<AppStoreClient.InAppPurchaseV2CreateRequest.Data.Attributes.InAppPurchaseType>.Convert(this.inAppPurchaseType),
                         reviewNote = this.reviewNote,
                         familySharable = this.familySharable,
-                        availableInAllTerritories = this.availableInAllTerritories
                     },
                     relationships = new()
                     {
@@ -86,7 +82,6 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
                         name = this.name,
                         reviewNote = this.reviewNote,
                         familySharable = this.familySharable,
-                        availableInAllTerritories = this.availableInAllTerritories
                     }
                 }
             };

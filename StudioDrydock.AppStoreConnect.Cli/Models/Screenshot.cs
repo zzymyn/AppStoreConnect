@@ -18,7 +18,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         {
         }
 
-        public Screenshot(AppStoreClient.AppScreenshotsResponse.Data data)
+        public Screenshot(AppStoreClient.AppScreenshot data)
         {
             this.id = data.id;
             this.fileSize = data.attributes.fileSize.Value;
@@ -26,7 +26,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.sourceFileChecksum = data.attributes.sourceFileChecksum;
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppScreenshotResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppScreenshot data)
         {
             this.id = data.id;
             this.fileSize = data.attributes.fileSize.Value;

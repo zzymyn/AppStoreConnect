@@ -52,8 +52,8 @@ rootCommand.AddCommand(getAppsCommand);
 // get-app-versions --appId=xxx [--platform=xxx] [--state=xxx]
 var getAppVersionsCommand = new Command("get-app-versions", "Get information about specific app versions");
 var appIdOption = new Option<string>("--appId") { IsRequired = true };
-var platformOption = new Option<AppStoreClient.GetAppsAppStoreVersionsFilterPlatform?>("--platform");
-var appStoreStateOption = new Option<AppStoreClient.GetAppsAppStoreVersionsFilterAppStoreState?>("--state");
+var platformOption = new Option<AppStoreClient.Apps_appStoreVersions_getToManyRelatedFilterPlatform?>("--platform");
+var appStoreStateOption = new Option<AppStoreClient.Apps_appStoreVersions_getToManyRelatedFilterAppStoreState?>("--state");
 getAppVersionsCommand.AddOption(appIdOption);
 getAppVersionsCommand.AddOption(platformOption);
 getAppVersionsCommand.AddOption(appStoreStateOption);
@@ -71,7 +71,7 @@ rootCommand.AddCommand(setAppVersionsCommand);
 
 // get-app-iaps --appId=xxx
 var getAppIapsCommand = new Command("get-app-iaps", "Get information about specific app in-app purchases");
-var iapStateOption = new Option<AppStoreClient.GetAppsInAppPurchasesV2FilterState?>("--state");
+var iapStateOption = new Option<AppStoreClient.Apps_inAppPurchasesV2_getToManyRelatedFilterState?>("--state");
 getAppIapsCommand.AddOption(appIdOption);
 getAppIapsCommand.AddOption(iapStateOption);
 getAppIapsCommand.AddOption(outputOption);
@@ -169,7 +169,7 @@ async Task GetApps(InvocationContext context)
 
     var api = CreateClient(context);
 
-    var response = await api.GetApps();
+    var response = await api.Apps_getCollection();
     apps.AddRange(response.data.Select(x => new AppInfo(x)));
 
     while (response.links.next != null)
@@ -192,12 +192,12 @@ async Task GetAppVersions(InvocationContext context)
     var platform = context.ParseResult.GetValueForOption(platformOption);
     var appStoreState = context.ParseResult.GetValueForOption(appStoreStateOption);
 
-    var info = await api.GetApps(appId);
+    var info = await api.Apps_getInstance(appId);
     var appInfo = new AppInfo(info.data);
 
     var versions = new List<AppVersion>();
 
-    var response = await api.GetAppsAppStoreVersions(appId,
+    var response = await api.Apps_appStoreVersions_getToManyRelated(appId,
         filterAppStoreState: Filter(appStoreState),
         filterPlatform: Filter(platform));
 
@@ -213,7 +213,7 @@ async Task GetAppVersions(InvocationContext context)
     {
         var localizations = new List<AppVersionLocalization>();
 
-        var localizationResponse = await api.GetAppStoreVersionsAppStoreVersionLocalizations(version.id);
+        var localizationResponse = await api.AppStoreVersions_appStoreVersionLocalizations_getToManyRelated(version.id);
         localizations.AddRange(localizationResponse.data.Select(x => new AppVersionLocalization(x)));
 
         // API bug: pagination doesn't seem to work for this endpoint
@@ -226,7 +226,7 @@ async Task GetAppVersions(InvocationContext context)
         foreach (var loc in localizations)
         {
             var ssets = new List<ScreenshotSet>();
-            var ssetsResponse = await api.GetAppStoreVersionLocalizationsAppScreenshotSets(loc.id);
+            var ssetsResponse = await api.AppStoreVersionLocalizations_appScreenshotSets_getToManyRelated(loc.id);
 
             foreach (var ssetResponse in ssetsResponse.data)
             {
@@ -234,7 +234,7 @@ async Task GetAppVersions(InvocationContext context)
                 ssets.Add(sset);
 
                 var ss = new List<Screenshot>();
-                var ssResponse = await api.GetAppScreenshotSetsAppScreenshots(ssetResponse.id, include: default);
+                var ssResponse = await api.AppScreenshotSets_appScreenshots_getToManyRelated(ssetResponse.id, include: default);
 
                 foreach (var sRespons in ssResponse.data)
                 {
@@ -253,13 +253,13 @@ async Task GetAppVersions(InvocationContext context)
             }
 
             var apsets = new List<AppPreviewSet>();
-            var apsetsResponse = await api.GetAppStoreVersionLocalizationsAppPreviewSets(loc.id);
+            var apsetsResponse = await api.AppStoreVersionLocalizations_appPreviewSets_getToManyRelated(loc.id);
 
             foreach (var apsetResponse in apsetsResponse.data)
             {
                 var apset = new AppPreviewSet(apsetResponse);
                 apsets.Add(apset);
-                var apResponse = await api.GetAppPreviewSetsAppPreviews(apsetResponse.id, include: default);
+                var apResponse = await api.AppPreviewSets_appPreviews_getToManyRelated(apsetResponse.id, include: default);
 
                 var aps = new List<AppPreview>();
                 foreach (var apRespons in apResponse.data)
@@ -317,12 +317,12 @@ async Task SetAppVersions(InvocationContext context)
 
             if (string.IsNullOrEmpty(version.id))
             {
-                var response = await api.PostAppStoreVersions(version.CreateCreateRequest(appId));
+                var response = await api.AppStoreVersions_createInstance(version.CreateCreateRequest(appId));
                 version.UpdateWithResponse(response.data);
             }
             else
             {
-                var response = await api.PatchAppStoreVersions(version.id, version.CreateUpdateRequest());
+                var response = await api.AppStoreVersions_updateInstance(version.id, version.CreateUpdateRequest());
                 version.UpdateWithResponse(response.data);
             }
 
@@ -330,12 +330,12 @@ async Task SetAppVersions(InvocationContext context)
             {
                 if (string.IsNullOrEmpty(localization.id))
                 {
-                    var response = await api.PostAppStoreVersionLocalizations(localization.CreateCreateRequest(version.id));
+                    var response = await api.AppStoreVersionLocalizations_createInstance(localization.CreateCreateRequest(version.id));
                     localization.UpdateWithResponse(response.data);
                 }
                 else
                 {
-                    var response = await api.PatchAppStoreVersionLocalizations(localization.id, localization.CreateUpdateRequest());
+                    var response = await api.AppStoreVersionLocalizations_updateInstance(localization.id, localization.CreateUpdateRequest());
                     localization.UpdateWithResponse(response.data);
                 }
 
@@ -343,7 +343,7 @@ async Task SetAppVersions(InvocationContext context)
                 {
                     // delete sets that no longer exist:
                     {
-                        var ssSetsResponse = await api.GetAppStoreVersionLocalizationsAppScreenshotSets(localization.id);
+                        var ssSetsResponse = await api.AppStoreVersionLocalizations_appScreenshotSets_getToManyRelated(localization.id);
 
                         foreach (var ssSetResponse in ssSetsResponse.data)
                         {
@@ -351,7 +351,7 @@ async Task SetAppVersions(InvocationContext context)
 
                             if (ssSet == null)
                             {
-                                await api.DeleteAppScreenshotSets(ssSetResponse.id);
+                                await api.AppScreenshotSets_deleteInstance(ssSetResponse.id);
                             }
                         }
                     }
@@ -360,7 +360,7 @@ async Task SetAppVersions(InvocationContext context)
                     {
                         if (string.IsNullOrEmpty(ssSet.id))
                         {
-                            var response = await api.PostAppScreenshotSets(ssSet.CreateCreateRequest(localization.id));
+                            var response = await api.AppScreenshotSets_createInstance(ssSet.CreateCreateRequest(localization.id));
                             ssSet.UpdateWithResponse(response.data);
                         }
 
@@ -368,7 +368,7 @@ async Task SetAppVersions(InvocationContext context)
                         {
                             // delete screenshots that are no longer in the set:
                             {
-                                var ssSetResponse = await api.GetAppScreenshotSetsAppScreenshots(ssSet.id, include: default);
+                                var ssSetResponse = await api.AppScreenshotSets_appScreenshots_getToManyRelated(ssSet.id, include: default);
 
                                 foreach (var ssResponse in ssSetResponse.data)
                                 {
@@ -376,7 +376,7 @@ async Task SetAppVersions(InvocationContext context)
 
                                     if (ss == null)
                                     {
-                                        await api.DeleteAppScreenshots(ssResponse.id);
+                                        await api.AppScreenshots_deleteInstance(ssResponse.id);
                                     }
                                 }
                             }
@@ -386,12 +386,12 @@ async Task SetAppVersions(InvocationContext context)
                                 if (string.IsNullOrEmpty(ss.id))
                                 {
                                     var fi = ad.GetFileByName(ss.fileName, out var fileHash);
-                                    var response = await api.PostAppScreenshots(ss.CreateCreateRequest(ssSet.id, (int)fi.Length, fi.Name));
+                                    var response = await api.AppScreenshots_createInstance(ss.CreateCreateRequest(ssSet.id, (int)fi.Length, fi.Name));
                                     ss.UpdateWithResponse(response.data);
 
                                     await UploadFile(api, fi, response.data.attributes.uploadOperations);
 
-                                    response = await api.PatchAppScreenshots(ss.id, ss.CreateUploadCompleteRequest(fileHash));
+                                    response = await api.AppScreenshots_updateInstance(ss.id, ss.CreateUploadCompleteRequest(fileHash));
                                     ss.UpdateWithResponse(response.data);
 
                                     // API doesn't give us these back:
@@ -409,7 +409,7 @@ async Task SetAppVersions(InvocationContext context)
                             }
                         }
 
-                        await api.PatchAppScreenshotSetsAppScreenshots(ssSet.id, ssSet.CreateUpdateRequest());
+                        await api.AppScreenshotSets_appScreenshots_replaceToManyRelationship(ssSet.id, ssSet.CreateUpdateRequest());
                     }
                 }
 
@@ -417,7 +417,7 @@ async Task SetAppVersions(InvocationContext context)
                 {
                     // delete sets that no longer exist:
                     {
-                        var apSetsResponse = await api.GetAppStoreVersionLocalizationsAppPreviewSets(localization.id);
+                        var apSetsResponse = await api.AppStoreVersionLocalizations_appPreviewSets_getToManyRelated(localization.id);
 
                         foreach (var apSetResponse in apSetsResponse.data)
                         {
@@ -425,7 +425,7 @@ async Task SetAppVersions(InvocationContext context)
 
                             if (apSet == null)
                             {
-                                await api.DeleteAppPreviewSets(apSetResponse.id);
+                                await api.AppPreviewSets_deleteInstance(apSetResponse.id);
                             }
                         }
                     }
@@ -434,7 +434,7 @@ async Task SetAppVersions(InvocationContext context)
                     {
                         if (string.IsNullOrEmpty(apSet.id))
                         {
-                            var response = await api.PostAppPreviewSets(apSet.CreateCreateRequest(localization.id));
+                            var response = await api.AppPreviewSets_createInstance(apSet.CreateCreateRequest(localization.id));
                             apSet.UpdateWithResponse(response.data);
                         }
 
@@ -442,7 +442,7 @@ async Task SetAppVersions(InvocationContext context)
                         {
                             // delete app previews that are no longer in the set:
                             {
-                                var apSetResponse = await api.GetAppPreviewSetsAppPreviews(apSet.id, include: default);
+                                var apSetResponse = await api.AppPreviewSets_appPreviews_getToManyRelated(apSet.id, include: default);
 
                                 foreach (var apResponse in apSetResponse.data)
                                 {
@@ -450,7 +450,7 @@ async Task SetAppVersions(InvocationContext context)
 
                                     if (ap == null)
                                     {
-                                        await api.DeleteAppPreviews(apResponse.id);
+                                        await api.AppPreviews_deleteInstance(apResponse.id);
                                     }
                                 }
                             }
@@ -462,12 +462,12 @@ async Task SetAppVersions(InvocationContext context)
                                     var fi = ad.GetFileByName(ap.fileName, out var fileHash);
                                     var previewFrameTimeCode = ap.previewFrameTimeCode;
 
-                                    var response = await api.PostAppPreviews(ap.CreateCreateRequest(apSet.id, (int)fi.Length, fi.Name));
+                                    var response = await api.AppPreviews_createInstance(ap.CreateCreateRequest(apSet.id, (int)fi.Length, fi.Name));
                                     ap.UpdateWithResponse(response.data);
 
                                     await UploadFile(api, fi, response.data.attributes.uploadOperations);
 
-                                    response = await api.PatchAppPreviews(ap.id, ap.CreateUploadCompleteRequest(fileHash));
+                                    response = await api.AppPreviews_updateInstance(ap.id, ap.CreateUploadCompleteRequest(fileHash));
                                     ap.UpdateWithResponse(response.data);
 
                                     // API doesn't give us these back:
@@ -476,7 +476,7 @@ async Task SetAppVersions(InvocationContext context)
                                 }
                                 else if (!string.IsNullOrEmpty(ap.sourceFileChecksum))
                                 {
-                                    var response = await api.PatchAppPreviews(ap.id, ap.CreateUpdateRequest());
+                                    var response = await api.AppPreviews_updateInstance(ap.id, ap.CreateUpdateRequest());
                                     ap.UpdateWithResponse(response.data);
                                 }
                                 else
@@ -495,7 +495,7 @@ async Task SetAppVersions(InvocationContext context)
                             }
                         }
 
-                        await api.PatchAppPreviewSetsAppPreviews(apSet.id, apSet.CreateUpdateRequest());
+                        await api.AppPreviewSets_appPreviews_replaceToManyRelationship(apSet.id, apSet.CreateUpdateRequest());
                     }
                 }
             }
@@ -514,7 +514,7 @@ async Task GetAppIaps(InvocationContext context)
     var appId = context.ParseResult.GetValueForOption(appIdOption);
     var state = context.ParseResult.GetValueForOption(iapStateOption);
 
-    var response = await api.GetAppsInAppPurchasesV2(appId,
+    var response = await api.Apps_inAppPurchasesV2_getToManyRelated(appId,
         filterState: Filter(state));
 
     var iaps = new List<Iap>();
@@ -530,7 +530,7 @@ async Task GetAppIaps(InvocationContext context)
     foreach (var iap in iaps)
     {
         var iapLocalizations = new List<IapLocalization>();
-        var localizationResponse = await api.GetInAppPurchasesInAppPurchaseLocalizations(iap.id);
+        var localizationResponse = await api.InAppPurchasesV2_inAppPurchaseLocalizations_getToManyRelated(iap.id);
         iapLocalizations.AddRange(localizationResponse.data.Select(x => new IapLocalization(x)));
 
         while (localizationResponse.links.next != null)
@@ -562,12 +562,12 @@ async Task SetAppIaps(InvocationContext context)
 
             if (string.IsNullOrEmpty(iap.id))
             {
-                var response = await api.PostInAppPurchases(iap.CreateCreateRequest(appId));
+                var response = await api.InAppPurchasesV2_createInstance(iap.CreateCreateRequest(appId));
                 iap.UpdateWithResponse(response.data);
             }
             else
             {
-                var response = await api.PatchInAppPurchases(iap.id, iap.CreateUpdateRequest());
+                var response = await api.InAppPurchasesV2_updateInstance(iap.id, iap.CreateUpdateRequest());
                 iap.UpdateWithResponse(response.data);
             }
 
@@ -575,12 +575,12 @@ async Task SetAppIaps(InvocationContext context)
             {
                 if (string.IsNullOrEmpty(localization.id))
                 {
-                    var response = await api.PostInAppPurchaseLocalizations(localization.CreateCreateRequest(iap.id));
+                    var response = await api.InAppPurchaseLocalizations_createInstance(localization.CreateCreateRequest(iap.id));
                     localization.UpdateWithResponse(response.data);
                 }
                 else
                 {
-                    var response = await api.PatchInAppPurchaseLocalizations(localization.id, localization.CreateUpdateRequest());
+                    var response = await api.InAppPurchaseLocalizations_updateInstance(localization.id, localization.CreateUpdateRequest());
                     localization.UpdateWithResponse(response.data);
                 }
             }
@@ -598,7 +598,7 @@ async Task GetAppEvents(InvocationContext context)
     var api = CreateClient(context);
     var appId = context.ParseResult.GetValueForOption(appIdOption);
 
-    var response = await api.GetAppsAppEvents(appId);
+    var response = await api.Apps_appEvents_getToManyRelated(appId);
 
     var events = new List<Event>();
 
@@ -613,7 +613,7 @@ async Task GetAppEvents(InvocationContext context)
     foreach (var ev in events)
     {
         var evLocalizations = new List<EventLocalization>();
-        var localizationResponse = await api.GetAppEventsLocalizations(ev.id);
+        var localizationResponse = await api.AppEvents_localizations_getToManyRelated(ev.id);
         evLocalizations.AddRange(localizationResponse.data.Select(x => new EventLocalization(x)));
 
         while (localizationResponse.links.next != null)
@@ -654,12 +654,12 @@ async Task SetAppEvents(InvocationContext context)
 
             if (string.IsNullOrEmpty(ev.id))
             {
-                var response = await api.PostAppEvents(ev.CreateCreateRequest(appId));
+                var response = await api.AppEvents_createInstance(ev.CreateCreateRequest(appId));
                 ev.UpdateWithResponse(response.data);
             }
             else
             {
-                var response = await api.PatchAppEvents(ev.id, ev.CreateUpdateRequest());
+                var response = await api.AppEvents_updateInstance(ev.id, ev.CreateUpdateRequest());
                 ev.UpdateWithResponse(response.data);
             }
 
@@ -667,12 +667,12 @@ async Task SetAppEvents(InvocationContext context)
             {
                 if (string.IsNullOrEmpty(localization.id))
                 {
-                    var response = await api.PostAppEventLocalizations(localization.CreateCreateRequest(ev.id));
+                    var response = await api.AppEventLocalizations_createInstance(localization.CreateCreateRequest(ev.id));
                     localization.UpdateWithResponse(response.data);
                 }
                 else
                 {
-                    var response = await api.PatchAppEventLocalizations(localization.id, localization.CreateUpdateRequest());
+                    var response = await api.AppEventLocalizations_updateInstance(localization.id, localization.CreateUpdateRequest());
                     localization.UpdateWithResponse(response.data);
                 }
             }
@@ -684,7 +684,7 @@ async Task SetAppEvents(InvocationContext context)
     }
 }
 
-static async Task UploadFile(AppStoreClient api, FileInfo fi, IReadOnlyList<AppStoreClient.IUploadOperations> ops)
+static async Task UploadFile(AppStoreClient api, FileInfo fi, IReadOnlyList<AppStoreClient.UploadOperation> ops)
 {
     using (var stream = fi.OpenRead())
     {

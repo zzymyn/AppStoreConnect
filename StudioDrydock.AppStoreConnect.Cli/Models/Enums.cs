@@ -172,16 +172,6 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
     }
 
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum PurchaseRequirement
-    {
-        NO_COST_ASSOCIATED,
-        IN_APP_PURCHASE,
-        SUBSCRIPTION,
-        IN_APP_PURCHASE_AND_SUBSCRIPTION,
-        IN_APP_PURCHASE_OR_SUBSCRIPTION,
-    }
-
-    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Priority
     {
         HIGH,

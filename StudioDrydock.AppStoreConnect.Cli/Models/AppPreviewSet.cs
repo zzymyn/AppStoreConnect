@@ -17,13 +17,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         {
         }
 
-        public AppPreviewSet(AppStoreClient.AppPreviewSetsResponse.Data data)
+        public AppPreviewSet(AppStoreClient.AppPreviewSet data)
         {
             this.id = data.id;
             this.previewType = EnumExtensions<PreviewType>.Convert(data.attributes.previewType.Value);
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppPreviewSetResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppPreviewSet data)
         {
             this.id = data.id;
             this.previewType = EnumExtensions<PreviewType>.Convert(data.attributes.previewType.Value);
@@ -53,11 +53,11 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             };
         }
 
-        internal AppStoreClient.PatchAppPreviewSetsAppPreviewsRequest CreateUpdateRequest()
+        internal AppStoreClient.AppPreviewSetAppPreviewsLinkagesRequest CreateUpdateRequest()
         {
             return new()
             {
-                data = appPreviews.Select(a => new AppStoreClient.PatchAppPreviewSetsAppPreviewsRequest.Data
+                data = appPreviews.Select(a => new AppStoreClient.AppPreviewSetAppPreviewsLinkagesRequest.Data
                 {
                     id = a.id
                 }).ToArray(),

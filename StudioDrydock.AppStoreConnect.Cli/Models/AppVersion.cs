@@ -21,7 +21,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public AppVersion()
         { }
 
-        public AppVersion(AppStoreClient.AppStoreVersionsResponse.Data data)
+        public AppVersion(AppStoreClient.AppStoreVersion data)
         {
             this.id = data.id;
             this.platform = EnumExtensions<Platform>.Convert(data.attributes.platform.Value);
@@ -34,7 +34,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.createdDate = data.attributes.createdDate;
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppStoreVersionResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppStoreVersion data)
         {
             this.id = data.id;
             this.platform = EnumExtensions<Platform>.Convert(data.attributes.platform.Value);

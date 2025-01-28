@@ -12,6 +12,11 @@ using (var writer = new StreamWriter(stream))
 using (var api = new ApiWriter(writer))
 {
     api.cs.BeginBlock("public partial class AppStoreClient");
+    foreach (var kv in document.Components.Schemas.OrderBy(a => a.Key))
+    {
+        var schema = kv.Value;
+        api.GenerateSchema(kv.Key, schema);
+    }
     foreach (var kv in document.Paths.OrderBy(a => a.Key))
     {
         var path = kv.Key;

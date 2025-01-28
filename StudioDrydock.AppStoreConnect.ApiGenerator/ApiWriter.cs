@@ -33,28 +33,13 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
 
         public void GenerateClass(string name, OpenApiSchema schema)
         {
-            var isNextLink = name == "Links" && schema.Properties.ContainsKey("next");
             var hasNextLink = schema.Properties.ContainsKey("links") && schema.Properties["links"].Properties.ContainsKey("next");
-            var isUploadOperations = name == "UploadOperations";
-            var isRequestHeaders = name == "RequestHeaders";
 
             cs.WriteLine($"public class {name}");
 
             if (hasNextLink)
             {
                 cs.WriteLine("    : IHasNextLink");
-            }
-            else if (isNextLink)
-            {
-                cs.WriteLine("    : INextLink");
-            }
-            else if (isUploadOperations)
-            {
-                cs.WriteLine("    : IUploadOperations");
-            }
-            else if (isRequestHeaders)
-            {
-                cs.WriteLine("    : IRequestHeaders");
             }
 
             cs.BeginBlock();
@@ -68,15 +53,6 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             foreach (var kv in schema.Properties)
                 GenerateProperty(kv.Key, kv.Value, required: requiredProperties.Contains(kv.Key));
 
-            if (hasNextLink)
-            {
-                cs.WriteLine("INextLink IHasNextLink.links => links;");
-            }
-            if (isUploadOperations)
-            {
-                cs.WriteLine("IReadOnlyList<IRequestHeaders>? IUploadOperations.requestHeaders => requestHeaders;");
-            }
-
             cs.EndBlock();
         }
 
@@ -89,7 +65,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             WriteType(name, schema);
             if (!required)
                 cs.Write("?");
-            cs.Write($" {name} {{ get; set; }}");
+            cs.Write($" @{name} {{ get; set; }}");
             if (required)
             {
                 cs.Write(" = ");
@@ -188,7 +164,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                     break;
                 case "object":
                     // Reference anonymous property type generated earlier
-                    cs.Write(nameHint.TitleCase());
+                    cs.Write(schema.Reference?.Id ?? nameHint.TitleCase());
                     break;
                 default:
                     throw new NotSupportedException($"Schema type {schema.Type} not supported");
@@ -238,7 +214,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                     break;
                 case "object":
                     // Reference anonymous property type generated earlier
-                    cs.Write($"new {nameHint.TitleCase()}()");
+                    cs.Write($"new ()");
                     break;
                 default:
                     throw new NotSupportedException($"Schema type {schema.Type} not supported");
@@ -247,6 +223,9 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
 
         void GenerateAnonymousPropertyTypes(string nameHint, OpenApiSchema schema)
         {
+            if (schema.Reference != null)
+                return;
+
             if (schema.Type == null && schema.OneOf.Count >= 1)
             {
                 var first = schema.OneOf.First();
@@ -291,9 +270,10 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             switch (schema.Type)
             {
                 case "array":
-                case "string":
                 case "object":
                     return true;
+                case "string":
+                    return schema.Enum == null || schema.Enum.Count == 0;
                 case "boolean":
                 case "integer":
                 case "number":
@@ -307,11 +287,17 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
 
         string FormatRequestMethodName(OperationType operationType, string operationId)
         {
-            string method = operationType.ToString();
-            if (operationId.Contains('-'))
-                operationId = operationId.Substring(0, operationId.LastIndexOf('-'));
+            //string method = operationType.ToString();
+            //if (operationId.Contains('-'))
+            //{
+            //    operationId = operationId.Substring(0, operationId.IndexOf('-'));
+            //}
+            //else if (operationId.Contains('_'))
+            //{
+            //    operationId = operationId.Substring(0, operationId.IndexOf('_'));
+            //}
             operationId = operationId.MakeValidIdentifier().TitleCase();
-            return $"{method}{operationId}";
+            return $"{operationId}";
         }
 
         void GenerateTopLevelEnum(string name, OpenApiSchema schema)
@@ -375,8 +361,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             if (response.Content.TryGetValue("application/json", out var responseContent))
             {
                 responseSchema = responseContent.Schema;
-                if (!string.IsNullOrEmpty(responseSchema.Title))
-                    responseSchemaName = responseSchema.Title;
+                responseSchemaName = responseSchema.Reference?.Id ?? responseSchemaName;
                 GenerateTopLevelClass(responseSchemaName, responseSchema);
             }
 
@@ -479,6 +464,21 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             cs.EndBlock();
         }
 
+        public void GenerateSchema(string key, OpenApiSchema schema)
+        {
+            switch (schema.Type)
+            {
+                case "object":
+                    GenerateTopLevelClass(key, schema);
+                    break;
+                case "string":
+                    GenerateTopLevelEnum(key, schema);
+                    break;
+                default:
+                    throw new NotSupportedException($"Schema type {schema.Type} not supported");
+            }
+        }
+
         void WriteParameterToString(OpenApiParameter param)
         {
             var schema = param.Schema;
@@ -507,7 +507,17 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                     cs.Write(")");
                     break;
                 case "string":
-                    cs.Write(param.Name.MakeValidIdentifier());
+                    if (schema.Enum != null && schema.Enum.Count > 1)
+                    {
+                        cs.Write(param.Name.MakeValidIdentifier());
+                        if (!param.Required)
+                            cs.Write(".Value");
+                        cs.Write(".ToString()");
+                    }
+                    else
+                    {
+                        cs.Write(param.Name.MakeValidIdentifier());
+                    }
                     break;
                 case "object":
                     throw new NotSupportedException("Parameter cannot be object type");
@@ -524,5 +534,4 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             }
         }
     }
-
 }

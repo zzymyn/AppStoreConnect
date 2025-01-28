@@ -17,13 +17,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         {
         }
 
-        public ScreenshotSet(AppStoreClient.AppScreenshotSetsResponse.Data data)
+        public ScreenshotSet(AppStoreClient.AppScreenshotSet data)
         {
             this.id = data.id;
             this.screenshotDisplayType = EnumExtensions<ScreenshotDisplayType>.Convert(data.attributes.screenshotDisplayType.Value);
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppScreenshotSetResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppScreenshotSet data)
         {
             this.id = data.id;
             this.screenshotDisplayType = EnumExtensions<ScreenshotDisplayType>.Convert(data.attributes.screenshotDisplayType.Value);
@@ -53,11 +53,11 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             };
         }
 
-        internal AppStoreClient.PatchAppScreenshotSetsAppScreenshotsRequest CreateUpdateRequest()
+        internal AppStoreClient.AppScreenshotSetAppScreenshotsLinkagesRequest CreateUpdateRequest()
         {
             return new()
             {
-                data = screenshots.Select(a => new AppStoreClient.PatchAppScreenshotSetsAppScreenshotsRequest.Data
+                data = screenshots.Select(a => new AppStoreClient.AppScreenshotSetAppScreenshotsLinkagesRequest.Data
                 {
                     id = a.id
                 }).ToArray(),

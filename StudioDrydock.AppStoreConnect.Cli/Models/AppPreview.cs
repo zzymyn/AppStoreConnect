@@ -19,7 +19,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         {
         }
 
-        public AppPreview(AppStoreClient.AppPreviewsResponse.Data data)
+        public AppPreview(AppStoreClient.AppPreview data)
         {
             this.id = data.id;
             this.fileSize = data.attributes.fileSize.Value;
@@ -28,7 +28,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.previewFrameTimeCode = data.attributes.previewFrameTimeCode;
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppPreviewResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppPreview data)
         {
             this.id = data.id;
             this.fileSize = data.attributes.fileSize.Value;

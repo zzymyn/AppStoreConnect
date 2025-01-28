@@ -18,7 +18,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public AppVersionLocalization()
         { }
 
-        public AppVersionLocalization(AppStoreClient.AppStoreVersionLocalizationsResponse.Data data)
+        public AppVersionLocalization(AppStoreClient.AppStoreVersionLocalization data)
         {
             this.id = data.id;
             this.locale = data.attributes.locale;
@@ -30,7 +30,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.whatsNew = data.attributes.whatsNew;
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppStoreVersionLocalizationResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppStoreVersionLocalization data)
         {
             this.id = data.id;
             this.locale = data.attributes.locale;

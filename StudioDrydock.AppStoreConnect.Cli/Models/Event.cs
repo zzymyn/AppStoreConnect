@@ -9,7 +9,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public Badge badge { get; set; }
         public EventState eventState { get; set; }
         public string deepLink { get; set; }
-        public PurchaseRequirement purchaseRequirement { get; set; }
+        public string purchaseRequirement { get; set; }
         public string primaryLocale { get; set; }
         public Priority priority { get; set; }
         public Purpose purpose { get; set; }
@@ -19,14 +19,14 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public Event()
         { }
 
-        public Event(AppStoreClient.AppEventsResponse.Data data)
+        public Event(AppStoreClient.AppEvent data)
         {
             this.id = data.id;
             this.referenceName = data.attributes.referenceName;
             this.badge = EnumExtensions<Badge>.Convert(data.attributes.badge.Value);
             this.eventState = EnumExtensions<EventState>.Convert(data.attributes.eventState.Value);
             this.deepLink = data.attributes.deepLink;
-            this.purchaseRequirement = EnumExtensions<PurchaseRequirement>.Convert(data.attributes.purchaseRequirement.Value);
+            this.purchaseRequirement = data.attributes.purchaseRequirement;
             this.primaryLocale = data.attributes.primaryLocale;
             this.priority = EnumExtensions<Priority>.Convert(data.attributes.priority.Value);
             this.purpose = EnumExtensions<Purpose>.Convert(data.attributes.purpose.Value);
@@ -39,14 +39,14 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             }).ToArray();
         }
 
-        internal void UpdateWithResponse(AppStoreClient.AppEventResponse.Data data)
+        internal void UpdateWithResponse(AppStoreClient.AppEvent data)
         {
             this.id = data.id;
             this.referenceName = data.attributes.referenceName;
             this.badge = EnumExtensions<Badge>.Convert(data.attributes.badge.Value);
             this.eventState = EnumExtensions<EventState>.Convert(data.attributes.eventState.Value);
             this.deepLink = data.attributes.deepLink;
-            this.purchaseRequirement = EnumExtensions<PurchaseRequirement>.Convert(data.attributes.purchaseRequirement.Value);
+            this.purchaseRequirement = data.attributes.purchaseRequirement;
             this.primaryLocale = data.attributes.primaryLocale;
             this.priority = EnumExtensions<Priority>.Convert(data.attributes.priority.Value);
             this.purpose = EnumExtensions<Purpose>.Convert(data.attributes.purpose.Value);
@@ -70,7 +70,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
                         referenceName = this.referenceName,
                         badge = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Badge>.Convert(this.badge),
                         deepLink = this.deepLink,
-                        purchaseRequirement = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.PurchaseRequirement>.Convert(this.purchaseRequirement),
+                        purchaseRequirement = this.purchaseRequirement,
                         primaryLocale = this.primaryLocale,
                         priority = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Priority>.Convert(this.priority),
                         purpose = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Purpose>.Convert(this.purpose),
@@ -108,7 +108,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
                         referenceName = this.referenceName,
                         badge = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Badge>.Convert(this.badge),
                         deepLink = this.deepLink,
-                        purchaseRequirement = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.PurchaseRequirement>.Convert(this.purchaseRequirement),
+                        purchaseRequirement = this.purchaseRequirement,
                         primaryLocale = this.primaryLocale,
                         priority = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Priority>.Convert(this.priority),
                         purpose = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Purpose>.Convert(this.purpose),

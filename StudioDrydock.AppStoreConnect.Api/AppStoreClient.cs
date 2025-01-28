@@ -171,7 +171,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         public interface IHasNextLink
         {
-            INextLink links { get; }
+            PagedDocumentLinks links { get; }
         }
 
         public interface INextLink
