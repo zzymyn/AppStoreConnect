@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 using StudioDrydock.AppStoreConnect.Api;
@@ -100,6 +101,13 @@ setEventsCommand.AddOption(inputOption);
 setEventsCommand.AddOption(outputOption);
 setEventsCommand.SetHandler(SetAppEvents);
 rootCommand.AddCommand(setEventsCommand);
+
+// get-game-center --appId=xxx
+var getGameCenterCommand = new Command("get-game-center", "Get information about specific app Game Center");
+getGameCenterCommand.AddOption(appIdOption);
+getGameCenterCommand.AddOption(outputOption);
+getGameCenterCommand.SetHandler(GetGameCenter);
+rootCommand.AddCommand(getGameCenterCommand);
 
 await rootCommand.InvokeAsync(args);
 
@@ -682,6 +690,147 @@ async Task SetAppEvents(InvocationContext context)
     {
         Output(context, events);
     }
+}
+
+// get-game-center
+async Task GetGameCenter(InvocationContext context)
+{
+    var api = CreateClient(context);
+    var appId = context.ParseResult.GetValueForOption(appIdOption);
+
+    var detail = await api.Apps_gameCenterDetail_getToOneRelated(appId);
+    var gameCenterDetail = new GameCenterDetail(detail.data);
+
+    var group = await api.GameCenterDetails_gameCenterGroup_getToOneRelated(detail.data.id);
+    GameCenterGroup gameCenterGroup = null;
+    var gameCenterAchievements = new List<GameCenterAchievement>();
+    var gameCenterLeaderboards = new List<GameCenterLeaderboard>();
+
+    // is this the best way of handling groups?
+    if (group.data == null)
+    {
+        var achievements = await api.GameCenterDetails_gameCenterAchievements_getToManyRelated(detail.data.id);
+        gameCenterAchievements.AddRange(achievements.data.Select(x => new GameCenterAchievement(x)));
+
+        while (achievements.links.next != null)
+        {
+            achievements = await api.GetNextPage(achievements);
+            gameCenterAchievements.AddRange(achievements.data.Select(x => new GameCenterAchievement(x)));
+        }
+
+        var leaderboards = await api.GameCenterDetails_gameCenterLeaderboards_getToManyRelated(detail.data.id);
+        gameCenterLeaderboards.AddRange(leaderboards.data.Select(x => new GameCenterLeaderboard(x)));
+
+        while (leaderboards.links.next != null)
+        {
+            leaderboards = await api.GetNextPage(leaderboards);
+            gameCenterLeaderboards.AddRange(leaderboards.data.Select(x => new GameCenterLeaderboard(x)));
+        }
+    }
+    else
+    {
+        gameCenterGroup = new(group.data);
+
+        var achievements = await api.GameCenterGroups_gameCenterAchievements_getToManyRelated(group.data.id);
+        gameCenterAchievements.AddRange(achievements.data.Select(x => new GameCenterAchievement(x)));
+
+        while (achievements.links.next != null)
+        {
+            achievements = await api.GetNextPage(achievements);
+            gameCenterAchievements.AddRange(achievements.data.Select(x => new GameCenterAchievement(x)));
+        }
+
+        var leaderboards = await api.GameCenterGroups_gameCenterLeaderboards_getToManyRelated(group.data.id);
+        gameCenterLeaderboards.AddRange(leaderboards.data.Select(x => new GameCenterLeaderboard(x)));
+
+        while (leaderboards.links.next != null)
+        {
+            leaderboards = await api.GetNextPage(leaderboards);
+            gameCenterLeaderboards.AddRange(leaderboards.data.Select(x => new GameCenterLeaderboard(x)));
+        }
+    }
+
+    foreach (var a in gameCenterAchievements)
+    {
+        var aLocalizations = new List<GameCenterAchievementLocalization>();
+
+        var localizationResponse = await api.GameCenterAchievements_localizations_getToManyRelated(a.id, include: new[] { AppStoreClient.GameCenterAchievements_localizations_getToManyRelatedInclude.gameCenterAchievementImage });
+        AddGameCenterAchievementLocalizations(aLocalizations, localizationResponse);
+
+        while (localizationResponse.links.next != null)
+        {
+            localizationResponse = await api.GetNextPage(localizationResponse);
+            AddGameCenterAchievementLocalizations(aLocalizations, localizationResponse);
+        }
+
+        a.localizations = aLocalizations.OrderBy(a => a.locale).ToArray();
+    }
+
+    foreach (var lb in gameCenterLeaderboards)
+    {
+        var lbLocalizations = new List<GameCenterLeaderboardLocalization>();
+        var localizationResponse = await api.GameCenterLeaderboards_localizations_getToManyRelated(lb.id);
+        lbLocalizations.AddRange(localizationResponse.data.Select(x => new GameCenterLeaderboardLocalization(x)));
+
+        while (localizationResponse.links.next != null)
+        {
+            localizationResponse = await api.GetNextPage(localizationResponse);
+            lbLocalizations.AddRange(localizationResponse.data.Select(x => new GameCenterLeaderboardLocalization(x)));
+        }
+
+        lb.localizations = lbLocalizations.OrderBy(a => a.locale).ToArray();
+
+        foreach (var lbl in lb.localizations)
+        {
+            var image = await api.GameCenterLeaderboardLocalizations_gameCenterLeaderboardImage_getToOneRelated(lbl.id);
+            if (image.data != null)
+            {
+                var gameCenterLeaderboardImage = new GameCenterLeaderboardImage(image.data);
+                lbl.image = gameCenterLeaderboardImage;
+            }
+        }
+    }
+
+    Output(context, new GameCenter()
+    {
+        gameCenterDetail = gameCenterDetail,
+        gameCenterGroup = gameCenterGroup,
+        gameCenterAchievements = gameCenterAchievements.ToArray(),
+        gameCenterLeaderboards = gameCenterLeaderboards.ToArray(),
+    });
+
+}
+
+static void AddGameCenterAchievementLocalizations(List<GameCenterAchievementLocalization> list, AppStoreClient.GameCenterAchievementLocalizationsResponse resp)
+{
+    foreach (var data in resp.data)
+    {
+        var gameCenterAchievementLocalization = new GameCenterAchievementLocalization(data);
+
+        list.Add(gameCenterAchievementLocalization);
+
+        if (data?.relationships?.gameCenterAchievementImage?.data != null)
+        {
+            var image = FindIncluded<AppStoreClient.GameCenterAchievementImage>(resp.included, data.relationships.gameCenterAchievementImage.data.id);
+            if (image != null)
+            {
+                gameCenterAchievementLocalization.image = new GameCenterAchievementImage(image);
+            }
+        }
+    }
+}
+
+static T FindIncluded<T>(object[] included, string id)
+{
+    foreach (var obj in included)
+    {
+        if (obj is JsonElement je && je.ValueKind == JsonValueKind.Object && je.GetProperty("id").GetString() == id)
+        {
+            return JsonSerializer.Deserialize<T>(je);
+        }
+    }
+
+    return default;
 }
 
 static async Task UploadFile(AppStoreClient api, FileInfo fi, IReadOnlyList<AppStoreClient.UploadOperation> ops)

@@ -187,4 +187,66 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         BRING_BACK_LAPSED_USERS,
     }
 
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum DefaultFormatter
+    {
+        INTEGER,
+        DECIMAL_POINT_1_PLACE,
+        DECIMAL_POINT_2_PLACE,
+        DECIMAL_POINT_3_PLACE,
+        ELAPSED_TIME_MILLISECOND,
+        ELAPSED_TIME_CENTISECOND,
+        ELAPSED_TIME_MINUTE,
+        ELAPSED_TIME_SECOND,
+        MONEY_POUND_DECIMAL,
+        MONEY_POUND,
+        MONEY_DOLLAR_DECIMAL,
+        MONEY_DOLLAR,
+        MONEY_EURO_DECIMAL,
+        MONEY_EURO,
+        MONEY_FRANC_DECIMAL,
+        MONEY_FRANC,
+        MONEY_KRONER_DECIMAL,
+        MONEY_KRONER,
+        MONEY_YEN,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum SubmissionType
+    {
+        BEST_SCORE,
+        MOST_RECENT_SCORE,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum ScoreSortType
+    {
+        ASC,
+        DESC,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum FormatterOverride
+    {
+        INTEGER,
+        DECIMAL_POINT_1_PLACE,
+        DECIMAL_POINT_2_PLACE,
+        DECIMAL_POINT_3_PLACE,
+        ELAPSED_TIME_MILLISECOND,
+        ELAPSED_TIME_CENTISECOND,
+        ELAPSED_TIME_MINUTE,
+        ELAPSED_TIME_SECOND,
+        MONEY_POUND_DECIMAL,
+        MONEY_POUND,
+        MONEY_DOLLAR_DECIMAL,
+        MONEY_DOLLAR,
+        MONEY_EURO_DECIMAL,
+        MONEY_EURO,
+        MONEY_FRANC_DECIMAL,
+        MONEY_FRANC,
+        MONEY_KRONER_DECIMAL,
+        MONEY_KRONER,
+        MONEY_YEN,
+    }
+
 }
