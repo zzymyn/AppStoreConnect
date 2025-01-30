@@ -16,6 +16,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public bool? showBeforeEarned { get; set; }
         public bool? repeatable { get; set; }
         public bool? archived { get; set; }
+        public bool? live { get; set; }
         public GameCenterAchievementLocalization[] localizations { get; set; }
 
         public GameCenterAchievement(AppStoreClient.GameCenterAchievement data)

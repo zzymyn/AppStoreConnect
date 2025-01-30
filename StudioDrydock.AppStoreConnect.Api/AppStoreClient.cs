@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -34,6 +35,16 @@ namespace StudioDrydock.AppStoreConnect.Api
             uploadClient = new HttpClient();
         }
 
+        public AppStoreClient(TextReader privateKey, string keyId)
+        {
+            string token = CreateTokenAndSign(privateKey, keyId, null, "appstoreconnect-v1");
+
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            uploadClient = new HttpClient();
+        }
+
         // https://github.com/dersia/AppStoreConnect/blob/main/src/AppStoreConnect.Jwt/KeyUtils.cs
         static void GetPrivateKey(TextReader reader, ECDsa ecDSA)
         {
@@ -49,7 +60,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // https://github.com/dersia/AppStoreConnect/blob/main/src/AppStoreConnect.Jwt/KeyUtils.cs
-        string CreateTokenAndSign(TextReader reader, string kid, string issuer, string audience, TimeSpan timeout = default)
+        string CreateTokenAndSign(TextReader reader, string kid, string? issuer, string audience, TimeSpan timeout = default)
         {
             if (timeout == default)
             {
@@ -67,14 +78,25 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var descriptor = new SecurityTokenDescriptor
             {
-                Issuer = issuer,
                 Audience = audience,
                 Expires = DateTime.UtcNow.Add(timeout),
                 TokenType = "JWT",
                 SigningCredentials = credentials
             };
 
-            var handler = new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler();
+            if (issuer != null)
+            {
+                descriptor.Issuer = issuer;
+            }
+            else
+            {
+                descriptor.Claims = new Dictionary<string, object>()
+                {
+                    { "sub", "user" },
+				};
+			}
+
+			var handler = new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler();
             var encodedToken = handler.CreateToken(descriptor);
             return encodedToken;
         }

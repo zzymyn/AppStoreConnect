@@ -2,9 +2,10 @@
 {
     public class GameCenter
     {
-        public GameCenterDetail gameCenterDetail { get; set; }
-        public GameCenterGroup gameCenterGroup { get; set; }
-        public GameCenterAchievement[] gameCenterAchievements { get; set; }
-        public GameCenterLeaderboard[] gameCenterLeaderboards { get; set; }
+        public GameCenterDetail detail { get; set; }
+        public GameCenterGroup group { get; set; }
+        public GameCenterAchievement[] achievements { get; set; }
+        public GameCenterLeaderboard[] leaderboards { get; set; }
+        public GameCenterLeaderboardSet[] leaderboardSets { get; set; }
     }
 }

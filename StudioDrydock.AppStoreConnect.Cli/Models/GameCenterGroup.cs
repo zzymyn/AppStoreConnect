@@ -7,7 +7,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string id { get; set; }
         public string referenceName { get; set; }
 
-        public GameCenterGroup(AppStoreClient.GameCenterGroup data)
+		public GameCenterGroup(AppStoreClient.GameCenterGroup data)
         {
             this.id = data.id;
             this.referenceName = data.attributes.referenceName;
