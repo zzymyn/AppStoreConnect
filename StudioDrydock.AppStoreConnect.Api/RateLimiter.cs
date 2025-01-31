@@ -67,7 +67,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 				}
 
 				// TODO: don't just spin here, use a semaphore or something
-				await Task.Delay(1000);
+				await Task.Delay(200);
 			}
 		}
 

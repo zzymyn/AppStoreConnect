@@ -834,8 +834,7 @@ internal static class Program
 					// need limit: 200 because this endpoint doesn't paginate (boo):
 					var achievements = await api.GameCenterGroups_gameCenterAchievements_getToManyRelated(
 						group.data.id,
-						limit: 200,
-						include: new[] { AppStoreClient.GameCenterGroups_gameCenterAchievements_getToManyRelatedInclude.localizations });
+						limit: 200);
 					AddGameCenterAchievements(gameCenterAchievements, achievements, achievementReleasesMap);
 				}),
 				Task.Run(async () =>
@@ -874,17 +873,17 @@ internal static class Program
 					// find achievements:
 					// need limit: 200 because this endpoint doesn't paginate (boo):
 					var achievements = await api.GameCenterDetails_gameCenterAchievements_getToManyRelated(
-					detail.data.id,
-					limit: 200);
+						detail.data.id,
+						limit: 200);
 					AddGameCenterAchievements(gameCenterAchievements, achievements, achievementReleasesMap);
 				}),
 				Task.Run(async () =>
 				{
 					// find leaderboards:
 					var leaderboards = await api.GameCenterDetails_gameCenterLeaderboards_getToManyRelated(
-					detail.data.id,
-					include: new[] { AppStoreClient.GameCenterDetails_gameCenterLeaderboards_getToManyRelatedInclude.gameCenterLeaderboardSets },
-					fieldsGameCenterLeaderboardSets: Array.Empty<AppStoreClient.GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets>());
+						detail.data.id,
+						include: new[] { AppStoreClient.GameCenterDetails_gameCenterLeaderboards_getToManyRelatedInclude.gameCenterLeaderboardSets },
+						fieldsGameCenterLeaderboardSets: Array.Empty<AppStoreClient.GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets>());
 					AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
 
 					while (leaderboards.links.next != null)
@@ -898,8 +897,8 @@ internal static class Program
 					// find leaderboard sets:
 					// need limit: 200 because this endpoint doesn't paginate (boo):
 					var leaderboardSets = await api.GameCenterDetails_gameCenterLeaderboardSets_getToManyRelated(
-					detail.data.id,
-					limit: 200);
+						detail.data.id,
+						limit: 200);
 					AddGameCenterLeaderboardSets(gameCenterLeaderboardSets, leaderboardSets, leaderboardSetReleasesMap);
 				})
 			);
