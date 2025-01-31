@@ -10,6 +10,9 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
 		public bool? live { get; set; }
 		public GameCenterLeaderboardSetLocalization[] localizations { get; set; }
 
+		public GameCenterLeaderboardSet()
+		{ }
+
 		public GameCenterLeaderboardSet(AppStoreClient.GameCenterLeaderboardSet data)
 		{
 			this.id = data.id;
@@ -37,13 +40,6 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
 					},
 					relationships = new()
 					{
-						gameCenterDetail = new()
-						{
-							data = new()
-							{
-								id = detailId,
-							}
-						},
 					},
 				},
 			};
@@ -54,6 +50,16 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
 					data = new()
 					{
 						id = groupId,
+					}
+				};
+			}
+			else
+			{
+				req.data.relationships.gameCenterDetail = new()
+				{
+					data = new()
+					{
+						id = detailId,
 					}
 				};
 			}

@@ -431,7 +431,7 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             cs.WriteLine($"string path = \"{path}\";");
             foreach (var param in pathItem.Parameters)
                 cs.WriteLine($"path = path.Replace(\"{{{param.Name}}}\", {param.Name.MakeValidIdentifier()}.ToString());");
-            cs.WriteLine($"var uriBuilder = new UriBuilder(baseUri, path);");
+            cs.WriteLine($"var uriBuilder = new UriBuilder(m_BaseUri, path);");
             foreach (var param in queryParameters)
             {
                 if (IsReferenceType(param.Schema))

@@ -22931,7 +22931,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<ActorsResponse> Actors_getCollection(string[] filterId, Actors_getCollectionFieldsActors[]? fieldsActors = default, int? limit = default)
         {
             string path = "/v1/actors";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterId != null)
                 uriBuilder.AddParameter("filter[id]", string.Join(",", filterId));
             if (fieldsActors != null)
@@ -22958,7 +22958,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/actors/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsActors != null)
                 uriBuilder.AddParameter("fields[actors]", string.Join(",", fieldsActors));
 
@@ -22971,7 +22971,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ageRatingDeclarations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -22990,7 +22990,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AlternativeDistributionDomainsResponse> AlternativeDistributionDomains_getCollection(AlternativeDistributionDomains_getCollectionFieldsAlternativeDistributionDomains[]? fieldsAlternativeDistributionDomains = default, int? limit = default)
         {
             string path = "/v1/alternativeDistributionDomains";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionDomains != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionDomains]", string.Join(",", fieldsAlternativeDistributionDomains));
             if (limit.HasValue)
@@ -23004,7 +23004,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AlternativeDistributionDomainResponse> AlternativeDistributionDomains_createInstance(AlternativeDistributionDomainCreateRequest request)
         {
             string path = "/v1/alternativeDistributionDomains";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23024,7 +23024,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionDomains/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionDomains != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionDomains]", string.Join(",", fieldsAlternativeDistributionDomains));
 
@@ -23037,7 +23037,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionDomains/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -23047,7 +23047,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AlternativeDistributionKeysResponse> AlternativeDistributionKeys_getCollection(bool? existsApp = default, string[]? fieldsAlternativeDistributionKeys = default, int? limit = default)
         {
             string path = "/v1/alternativeDistributionKeys";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (existsApp.HasValue)
                 uriBuilder.AddParameter("exists[app]", existsApp.Value.ToString());
             if (fieldsAlternativeDistributionKeys != null)
@@ -23063,7 +23063,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AlternativeDistributionKeyResponse> AlternativeDistributionKeys_createInstance(AlternativeDistributionKeyCreateRequest request)
         {
             string path = "/v1/alternativeDistributionKeys";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23075,7 +23075,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionKeys/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionKeys != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionKeys]", string.Join(",", fieldsAlternativeDistributionKeys));
 
@@ -23088,7 +23088,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionKeys/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -23108,7 +23108,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionPackageDeltas/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionPackageDeltas != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionPackageDeltas]", string.Join(",", fieldsAlternativeDistributionPackageDeltas));
 
@@ -23120,7 +23120,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AlternativeDistributionPackageResponse> AlternativeDistributionPackages_createInstance(AlternativeDistributionPackageCreateRequest request)
         {
             string path = "/v1/alternativeDistributionPackages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23145,7 +23145,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionPackages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionPackages != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionPackages]", string.Join(",", fieldsAlternativeDistributionPackages));
             if (fieldsAlternativeDistributionPackageVersions != null)
@@ -23210,7 +23210,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionPackages/{id}/versions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterState != null)
                 uriBuilder.AddParameter("filter[state]", string.Join(",", filterState));
             if (fieldsAlternativeDistributionPackageVersions != null)
@@ -23248,7 +23248,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionPackageVariants/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionPackageVariants != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionPackageVariants]", string.Join(",", fieldsAlternativeDistributionPackageVariants));
 
@@ -23300,7 +23300,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionPackageVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionPackageVersions != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionPackageVersions]", string.Join(",", fieldsAlternativeDistributionPackageVersions));
             if (fieldsAlternativeDistributionPackageVariants != null)
@@ -23332,7 +23332,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionPackageVersions/{id}/deltas";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionPackageDeltas != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionPackageDeltas]", string.Join(",", fieldsAlternativeDistributionPackageDeltas));
             if (limit.HasValue)
@@ -23356,7 +23356,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/alternativeDistributionPackageVersions/{id}/variants";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionPackageVariants != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionPackageVariants]", string.Join(",", fieldsAlternativeDistributionPackageVariants));
             if (limit.HasValue)
@@ -23379,7 +23379,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReportInstances/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAnalyticsReportInstances != null)
                 uriBuilder.AddParameter("fields[analyticsReportInstances]", string.Join(",", fieldsAnalyticsReportInstances));
 
@@ -23400,7 +23400,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReportInstances/{id}/segments";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAnalyticsReportSegments != null)
                 uriBuilder.AddParameter("fields[analyticsReportSegments]", string.Join(",", fieldsAnalyticsReportSegments));
             if (limit.HasValue)
@@ -23414,7 +23414,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AnalyticsReportRequestResponse> AnalyticsReportRequests_createInstance(AnalyticsReportRequestCreateRequest request)
         {
             string path = "/v1/analyticsReportRequests";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23442,7 +23442,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReportRequests/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAnalyticsReportRequests != null)
                 uriBuilder.AddParameter("fields[analyticsReportRequests]", string.Join(",", fieldsAnalyticsReportRequests));
             if (fieldsAnalyticsReports != null)
@@ -23461,7 +23461,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReportRequests/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -23490,7 +23490,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReportRequests/{id}/reports";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterName != null)
                 uriBuilder.AddParameter("filter[name]", string.Join(",", filterName));
             if (filterCategory != null)
@@ -23517,7 +23517,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReports/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAnalyticsReports != null)
                 uriBuilder.AddParameter("fields[analyticsReports]", string.Join(",", fieldsAnalyticsReports));
 
@@ -23546,7 +23546,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReports/{id}/instances";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterGranularity != null)
                 uriBuilder.AddParameter("filter[granularity]", string.Join(",", filterGranularity));
             if (filterProcessingDate != null)
@@ -23573,7 +23573,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/analyticsReportSegments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAnalyticsReportSegments != null)
                 uriBuilder.AddParameter("fields[analyticsReportSegments]", string.Join(",", fieldsAnalyticsReportSegments));
 
@@ -23609,7 +23609,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppCategoriesResponse> AppCategories_getCollection(AppCategories_getCollectionFilterPlatforms[]? filterPlatforms = default, bool? existsParent = default, AppCategories_getCollectionFieldsAppCategories[]? fieldsAppCategories = default, int? limit = default, AppCategories_getCollectionInclude[]? include = default, int? limitSubcategories = default)
         {
             string path = "/v1/appCategories";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatforms != null)
                 uriBuilder.AddParameter("filter[platforms]", string.Join(",", filterPlatforms));
             if (existsParent.HasValue)
@@ -23647,7 +23647,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCategories/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (include != null)
@@ -23672,7 +23672,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCategories/{id}/parent";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
 
@@ -23693,7 +23693,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCategories/{id}/subcategories";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (limit.HasValue)
@@ -23707,7 +23707,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppClipAdvancedExperienceImageResponse> AppClipAdvancedExperienceImages_createInstance(AppClipAdvancedExperienceImageCreateRequest request)
         {
             string path = "/v1/appClipAdvancedExperienceImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23730,7 +23730,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipAdvancedExperienceImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipAdvancedExperienceImages != null)
                 uriBuilder.AddParameter("fields[appClipAdvancedExperienceImages]", string.Join(",", fieldsAppClipAdvancedExperienceImages));
 
@@ -23743,7 +23743,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipAdvancedExperienceImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23754,7 +23754,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppClipAdvancedExperienceResponse> AppClipAdvancedExperiences_createInstance(AppClipAdvancedExperienceCreateRequest request)
         {
             string path = "/v1/appClipAdvancedExperiences";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23791,7 +23791,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipAdvancedExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipAdvancedExperiences != null)
                 uriBuilder.AddParameter("fields[appClipAdvancedExperiences]", string.Join(",", fieldsAppClipAdvancedExperiences));
             if (include != null)
@@ -23808,7 +23808,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipAdvancedExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23819,7 +23819,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppClipAppStoreReviewDetailResponse> AppClipAppStoreReviewDetails_createInstance(AppClipAppStoreReviewDetailCreateRequest request)
         {
             string path = "/v1/appClipAppStoreReviewDetails";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23838,7 +23838,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipAppStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipAppStoreReviewDetails != null)
                 uriBuilder.AddParameter("fields[appClipAppStoreReviewDetails]", string.Join(",", fieldsAppClipAppStoreReviewDetails));
             if (include != null)
@@ -23853,7 +23853,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipAppStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23864,7 +23864,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppClipDefaultExperienceLocalizationResponse> AppClipDefaultExperienceLocalizations_createInstance(AppClipDefaultExperienceLocalizationCreateRequest request)
         {
             string path = "/v1/appClipDefaultExperienceLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23904,7 +23904,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipDefaultExperienceLocalizations != null)
                 uriBuilder.AddParameter("fields[appClipDefaultExperienceLocalizations]", string.Join(",", fieldsAppClipDefaultExperienceLocalizations));
             if (fieldsAppClipHeaderImages != null)
@@ -23921,7 +23921,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -23933,7 +23933,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -23965,7 +23965,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}/appClipHeaderImage";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipHeaderImages != null)
                 uriBuilder.AddParameter("fields[appClipHeaderImages]", string.Join(",", fieldsAppClipHeaderImages));
             if (fieldsAppClipDefaultExperienceLocalizations != null)
@@ -23981,7 +23981,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppClipDefaultExperienceResponse> AppClipDefaultExperiences_createInstance(AppClipDefaultExperienceCreateRequest request)
         {
             string path = "/v1/appClipDefaultExperiences";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -24057,7 +24057,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipDefaultExperiences != null)
                 uriBuilder.AddParameter("fields[appClipDefaultExperiences]", string.Join(",", fieldsAppClipDefaultExperiences));
             if (fieldsAppStoreVersions != null)
@@ -24080,7 +24080,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -24092,7 +24092,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -24120,7 +24120,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}/appClipAppStoreReviewDetail";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipAppStoreReviewDetails != null)
                 uriBuilder.AddParameter("fields[appClipAppStoreReviewDetails]", string.Join(",", fieldsAppClipAppStoreReviewDetails));
             if (fieldsAppClipDefaultExperiences != null)
@@ -24175,7 +24175,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}/appClipDefaultExperienceLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLocale != null)
                 uriBuilder.AddParameter("filter[locale]", string.Join(",", filterLocale));
             if (fieldsAppClipDefaultExperienceLocalizations != null)
@@ -24198,7 +24198,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}/relationships/releaseWithAppStoreVersion";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync<AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageResponse>(message);
@@ -24220,7 +24220,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}/relationships/releaseWithAppStoreVersion";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -24466,7 +24466,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipDefaultExperiences/{id}/releaseWithAppStoreVersion";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersions != null)
                 uriBuilder.AddParameter("fields[appStoreVersions]", string.Join(",", fieldsAppStoreVersions));
             if (fieldsApps != null)
@@ -24508,7 +24508,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppClipHeaderImageResponse> AppClipHeaderImages_createInstance(AppClipHeaderImageCreateRequest request)
         {
             string path = "/v1/appClipHeaderImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -24532,7 +24532,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipHeaderImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipHeaderImages != null)
                 uriBuilder.AddParameter("fields[appClipHeaderImages]", string.Join(",", fieldsAppClipHeaderImages));
             if (include != null)
@@ -24547,7 +24547,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipHeaderImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -24559,7 +24559,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClipHeaderImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -24596,7 +24596,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClips/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClips != null)
                 uriBuilder.AddParameter("fields[appClips]", string.Join(",", fieldsAppClips));
             if (fieldsAppClipDefaultExperiences != null)
@@ -24692,7 +24692,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClips/{id}/appClipAdvancedExperiences";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterStatus != null)
                 uriBuilder.AddParameter("filter[status]", string.Join(",", filterStatus));
             if (filterPlaceStatus != null)
@@ -24796,7 +24796,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appClips/{id}/appClipDefaultExperiences";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (existsReleaseWithAppStoreVersion.HasValue)
                 uriBuilder.AddParameter("exists[releaseWithAppStoreVersion]", existsReleaseWithAppStoreVersion.Value.ToString());
             if (fieldsAppClipDefaultExperiences != null)
@@ -24824,7 +24824,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppCustomProductPageLocalizationResponse> AppCustomProductPageLocalizations_createInstance(AppCustomProductPageLocalizationCreateRequest request)
         {
             string path = "/v1/appCustomProductPageLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -24874,7 +24874,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCustomProductPageLocalizations != null)
                 uriBuilder.AddParameter("fields[appCustomProductPageLocalizations]", string.Join(",", fieldsAppCustomProductPageLocalizations));
             if (fieldsAppScreenshotSets != null)
@@ -24897,7 +24897,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -24909,7 +24909,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -25011,7 +25011,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}/appPreviewSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPreviewType != null)
                 uriBuilder.AddParameter("filter[previewType]", string.Join(",", filterPreviewType));
             if (filterAppStoreVersionLocalization != null)
@@ -25149,7 +25149,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}/appScreenshotSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterScreenshotDisplayType != null)
                 uriBuilder.AddParameter("filter[screenshotDisplayType]", string.Join(",", filterScreenshotDisplayType));
             if (filterAppStoreVersionLocalization != null)
@@ -25181,7 +25181,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppCustomProductPageResponse> AppCustomProductPages_createInstance(AppCustomProductPageCreateRequest request)
         {
             string path = "/v1/appCustomProductPages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25220,7 +25220,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCustomProductPages != null)
                 uriBuilder.AddParameter("fields[appCustomProductPages]", string.Join(",", fieldsAppCustomProductPages));
             if (fieldsAppCustomProductPageVersions != null)
@@ -25239,7 +25239,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25251,7 +25251,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -25312,7 +25312,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPages/{id}/appCustomProductPageVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterState != null)
                 uriBuilder.AddParameter("filter[state]", string.Join(",", filterState));
             if (fieldsAppCustomProductPageVersions != null)
@@ -25336,7 +25336,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppCustomProductPageVersionResponse> AppCustomProductPageVersions_createInstance(AppCustomProductPageVersionCreateRequest request)
         {
             string path = "/v1/appCustomProductPageVersions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25375,7 +25375,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCustomProductPageVersions != null)
                 uriBuilder.AddParameter("fields[appCustomProductPageVersions]", string.Join(",", fieldsAppCustomProductPageVersions));
             if (fieldsAppCustomProductPageLocalizations != null)
@@ -25394,7 +25394,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25454,7 +25454,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appCustomProductPageVersions/{id}/appCustomProductPageLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLocale != null)
                 uriBuilder.AddParameter("filter[locale]", string.Join(",", filterLocale));
             if (fieldsAppCustomProductPageLocalizations != null)
@@ -25482,7 +25482,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarationDocuments_createInstance(AppEncryptionDeclarationDocumentCreateRequest request)
         {
             string path = "/v1/appEncryptionDeclarationDocuments";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25506,7 +25506,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEncryptionDeclarationDocuments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEncryptionDeclarationDocuments != null)
                 uriBuilder.AddParameter("fields[appEncryptionDeclarationDocuments]", string.Join(",", fieldsAppEncryptionDeclarationDocuments));
 
@@ -25519,7 +25519,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEncryptionDeclarationDocuments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25581,7 +25581,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppEncryptionDeclarationsResponse> AppEncryptionDeclarations_getCollection(AppEncryptionDeclarations_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterApp = default, string[]? filterBuilds = default, AppEncryptionDeclarations_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, AppEncryptionDeclarations_getCollectionFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, int? limit = default, AppEncryptionDeclarations_getCollectionInclude[]? include = default, int? limitBuilds = default)
         {
             string path = "/v1/appEncryptionDeclarations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterApp != null)
@@ -25607,7 +25607,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppEncryptionDeclarationResponse> AppEncryptionDeclarations_createInstance(AppEncryptionDeclarationCreateRequest request)
         {
             string path = "/v1/appEncryptionDeclarations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25661,7 +25661,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEncryptionDeclarations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEncryptionDeclarations != null)
                 uriBuilder.AddParameter("fields[appEncryptionDeclarations]", string.Join(",", fieldsAppEncryptionDeclarations));
             if (fieldsAppEncryptionDeclarationDocuments != null)
@@ -25729,7 +25729,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEncryptionDeclarations/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -25754,7 +25754,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEncryptionDeclarations/{id}/appEncryptionDeclarationDocument";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEncryptionDeclarationDocuments != null)
                 uriBuilder.AddParameter("fields[appEncryptionDeclarationDocuments]", string.Join(",", fieldsAppEncryptionDeclarationDocuments));
 
@@ -25779,7 +25779,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEncryptionDeclarations/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25790,7 +25790,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppEventLocalizationResponse> AppEventLocalizations_createInstance(AppEventLocalizationCreateRequest request)
         {
             string path = "/v1/appEventLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25851,7 +25851,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEventLocalizations != null)
                 uriBuilder.AddParameter("fields[appEventLocalizations]", string.Join(",", fieldsAppEventLocalizations));
             if (fieldsAppEventScreenshots != null)
@@ -25874,7 +25874,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -25886,7 +25886,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -25922,7 +25922,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventLocalizations/{id}/appEventScreenshots";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEventScreenshots != null)
                 uriBuilder.AddParameter("fields[appEventScreenshots]", string.Join(",", fieldsAppEventScreenshots));
             if (fieldsAppEventLocalizations != null)
@@ -25969,7 +25969,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventLocalizations/{id}/appEventVideoClips";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEventVideoClips != null)
                 uriBuilder.AddParameter("fields[appEventVideoClips]", string.Join(",", fieldsAppEventVideoClips));
             if (fieldsAppEventLocalizations != null)
@@ -25987,7 +25987,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppEventResponse> AppEvents_createInstance(AppEventCreateRequest request)
         {
             string path = "/v1/appEvents";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26027,7 +26027,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEvents/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEvents != null)
                 uriBuilder.AddParameter("fields[appEvents]", string.Join(",", fieldsAppEvents));
             if (fieldsAppEventLocalizations != null)
@@ -26046,7 +26046,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEvents/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26058,7 +26058,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEvents/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -26134,7 +26134,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEvents/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEventLocalizations != null)
                 uriBuilder.AddParameter("fields[appEventLocalizations]", string.Join(",", fieldsAppEventLocalizations));
             if (fieldsAppEvents != null)
@@ -26160,7 +26160,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppEventScreenshotResponse> AppEventScreenshots_createInstance(AppEventScreenshotCreateRequest request)
         {
             string path = "/v1/appEventScreenshots";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26185,7 +26185,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEventScreenshots != null)
                 uriBuilder.AddParameter("fields[appEventScreenshots]", string.Join(",", fieldsAppEventScreenshots));
             if (include != null)
@@ -26200,7 +26200,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26212,7 +26212,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -26222,7 +26222,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppEventVideoClipResponse> AppEventVideoClips_createInstance(AppEventVideoClipCreateRequest request)
         {
             string path = "/v1/appEventVideoClips";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26250,7 +26250,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventVideoClips/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEventVideoClips != null)
                 uriBuilder.AddParameter("fields[appEventVideoClips]", string.Join(",", fieldsAppEventVideoClips));
             if (include != null)
@@ -26265,7 +26265,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventVideoClips/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26277,7 +26277,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appEventVideoClips/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -26287,7 +26287,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppInfoLocalizationResponse> AppInfoLocalizations_createInstance(AppInfoLocalizationCreateRequest request)
         {
             string path = "/v1/appInfoLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26311,7 +26311,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfoLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppInfoLocalizations != null)
                 uriBuilder.AddParameter("fields[appInfoLocalizations]", string.Join(",", fieldsAppInfoLocalizations));
             if (include != null)
@@ -26326,7 +26326,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfoLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26338,7 +26338,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfoLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -26431,7 +26431,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppInfos != null)
                 uriBuilder.AddParameter("fields[appInfos]", string.Join(",", fieldsAppInfos));
             if (fieldsAgeRatingDeclarations != null)
@@ -26454,7 +26454,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26491,7 +26491,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/ageRatingDeclaration";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAgeRatingDeclarations != null)
                 uriBuilder.AddParameter("fields[ageRatingDeclarations]", string.Join(",", fieldsAgeRatingDeclarations));
 
@@ -26539,7 +26539,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/appInfoLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLocale != null)
                 uriBuilder.AddParameter("filter[locale]", string.Join(",", filterLocale));
             if (fieldsAppInfoLocalizations != null)
@@ -26575,7 +26575,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/primaryCategory";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (include != null)
@@ -26607,7 +26607,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/primarySubcategoryOne";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (include != null)
@@ -26639,7 +26639,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/primarySubcategoryTwo";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (include != null)
@@ -26671,7 +26671,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/secondaryCategory";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (include != null)
@@ -26703,7 +26703,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/secondarySubcategoryOne";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (include != null)
@@ -26735,7 +26735,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appInfos/{id}/secondarySubcategoryTwo";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppCategories != null)
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
             if (include != null)
@@ -26751,7 +26751,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppPreviewResponse> AppPreviews_createInstance(AppPreviewCreateRequest request)
         {
             string path = "/v1/appPreviews";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26780,7 +26780,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviews/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppPreviews != null)
                 uriBuilder.AddParameter("fields[appPreviews]", string.Join(",", fieldsAppPreviews));
             if (include != null)
@@ -26795,7 +26795,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviews/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26807,7 +26807,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviews/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -26817,7 +26817,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppPreviewSetResponse> AppPreviewSets_createInstance(AppPreviewSetCreateRequest request)
         {
             string path = "/v1/appPreviewSets";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26865,7 +26865,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviewSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppPreviewSets != null)
                 uriBuilder.AddParameter("fields[appPreviewSets]", string.Join(",", fieldsAppPreviewSets));
             if (fieldsAppPreviews != null)
@@ -26884,7 +26884,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviewSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -26922,7 +26922,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviewSets/{id}/appPreviews";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppPreviews != null)
                 uriBuilder.AddParameter("fields[appPreviews]", string.Join(",", fieldsAppPreviews));
             if (fieldsAppPreviewSets != null)
@@ -26941,7 +26941,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviewSets/{id}/relationships/appPreviews";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -26965,7 +26965,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPreviewSets/{id}/relationships/appPreviews";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -26976,7 +26976,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppPriceScheduleResponse> AppPriceSchedules_createInstance(AppPriceScheduleCreateRequest request)
         {
             string path = "/v1/appPriceSchedules";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -27016,7 +27016,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPriceSchedules/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppPriceSchedules != null)
                 uriBuilder.AddParameter("fields[appPriceSchedules]", string.Join(",", fieldsAppPriceSchedules));
             if (fieldsTerritories != null)
@@ -27066,7 +27066,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPriceSchedules/{id}/automaticPrices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterStartDate != null)
                 uriBuilder.AddParameter("filter[startDate]", string.Join(",", filterStartDate));
             if (filterEndDate != null)
@@ -27093,7 +27093,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPriceSchedules/{id}/baseTerritory";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsTerritories != null)
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
 
@@ -27133,7 +27133,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appPriceSchedules/{id}/manualPrices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterStartDate != null)
                 uriBuilder.AddParameter("filter[startDate]", string.Join(",", filterStartDate));
             if (filterEndDate != null)
@@ -27642,7 +27642,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppsResponse> Apps_getCollection(string[]? filterName = default, string[]? filterBundleId = default, string[]? filterSku = default, Apps_getCollectionFilterAppStoreVersionsAppStoreState[]? filterAppStoreVersionsAppStoreState = default, Apps_getCollectionFilterAppStoreVersionsPlatform[]? filterAppStoreVersionsPlatform = default, Apps_getCollectionFilterAppStoreVersionsAppVersionState[]? filterAppStoreVersionsAppVersionState = default, Apps_getCollectionFilterReviewSubmissionsState[]? filterReviewSubmissionsState = default, Apps_getCollectionFilterReviewSubmissionsPlatform[]? filterReviewSubmissionsPlatform = default, string[]? filterAppStoreVersions = default, string[]? filterId = default, Apps_getCollectionSort[]? sort = default, Apps_getCollectionFieldsApps[]? fieldsApps = default, Apps_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Apps_getCollectionFieldsCiProducts[]? fieldsCiProducts = default, Apps_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, Apps_getCollectionFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Apps_getCollectionFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, Apps_getCollectionFieldsBuilds[]? fieldsBuilds = default, Apps_getCollectionFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, Apps_getCollectionFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, Apps_getCollectionFieldsAppInfos[]? fieldsAppInfos = default, Apps_getCollectionFieldsAppClips[]? fieldsAppClips = default, Apps_getCollectionFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, Apps_getCollectionFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_getCollectionFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, Apps_getCollectionFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, Apps_getCollectionFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_getCollectionFieldsAppEvents[]? fieldsAppEvents = default, Apps_getCollectionFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, Apps_getCollectionFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, Apps_getCollectionFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, Apps_getCollectionFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, int? limit = default, Apps_getCollectionInclude[]? include = default, int? limitAppClips = default, int? limitAppCustomProductPages = default, int? limitAppEncryptionDeclarations = default, int? limitAppEvents = default, int? limitAppInfos = default, int? limitAppStoreVersionExperimentsV2 = default, int? limitAppStoreVersions = default, int? limitBetaAppLocalizations = default, int? limitBetaGroups = default, int? limitBuilds = default, int? limitInAppPurchasesV2 = default, int? limitPreReleaseVersions = default, int? limitPromotedPurchases = default, int? limitReviewSubmissions = default, int? limitSubscriptionGroups = default)
         {
             string path = "/v1/apps";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterName != null)
                 uriBuilder.AddParameter("filter[name]", string.Join(",", filterName));
             if (filterBundleId != null)
@@ -28147,7 +28147,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
             if (fieldsAppEncryptionDeclarations != null)
@@ -28234,7 +28234,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -28246,7 +28246,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/alternativeDistributionKey";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionKeys != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionKeys]", string.Join(",", fieldsAlternativeDistributionKeys));
 
@@ -28282,7 +28282,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/analyticsReportRequests";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterAccessType != null)
                 uriBuilder.AddParameter("filter[accessType]", string.Join(",", filterAccessType));
             if (fieldsAnalyticsReportRequests != null)
@@ -28323,7 +28323,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appAvailabilityV2";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppAvailabilities != null)
                 uriBuilder.AddParameter("fields[appAvailabilities]", string.Join(",", fieldsAppAvailabilities));
             if (fieldsTerritoryAvailabilities != null)
@@ -28416,7 +28416,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appClips";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterBundleId != null)
                 uriBuilder.AddParameter("filter[bundleId]", string.Join(",", filterBundleId));
             if (fieldsAppClips != null)
@@ -28516,7 +28516,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appCustomProductPages";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterVisible != null)
                 uriBuilder.AddParameter("filter[visible]", string.Join(",", filterVisible));
             if (fieldsAppCustomProductPages != null)
@@ -28669,7 +28669,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appEncryptionDeclarations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterBuilds != null)
@@ -28741,7 +28741,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appEvents";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterEventState != null)
                 uriBuilder.AddParameter("filter[eventState]", string.Join(",", filterEventState));
             if (filterId != null)
@@ -28896,7 +28896,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appInfos";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppInfos != null)
                 uriBuilder.AddParameter("fields[appInfos]", string.Join(",", fieldsAppInfos));
             if (fieldsApps != null)
@@ -28988,7 +28988,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appPricePoints";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsAppPricePoints != null)
@@ -29087,7 +29087,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appPriceSchedule";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppPriceSchedules != null)
                 uriBuilder.AddParameter("fields[appPriceSchedules]", string.Join(",", fieldsAppPriceSchedules));
             if (fieldsApps != null)
@@ -29240,7 +29240,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appStoreVersionExperimentsV2";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterState != null)
                 uriBuilder.AddParameter("filter[state]", string.Join(",", filterState));
             if (fieldsAppStoreVersionExperiments != null)
@@ -29557,7 +29557,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/appStoreVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterVersionString != null)
@@ -29624,7 +29624,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/betaAppLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppLocalizations != null)
                 uriBuilder.AddParameter("fields[betaAppLocalizations]", string.Join(",", fieldsBetaAppLocalizations));
             if (limit.HasValue)
@@ -29653,7 +29653,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/betaAppReviewDetail";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppReviewDetails != null)
                 uriBuilder.AddParameter("fields[betaAppReviewDetails]", string.Join(",", fieldsBetaAppReviewDetails));
 
@@ -29685,7 +29685,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/betaGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaGroups != null)
                 uriBuilder.AddParameter("fields[betaGroups]", string.Join(",", fieldsBetaGroups));
             if (limit.HasValue)
@@ -29707,7 +29707,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/betaLicenseAgreement";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaLicenseAgreements != null)
                 uriBuilder.AddParameter("fields[betaLicenseAgreements]", string.Join(",", fieldsBetaLicenseAgreements));
 
@@ -29749,7 +29749,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
             if (limit.HasValue)
@@ -29860,7 +29860,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/ciProduct";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiProducts != null)
                 uriBuilder.AddParameter("fields[ciProducts]", string.Join(",", fieldsCiProducts));
             if (fieldsApps != null)
@@ -30152,7 +30152,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/customerReviews";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (filterRating != null)
@@ -30187,7 +30187,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/endUserLicenseAgreement";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsEndUserLicenseAgreements != null)
                 uriBuilder.AddParameter("fields[endUserLicenseAgreements]", string.Join(",", fieldsEndUserLicenseAgreements));
 
@@ -30375,7 +30375,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/gameCenterDetail";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterDetails != null)
                 uriBuilder.AddParameter("fields[gameCenterDetails]", string.Join(",", fieldsGameCenterDetails));
             if (fieldsApps != null)
@@ -30505,7 +30505,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/gameCenterEnabledVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterVersionString != null)
@@ -30615,7 +30615,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/inAppPurchases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterInAppPurchaseType != null)
                 uriBuilder.AddParameter("filter[inAppPurchaseType]", string.Join(",", filterInAppPurchaseType));
             if (filterCanBeSubmitted != null)
@@ -30783,7 +30783,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/inAppPurchasesV2";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterProductId != null)
                 uriBuilder.AddParameter("filter[productId]", string.Join(",", filterProductId));
             if (filterName != null)
@@ -30828,7 +30828,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/marketplaceSearchDetail";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsMarketplaceSearchDetails != null)
                 uriBuilder.AddParameter("fields[marketplaceSearchDetails]", string.Join(",", fieldsMarketplaceSearchDetails));
 
@@ -30850,7 +30850,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/metrics/betaTesterUsages";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (period.HasValue)
                 uriBuilder.AddParameter("period", period.Value.ToString());
             if (groupBy != null)
@@ -30881,7 +30881,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/perfPowerMetrics";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterMetricType != null)
@@ -30907,7 +30907,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/preReleaseVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPreReleaseVersions != null)
                 uriBuilder.AddParameter("fields[preReleaseVersions]", string.Join(",", fieldsPreReleaseVersions));
             if (limit.HasValue)
@@ -30999,7 +30999,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/promotedPurchases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPromotedPurchases != null)
                 uriBuilder.AddParameter("fields[promotedPurchases]", string.Join(",", fieldsPromotedPurchases));
             if (fieldsInAppPurchases != null)
@@ -31033,7 +31033,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31045,7 +31045,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/relationships/promotedPurchases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -31069,7 +31069,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/relationships/promotedPurchases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31223,7 +31223,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/reviewSubmissions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterState != null)
@@ -31263,7 +31263,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/subscriptionGracePeriod";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionGracePeriods != null)
                 uriBuilder.AddParameter("fields[subscriptionGracePeriods]", string.Join(",", fieldsSubscriptionGracePeriods));
 
@@ -31348,7 +31348,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/apps/{id}/subscriptionGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterSubscriptionsState != null)
@@ -31378,7 +31378,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppScreenshotResponse> AppScreenshots_createInstance(AppScreenshotCreateRequest request)
         {
             string path = "/v1/appScreenshots";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31404,7 +31404,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppScreenshots != null)
                 uriBuilder.AddParameter("fields[appScreenshots]", string.Join(",", fieldsAppScreenshots));
             if (include != null)
@@ -31419,7 +31419,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31431,7 +31431,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -31441,7 +31441,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppScreenshotSetResponse> AppScreenshotSets_createInstance(AppScreenshotSetCreateRequest request)
         {
             string path = "/v1/appScreenshotSets";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31486,7 +31486,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshotSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppScreenshotSets != null)
                 uriBuilder.AddParameter("fields[appScreenshotSets]", string.Join(",", fieldsAppScreenshotSets));
             if (fieldsAppScreenshots != null)
@@ -31505,7 +31505,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshotSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -31540,7 +31540,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshotSets/{id}/appScreenshots";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppScreenshots != null)
                 uriBuilder.AddParameter("fields[appScreenshots]", string.Join(",", fieldsAppScreenshots));
             if (fieldsAppScreenshotSets != null)
@@ -31559,7 +31559,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshotSets/{id}/relationships/appScreenshots";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -31583,7 +31583,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appScreenshotSets/{id}/relationships/appScreenshots";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31594,7 +31594,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreReviewAttachmentResponse> AppStoreReviewAttachments_createInstance(AppStoreReviewAttachmentCreateRequest request)
         {
             string path = "/v1/appStoreReviewAttachments";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31617,7 +31617,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreReviewAttachments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreReviewAttachments != null)
                 uriBuilder.AddParameter("fields[appStoreReviewAttachments]", string.Join(",", fieldsAppStoreReviewAttachments));
             if (include != null)
@@ -31632,7 +31632,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreReviewAttachments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31644,7 +31644,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreReviewAttachments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -31654,7 +31654,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreReviewDetailResponse> AppStoreReviewDetails_createInstance(AppStoreReviewDetailCreateRequest request)
         {
             string path = "/v1/appStoreReviewDetails";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31699,7 +31699,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreReviewDetails != null)
                 uriBuilder.AddParameter("fields[appStoreReviewDetails]", string.Join(",", fieldsAppStoreReviewDetails));
             if (fieldsAppStoreReviewAttachments != null)
@@ -31718,7 +31718,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31756,7 +31756,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreReviewDetails/{id}/appStoreReviewAttachments";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreReviewAttachments != null)
                 uriBuilder.AddParameter("fields[appStoreReviewAttachments]", string.Join(",", fieldsAppStoreReviewAttachments));
             if (fieldsAppStoreReviewDetails != null)
@@ -31775,7 +31775,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionExperimentResponse> AppStoreVersionExperiments_createInstance(AppStoreVersionExperimentCreateRequest request)
         {
             string path = "/v1/appStoreVersionExperiments";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31820,7 +31820,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionExperiments != null)
                 uriBuilder.AddParameter("fields[appStoreVersionExperiments]", string.Join(",", fieldsAppStoreVersionExperiments));
             if (fieldsAppStoreVersionExperimentTreatments != null)
@@ -31840,7 +31840,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31853,7 +31853,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -31911,7 +31911,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionExperimentTreatments != null)
                 uriBuilder.AddParameter("fields[appStoreVersionExperimentTreatments]", string.Join(",", fieldsAppStoreVersionExperimentTreatments));
             if (fieldsAppStoreVersionExperiments != null)
@@ -31933,7 +31933,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionExperimentTreatmentLocalizationResponse> AppStoreVersionExperimentTreatmentLocalizations_createInstance(AppStoreVersionExperimentTreatmentLocalizationCreateRequest request)
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -31982,7 +31982,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionExperimentTreatmentLocalizations != null)
                 uriBuilder.AddParameter("fields[appStoreVersionExperimentTreatmentLocalizations]", string.Join(",", fieldsAppStoreVersionExperimentTreatmentLocalizations));
             if (fieldsAppScreenshotSets != null)
@@ -32005,7 +32005,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -32107,7 +32107,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}/appPreviewSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPreviewType != null)
                 uriBuilder.AddParameter("filter[previewType]", string.Join(",", filterPreviewType));
             if (filterAppStoreVersionLocalization != null)
@@ -32245,7 +32245,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}/appScreenshotSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterScreenshotDisplayType != null)
                 uriBuilder.AddParameter("filter[screenshotDisplayType]", string.Join(",", filterScreenshotDisplayType));
             if (filterAppStoreVersionLocalization != null)
@@ -32277,7 +32277,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionExperimentTreatmentResponse> AppStoreVersionExperimentTreatments_createInstance(AppStoreVersionExperimentTreatmentCreateRequest request)
         {
             string path = "/v1/appStoreVersionExperimentTreatments";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32318,7 +32318,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionExperimentTreatments != null)
                 uriBuilder.AddParameter("fields[appStoreVersionExperimentTreatments]", string.Join(",", fieldsAppStoreVersionExperimentTreatments));
             if (fieldsAppStoreVersionExperimentTreatmentLocalizations != null)
@@ -32337,7 +32337,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32349,7 +32349,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -32409,7 +32409,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}/appStoreVersionExperimentTreatmentLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLocale != null)
                 uriBuilder.AddParameter("filter[locale]", string.Join(",", filterLocale));
             if (fieldsAppStoreVersionExperimentTreatmentLocalizations != null)
@@ -32437,7 +32437,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionLocalizationResponse> AppStoreVersionLocalizations_createInstance(AppStoreVersionLocalizationCreateRequest request)
         {
             string path = "/v1/appStoreVersionLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32492,7 +32492,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionLocalizations != null)
                 uriBuilder.AddParameter("fields[appStoreVersionLocalizations]", string.Join(",", fieldsAppStoreVersionLocalizations));
             if (fieldsAppScreenshotSets != null)
@@ -32515,7 +32515,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32527,7 +32527,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -32629,7 +32629,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionLocalizations/{id}/appPreviewSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPreviewType != null)
                 uriBuilder.AddParameter("filter[previewType]", string.Join(",", filterPreviewType));
             if (filterAppCustomProductPageLocalization != null)
@@ -32767,7 +32767,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionLocalizations/{id}/appScreenshotSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterScreenshotDisplayType != null)
                 uriBuilder.AddParameter("filter[screenshotDisplayType]", string.Join(",", filterScreenshotDisplayType));
             if (filterAppCustomProductPageLocalization != null)
@@ -32799,7 +32799,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionPhasedReleaseResponse> AppStoreVersionPhasedReleases_createInstance(AppStoreVersionPhasedReleaseCreateRequest request)
         {
             string path = "/v1/appStoreVersionPhasedReleases";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32811,7 +32811,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionPhasedReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32823,7 +32823,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionPhasedReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -32833,7 +32833,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionPromotionResponse> AppStoreVersionPromotions_createInstance(AppStoreVersionPromotionCreateRequest request)
         {
             string path = "/v1/appStoreVersionPromotions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32844,7 +32844,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionReleaseRequestResponse> AppStoreVersionReleaseRequests_createInstance(AppStoreVersionReleaseRequestCreateRequest request)
         {
             string path = "/v1/appStoreVersionReleaseRequests";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -32855,7 +32855,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionResponse> AppStoreVersions_createInstance(AppStoreVersionCreateRequest request)
         {
             string path = "/v1/appStoreVersions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -33028,7 +33028,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersions != null)
                 uriBuilder.AddParameter("fields[appStoreVersions]", string.Join(",", fieldsAppStoreVersions));
             if (fieldsAppStoreVersionLocalizations != null)
@@ -33065,7 +33065,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -33077,7 +33077,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -33114,7 +33114,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/ageRatingDeclaration";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAgeRatingDeclarations != null)
                 uriBuilder.AddParameter("fields[ageRatingDeclarations]", string.Join(",", fieldsAgeRatingDeclarations));
 
@@ -33140,7 +33140,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/alternativeDistributionPackage";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAlternativeDistributionPackages != null)
                 uriBuilder.AddParameter("fields[alternativeDistributionPackages]", string.Join(",", fieldsAlternativeDistributionPackages));
             if (fieldsAlternativeDistributionPackageVersions != null)
@@ -33232,7 +33232,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/appClipDefaultExperience";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipDefaultExperiences != null)
                 uriBuilder.AddParameter("fields[appClipDefaultExperiences]", string.Join(",", fieldsAppClipDefaultExperiences));
             if (fieldsAppClips != null)
@@ -33319,7 +33319,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/appStoreReviewDetail";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreReviewDetails != null)
                 uriBuilder.AddParameter("fields[appStoreReviewDetails]", string.Join(",", fieldsAppStoreReviewDetails));
             if (fieldsAppStoreVersions != null)
@@ -33416,7 +33416,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionExperiments";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterState != null)
                 uriBuilder.AddParameter("filter[state]", string.Join(",", filterState));
             if (fieldsAppStoreVersionExperiments != null)
@@ -33569,7 +33569,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionExperimentsV2";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterState != null)
                 uriBuilder.AddParameter("filter[state]", string.Join(",", filterState));
             if (fieldsAppStoreVersionExperiments != null)
@@ -33670,7 +33670,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLocale != null)
                 uriBuilder.AddParameter("filter[locale]", string.Join(",", filterLocale));
             if (fieldsAppStoreVersionLocalizations != null)
@@ -33708,7 +33708,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionPhasedRelease";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionPhasedReleases != null)
                 uriBuilder.AddParameter("fields[appStoreVersionPhasedReleases]", string.Join(",", fieldsAppStoreVersionPhasedReleases));
 
@@ -33751,7 +33751,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionSubmission";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionSubmissions != null)
                 uriBuilder.AddParameter("fields[appStoreVersionSubmissions]", string.Join(",", fieldsAppStoreVersionSubmissions));
             if (fieldsAppStoreVersions != null)
@@ -33797,7 +33797,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/build";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
@@ -34079,7 +34079,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/customerReviews";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (filterRating != null)
@@ -34150,7 +34150,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/gameCenterAppVersion";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAppVersions != null)
                 uriBuilder.AddParameter("fields[gameCenterAppVersions]", string.Join(",", fieldsGameCenterAppVersions));
             if (fieldsAppStoreVersions != null)
@@ -34169,7 +34169,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/relationships/appClipDefaultExperience";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync<AppStoreVersionAppClipDefaultExperienceLinkageResponse>(message);
@@ -34191,7 +34191,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/relationships/appClipDefaultExperience";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34203,7 +34203,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/relationships/build";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync<AppStoreVersionBuildLinkageResponse>(message);
@@ -34225,7 +34225,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/relationships/build";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34248,7 +34248,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersions/{id}/routingAppCoverage";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsRoutingAppCoverages != null)
                 uriBuilder.AddParameter("fields[routingAppCoverages]", string.Join(",", fieldsRoutingAppCoverages));
 
@@ -34261,7 +34261,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<AppStoreVersionSubmissionResponse> AppStoreVersionSubmissions_createInstance(AppStoreVersionSubmissionCreateRequest request)
         {
             string path = "/v1/appStoreVersionSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34274,7 +34274,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/appStoreVersionSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -34284,7 +34284,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaAppClipInvocationLocalizationResponse> BetaAppClipInvocationLocalizations_createInstance(BetaAppClipInvocationLocalizationCreateRequest request)
         {
             string path = "/v1/betaAppClipInvocationLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34296,7 +34296,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppClipInvocationLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34308,7 +34308,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppClipInvocationLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -34318,7 +34318,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaAppClipInvocationResponse> BetaAppClipInvocations_createInstance(BetaAppClipInvocationCreateRequest request)
         {
             string path = "/v1/betaAppClipInvocations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34337,7 +34337,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppClipInvocations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppClipInvocations != null)
                 uriBuilder.AddParameter("fields[betaAppClipInvocations]", string.Join(",", fieldsBetaAppClipInvocations));
             if (include != null)
@@ -34354,7 +34354,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppClipInvocations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34366,7 +34366,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppClipInvocations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -34436,7 +34436,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaAppLocalizationsResponse> BetaAppLocalizations_getCollection(string[]? filterLocale = default, string[]? filterApp = default, BetaAppLocalizations_getCollectionFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, BetaAppLocalizations_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default)
         {
             string path = "/v1/betaAppLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLocale != null)
                 uriBuilder.AddParameter("filter[locale]", string.Join(",", filterLocale));
             if (filterApp != null)
@@ -34458,7 +34458,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaAppLocalizationResponse> BetaAppLocalizations_createInstance(BetaAppLocalizationCreateRequest request)
         {
             string path = "/v1/betaAppLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34530,7 +34530,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppLocalizations != null)
                 uriBuilder.AddParameter("fields[betaAppLocalizations]", string.Join(",", fieldsBetaAppLocalizations));
             if (fieldsApps != null)
@@ -34547,7 +34547,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34559,7 +34559,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -34618,7 +34618,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppLocalizations/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -34692,7 +34692,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaAppReviewDetailsResponse> BetaAppReviewDetails_getCollection(string[] filterApp, BetaAppReviewDetails_getCollectionFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, BetaAppReviewDetails_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default)
         {
             string path = "/v1/betaAppReviewDetails";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterApp != null)
                 uriBuilder.AddParameter("filter[app]", string.Join(",", filterApp));
             if (fieldsBetaAppReviewDetails != null)
@@ -34775,7 +34775,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppReviewDetails != null)
                 uriBuilder.AddParameter("fields[betaAppReviewDetails]", string.Join(",", fieldsBetaAppReviewDetails));
             if (fieldsApps != null)
@@ -34792,7 +34792,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34852,7 +34852,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppReviewDetails/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -34910,7 +34910,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaAppReviewSubmissionsResponse> BetaAppReviewSubmissions_getCollection(string[] filterBuild, BetaAppReviewSubmissions_getCollectionFilterBetaReviewState[]? filterBetaReviewState = default, BetaAppReviewSubmissions_getCollectionFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, BetaAppReviewSubmissions_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default)
         {
             string path = "/v1/betaAppReviewSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterBuild != null)
                 uriBuilder.AddParameter("filter[build]", string.Join(",", filterBuild));
             if (filterBetaReviewState != null)
@@ -34932,7 +34932,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaAppReviewSubmissionResponse> BetaAppReviewSubmissions_createInstance(BetaAppReviewSubmissionCreateRequest request)
         {
             string path = "/v1/betaAppReviewSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -34981,7 +34981,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppReviewSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppReviewSubmissions != null)
                 uriBuilder.AddParameter("fields[betaAppReviewSubmissions]", string.Join(",", fieldsBetaAppReviewSubmissions));
             if (fieldsBuilds != null)
@@ -35027,7 +35027,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaAppReviewSubmissions/{id}/build";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
@@ -35076,7 +35076,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaBuildLocalizationsResponse> BetaBuildLocalizations_getCollection(string[]? filterLocale = default, string[]? filterBuild = default, BetaBuildLocalizations_getCollectionFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, BetaBuildLocalizations_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default)
         {
             string path = "/v1/betaBuildLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLocale != null)
                 uriBuilder.AddParameter("filter[locale]", string.Join(",", filterLocale));
             if (filterBuild != null)
@@ -35098,7 +35098,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaBuildLocalizationResponse> BetaBuildLocalizations_createInstance(BetaBuildLocalizationCreateRequest request)
         {
             string path = "/v1/betaBuildLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35147,7 +35147,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaBuildLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaBuildLocalizations != null)
                 uriBuilder.AddParameter("fields[betaBuildLocalizations]", string.Join(",", fieldsBetaBuildLocalizations));
             if (fieldsBuilds != null)
@@ -35164,7 +35164,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaBuildLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35176,7 +35176,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaBuildLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -35216,7 +35216,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaBuildLocalizations/{id}/build";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
@@ -35362,7 +35362,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaGroupsResponse> BetaGroups_getCollection(string[]? filterName = default, string[]? filterIsInternalGroup = default, string[]? filterPublicLinkEnabled = default, string[]? filterPublicLinkLimitEnabled = default, string[]? filterPublicLink = default, string[]? filterApp = default, string[]? filterBuilds = default, string[]? filterId = default, BetaGroups_getCollectionSort[]? sort = default, BetaGroups_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, BetaGroups_getCollectionFieldsApps[]? fieldsApps = default, BetaGroups_getCollectionFieldsBuilds[]? fieldsBuilds = default, BetaGroups_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, int? limit = default, BetaGroups_getCollectionInclude[]? include = default, int? limitBetaTesters = default, int? limitBuilds = default)
         {
             string path = "/v1/betaGroups";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterName != null)
                 uriBuilder.AddParameter("filter[name]", string.Join(",", filterName));
             if (filterIsInternalGroup != null)
@@ -35406,7 +35406,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaGroupResponse> BetaGroups_createInstance(BetaGroupCreateRequest request)
         {
             string path = "/v1/betaGroups";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35535,7 +35535,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaGroups != null)
                 uriBuilder.AddParameter("fields[betaGroups]", string.Join(",", fieldsBetaGroups));
             if (fieldsApps != null)
@@ -35560,7 +35560,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35572,7 +35572,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -35631,7 +35631,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -35657,7 +35657,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/betaTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaTesters != null)
                 uriBuilder.AddParameter("fields[betaTesters]", string.Join(",", fieldsBetaTesters));
             if (limit.HasValue)
@@ -35701,7 +35701,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
             if (limit.HasValue)
@@ -35725,7 +35725,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/metrics/betaTesterUsages";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (period.HasValue)
                 uriBuilder.AddParameter("period", period.Value.ToString());
             if (groupBy != null)
@@ -35744,7 +35744,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -35768,7 +35768,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35791,7 +35791,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35803,7 +35803,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -35827,7 +35827,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35850,7 +35850,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaGroups/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -35916,7 +35916,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaLicenseAgreementsResponse> BetaLicenseAgreements_getCollection(string[]? filterApp = default, BetaLicenseAgreements_getCollectionFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, BetaLicenseAgreements_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default)
         {
             string path = "/v1/betaLicenseAgreements";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterApp != null)
                 uriBuilder.AddParameter("filter[app]", string.Join(",", filterApp));
             if (fieldsBetaLicenseAgreements != null)
@@ -35992,7 +35992,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaLicenseAgreements != null)
                 uriBuilder.AddParameter("fields[betaLicenseAgreements]", string.Join(",", fieldsBetaLicenseAgreements));
             if (fieldsApps != null)
@@ -36009,7 +36009,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36069,7 +36069,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaLicenseAgreements/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -36081,7 +36081,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaTesterInvitationResponse> BetaTesterInvitations_createInstance(BetaTesterInvitationCreateRequest request)
         {
             string path = "/v1/betaTesterInvitations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36236,7 +36236,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaTestersResponse> BetaTesters_getCollection(string[]? filterFirstName = default, string[]? filterLastName = default, string[]? filterEmail = default, BetaTesters_getCollectionFilterInviteType[]? filterInviteType = default, string[]? filterApps = default, string[]? filterBetaGroups = default, string[]? filterBuilds = default, string[]? filterId = default, BetaTesters_getCollectionSort[]? sort = default, BetaTesters_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, BetaTesters_getCollectionFieldsApps[]? fieldsApps = default, BetaTesters_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, BetaTesters_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, BetaTesters_getCollectionInclude[]? include = default, int? limitApps = default, int? limitBetaGroups = default, int? limitBuilds = default)
         {
             string path = "/v1/betaTesters";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterFirstName != null)
                 uriBuilder.AddParameter("filter[firstName]", string.Join(",", filterFirstName));
             if (filterLastName != null)
@@ -36282,7 +36282,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BetaTesterResponse> BetaTesters_createInstance(BetaTesterCreateRequest request)
         {
             string path = "/v1/betaTesters";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36411,7 +36411,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaTesters != null)
                 uriBuilder.AddParameter("fields[betaTesters]", string.Join(",", fieldsBetaTesters));
             if (fieldsApps != null)
@@ -36438,7 +36438,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -36497,7 +36497,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/apps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
             if (limit.HasValue)
@@ -36531,7 +36531,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/betaGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaGroups != null)
                 uriBuilder.AddParameter("fields[betaGroups]", string.Join(",", fieldsBetaGroups));
             if (limit.HasValue)
@@ -36575,7 +36575,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
             if (limit.HasValue)
@@ -36599,7 +36599,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/metrics/betaTesterUsages";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterApps != null)
                 uriBuilder.AddParameter("filter[apps]", filterApps);
             if (period.HasValue)
@@ -36616,7 +36616,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/apps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -36640,7 +36640,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/apps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36652,7 +36652,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -36676,7 +36676,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36699,7 +36699,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36711,7 +36711,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -36735,7 +36735,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36758,7 +36758,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/betaTesters/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36807,7 +36807,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BuildBetaDetailsResponse> BuildBetaDetails_getCollection(string[]? filterBuild = default, string[]? filterId = default, BuildBetaDetails_getCollectionFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, BuildBetaDetails_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default)
         {
             string path = "/v1/buildBetaDetails";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterBuild != null)
                 uriBuilder.AddParameter("filter[build]", string.Join(",", filterBuild));
             if (filterId != null)
@@ -36868,7 +36868,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/buildBetaDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuildBetaDetails != null)
                 uriBuilder.AddParameter("fields[buildBetaDetails]", string.Join(",", fieldsBuildBetaDetails));
             if (fieldsBuilds != null)
@@ -36885,7 +36885,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/buildBetaDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36926,7 +36926,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/buildBetaDetails/{id}/build";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
@@ -36938,7 +36938,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BuildBetaNotificationResponse> BuildBetaNotifications_createInstance(BuildBetaNotificationCreateRequest request)
         {
             string path = "/v1/buildBetaNotifications";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -36957,7 +36957,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/buildBundles/{id}/appClipDomainCacheStatus";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipDomainStatuses != null)
                 uriBuilder.AddParameter("fields[appClipDomainStatuses]", string.Join(",", fieldsAppClipDomainStatuses));
 
@@ -36977,7 +36977,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/buildBundles/{id}/appClipDomainDebugStatus";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppClipDomainStatuses != null)
                 uriBuilder.AddParameter("fields[appClipDomainStatuses]", string.Join(",", fieldsAppClipDomainStatuses));
 
@@ -37004,7 +37004,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/buildBundles/{id}/betaAppClipInvocations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppClipInvocations != null)
                 uriBuilder.AddParameter("fields[betaAppClipInvocations]", string.Join(",", fieldsBetaAppClipInvocations));
             if (fieldsBetaAppClipInvocationLocalizations != null)
@@ -37034,7 +37034,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/buildBundles/{id}/buildBundleFileSizes";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuildBundleFileSizes != null)
                 uriBuilder.AddParameter("fields[buildBundleFileSizes]", string.Join(",", fieldsBuildBundleFileSizes));
             if (limit.HasValue)
@@ -37295,7 +37295,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BuildsResponse> Builds_getCollection(string[]? filterVersion = default, string[]? filterExpired = default, Builds_getCollectionFilterProcessingState[]? filterProcessingState = default, Builds_getCollectionFilterBetaAppReviewSubmissionBetaReviewState[]? filterBetaAppReviewSubmissionBetaReviewState = default, string[]? filterUsesNonExemptEncryption = default, string[]? filterPreReleaseVersionVersion = default, Builds_getCollectionFilterPreReleaseVersionPlatform[]? filterPreReleaseVersionPlatform = default, Builds_getCollectionFilterBuildAudienceType[]? filterBuildAudienceType = default, string[]? filterPreReleaseVersion = default, string[]? filterApp = default, string[]? filterBetaGroups = default, string[]? filterAppStoreVersion = default, string[]? filterId = default, Builds_getCollectionSort[]? sort = default, Builds_getCollectionFieldsBuilds[]? fieldsBuilds = default, Builds_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Builds_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, Builds_getCollectionFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, Builds_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Builds_getCollectionFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, Builds_getCollectionFieldsApps[]? fieldsApps = default, Builds_getCollectionFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, Builds_getCollectionFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Builds_getCollectionFieldsBuildIcons[]? fieldsBuildIcons = default, int? limit = default, Builds_getCollectionInclude[]? include = default, int? limitBetaBuildLocalizations = default, int? limitBetaGroups = default, int? limitBuildBundles = default, int? limitIcons = default, int? limitIndividualTesters = default)
         {
             string path = "/v1/builds";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterVersion != null)
                 uriBuilder.AddParameter("filter[version]", string.Join(",", filterVersion));
             if (filterExpired != null)
@@ -37567,7 +37567,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
             if (fieldsPreReleaseVersions != null)
@@ -37610,7 +37610,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -37670,7 +37670,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -37705,7 +37705,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/appEncryptionDeclaration";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppEncryptionDeclarations != null)
                 uriBuilder.AddParameter("fields[appEncryptionDeclarations]", string.Join(",", fieldsAppEncryptionDeclarations));
 
@@ -37952,7 +37952,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/appStoreVersion";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersions != null)
                 uriBuilder.AddParameter("fields[appStoreVersions]", string.Join(",", fieldsAppStoreVersions));
             if (fieldsApps != null)
@@ -38003,7 +38003,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/betaAppReviewSubmission";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaAppReviewSubmissions != null)
                 uriBuilder.AddParameter("fields[betaAppReviewSubmissions]", string.Join(",", fieldsBetaAppReviewSubmissions));
 
@@ -38024,7 +38024,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/betaBuildLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaBuildLocalizations != null)
                 uriBuilder.AddParameter("fields[betaBuildLocalizations]", string.Join(",", fieldsBetaBuildLocalizations));
             if (limit.HasValue)
@@ -38077,7 +38077,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/buildBetaDetail";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuildBetaDetails != null)
                 uriBuilder.AddParameter("fields[buildBetaDetails]", string.Join(",", fieldsBuildBetaDetails));
             if (fieldsBuilds != null)
@@ -38112,7 +38112,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/diagnosticSignatures";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterDiagnosticType != null)
                 uriBuilder.AddParameter("filter[diagnosticType]", string.Join(",", filterDiagnosticType));
             if (fieldsDiagnosticSignatures != null)
@@ -38137,7 +38137,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/icons";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuildIcons != null)
                 uriBuilder.AddParameter("fields[buildIcons]", string.Join(",", fieldsBuildIcons));
             if (limit.HasValue)
@@ -38165,7 +38165,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/individualTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBetaTesters != null)
                 uriBuilder.AddParameter("fields[betaTesters]", string.Join(",", fieldsBetaTesters));
             if (limit.HasValue)
@@ -38180,7 +38180,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/metrics/betaBuildUsages";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -38205,7 +38205,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/perfPowerMetrics";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterMetricType != null)
@@ -38231,7 +38231,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/preReleaseVersion";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPreReleaseVersions != null)
                 uriBuilder.AddParameter("fields[preReleaseVersions]", string.Join(",", fieldsPreReleaseVersions));
 
@@ -38244,7 +38244,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/relationships/appEncryptionDeclaration";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync<BuildAppEncryptionDeclarationLinkageResponse>(message);
@@ -38266,7 +38266,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/relationships/appEncryptionDeclaration";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38289,7 +38289,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38312,7 +38312,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38324,7 +38324,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/relationships/individualTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -38348,7 +38348,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/relationships/individualTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38371,7 +38371,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/builds/{id}/relationships/individualTesters";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38382,7 +38382,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BundleIdCapabilityResponse> BundleIdCapabilities_createInstance(BundleIdCapabilityCreateRequest request)
         {
             string path = "/v1/bundleIdCapabilities";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38394,7 +38394,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIdCapabilities/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38406,7 +38406,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIdCapabilities/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -38535,7 +38535,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BundleIdsResponse> BundleIds_getCollection(string[]? filterName = default, BundleIds_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterIdentifier = default, string[]? filterSeedId = default, string[]? filterId = default, BundleIds_getCollectionSort[]? sort = default, BundleIds_getCollectionFieldsBundleIds[]? fieldsBundleIds = default, BundleIds_getCollectionFieldsProfiles[]? fieldsProfiles = default, BundleIds_getCollectionFieldsBundleIdCapabilities[]? fieldsBundleIdCapabilities = default, BundleIds_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, BundleIds_getCollectionInclude[]? include = default, int? limitBundleIdCapabilities = default, int? limitProfiles = default)
         {
             string path = "/v1/bundleIds";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterName != null)
                 uriBuilder.AddParameter("filter[name]", string.Join(",", filterName));
             if (filterPlatform != null)
@@ -38573,7 +38573,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<BundleIdResponse> BundleIds_createInstance(BundleIdCreateRequest request)
         {
             string path = "/v1/bundleIds";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38676,7 +38676,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIds/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBundleIds != null)
                 uriBuilder.AddParameter("fields[bundleIds]", string.Join(",", fieldsBundleIds));
             if (fieldsProfiles != null)
@@ -38701,7 +38701,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIds/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38713,7 +38713,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIds/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -38772,7 +38772,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIds/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -38792,7 +38792,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIds/{id}/bundleIdCapabilities";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBundleIdCapabilities != null)
                 uriBuilder.AddParameter("fields[bundleIdCapabilities]", string.Join(",", fieldsBundleIdCapabilities));
             if (limit.HasValue)
@@ -38823,7 +38823,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/bundleIds/{id}/profiles";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsProfiles != null)
                 uriBuilder.AddParameter("fields[profiles]", string.Join(",", fieldsProfiles));
             if (limit.HasValue)
@@ -38884,7 +38884,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CertificatesResponse> Certificates_getCollection(string[]? filterDisplayName = default, Certificates_getCollectionFilterCertificateType[]? filterCertificateType = default, string[]? filterSerialNumber = default, string[]? filterId = default, Certificates_getCollectionSort[]? sort = default, Certificates_getCollectionFieldsCertificates[]? fieldsCertificates = default, int? limit = default)
         {
             string path = "/v1/certificates";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterDisplayName != null)
                 uriBuilder.AddParameter("filter[displayName]", string.Join(",", filterDisplayName));
             if (filterCertificateType != null)
@@ -38908,7 +38908,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CertificateResponse> Certificates_createInstance(CertificateCreateRequest request)
         {
             string path = "/v1/certificates";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -38932,7 +38932,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/certificates/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCertificates != null)
                 uriBuilder.AddParameter("fields[certificates]", string.Join(",", fieldsCertificates));
 
@@ -38945,7 +38945,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/certificates/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -38965,7 +38965,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciArtifacts/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiArtifacts != null)
                 uriBuilder.AddParameter("fields[ciArtifacts]", string.Join(",", fieldsCiArtifacts));
 
@@ -39019,7 +39019,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildActions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiBuildActions != null)
                 uriBuilder.AddParameter("fields[ciBuildActions]", string.Join(",", fieldsCiBuildActions));
             if (fieldsCiBuildRuns != null)
@@ -39045,7 +39045,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildActions/{id}/artifacts";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiArtifacts != null)
                 uriBuilder.AddParameter("fields[ciArtifacts]", string.Join(",", fieldsCiArtifacts));
             if (limit.HasValue)
@@ -39190,7 +39190,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildActions/{id}/buildRun";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiBuildRuns != null)
                 uriBuilder.AddParameter("fields[ciBuildRuns]", string.Join(",", fieldsCiBuildRuns));
             if (fieldsBuilds != null)
@@ -39226,7 +39226,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildActions/{id}/issues";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiIssues != null)
                 uriBuilder.AddParameter("fields[ciIssues]", string.Join(",", fieldsCiIssues));
             if (limit.HasValue)
@@ -39252,7 +39252,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildActions/{id}/testResults";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiTestResults != null)
                 uriBuilder.AddParameter("fields[ciTestResults]", string.Join(",", fieldsCiTestResults));
             if (limit.HasValue)
@@ -39266,7 +39266,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CiBuildRunResponse> CiBuildRuns_createInstance(CiBuildRunCreateRequest request)
         {
             string path = "/v1/ciBuildRuns";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -39342,7 +39342,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildRuns/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiBuildRuns != null)
                 uriBuilder.AddParameter("fields[ciBuildRuns]", string.Join(",", fieldsCiBuildRuns));
             if (fieldsBuilds != null)
@@ -39402,7 +39402,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildRuns/{id}/actions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiBuildActions != null)
                 uriBuilder.AddParameter("fields[ciBuildActions]", string.Join(",", fieldsCiBuildActions));
             if (fieldsCiBuildRuns != null)
@@ -39713,7 +39713,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciBuildRuns/{id}/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterVersion != null)
                 uriBuilder.AddParameter("filter[version]", string.Join(",", filterVersion));
             if (filterExpired != null)
@@ -39799,7 +39799,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciIssues/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiIssues != null)
                 uriBuilder.AddParameter("fields[ciIssues]", string.Join(",", fieldsCiIssues));
 
@@ -39828,7 +39828,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CiMacOsVersionsResponse> CiMacOsVersions_getCollection(CiMacOsVersions_getCollectionFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, CiMacOsVersions_getCollectionFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, int? limit = default, string[]? include = default, int? limitXcodeVersions = default)
         {
             string path = "/v1/ciMacOsVersions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiMacOsVersions != null)
                 uriBuilder.AddParameter("fields[ciMacOsVersions]", string.Join(",", fieldsCiMacOsVersions));
             if (fieldsCiXcodeVersions != null)
@@ -39866,7 +39866,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciMacOsVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiMacOsVersions != null)
                 uriBuilder.AddParameter("fields[ciMacOsVersions]", string.Join(",", fieldsCiMacOsVersions));
             if (fieldsCiXcodeVersions != null)
@@ -39902,7 +39902,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciMacOsVersions/{id}/xcodeVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiXcodeVersions != null)
                 uriBuilder.AddParameter("fields[ciXcodeVersions]", string.Join(",", fieldsCiXcodeVersions));
             if (fieldsCiMacOsVersions != null)
@@ -40013,7 +40013,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CiProductsResponse> CiProducts_getCollection(CiProducts_getCollectionFilterProductType[]? filterProductType = default, string[]? filterApp = default, CiProducts_getCollectionFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_getCollectionFieldsApps[]? fieldsApps = default, CiProducts_getCollectionFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, CiProducts_getCollectionInclude[]? include = default, int? limitPrimaryRepositories = default)
         {
             string path = "/v1/ciProducts";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterProductType != null)
                 uriBuilder.AddParameter("filter[productType]", string.Join(",", filterProductType));
             if (filterApp != null)
@@ -40124,7 +40124,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciProducts/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiProducts != null)
                 uriBuilder.AddParameter("fields[ciProducts]", string.Join(",", fieldsCiProducts));
             if (fieldsApps != null)
@@ -40145,7 +40145,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciProducts/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -40195,7 +40195,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciProducts/{id}/additionalRepositories";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterId != null)
                 uriBuilder.AddParameter("filter[id]", string.Join(",", filterId));
             if (fieldsScmRepositories != null)
@@ -40622,7 +40622,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciProducts/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
             if (fieldsAppEncryptionDeclarations != null)
@@ -40849,7 +40849,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciProducts/{id}/buildRuns";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterBuilds != null)
                 uriBuilder.AddParameter("filter[builds]", string.Join(",", filterBuilds));
             if (sort != null)
@@ -40921,7 +40921,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciProducts/{id}/primaryRepositories";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterId != null)
                 uriBuilder.AddParameter("filter[id]", string.Join(",", filterId));
             if (fieldsScmRepositories != null)
@@ -41023,7 +41023,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciProducts/{id}/workflows";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiWorkflows != null)
                 uriBuilder.AddParameter("fields[ciWorkflows]", string.Join(",", fieldsCiWorkflows));
             if (fieldsCiProducts != null)
@@ -41059,7 +41059,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciTestResults/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiTestResults != null)
                 uriBuilder.AddParameter("fields[ciTestResults]", string.Join(",", fieldsCiTestResults));
 
@@ -41071,7 +41071,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CiWorkflowResponse> CiWorkflows_createInstance(CiWorkflowCreateRequest request)
         {
             string path = "/v1/ciWorkflows";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41131,7 +41131,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciWorkflows/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiWorkflows != null)
                 uriBuilder.AddParameter("fields[ciWorkflows]", string.Join(",", fieldsCiWorkflows));
             if (fieldsScmRepositories != null)
@@ -41148,7 +41148,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciWorkflows/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41160,7 +41160,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciWorkflows/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -41309,7 +41309,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciWorkflows/{id}/buildRuns";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterBuilds != null)
                 uriBuilder.AddParameter("filter[builds]", string.Join(",", filterBuilds));
             if (sort != null)
@@ -41381,7 +41381,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciWorkflows/{id}/repository";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmRepositories != null)
                 uriBuilder.AddParameter("fields[scmRepositories]", string.Join(",", fieldsScmRepositories));
             if (fieldsScmProviders != null)
@@ -41416,7 +41416,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CiXcodeVersionsResponse> CiXcodeVersions_getCollection(CiXcodeVersions_getCollectionFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiXcodeVersions_getCollectionFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, int? limit = default, string[]? include = default, int? limitMacOsVersions = default)
         {
             string path = "/v1/ciXcodeVersions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiXcodeVersions != null)
                 uriBuilder.AddParameter("fields[ciXcodeVersions]", string.Join(",", fieldsCiXcodeVersions));
             if (fieldsCiMacOsVersions != null)
@@ -41454,7 +41454,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciXcodeVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiXcodeVersions != null)
                 uriBuilder.AddParameter("fields[ciXcodeVersions]", string.Join(",", fieldsCiXcodeVersions));
             if (fieldsCiMacOsVersions != null)
@@ -41490,7 +41490,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/ciXcodeVersions/{id}/macOsVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCiMacOsVersions != null)
                 uriBuilder.AddParameter("fields[ciMacOsVersions]", string.Join(",", fieldsCiMacOsVersions));
             if (fieldsCiXcodeVersions != null)
@@ -41510,7 +41510,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<CustomerReviewResponseV1Response> CustomerReviewResponses_createInstance(CustomerReviewResponseV1CreateRequest request)
         {
             string path = "/v1/customerReviewResponses";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41531,7 +41531,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/customerReviewResponses/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCustomerReviewResponses != null)
                 uriBuilder.AddParameter("fields[customerReviewResponses]", string.Join(",", fieldsCustomerReviewResponses));
             if (include != null)
@@ -41546,7 +41546,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/customerReviewResponses/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -41578,7 +41578,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/customerReviews/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCustomerReviews != null)
                 uriBuilder.AddParameter("fields[customerReviews]", string.Join(",", fieldsCustomerReviews));
             if (fieldsCustomerReviewResponses != null)
@@ -41616,7 +41616,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/customerReviews/{id}/response";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCustomerReviewResponses != null)
                 uriBuilder.AddParameter("fields[customerReviewResponses]", string.Join(",", fieldsCustomerReviewResponses));
             if (fieldsCustomerReviews != null)
@@ -41679,7 +41679,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<DevicesResponse> Devices_getCollection(string[]? filterName = default, Devices_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterUdid = default, Devices_getCollectionFilterStatus[]? filterStatus = default, string[]? filterId = default, Devices_getCollectionSort[]? sort = default, Devices_getCollectionFieldsDevices[]? fieldsDevices = default, int? limit = default)
         {
             string path = "/v1/devices";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterName != null)
                 uriBuilder.AddParameter("filter[name]", string.Join(",", filterName));
             if (filterPlatform != null)
@@ -41705,7 +41705,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<DeviceResponse> Devices_createInstance(DeviceCreateRequest request)
         {
             string path = "/v1/devices";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41729,7 +41729,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/devices/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsDevices != null)
                 uriBuilder.AddParameter("fields[devices]", string.Join(",", fieldsDevices));
 
@@ -41742,7 +41742,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/devices/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41754,7 +41754,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/diagnosticSignatures/{id}/logs";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -41766,7 +41766,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<EndAppAvailabilityPreOrderResponse> EndAppAvailabilityPreOrders_createInstance(EndAppAvailabilityPreOrderCreateRequest request)
         {
             string path = "/v1/endAppAvailabilityPreOrders";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41777,7 +41777,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<EndUserLicenseAgreementResponse> EndUserLicenseAgreements_createInstance(EndUserLicenseAgreementCreateRequest request)
         {
             string path = "/v1/endUserLicenseAgreements";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41804,7 +41804,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/endUserLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsEndUserLicenseAgreements != null)
                 uriBuilder.AddParameter("fields[endUserLicenseAgreements]", string.Join(",", fieldsEndUserLicenseAgreements));
             if (fieldsTerritories != null)
@@ -41823,7 +41823,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/endUserLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41835,7 +41835,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/endUserLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -41846,7 +41846,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/endUserLicenseAgreements/{id}/territories";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsTerritories != null)
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
             if (limit.HasValue)
@@ -41867,7 +41867,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task FinanceReports_getCollection(string[] filterVendorNumber, FinanceReports_getCollectionFilterReportType[] filterReportType, string[] filterRegionCode, string[] filterReportDate)
         {
             string path = "/v1/financeReports";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterVendorNumber != null)
                 uriBuilder.AddParameter("filter[vendorNumber]", string.Join(",", filterVendorNumber));
             if (filterReportType != null)
@@ -41885,7 +41885,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<GameCenterAchievementImageResponse> GameCenterAchievementImages_createInstance(GameCenterAchievementImageCreateRequest request)
         {
             string path = "/v1/gameCenterAchievementImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41908,7 +41908,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievementImages != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievementImages]", string.Join(",", fieldsGameCenterAchievementImages));
             if (include != null)
@@ -41923,7 +41923,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -41935,7 +41935,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -41945,7 +41945,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<GameCenterAchievementLocalizationResponse> GameCenterAchievementLocalizations_createInstance(GameCenterAchievementLocalizationCreateRequest request)
         {
             string path = "/v1/gameCenterAchievementLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42002,7 +42002,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievementLocalizations != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievementLocalizations]", string.Join(",", fieldsGameCenterAchievementLocalizations));
             if (fieldsGameCenterAchievements != null)
@@ -42021,7 +42021,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42033,7 +42033,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -42117,7 +42117,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievement";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievements != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievements]", string.Join(",", fieldsGameCenterAchievements));
             if (fieldsGameCenterDetails != null)
@@ -42166,7 +42166,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievementImage";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievementImages != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievementImages]", string.Join(",", fieldsGameCenterAchievementImages));
             if (fieldsGameCenterAchievementLocalizations != null)
@@ -42182,7 +42182,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<GameCenterAchievementReleaseResponse> GameCenterAchievementReleases_createInstance(GameCenterAchievementReleaseCreateRequest request)
         {
             string path = "/v1/gameCenterAchievementReleases";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42209,7 +42209,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievementReleases != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievementReleases]", string.Join(",", fieldsGameCenterAchievementReleases));
             if (include != null)
@@ -42224,7 +42224,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievementReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -42234,7 +42234,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<GameCenterAchievementResponse> GameCenterAchievements_createInstance(GameCenterAchievementCreateRequest request)
         {
             string path = "/v1/gameCenterAchievements";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42291,7 +42291,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievements != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievements]", string.Join(",", fieldsGameCenterAchievements));
             if (fieldsGameCenterAchievementLocalizations != null)
@@ -42314,7 +42314,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42326,7 +42326,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -42411,7 +42411,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}/groupAchievement";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievements != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievements]", string.Join(",", fieldsGameCenterAchievements));
             if (fieldsGameCenterDetails != null)
@@ -42483,7 +42483,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAchievementLocalizations != null)
                 uriBuilder.AddParameter("fields[gameCenterAchievementLocalizations]", string.Join(",", fieldsGameCenterAchievementLocalizations));
             if (fieldsGameCenterAchievements != null)
@@ -42505,7 +42505,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}/relationships/groupAchievement";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync<GameCenterAchievementGroupAchievementLinkageResponse>(message);
@@ -42528,7 +42528,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}/relationships/groupAchievement";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42589,7 +42589,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAchievements/{id}/releases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLive != null)
                 uriBuilder.AddParameter("filter[live]", string.Join(",", filterLive));
             if (filterGameCenterDetail != null)
@@ -42613,7 +42613,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<GameCenterAppVersionResponse> GameCenterAppVersions_createInstance(GameCenterAppVersionCreateRequest request)
         {
             string path = "/v1/gameCenterAppVersions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42669,7 +42669,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAppVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterAppVersions != null)
                 uriBuilder.AddParameter("fields[gameCenterAppVersions]", string.Join(",", fieldsGameCenterAppVersions));
             if (fieldsAppStoreVersions != null)
@@ -42688,7 +42688,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAppVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -42934,7 +42934,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAppVersions/{id}/appStoreVersion";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersions != null)
                 uriBuilder.AddParameter("fields[appStoreVersions]", string.Join(",", fieldsAppStoreVersions));
             if (fieldsApps != null)
@@ -43021,7 +43021,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAppVersions/{id}/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterEnabled != null)
                 uriBuilder.AddParameter("filter[enabled]", string.Join(",", filterEnabled));
             if (fieldsGameCenterAppVersions != null)
@@ -43044,7 +43044,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -43068,7 +43068,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -43091,7 +43091,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -43102,7 +43102,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         public Task<GameCenterDetailResponse> GameCenterDetails_createInstance(GameCenterDetailCreateRequest request)
         {
             string path = "/v1/gameCenterDetails";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -43241,7 +43241,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterDetails != null)
                 uriBuilder.AddParameter("fields[gameCenterDetails]", string.Join(",", fieldsGameCenterDetails));
             if (fieldsGameCenterAppVersions != null)
@@ -43286,7 +43286,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -43347,7 +43347,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/achievementReleases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLive != null)
                 uriBuilder.AddParameter("filter[live]", string.Join(",", filterLive));
             if (filterGameCenterAchievement != null)
@@ -43445,7 +43445,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterArchived != null)
@@ -43524,7 +43524,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterAppVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterEnabled != null)
                 uriBuilder.AddParameter("filter[enabled]", string.Join(",", filterEnabled));
             if (fieldsGameCenterAppVersions != null)
@@ -43635,7 +43635,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterGroup";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterGroups != null)
                 uriBuilder.AddParameter("fields[gameCenterGroups]", string.Join(",", fieldsGameCenterGroups));
             if (fieldsGameCenterDetails != null)
@@ -43760,7 +43760,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterArchived != null)
@@ -43890,7 +43890,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterId != null)
@@ -43982,7 +43982,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/leaderboardReleases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLive != null)
                 uriBuilder.AddParameter("filter[live]", string.Join(",", filterLive));
             if (filterGameCenterLeaderboard != null)
@@ -44053,7 +44053,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/leaderboardSetReleases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLive != null)
                 uriBuilder.AddParameter("filter[live]", string.Join(",", filterLive));
             if (filterGameCenterLeaderboardSet != null)
@@ -44111,7 +44111,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         {
             string path = "/v1/gameCenterDetails/{id}/metrics/classicMatchmakingRequests";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (groupBy != null)
                 uriBuilder.AddParameter("groupBy", string.Join(",", groupBy));
@@ -44164,7 +44164,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterDetails/{id}/metrics/ruleBasedMatchmakingRequests";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (groupBy != null)
                 uriBuilder.AddParameter("groupBy", string.Join(",", groupBy));
@@ -44184,7 +44184,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -44208,7 +44208,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44220,7 +44220,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -44244,7 +44244,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44256,7 +44256,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -44280,7 +44280,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44375,7 +44375,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterPlatform != null)
                 uriBuilder.AddParameter("filter[platform]", string.Join(",", filterPlatform));
             if (filterVersionString != null)
@@ -44405,7 +44405,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -44430,7 +44430,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44454,7 +44454,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44478,7 +44478,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44577,7 +44577,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterGroupsResponse> GameCenterGroups_getCollection(string[]? filterGameCenterDetails = default, GameCenterGroups_getCollectionFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_getCollectionFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_getCollectionFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_getCollectionFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_getCollectionFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, int? limit = default, GameCenterGroups_getCollectionInclude[]? include = default, int? limitGameCenterAchievements = default, int? limitGameCenterDetails = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterLeaderboards = default)
         {
             string path = "/v1/gameCenterGroups";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterGameCenterDetails != null)
                 uriBuilder.AddParameter("filter[gameCenterDetails]", string.Join(",", filterGameCenterDetails));
             if (fieldsGameCenterGroups != null)
@@ -44611,7 +44611,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterGroupResponse> GameCenterGroups_createInstance(GameCenterGroupCreateRequest request)
         {
             string path = "/v1/gameCenterGroups";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44711,7 +44711,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterGroups != null)
                 uriBuilder.AddParameter("fields[gameCenterGroups]", string.Join(",", fieldsGameCenterGroups));
             if (fieldsGameCenterDetails != null)
@@ -44742,7 +44742,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -44754,7 +44754,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -44838,7 +44838,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterArchived != null)
@@ -45048,7 +45048,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterDetails";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterGameCenterAppVersionsEnabled != null)
                 uriBuilder.AddParameter("filter[gameCenterAppVersions.enabled]", string.Join(",", filterGameCenterAppVersionsEnabled));
             if (fieldsGameCenterDetails != null)
@@ -45193,7 +45193,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterArchived != null)
@@ -45323,7 +45323,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterId != null)
@@ -45360,7 +45360,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -45384,7 +45384,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45396,7 +45396,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -45420,7 +45420,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45432,7 +45432,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -45456,7 +45456,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45467,7 +45467,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardEntrySubmissionResponse> GameCenterLeaderboardEntrySubmissions_createInstance(GameCenterLeaderboardEntrySubmissionCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardEntrySubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45478,7 +45478,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardImages_createInstance(GameCenterLeaderboardImageCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45501,7 +45501,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardImages != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardImages]", string.Join(",", fieldsGameCenterLeaderboardImages));
             if (include != null)
@@ -45516,7 +45516,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45528,7 +45528,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -45538,7 +45538,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardLocalizationResponse> GameCenterLeaderboardLocalizations_createInstance(GameCenterLeaderboardLocalizationCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45580,7 +45580,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardLocalizations != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardLocalizations]", string.Join(",", fieldsGameCenterLeaderboardLocalizations));
             if (fieldsGameCenterLeaderboardImages != null)
@@ -45597,7 +45597,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45609,7 +45609,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -45643,7 +45643,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}/gameCenterLeaderboardImage";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardImages != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardImages]", string.Join(",", fieldsGameCenterLeaderboardImages));
             if (fieldsGameCenterLeaderboardLocalizations != null)
@@ -45659,7 +45659,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardReleaseResponse> GameCenterLeaderboardReleases_createInstance(GameCenterLeaderboardReleaseCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardReleases";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45686,7 +45686,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardReleases != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardReleases]", string.Join(",", fieldsGameCenterLeaderboardReleases));
             if (include != null)
@@ -45701,7 +45701,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -45711,7 +45711,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_createInstance(GameCenterLeaderboardCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboards";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45776,7 +45776,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboards != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboards]", string.Join(",", fieldsGameCenterLeaderboards));
             if (fieldsGameCenterLeaderboardLocalizations != null)
@@ -45801,7 +45801,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -45813,7 +45813,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -45919,7 +45919,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}/groupLeaderboard";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboards != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboards]", string.Join(",", fieldsGameCenterLeaderboards));
             if (fieldsGameCenterDetails != null)
@@ -46002,7 +46002,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardLocalizations != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardLocalizations]", string.Join(",", fieldsGameCenterLeaderboardLocalizations));
             if (fieldsGameCenterLeaderboards != null)
@@ -46024,7 +46024,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}/relationships/groupLeaderboard";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync<GameCenterLeaderboardGroupLeaderboardLinkageResponse>(message);
@@ -46047,7 +46047,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}/relationships/groupLeaderboard";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46114,7 +46114,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboards/{id}/releases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLive != null)
                 uriBuilder.AddParameter("filter[live]", string.Join(",", filterLive));
             if (filterGameCenterDetail != null)
@@ -46138,7 +46138,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetImages_createInstance(GameCenterLeaderboardSetImageCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardSetImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46161,7 +46161,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSetImages != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSetImages]", string.Join(",", fieldsGameCenterLeaderboardSetImages));
             if (include != null)
@@ -46176,7 +46176,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46188,7 +46188,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -46198,7 +46198,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardSetLocalizationResponse> GameCenterLeaderboardSetLocalizations_createInstance(GameCenterLeaderboardSetLocalizationCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46237,7 +46237,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSetLocalizations != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSetLocalizations]", string.Join(",", fieldsGameCenterLeaderboardSetLocalizations));
             if (fieldsGameCenterLeaderboardSetImages != null)
@@ -46254,7 +46254,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46266,7 +46266,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -46297,7 +46297,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}/gameCenterLeaderboardSetImage";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSetImages != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSetImages]", string.Join(",", fieldsGameCenterLeaderboardSetImages));
             if (fieldsGameCenterLeaderboardSetLocalizations != null)
@@ -46364,7 +46364,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardSetMemberLocalizationsResponse> GameCenterLeaderboardSetMemberLocalizations_getCollection(string[] filterGameCenterLeaderboardSet, string[] filterGameCenterLeaderboard, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboardSetMemberLocalizations[]? fieldsGameCenterLeaderboardSetMemberLocalizations = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, int? limit = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionInclude[]? include = default)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterGameCenterLeaderboardSet != null)
                 uriBuilder.AddParameter("filter[gameCenterLeaderboardSet]", string.Join(",", filterGameCenterLeaderboardSet));
             if (filterGameCenterLeaderboard != null)
@@ -46388,7 +46388,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardSetMemberLocalizationResponse> GameCenterLeaderboardSetMemberLocalizations_createInstance(GameCenterLeaderboardSetMemberLocalizationCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46400,7 +46400,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46412,7 +46412,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -46517,7 +46517,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}/gameCenterLeaderboard";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboards != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboards]", string.Join(",", fieldsGameCenterLeaderboards));
             if (fieldsGameCenterDetails != null)
@@ -46639,7 +46639,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}/gameCenterLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSets != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSets]", string.Join(",", fieldsGameCenterLeaderboardSets));
             if (fieldsGameCenterDetails != null)
@@ -46669,7 +46669,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardSetReleaseResponse> GameCenterLeaderboardSetReleases_createInstance(GameCenterLeaderboardSetReleaseCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardSetReleases";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46696,7 +46696,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSetReleases != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSetReleases]", string.Join(",", fieldsGameCenterLeaderboardSetReleases));
             if (include != null)
@@ -46711,7 +46711,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSetReleases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -46721,7 +46721,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_createInstance(GameCenterLeaderboardSetCreateRequest request)
         {
             string path = "/v1/gameCenterLeaderboardSets";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46796,7 +46796,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSets != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSets]", string.Join(",", fieldsGameCenterLeaderboardSets));
             if (fieldsGameCenterLeaderboardSetLocalizations != null)
@@ -46823,7 +46823,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -46835,7 +46835,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -46940,7 +46940,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterReferenceName != null)
                 uriBuilder.AddParameter("filter[referenceName]", string.Join(",", filterReferenceName));
             if (filterArchived != null)
@@ -47071,7 +47071,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/groupLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSets != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSets]", string.Join(",", fieldsGameCenterLeaderboardSets));
             if (fieldsGameCenterDetails != null)
@@ -47142,7 +47142,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterLeaderboardSetLocalizations != null)
                 uriBuilder.AddParameter("fields[gameCenterLeaderboardSetLocalizations]", string.Join(",", fieldsGameCenterLeaderboardSetLocalizations));
             if (fieldsGameCenterLeaderboardSets != null)
@@ -47163,7 +47163,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -47187,7 +47187,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47210,7 +47210,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47233,7 +47233,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47246,7 +47246,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/groupLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync<GameCenterLeaderboardSetGroupLeaderboardSetLinkageResponse>(message);
@@ -47269,7 +47269,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/groupLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47327,7 +47327,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/releases";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterLive != null)
                 uriBuilder.AddParameter("filter[live]", string.Join(",", filterLive));
             if (filterGameCenterDetail != null)
@@ -47367,7 +47367,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterMatchmakingQueuesResponse> GameCenterMatchmakingQueues_getCollection(GameCenterMatchmakingQueues_getCollectionFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, int? limit = default, GameCenterMatchmakingQueues_getCollectionInclude[]? include = default)
         {
             string path = "/v1/gameCenterMatchmakingQueues";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterMatchmakingQueues != null)
                 uriBuilder.AddParameter("fields[gameCenterMatchmakingQueues]", string.Join(",", fieldsGameCenterMatchmakingQueues));
             if (limit.HasValue)
@@ -47383,7 +47383,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterMatchmakingQueueResponse> GameCenterMatchmakingQueues_createInstance(GameCenterMatchmakingQueueCreateRequest request)
         {
             string path = "/v1/gameCenterMatchmakingQueues";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47411,7 +47411,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterMatchmakingQueues != null)
                 uriBuilder.AddParameter("fields[gameCenterMatchmakingQueues]", string.Join(",", fieldsGameCenterMatchmakingQueues));
             if (include != null)
@@ -47426,7 +47426,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47438,7 +47438,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -47474,7 +47474,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/experimentMatchmakingQueueSizes";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (sort != null)
                 uriBuilder.AddParameter("sort", string.Join(",", sort));
@@ -47530,7 +47530,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/experimentMatchmakingRequests";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (groupBy != null)
                 uriBuilder.AddParameter("groupBy", string.Join(",", groupBy));
@@ -47577,7 +47577,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingQueueSizes";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (sort != null)
                 uriBuilder.AddParameter("sort", string.Join(",", sort));
@@ -47633,7 +47633,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingRequests";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (groupBy != null)
                 uriBuilder.AddParameter("groupBy", string.Join(",", groupBy));
@@ -47680,7 +47680,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingSessions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (sort != null)
                 uriBuilder.AddParameter("sort", string.Join(",", sort));
@@ -47695,7 +47695,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterMatchmakingRuleResponse> GameCenterMatchmakingRules_createInstance(GameCenterMatchmakingRuleCreateRequest request)
         {
             string path = "/v1/gameCenterMatchmakingRules";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47707,7 +47707,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47719,7 +47719,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -47753,7 +47753,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingBooleanRuleResults";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (groupBy != null)
                 uriBuilder.AddParameter("groupBy", string.Join(",", groupBy));
@@ -47800,7 +47800,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingNumberRuleResults";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (groupBy != null)
                 uriBuilder.AddParameter("groupBy", string.Join(",", groupBy));
@@ -47836,7 +47836,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingRuleErrors";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 uriBuilder.AddParameter("granularity", granularity.ToString());
             if (groupBy != null)
                 uriBuilder.AddParameter("groupBy", string.Join(",", groupBy));
@@ -47902,7 +47902,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterMatchmakingRuleSetsResponse> GameCenterMatchmakingRuleSets_getCollection(GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingRuleSets[]? fieldsGameCenterMatchmakingRuleSets = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingTeams[]? fieldsGameCenterMatchmakingTeams = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingRules[]? fieldsGameCenterMatchmakingRules = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, int? limit = default, GameCenterMatchmakingRuleSets_getCollectionInclude[]? include = default, int? limitMatchmakingQueues = default, int? limitRules = default, int? limitTeams = default)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterMatchmakingRuleSets != null)
                 uriBuilder.AddParameter("fields[gameCenterMatchmakingRuleSets]", string.Join(",", fieldsGameCenterMatchmakingRuleSets));
             if (fieldsGameCenterMatchmakingTeams != null)
@@ -47930,7 +47930,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterMatchmakingRuleSetResponse> GameCenterMatchmakingRuleSets_createInstance(GameCenterMatchmakingRuleSetCreateRequest request)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -47989,7 +47989,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterMatchmakingRuleSets != null)
                 uriBuilder.AddParameter("fields[gameCenterMatchmakingRuleSets]", string.Join(",", fieldsGameCenterMatchmakingRuleSets));
             if (fieldsGameCenterMatchmakingTeams != null)
@@ -48016,7 +48016,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48028,7 +48028,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48067,7 +48067,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}/matchmakingQueues";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterMatchmakingQueues != null)
                 uriBuilder.AddParameter("fields[gameCenterMatchmakingQueues]", string.Join(",", fieldsGameCenterMatchmakingQueues));
             if (fieldsGameCenterMatchmakingRuleSets != null)
@@ -48096,7 +48096,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}/rules";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterMatchmakingRules != null)
                 uriBuilder.AddParameter("fields[gameCenterMatchmakingRules]", string.Join(",", fieldsGameCenterMatchmakingRules));
             if (limit.HasValue)
@@ -48119,7 +48119,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}/teams";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsGameCenterMatchmakingTeams != null)
                 uriBuilder.AddParameter("fields[gameCenterMatchmakingTeams]", string.Join(",", fieldsGameCenterMatchmakingTeams));
             if (limit.HasValue)
@@ -48133,7 +48133,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterMatchmakingRuleSetTestResponse> GameCenterMatchmakingRuleSetTests_createInstance(GameCenterMatchmakingRuleSetTestCreateRequest request)
         {
             string path = "/v1/gameCenterMatchmakingRuleSetTests";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48144,7 +48144,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterMatchmakingTeamResponse> GameCenterMatchmakingTeams_createInstance(GameCenterMatchmakingTeamCreateRequest request)
         {
             string path = "/v1/gameCenterMatchmakingTeams";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48156,7 +48156,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingTeams/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48168,7 +48168,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/gameCenterMatchmakingTeams/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48178,7 +48178,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<GameCenterPlayerAchievementSubmissionResponse> GameCenterPlayerAchievementSubmissions_createInstance(GameCenterPlayerAchievementSubmissionCreateRequest request)
         {
             string path = "/v1/gameCenterPlayerAchievementSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48189,7 +48189,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchaseAppStoreReviewScreenshots_createInstance(InAppPurchaseAppStoreReviewScreenshotCreateRequest request)
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48215,7 +48215,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseAppStoreReviewScreenshots != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseAppStoreReviewScreenshots]", string.Join(",", fieldsInAppPurchaseAppStoreReviewScreenshots));
             if (include != null)
@@ -48230,7 +48230,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48242,7 +48242,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48252,7 +48252,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<InAppPurchaseAvailabilityResponse> InAppPurchaseAvailabilities_createInstance(InAppPurchaseAvailabilityCreateRequest request)
         {
             string path = "/v1/inAppPurchaseAvailabilities";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48271,7 +48271,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseAvailabilities != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseAvailabilities]", string.Join(",", fieldsInAppPurchaseAvailabilities));
             if (fieldsTerritories != null)
@@ -48290,7 +48290,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseAvailabilities/{id}/availableTerritories";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsTerritories != null)
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
             if (limit.HasValue)
@@ -48315,7 +48315,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseContents/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseContents != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseContents]", string.Join(",", fieldsInAppPurchaseContents));
             if (include != null)
@@ -48329,7 +48329,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<InAppPurchaseImageResponse> InAppPurchaseImages_createInstance(InAppPurchaseImageCreateRequest request)
         {
             string path = "/v1/inAppPurchaseImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48354,7 +48354,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseImages != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseImages]", string.Join(",", fieldsInAppPurchaseImages));
             if (include != null)
@@ -48369,7 +48369,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48381,7 +48381,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48391,7 +48391,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<InAppPurchaseLocalizationResponse> InAppPurchaseLocalizations_createInstance(InAppPurchaseLocalizationCreateRequest request)
         {
             string path = "/v1/inAppPurchaseLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48413,7 +48413,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseLocalizations != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseLocalizations]", string.Join(",", fieldsInAppPurchaseLocalizations));
             if (include != null)
@@ -48428,7 +48428,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48440,7 +48440,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchaseLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48460,7 +48460,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchasePricePoints/{id}/equalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (filterInAppPurchaseV2 != null)
@@ -48482,7 +48482,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<InAppPurchasePriceScheduleResponse> InAppPurchasePriceSchedules_createInstance(InAppPurchasePriceScheduleCreateRequest request)
         {
             string path = "/v1/inAppPurchasePriceSchedules";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48520,7 +48520,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchasePriceSchedules != null)
                 uriBuilder.AddParameter("fields[inAppPurchasePriceSchedules]", string.Join(",", fieldsInAppPurchasePriceSchedules));
             if (fieldsTerritories != null)
@@ -48569,7 +48569,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}/automaticPrices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsInAppPurchasePrices != null)
@@ -48592,7 +48592,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}/baseTerritory";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsTerritories != null)
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
 
@@ -48631,7 +48631,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}/manualPrices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsInAppPurchasePrices != null)
@@ -48665,7 +48665,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchases != null)
                 uriBuilder.AddParameter("fields[inAppPurchases]", string.Join(",", fieldsInAppPurchases));
             if (include != null)
@@ -48681,7 +48681,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<InAppPurchaseSubmissionResponse> InAppPurchaseSubmissions_createInstance(InAppPurchaseSubmissionCreateRequest request)
         {
             string path = "/v1/inAppPurchaseSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48701,7 +48701,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<MarketplaceDomainsResponse> MarketplaceDomains_getCollection(MarketplaceDomains_getCollectionFieldsMarketplaceDomains[]? fieldsMarketplaceDomains = default, int? limit = default)
         {
             string path = "/v1/marketplaceDomains";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsMarketplaceDomains != null)
                 uriBuilder.AddParameter("fields[marketplaceDomains]", string.Join(",", fieldsMarketplaceDomains));
             if (limit.HasValue)
@@ -48716,7 +48716,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<MarketplaceDomainResponse> MarketplaceDomains_createInstance(MarketplaceDomainCreateRequest request)
         {
             string path = "/v1/marketplaceDomains";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48737,7 +48737,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/marketplaceDomains/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsMarketplaceDomains != null)
                 uriBuilder.AddParameter("fields[marketplaceDomains]", string.Join(",", fieldsMarketplaceDomains));
 
@@ -48751,7 +48751,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/marketplaceDomains/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48761,7 +48761,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<MarketplaceSearchDetailResponse> MarketplaceSearchDetails_createInstance(MarketplaceSearchDetailCreateRequest request)
         {
             string path = "/v1/marketplaceSearchDetails";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48773,7 +48773,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/marketplaceSearchDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48785,7 +48785,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/marketplaceSearchDetails/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48795,7 +48795,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<MarketplaceWebhooksResponse> MarketplaceWebhooks_getCollection(string[]? fieldsMarketplaceWebhooks = default, int? limit = default)
         {
             string path = "/v1/marketplaceWebhooks";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsMarketplaceWebhooks != null)
                 uriBuilder.AddParameter("fields[marketplaceWebhooks]", string.Join(",", fieldsMarketplaceWebhooks));
             if (limit.HasValue)
@@ -48809,7 +48809,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<MarketplaceWebhookResponse> MarketplaceWebhooks_createInstance(MarketplaceWebhookCreateRequest request)
         {
             string path = "/v1/marketplaceWebhooks";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48821,7 +48821,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/marketplaceWebhooks/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -48833,7 +48833,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/marketplaceWebhooks/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -48962,7 +48962,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<PreReleaseVersionsResponse> PreReleaseVersions_getCollection(string[]? filterBuildsExpired = default, PreReleaseVersions_getCollectionFilterBuildsProcessingState[]? filterBuildsProcessingState = default, string[]? filterBuildsVersion = default, PreReleaseVersions_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterVersion = default, string[]? filterApp = default, string[]? filterBuilds = default, PreReleaseVersions_getCollectionSort[]? sort = default, PreReleaseVersions_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, PreReleaseVersions_getCollectionFieldsBuilds[]? fieldsBuilds = default, PreReleaseVersions_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, PreReleaseVersions_getCollectionInclude[]? include = default, int? limitBuilds = default)
         {
             string path = "/v1/preReleaseVersions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterBuildsExpired != null)
                 uriBuilder.AddParameter("filter[builds.expired]", string.Join(",", filterBuildsExpired));
             if (filterBuildsProcessingState != null)
@@ -49094,7 +49094,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/preReleaseVersions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPreReleaseVersions != null)
                 uriBuilder.AddParameter("fields[preReleaseVersions]", string.Join(",", fieldsPreReleaseVersions));
             if (fieldsBuilds != null)
@@ -49163,7 +49163,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/preReleaseVersions/{id}/app";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
@@ -49205,7 +49205,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/preReleaseVersions/{id}/builds";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBuilds != null)
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
             if (limit.HasValue)
@@ -49322,7 +49322,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<ProfilesResponse> Profiles_getCollection(string[]? filterName = default, Profiles_getCollectionFilterProfileType[]? filterProfileType = default, Profiles_getCollectionFilterProfileState[]? filterProfileState = default, string[]? filterId = default, Profiles_getCollectionSort[]? sort = default, Profiles_getCollectionFieldsProfiles[]? fieldsProfiles = default, Profiles_getCollectionFieldsBundleIds[]? fieldsBundleIds = default, Profiles_getCollectionFieldsDevices[]? fieldsDevices = default, Profiles_getCollectionFieldsCertificates[]? fieldsCertificates = default, int? limit = default, Profiles_getCollectionInclude[]? include = default, int? limitCertificates = default, int? limitDevices = default)
         {
             string path = "/v1/profiles";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterName != null)
                 uriBuilder.AddParameter("filter[name]", string.Join(",", filterName));
             if (filterProfileType != null)
@@ -49358,7 +49358,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<ProfileResponse> Profiles_createInstance(ProfileCreateRequest request)
         {
             string path = "/v1/profiles";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49430,7 +49430,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/profiles/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsProfiles != null)
                 uriBuilder.AddParameter("fields[profiles]", string.Join(",", fieldsProfiles));
             if (fieldsBundleIds != null)
@@ -49455,7 +49455,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/profiles/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -49478,7 +49478,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/profiles/{id}/bundleId";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsBundleIds != null)
                 uriBuilder.AddParameter("fields[bundleIds]", string.Join(",", fieldsBundleIds));
 
@@ -49503,7 +49503,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/profiles/{id}/certificates";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsCertificates != null)
                 uriBuilder.AddParameter("fields[certificates]", string.Join(",", fieldsCertificates));
             if (limit.HasValue)
@@ -49530,7 +49530,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/profiles/{id}/devices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsDevices != null)
                 uriBuilder.AddParameter("fields[devices]", string.Join(",", fieldsDevices));
             if (limit.HasValue)
@@ -49545,7 +49545,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<PromotedPurchaseImageResponse> PromotedPurchaseImages_createInstance(PromotedPurchaseImageCreateRequest request)
         {
             string path = "/v1/promotedPurchaseImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49572,7 +49572,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/promotedPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPromotedPurchaseImages != null)
                 uriBuilder.AddParameter("fields[promotedPurchaseImages]", string.Join(",", fieldsPromotedPurchaseImages));
             if (include != null)
@@ -49588,7 +49588,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/promotedPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49601,7 +49601,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/promotedPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -49611,7 +49611,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<PromotedPurchaseResponse> PromotedPurchases_createInstance(PromotedPurchaseCreateRequest request)
         {
             string path = "/v1/promotedPurchases";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49642,7 +49642,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/promotedPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPromotedPurchases != null)
                 uriBuilder.AddParameter("fields[promotedPurchases]", string.Join(",", fieldsPromotedPurchases));
             if (include != null)
@@ -49657,7 +49657,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/promotedPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49669,7 +49669,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/promotedPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -49706,7 +49706,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/promotedPurchases/{id}/promotionImages";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPromotedPurchaseImages != null)
                 uriBuilder.AddParameter("fields[promotedPurchaseImages]", string.Join(",", fieldsPromotedPurchaseImages));
             if (fieldsPromotedPurchases != null)
@@ -49724,7 +49724,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<ReviewSubmissionItemResponse> ReviewSubmissionItems_createInstance(ReviewSubmissionItemCreateRequest request)
         {
             string path = "/v1/reviewSubmissionItems";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49736,7 +49736,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/reviewSubmissionItems/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49748,7 +49748,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/reviewSubmissionItems/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -49813,7 +49813,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<ReviewSubmissionsResponse> ReviewSubmissions_getCollection(string[] filterApp, ReviewSubmissions_getCollectionFilterPlatform[]? filterPlatform = default, ReviewSubmissions_getCollectionFilterState[]? filterState = default, ReviewSubmissions_getCollectionFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, ReviewSubmissions_getCollectionFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, int? limit = default, ReviewSubmissions_getCollectionInclude[]? include = default, int? limitItems = default)
         {
             string path = "/v1/reviewSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterApp != null)
                 uriBuilder.AddParameter("filter[app]", string.Join(",", filterApp));
             if (filterPlatform != null)
@@ -49839,7 +49839,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<ReviewSubmissionResponse> ReviewSubmissions_createInstance(ReviewSubmissionCreateRequest request)
         {
             string path = "/v1/reviewSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -49885,7 +49885,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/reviewSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsReviewSubmissions != null)
                 uriBuilder.AddParameter("fields[reviewSubmissions]", string.Join(",", fieldsReviewSubmissions));
             if (fieldsReviewSubmissionItems != null)
@@ -49904,7 +49904,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/reviewSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50009,7 +50009,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/reviewSubmissions/{id}/items";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsReviewSubmissionItems != null)
                 uriBuilder.AddParameter("fields[reviewSubmissionItems]", string.Join(",", fieldsReviewSubmissionItems));
             if (fieldsAppStoreVersions != null)
@@ -50033,7 +50033,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<RoutingAppCoverageResponse> RoutingAppCoverages_createInstance(RoutingAppCoverageCreateRequest request)
         {
             string path = "/v1/routingAppCoverages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50056,7 +50056,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/routingAppCoverages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsRoutingAppCoverages != null)
                 uriBuilder.AddParameter("fields[routingAppCoverages]", string.Join(",", fieldsRoutingAppCoverages));
             if (include != null)
@@ -50071,7 +50071,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/routingAppCoverages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50083,7 +50083,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/routingAppCoverages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -50127,7 +50127,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task SalesReports_getCollection(string[] filterVendorNumber, SalesReports_getCollectionFilterReportType[] filterReportType, SalesReports_getCollectionFilterReportSubType[] filterReportSubType, SalesReports_getCollectionFilterFrequency[] filterFrequency, string[]? filterReportDate = default, string[]? filterVersion = default)
         {
             string path = "/v1/salesReports";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterVendorNumber != null)
                 uriBuilder.AddParameter("filter[vendorNumber]", string.Join(",", filterVendorNumber));
             if (filterReportType != null)
@@ -50160,7 +50160,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/scmGitReferences/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmGitReferences != null)
                 uriBuilder.AddParameter("fields[scmGitReferences]", string.Join(",", fieldsScmGitReferences));
             if (include != null)
@@ -50182,7 +50182,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<ScmProvidersResponse> ScmProviders_getCollection(ScmProviders_getCollectionFieldsScmProviders[]? fieldsScmProviders = default, int? limit = default)
         {
             string path = "/v1/scmProviders";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmProviders != null)
                 uriBuilder.AddParameter("fields[scmProviders]", string.Join(",", fieldsScmProviders));
             if (limit.HasValue)
@@ -50205,7 +50205,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/scmProviders/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmProviders != null)
                 uriBuilder.AddParameter("fields[scmProviders]", string.Join(",", fieldsScmProviders));
 
@@ -50257,7 +50257,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/scmProviders/{id}/repositories";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterId != null)
                 uriBuilder.AddParameter("filter[id]", string.Join(",", filterId));
             if (fieldsScmRepositories != null)
@@ -50297,7 +50297,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/scmPullRequests/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmPullRequests != null)
                 uriBuilder.AddParameter("fields[scmPullRequests]", string.Join(",", fieldsScmPullRequests));
             if (include != null)
@@ -50332,7 +50332,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<ScmRepositoriesResponse> ScmRepositories_getCollection(string[]? filterId = default, ScmRepositories_getCollectionFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, ScmRepositories_getCollectionInclude[]? include = default)
         {
             string path = "/v1/scmRepositories";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterId != null)
                 uriBuilder.AddParameter("filter[id]", string.Join(",", filterId));
             if (fieldsScmRepositories != null)
@@ -50372,7 +50372,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/scmRepositories/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmRepositories != null)
                 uriBuilder.AddParameter("fields[scmRepositories]", string.Join(",", fieldsScmRepositories));
             if (include != null)
@@ -50411,7 +50411,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/scmRepositories/{id}/gitReferences";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmGitReferences != null)
                 uriBuilder.AddParameter("fields[scmGitReferences]", string.Join(",", fieldsScmGitReferences));
             if (fieldsScmRepositories != null)
@@ -50461,7 +50461,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/scmRepositories/{id}/pullRequests";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsScmPullRequests != null)
                 uriBuilder.AddParameter("fields[scmPullRequests]", string.Join(",", fieldsScmPullRequests));
             if (fieldsScmRepositories != null)
@@ -50479,7 +50479,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionAppStoreReviewScreenshotResponse> SubscriptionAppStoreReviewScreenshots_createInstance(SubscriptionAppStoreReviewScreenshotCreateRequest request)
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50505,7 +50505,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionAppStoreReviewScreenshots != null)
                 uriBuilder.AddParameter("fields[subscriptionAppStoreReviewScreenshots]", string.Join(",", fieldsSubscriptionAppStoreReviewScreenshots));
             if (include != null)
@@ -50520,7 +50520,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50532,7 +50532,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -50542,7 +50542,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionAvailabilityResponse> SubscriptionAvailabilities_createInstance(SubscriptionAvailabilityCreateRequest request)
         {
             string path = "/v1/subscriptionAvailabilities";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50561,7 +50561,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionAvailabilities != null)
                 uriBuilder.AddParameter("fields[subscriptionAvailabilities]", string.Join(",", fieldsSubscriptionAvailabilities));
             if (fieldsTerritories != null)
@@ -50580,7 +50580,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionAvailabilities/{id}/availableTerritories";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsTerritories != null)
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
             if (limit.HasValue)
@@ -50604,7 +50604,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGracePeriods/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionGracePeriods != null)
                 uriBuilder.AddParameter("fields[subscriptionGracePeriods]", string.Join(",", fieldsSubscriptionGracePeriods));
 
@@ -50617,7 +50617,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGracePeriods/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50628,7 +50628,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionGroupLocalizationResponse> SubscriptionGroupLocalizations_createInstance(SubscriptionGroupLocalizationCreateRequest request)
         {
             string path = "/v1/subscriptionGroupLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50650,7 +50650,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroupLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionGroupLocalizations != null)
                 uriBuilder.AddParameter("fields[subscriptionGroupLocalizations]", string.Join(",", fieldsSubscriptionGroupLocalizations));
             if (include != null)
@@ -50665,7 +50665,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroupLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50677,7 +50677,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroupLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -50687,7 +50687,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionGroupResponse> SubscriptionGroups_createInstance(SubscriptionGroupCreateRequest request)
         {
             string path = "/v1/subscriptionGroups";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50748,7 +50748,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionGroups != null)
                 uriBuilder.AddParameter("fields[subscriptionGroups]", string.Join(",", fieldsSubscriptionGroups));
             if (fieldsSubscriptions != null)
@@ -50771,7 +50771,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -50783,7 +50783,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroups/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -50812,7 +50812,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroups/{id}/subscriptionGroupLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionGroupLocalizations != null)
                 uriBuilder.AddParameter("fields[subscriptionGroupLocalizations]", string.Join(",", fieldsSubscriptionGroupLocalizations));
             if (fieldsSubscriptionGroups != null)
@@ -51026,7 +51026,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionGroups/{id}/subscriptions";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterProductId != null)
                 uriBuilder.AddParameter("filter[productId]", string.Join(",", filterProductId));
             if (filterName != null)
@@ -51086,7 +51086,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionGroupSubmissionResponse> SubscriptionGroupSubmissions_createInstance(SubscriptionGroupSubmissionCreateRequest request)
         {
             string path = "/v1/subscriptionGroupSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51097,7 +51097,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionImageResponse> SubscriptionImages_createInstance(SubscriptionImageCreateRequest request)
         {
             string path = "/v1/subscriptionImages";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51122,7 +51122,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionImages != null)
                 uriBuilder.AddParameter("fields[subscriptionImages]", string.Join(",", fieldsSubscriptionImages));
             if (include != null)
@@ -51137,7 +51137,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51149,7 +51149,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionImages/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -51159,7 +51159,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionIntroductoryOfferResponse> SubscriptionIntroductoryOffers_createInstance(SubscriptionIntroductoryOfferCreateRequest request)
         {
             string path = "/v1/subscriptionIntroductoryOffers";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51171,7 +51171,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionIntroductoryOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51183,7 +51183,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionIntroductoryOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -51193,7 +51193,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionLocalizationResponse> SubscriptionLocalizations_createInstance(SubscriptionLocalizationCreateRequest request)
         {
             string path = "/v1/subscriptionLocalizations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51215,7 +51215,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionLocalizations != null)
                 uriBuilder.AddParameter("fields[subscriptionLocalizations]", string.Join(",", fieldsSubscriptionLocalizations));
             if (include != null)
@@ -51230,7 +51230,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51242,7 +51242,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -51252,7 +51252,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionOfferCodeCustomCodeResponse> SubscriptionOfferCodeCustomCodes_createInstance(SubscriptionOfferCodeCustomCodeCreateRequest request)
         {
             string path = "/v1/subscriptionOfferCodeCustomCodes";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51275,7 +51275,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodeCustomCodes/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionOfferCodeCustomCodes != null)
                 uriBuilder.AddParameter("fields[subscriptionOfferCodeCustomCodes]", string.Join(",", fieldsSubscriptionOfferCodeCustomCodes));
             if (include != null)
@@ -51290,7 +51290,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodeCustomCodes/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51301,7 +51301,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionOfferCodeOneTimeUseCodeResponse> SubscriptionOfferCodeOneTimeUseCodes_createInstance(SubscriptionOfferCodeOneTimeUseCodeCreateRequest request)
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51324,7 +51324,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionOfferCodeOneTimeUseCodes != null)
                 uriBuilder.AddParameter("fields[subscriptionOfferCodeOneTimeUseCodes]", string.Join(",", fieldsSubscriptionOfferCodeOneTimeUseCodes));
             if (include != null)
@@ -51339,7 +51339,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51351,7 +51351,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes/{id}/values";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
             return SendAsync(message);
@@ -51361,7 +51361,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionOfferCodeResponse> SubscriptionOfferCodes_createInstance(SubscriptionOfferCodeCreateRequest request)
         {
             string path = "/v1/subscriptionOfferCodes";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51428,7 +51428,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodes/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionOfferCodes != null)
                 uriBuilder.AddParameter("fields[subscriptionOfferCodes]", string.Join(",", fieldsSubscriptionOfferCodes));
             if (fieldsSubscriptionOfferCodeOneTimeUseCodes != null)
@@ -51455,7 +51455,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodes/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51495,7 +51495,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodes/{id}/customCodes";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionOfferCodeCustomCodes != null)
                 uriBuilder.AddParameter("fields[subscriptionOfferCodeCustomCodes]", string.Join(",", fieldsSubscriptionOfferCodeCustomCodes));
             if (fieldsSubscriptionOfferCodes != null)
@@ -51542,7 +51542,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodes/{id}/oneTimeUseCodes";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionOfferCodeOneTimeUseCodes != null)
                 uriBuilder.AddParameter("fields[subscriptionOfferCodeOneTimeUseCodes]", string.Join(",", fieldsSubscriptionOfferCodeOneTimeUseCodes));
             if (fieldsSubscriptionOfferCodes != null)
@@ -51585,7 +51585,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionOfferCodes/{id}/prices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsSubscriptionOfferCodePrices != null)
@@ -51618,7 +51618,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionPricePoints/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionPricePoints != null)
                 uriBuilder.AddParameter("fields[subscriptionPricePoints]", string.Join(",", fieldsSubscriptionPricePoints));
             if (include != null)
@@ -51643,7 +51643,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionPricePoints/{id}/equalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (filterSubscription != null)
@@ -51665,7 +51665,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionPriceResponse> SubscriptionPrices_createInstance(SubscriptionPriceCreateRequest request)
         {
             string path = "/v1/subscriptionPrices";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51677,7 +51677,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionPrices/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -51687,7 +51687,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionPromotionalOfferResponse> SubscriptionPromotionalOffers_createInstance(SubscriptionPromotionalOfferCreateRequest request)
         {
             string path = "/v1/subscriptionPromotionalOffers";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51725,7 +51725,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionPromotionalOffers != null)
                 uriBuilder.AddParameter("fields[subscriptionPromotionalOffers]", string.Join(",", fieldsSubscriptionPromotionalOffers));
             if (fieldsSubscriptionPromotionalOfferPrices != null)
@@ -51744,7 +51744,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51756,7 +51756,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -51791,7 +51791,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}/prices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsSubscriptionPromotionalOfferPrices != null)
@@ -51813,7 +51813,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionResponse> Subscriptions_createInstance(SubscriptionCreateRequest request)
         {
             string path = "/v1/subscriptions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -51989,7 +51989,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptions != null)
                 uriBuilder.AddParameter("fields[subscriptions]", string.Join(",", fieldsSubscriptions));
             if (fieldsSubscriptionLocalizations != null)
@@ -52038,7 +52038,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -52050,7 +52050,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -52099,7 +52099,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/appStoreReviewScreenshot";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionAppStoreReviewScreenshots != null)
                 uriBuilder.AddParameter("fields[subscriptionAppStoreReviewScreenshots]", string.Join(",", fieldsSubscriptionAppStoreReviewScreenshots));
             if (fieldsSubscriptions != null)
@@ -52153,7 +52153,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/images";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionImages != null)
                 uriBuilder.AddParameter("fields[subscriptionImages]", string.Join(",", fieldsSubscriptionImages));
             if (fieldsSubscriptions != null)
@@ -52227,7 +52227,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/introductoryOffers";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsSubscriptionIntroductoryOffers != null)
@@ -52331,7 +52331,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/offerCodes";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsSubscriptionOfferCodes != null)
@@ -52374,7 +52374,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/pricePoints";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsSubscriptionPricePoints != null)
@@ -52421,7 +52421,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/prices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterSubscriptionPricePoint != null)
                 uriBuilder.AddParameter("filter[subscriptionPricePoint]", string.Join(",", filterSubscriptionPricePoint));
             if (filterTerritory != null)
@@ -52523,7 +52523,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/promotedPurchase";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPromotedPurchases != null)
                 uriBuilder.AddParameter("fields[promotedPurchases]", string.Join(",", fieldsPromotedPurchases));
             if (fieldsInAppPurchases != null)
@@ -52594,7 +52594,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/promotionalOffers";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsSubscriptionPromotionalOffers != null)
@@ -52619,7 +52619,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/relationships/introductoryOffers";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -52643,7 +52643,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/relationships/introductoryOffers";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -52655,7 +52655,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/relationships/prices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -52679,7 +52679,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/relationships/prices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -52698,7 +52698,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/subscriptionAvailability";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionAvailabilities != null)
                 uriBuilder.AddParameter("fields[subscriptionAvailabilities]", string.Join(",", fieldsSubscriptionAvailabilities));
             if (fieldsTerritories != null)
@@ -52751,7 +52751,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/subscriptionLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSubscriptionLocalizations != null)
                 uriBuilder.AddParameter("fields[subscriptionLocalizations]", string.Join(",", fieldsSubscriptionLocalizations));
             if (fieldsSubscriptions != null)
@@ -52795,7 +52795,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/subscriptions/{id}/winBackOffers";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsWinBackOffers != null)
                 uriBuilder.AddParameter("fields[winBackOffers]", string.Join(",", fieldsWinBackOffers));
             if (fieldsWinBackOfferPrices != null)
@@ -52815,7 +52815,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SubscriptionSubmissionResponse> SubscriptionSubmissions_createInstance(SubscriptionSubmissionCreateRequest request)
         {
             string path = "/v1/subscriptionSubmissions";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -52826,7 +52826,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<TerritoriesResponse> Territories_getCollection(string[]? fieldsTerritories = default, int? limit = default)
         {
             string path = "/v1/territories";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsTerritories != null)
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
             if (limit.HasValue)
@@ -52841,7 +52841,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/territoryAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -52942,7 +52942,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<UserInvitationsResponse> UserInvitations_getCollection(string[]? filterEmail = default, UserInvitations_getCollectionFilterRoles[]? filterRoles = default, string[]? filterVisibleApps = default, UserInvitations_getCollectionSort[]? sort = default, UserInvitations_getCollectionFieldsUserInvitations[]? fieldsUserInvitations = default, UserInvitations_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitVisibleApps = default)
         {
             string path = "/v1/userInvitations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterEmail != null)
                 uriBuilder.AddParameter("filter[email]", string.Join(",", filterEmail));
             if (filterRoles != null)
@@ -52970,7 +52970,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<UserInvitationResponse> UserInvitations_createInstance(UserInvitationCreateRequest request)
         {
             string path = "/v1/userInvitations";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53043,7 +53043,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/userInvitations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsUserInvitations != null)
                 uriBuilder.AddParameter("fields[userInvitations]", string.Join(",", fieldsUserInvitations));
             if (fieldsApps != null)
@@ -53062,7 +53062,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/userInvitations/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -53121,7 +53121,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/userInvitations/{id}/visibleApps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
             if (limit.HasValue)
@@ -53224,7 +53224,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<UsersResponse> Users_getCollection(string[]? filterUsername = default, Users_getCollectionFilterRoles[]? filterRoles = default, string[]? filterVisibleApps = default, Users_getCollectionSort[]? sort = default, Users_getCollectionFieldsUsers[]? fieldsUsers = default, Users_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitVisibleApps = default)
         {
             string path = "/v1/users";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterUsername != null)
                 uriBuilder.AddParameter("filter[username]", string.Join(",", filterUsername));
             if (filterRoles != null)
@@ -53313,7 +53313,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsUsers != null)
                 uriBuilder.AddParameter("fields[users]", string.Join(",", fieldsUsers));
             if (fieldsApps != null)
@@ -53332,7 +53332,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53344,7 +53344,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -53355,7 +53355,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (limit.HasValue)
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
@@ -53379,7 +53379,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53402,7 +53402,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53425,7 +53425,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53485,7 +53485,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/users/{id}/visibleApps";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsApps != null)
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
             if (limit.HasValue)
@@ -53499,7 +53499,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<WinBackOfferResponse> WinBackOffers_createInstance(WinBackOfferCreateRequest request)
         {
             string path = "/v1/winBackOffers";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53536,7 +53536,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/winBackOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsWinBackOffers != null)
                 uriBuilder.AddParameter("fields[winBackOffers]", string.Join(",", fieldsWinBackOffers));
             if (fieldsWinBackOfferPrices != null)
@@ -53555,7 +53555,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/winBackOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53567,7 +53567,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/winBackOffers/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -53602,7 +53602,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v1/winBackOffers/{id}/prices";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsWinBackOfferPrices != null)
@@ -53624,7 +53624,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<AppAvailabilityV2Response> AppAvailabilitiesV2_createInstance(AppAvailabilityV2CreateRequest request)
         {
             string path = "/v2/appAvailabilities";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53654,7 +53654,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/appAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppAvailabilities != null)
                 uriBuilder.AddParameter("fields[appAvailabilities]", string.Join(",", fieldsAppAvailabilities));
             if (fieldsTerritoryAvailabilities != null)
@@ -53684,7 +53684,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/appAvailabilities/{id}/territoryAvailabilities";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsTerritoryAvailabilities != null)
                 uriBuilder.AddParameter("fields[territoryAvailabilities]", string.Join(",", fieldsTerritoryAvailabilities));
             if (fieldsTerritories != null)
@@ -53702,7 +53702,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<AppStoreVersionExperimentV2Response> AppStoreVersionExperimentsV2_createInstance(AppStoreVersionExperimentV2CreateRequest request)
         {
             string path = "/v2/appStoreVersionExperiments";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53751,7 +53751,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionExperiments != null)
                 uriBuilder.AddParameter("fields[appStoreVersionExperiments]", string.Join(",", fieldsAppStoreVersionExperiments));
             if (fieldsAppStoreVersionExperimentTreatments != null)
@@ -53772,7 +53772,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53784,7 +53784,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -53841,7 +53841,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppStoreVersionExperimentTreatments != null)
                 uriBuilder.AddParameter("fields[appStoreVersionExperimentTreatments]", string.Join(",", fieldsAppStoreVersionExperimentTreatments));
             if (fieldsAppStoreVersionExperiments != null)
@@ -53863,7 +53863,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<InAppPurchaseV2Response> InAppPurchasesV2_createInstance(InAppPurchaseV2CreateRequest request)
         {
             string path = "/v2/inAppPurchases";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -53990,7 +53990,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchases != null)
                 uriBuilder.AddParameter("fields[inAppPurchases]", string.Join(",", fieldsInAppPurchases));
             if (fieldsInAppPurchaseLocalizations != null)
@@ -54027,7 +54027,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -54039,7 +54039,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             return SendAsync(message);
@@ -54084,7 +54084,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/appStoreReviewScreenshot";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseAppStoreReviewScreenshots != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseAppStoreReviewScreenshots]", string.Join(",", fieldsInAppPurchaseAppStoreReviewScreenshots));
             if (fieldsInAppPurchases != null)
@@ -54131,7 +54131,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/content";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseContents != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseContents]", string.Join(",", fieldsInAppPurchaseContents));
             if (fieldsInAppPurchases != null)
@@ -54174,7 +54174,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/iapPriceSchedule";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchasePriceSchedules != null)
                 uriBuilder.AddParameter("fields[inAppPurchasePriceSchedules]", string.Join(",", fieldsInAppPurchasePriceSchedules));
             if (fieldsTerritories != null)
@@ -54230,7 +54230,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/images";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseImages != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseImages]", string.Join(",", fieldsInAppPurchaseImages));
             if (fieldsInAppPurchases != null)
@@ -54256,7 +54256,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/inAppPurchaseAvailability";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseAvailabilities != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseAvailabilities]", string.Join(",", fieldsInAppPurchaseAvailabilities));
             if (fieldsTerritories != null)
@@ -54305,7 +54305,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/inAppPurchaseLocalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsInAppPurchaseLocalizations != null)
                 uriBuilder.AddParameter("fields[inAppPurchaseLocalizations]", string.Join(",", fieldsInAppPurchaseLocalizations));
             if (fieldsInAppPurchases != null)
@@ -54333,7 +54333,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/pricePoints";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsInAppPurchasePricePoints != null)
@@ -54431,7 +54431,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/inAppPurchases/{id}/promotedPurchase";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsPromotedPurchases != null)
                 uriBuilder.AddParameter("fields[promotedPurchases]", string.Join(",", fieldsPromotedPurchases));
             if (fieldsInAppPurchases != null)
@@ -54463,7 +54463,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SandboxTestersV2Response> SandboxTestersV2_getCollection(SandboxTestersV2_getCollectionFieldsSandboxTesters[]? fieldsSandboxTesters = default, int? limit = default)
         {
             string path = "/v2/sandboxTesters";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsSandboxTesters != null)
                 uriBuilder.AddParameter("fields[sandboxTesters]", string.Join(",", fieldsSandboxTesters));
             if (limit.HasValue)
@@ -54478,7 +54478,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v2/sandboxTesters/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -54489,7 +54489,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         public Task<SandboxTestersClearPurchaseHistoryRequestV2Response> SandboxTestersClearPurchaseHistoryRequestV2_createInstance(SandboxTestersClearPurchaseHistoryRequestV2CreateRequest request)
         {
             string path = "/v2/sandboxTestersClearPurchaseHistoryRequest";
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
@@ -54518,7 +54518,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v3/appPricePoints/{id}";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (fieldsAppPricePoints != null)
                 uriBuilder.AddParameter("fields[appPricePoints]", string.Join(",", fieldsAppPricePoints));
             if (include != null)
@@ -54598,7 +54598,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         {
             string path = "/v3/appPricePoints/{id}/equalizations";
             path = path.Replace("{id}", id.ToString());
-            var uriBuilder = new UriBuilder(baseUri, path);
+            var uriBuilder = new UriBuilder(m_BaseUri, path);
             if (filterTerritory != null)
                 uriBuilder.AddParameter("filter[territory]", string.Join(",", filterTerritory));
             if (fieldsAppPricePoints != null)

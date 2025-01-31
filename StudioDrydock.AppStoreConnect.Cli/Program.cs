@@ -125,21 +125,25 @@ AppStoreClient CreateClient(InvocationContext context)
 		Trace.Listeners.Add(new ConsoleTraceListener(useErrorStream: true));
 
 	// Read config.json
-	FileInfo configFile = context.ParseResult.GetValueForOption(configOption);
-	var config = JsonSerializer.Deserialize<Config>(File.ReadAllText(configFile.FullName));
-	if (config == null)
-		throw new Exception($"Failed to parse {configFile}");
+	var configFile = context.ParseResult.GetValueForOption(configOption);
+	var config = JsonSerializer.Deserialize<Config>(File.ReadAllText(configFile.FullName)) ?? throw new Exception($"Failed to parse {configFile}");
 	string configDirectory = configFile.Directory.FullName;
 
-	// Create client
+	var keyFile = Path.Combine(configDirectory, config.keyPath);
+	var keyData = File.ReadAllText(keyFile);
+
+	IAppStoreClientTokenMaker tokenMaker;
+
 	if (config.isUser)
 	{
-		return new AppStoreClient(new StreamReader(Path.Combine(configDirectory, config.keyPath)), config.keyId);
+		tokenMaker = AppStoreClientTokenMakerFactory.CreateUser(keyData, config.keyId);
 	}
 	else
 	{
-		return new AppStoreClient(new StreamReader(Path.Combine(configDirectory, config.keyPath)), config.keyId, config.issuerId);
+		tokenMaker = AppStoreClientTokenMakerFactory.CreateTeam(keyData, config.keyId, config.issuerId);
 	}
+
+	return new AppStoreClient(tokenMaker);
 }
 
 T Input<T>(InvocationContext context)
@@ -155,9 +159,7 @@ T Input<T>(InvocationContext context)
 			text = reader.ReadToEnd();
 	}
 
-	var result = JsonSerializer.Deserialize<T>(text);
-	if (result == null)
-		throw new Exception("Failed to deserialize input");
+	var result = JsonSerializer.Deserialize<T>(text) ?? throw new Exception("Failed to deserialize input");
 	return result;
 }
 
@@ -718,9 +720,12 @@ async Task GetGameCenter(InvocationContext context)
 
 	GameCenterGroup gameCenterGroup = null;
 
-	var achievementReleasesMap = await GetAchievementReleasesMap(api, detail);
-	var leaderboardReleasesMap = await GetLeaderboardReleasesMap(api, detail);
-	var leaderboardSetReleasesMap = await GetLeaderboardSetReleasesMap(api, detail);
+	var achievementReleasesMapTask = Task.Run(() => GetAchievementReleasesMap(api, detail));
+	var leaderboardReleasesMapTask = Task.Run(() => GetLeaderboardReleasesMap(api, detail));
+	var leaderboardSetReleasesMapTask = Task.Run(() => GetLeaderboardSetReleasesMap(api, detail));
+	var achievementReleasesMap = await achievementReleasesMapTask;
+	var leaderboardReleasesMap = await leaderboardReleasesMapTask;
+	var leaderboardSetReleasesMap = await leaderboardSetReleasesMapTask;
 
 	var gameCenterAchievements = new List<GameCenterAchievement>();
 	var gameCenterLeaderboardSets = new List<GameCenterLeaderboardSet>();
@@ -731,135 +736,147 @@ async Task GetGameCenter(InvocationContext context)
 	{
 		gameCenterGroup = new(group.data);
 
-		// find achievements:
-		{
-			// need limit: 200 because this endpoint doesn't paginate (boo):
-			var achievements = await api.GameCenterGroups_gameCenterAchievements_getToManyRelated(
-				group.data.id,
-				limit: 200);
-			AddGameCenterAchievements(gameCenterAchievements, achievements, achievementReleasesMap);
-		}
-		// find leaderboards:
-		{
-			var leaderboards = await api.GameCenterGroups_gameCenterLeaderboards_getToManyRelated(
-				group.data.id,
-				include: new[] { AppStoreClient.GameCenterGroups_gameCenterLeaderboards_getToManyRelatedInclude.gameCenterLeaderboardSets },
-				fieldsGameCenterLeaderboardSets: Array.Empty<AppStoreClient.GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets>());
-			AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
-
-			while (leaderboards.links.next != null)
-			{
-				leaderboards = await api.GetNextPage(leaderboards);
+		await Task.WhenAll(
+			Task.Run(async () => {
+				// find achievements:
+				// need limit: 200 because this endpoint doesn't paginate (boo):
+				var achievements = await api.GameCenterGroups_gameCenterAchievements_getToManyRelated(
+					group.data.id,
+					limit: 200,
+					include: new[] { AppStoreClient.GameCenterGroups_gameCenterAchievements_getToManyRelatedInclude.localizations } );
+				AddGameCenterAchievements(gameCenterAchievements, achievements, achievementReleasesMap);
+			}),
+			Task.Run(async () => {
+				// find leaderboards:
+				var leaderboards = await api.GameCenterGroups_gameCenterLeaderboards_getToManyRelated(
+					group.data.id,
+					include: new[] { AppStoreClient.GameCenterGroups_gameCenterLeaderboards_getToManyRelatedInclude.gameCenterLeaderboardSets },
+					fieldsGameCenterLeaderboardSets: Array.Empty<AppStoreClient.GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets>());
 				AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
-			}
-		}
-		// find leaderboard sets:
-		{
-			var leaderboardSets = await api.GameCenterGroups_gameCenterLeaderboardSets_getToManyRelated(
-				group.data.id,
-				limit: 200);
-			AddGameCenterLeaderboardSets(gameCenterLeaderboardSets, leaderboardSets, leaderboardSetReleasesMap);
 
-			while (leaderboardSets.links.next != null)
-			{
-				leaderboardSets = await api.GetNextPage(leaderboardSets);
+				while (leaderboards.links.next != null)
+				{
+					leaderboards = await api.GetNextPage(leaderboards);
+					AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
+				}
+			}),
+			Task.Run(async () => {
+				// find leaderboard sets:
+				// need limit: 200 because this endpoint doesn't paginate (boo):
+				var leaderboardSets = await api.GameCenterGroups_gameCenterLeaderboardSets_getToManyRelated(
+					group.data.id,
+					limit: 200);
 				AddGameCenterLeaderboardSets(gameCenterLeaderboardSets, leaderboardSets, leaderboardSetReleasesMap);
-			}
-		}
+			})
+		);
 	}
 	else
 	{
 		// non-group:
 
-		// find achievements:
-		{
-			// need limit: 200 because this endpoint doesn't paginate (boo):
-			var achievements = await api.GameCenterDetails_gameCenterAchievements_getToManyRelated(
+		await Task.WhenAll(
+			Task.Run(async () =>
+			{
+				// find achievements:
+				// need limit: 200 because this endpoint doesn't paginate (boo):
+				var achievements = await api.GameCenterDetails_gameCenterAchievements_getToManyRelated(
 				detail.data.id,
 				limit: 200);
-			AddGameCenterAchievements(gameCenterAchievements, achievements, achievementReleasesMap);
-		}
-		// find leaderboards:
-		{
-			var leaderboards = await api.GameCenterDetails_gameCenterLeaderboards_getToManyRelated(
+				AddGameCenterAchievements(gameCenterAchievements, achievements, achievementReleasesMap);
+			}),
+			Task.Run(async () =>
+			{
+				// find leaderboards:
+				var leaderboards = await api.GameCenterDetails_gameCenterLeaderboards_getToManyRelated(
 				detail.data.id,
 				include: new[] { AppStoreClient.GameCenterDetails_gameCenterLeaderboards_getToManyRelatedInclude.gameCenterLeaderboardSets },
 				fieldsGameCenterLeaderboardSets: Array.Empty<AppStoreClient.GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets>());
-			AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
-
-			while (leaderboards.links.next != null)
-			{
-				leaderboards = await api.GetNextPage(leaderboards);
 				AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
-			}
-		}
-		// find leaderboard sets:
-		{
-			var leaderboardSets = await api.GameCenterDetails_gameCenterLeaderboardSets_getToManyRelated(
-				detail.data.id);
-			AddGameCenterLeaderboardSets(gameCenterLeaderboardSets, leaderboardSets, leaderboardSetReleasesMap);
 
-			while (leaderboardSets.links.next != null)
+				while (leaderboards.links.next != null)
+				{
+					leaderboards = await api.GetNextPage(leaderboards);
+					AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
+				}
+			}),
+			Task.Run(async () =>
 			{
-				leaderboardSets = await api.GetNextPage(leaderboardSets);
+				// find leaderboard sets:
+				// need limit: 200 because this endpoint doesn't paginate (boo):
+				var leaderboardSets = await api.GameCenterDetails_gameCenterLeaderboardSets_getToManyRelated(
+				detail.data.id,
+				limit: 200);
 				AddGameCenterLeaderboardSets(gameCenterLeaderboardSets, leaderboardSets, leaderboardSetReleasesMap);
-			}
-		}
+			})
+		);
 	}
 
-	foreach (var a in gameCenterAchievements)
+	var locTasks = new List<Task>();
+
+	foreach (var ach in gameCenterAchievements)
 	{
-		var aLocalizations = new List<GameCenterAchievementLocalization>();
-
-		var localizationResponse = await api.GameCenterAchievements_localizations_getToManyRelated(
-			a.id,
-			include: new[] { AppStoreClient.GameCenterAchievements_localizations_getToManyRelatedInclude.gameCenterAchievementImage });
-		AddGameCenterAchievementLocalizations(aLocalizations, localizationResponse);
-
-		while (localizationResponse.links.next != null)
+		locTasks.Add(Task.Run(async () =>
 		{
-			localizationResponse = await api.GetNextPage(localizationResponse);
-			AddGameCenterAchievementLocalizations(aLocalizations, localizationResponse);
-		}
+			var locs = new List<GameCenterAchievementLocalization>();
 
-		a.localizations = aLocalizations.OrderBy(a => a.locale).ToArray();
+			var locResp = await api.GameCenterAchievements_localizations_getToManyRelated(
+				ach.id,
+				include: new[] { AppStoreClient.GameCenterAchievements_localizations_getToManyRelatedInclude.gameCenterAchievementImage });
+			AddGameCenterAchievementLocalizations(locs, locResp);
+
+			while (locResp.links.next != null)
+			{
+				locResp = await api.GetNextPage(locResp);
+				AddGameCenterAchievementLocalizations(locs, locResp);
+			}
+
+			ach.localizations = locs.OrderBy(a => a.locale).ToArray();
+		}));
 	}
 
 	foreach (var lb in gameCenterLeaderboards)
 	{
-		var lbLocalizations = new List<GameCenterLeaderboardLocalization>();
-
-		var localizationResponse = await api.GameCenterLeaderboards_localizations_getToManyRelated(
-			lb.id,
-			include: new[] { AppStoreClient.GameCenterLeaderboards_localizations_getToManyRelatedInclude.gameCenterLeaderboardImage });
-		AddGameCenterLeaderboardLocalizations(lbLocalizations, localizationResponse);
-
-		while (localizationResponse.links.next != null)
+		locTasks.Add(Task.Run(async () =>
 		{
-			localizationResponse = await api.GetNextPage(localizationResponse);
-			AddGameCenterLeaderboardLocalizations(lbLocalizations, localizationResponse);
-		}
+			var locs = new List<GameCenterLeaderboardLocalization>();
 
-		lb.localizations = lbLocalizations.OrderBy(a => a.locale).ToArray();
+			var locResp = await api.GameCenterLeaderboards_localizations_getToManyRelated(
+				lb.id,
+				include: new[] { AppStoreClient.GameCenterLeaderboards_localizations_getToManyRelatedInclude.gameCenterLeaderboardImage });
+			AddGameCenterLeaderboardLocalizations(locs, locResp);
+
+			while (locResp.links.next != null)
+			{
+				locResp = await api.GetNextPage(locResp);
+				AddGameCenterLeaderboardLocalizations(locs, locResp);
+			}
+
+			lb.localizations = locs.OrderBy(a => a.locale).ToArray();
+		}));
 	}
 
 	foreach (var lbs in gameCenterLeaderboardSets)
 	{
-		var lbsLocalizations = new List<GameCenterLeaderboardSetLocalization>();
-
-		var localizationResponse = await api.GameCenterLeaderboardSets_localizations_getToManyRelated(
-			lbs.id,
-			include: new[] { AppStoreClient.GameCenterLeaderboardSets_localizations_getToManyRelatedInclude.gameCenterLeaderboardSetImage });
-		AddGameCenterLeaderboardSetLocalizations(lbsLocalizations, localizationResponse);
-
-		while (localizationResponse.links.next != null)
+		locTasks.Add(Task.Run(async () =>
 		{
-			localizationResponse = await api.GetNextPage(localizationResponse);
-			AddGameCenterLeaderboardSetLocalizations(lbsLocalizations, localizationResponse);
-		}
+			var locs = new List<GameCenterLeaderboardSetLocalization>();
 
-		lbs.localizations = lbsLocalizations.OrderBy(a => a.locale).ToArray();
+			var locResp = await api.GameCenterLeaderboardSets_localizations_getToManyRelated(
+				lbs.id,
+				include: new[] { AppStoreClient.GameCenterLeaderboardSets_localizations_getToManyRelatedInclude.gameCenterLeaderboardSetImage });
+			AddGameCenterLeaderboardSetLocalizations(locs, locResp);
+
+			while (locResp.links.next != null)
+			{
+				locResp = await api.GetNextPage(locResp);
+				AddGameCenterLeaderboardSetLocalizations(locs, locResp);
+			}
+
+			lbs.localizations = locs.OrderBy(a => a.locale).ToArray();
+		}));
 	}
+
+	await Task.WhenAll(locTasks.ToArray());
 
 	Output(context, new GameCenter()
 	{
@@ -869,7 +886,6 @@ async Task GetGameCenter(InvocationContext context)
 		leaderboards = gameCenterLeaderboards.ToArray(),
 		leaderboardSets = gameCenterLeaderboardSets.ToArray(),
 	});
-
 }
 
 async Task SetGameCenter(InvocationContext context)
@@ -883,8 +899,77 @@ async Task SetGameCenter(InvocationContext context)
 		var detailId = gc.detail?.id;
 		var groupId = gc.group?.id;
 
+		foreach (var ach in gc.achievements)
+		{
+			// TODO: make this a cli switch:
+			if (ach.live == true)
+				continue;
+
+			if (string.IsNullOrEmpty(ach.id))
+			{
+				var response = await api.GameCenterAchievements_createInstance(ach.CreateCreateRequest(detailId, groupId));
+				ach.UpdateWithResponse(response.data);
+			}
+			else
+			{
+				var response = await api.GameCenterAchievements_updateInstance(ach.id, ach.CreateUpdateRequest());
+				ach.UpdateWithResponse(response.data);
+			}
+
+			foreach (var achLocalization in ach.localizations)
+			{
+				if (string.IsNullOrEmpty(achLocalization.id))
+				{
+					var response = await api.GameCenterAchievementLocalizations_createInstance(achLocalization.CreateCreateRequest(ach.id));
+					achLocalization.UpdateWithResponse(response.data);
+				}
+				else
+				{
+					var response = await api.GameCenterAchievementLocalizations_updateInstance(achLocalization.id, achLocalization.CreateUpdateRequest());
+					achLocalization.UpdateWithResponse(response.data);
+				}
+			}
+		}
+
+		foreach (var lb in gc.leaderboards)
+		{
+			// TODO: make this a cli switch:
+			if (lb.live == true)
+				continue;
+
+			if (string.IsNullOrEmpty(lb.id))
+			{
+				var response = await api.GameCenterLeaderboards_createInstance(lb.CreateCreateRequest(detailId, groupId));
+				lb.UpdateWithResponse(response.data);
+			}
+			else
+			{
+				var response = await api.GameCenterLeaderboards_updateInstance(lb.id, lb.CreateUpdateRequest());
+				lb.UpdateWithResponse(response.data);
+			}
+
+			foreach (var lbLocalization in lb.localizations)
+			{
+				if (string.IsNullOrEmpty(lbLocalization.id))
+				{
+					var response = await api.GameCenterLeaderboardLocalizations_createInstance(lbLocalization.CreateCreateRequest(lb.id));
+					lbLocalization.UpdateWithResponse(response.data);
+				}
+				else
+				{
+					var response = await api.GameCenterLeaderboardLocalizations_updateInstance(lbLocalization.id, lbLocalization.CreateUpdateRequest());
+					lbLocalization.UpdateWithResponse(response.data);
+				}
+			}
+		}
+
+		var postLbsetActions = new List<Func<Task>>();
 		foreach (var lbs in gc.leaderboardSets)
 		{
+			// TODO: make this a cli switch:
+			if (lbs.live == true)
+				continue;
+
 			if (string.IsNullOrEmpty(lbs.id))
 			{
 				var response = await api.GameCenterLeaderboardSets_createInstance(lbs.CreateCreateRequest(detailId, groupId));
@@ -908,6 +993,92 @@ async Task SetGameCenter(InvocationContext context)
 					var response = await api.GameCenterLeaderboardSetLocalizations_updateInstance(lbsLocalization.id, lbsLocalization.CreateUpdateRequest());
 					lbsLocalization.UpdateWithResponse(response.data);
 				}
+			}
+
+			// add new leaderboards to leaderboard set (removal and reordering is handled later):
+			var newLbIds = gc.leaderboards
+				.Where(x => x.leaderboardSets?.Contains(lbs.id) == true)
+				.Select(x => x.id)
+				.ToArray();
+
+			// limit 200 because this endpoint doesn't paginate (boo):
+			var currentLbIdsReq = await api.GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelationship(lbs.id, limit: 200);
+			var currentLbIds = currentLbIdsReq.data.Select(x => x.id).ToArray();
+
+			var createLbIds = newLbIds.Except(currentLbIds).ToArray();
+			var deleteLbIds = currentLbIds.Except(newLbIds).ToArray();
+
+			if (createLbIds.Length > 0)
+			{
+				await api.GameCenterLeaderboardSets_gameCenterLeaderboards_createToManyRelationship(lbs.id, new()
+				{
+					data = createLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
+					{
+						id = x,
+					}).ToArray()
+				});
+			}
+
+			if (deleteLbIds.Length > 0)
+			{
+				postLbsetActions.Add(async () =>
+				{
+					await api.GameCenterLeaderboardSets_gameCenterLeaderboards_deleteToManyRelationship(lbs.id, new()
+					{
+						data = deleteLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
+						{
+							id = x,
+						}).ToArray()
+					});
+				});
+			}
+
+			if (!Enumerable.SequenceEqual(newLbIds, currentLbIds))
+			{
+				postLbsetActions.Add(async () =>
+				{
+					await api.GameCenterLeaderboardSets_gameCenterLeaderboards_replaceToManyRelationship(lbs.id, new()
+					{
+						data = newLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
+						{
+							id = x,
+						}).ToArray()
+					});
+				});
+			}
+		}
+
+		foreach (var a in postLbsetActions)
+		{
+			await a();
+		}
+
+		// update order of leaderboard sets:
+		if (gc.leaderboardSets != null)
+		{
+			if (groupId != null)
+			{
+				var req = new AppStoreClient.GameCenterGroupGameCenterLeaderboardSetsLinkagesRequest
+				{
+					data = gc.leaderboardSets.Select(x => new AppStoreClient.GameCenterGroupGameCenterLeaderboardSetsLinkagesRequest.Data()
+					{
+						id = x.id,
+					}).ToArray()
+				};
+
+				await api.GameCenterGroups_gameCenterLeaderboardSets_replaceToManyRelationship(groupId, req);
+			}
+			else
+			{
+				var req = new AppStoreClient.GameCenterDetailGameCenterLeaderboardSetsLinkagesRequest
+				{
+					data = gc.leaderboardSets.Select(x => new AppStoreClient.GameCenterDetailGameCenterLeaderboardSetsLinkagesRequest.Data()
+					{
+						id = x.id,
+					}).ToArray()
+				};
+
+				await api.GameCenterDetails_gameCenterLeaderboardSets_replaceToManyRelationship(detailId, req);
 			}
 		}
 	}

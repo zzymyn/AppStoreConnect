@@ -14,8 +14,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string fileName { get; set; }
 
         public GameCenterLeaderboardSetImage()
-        {
-        }
+        { }
 
         public GameCenterLeaderboardSetImage(AppStoreClient.GameCenterLeaderboardSetImage data)
         {

@@ -14,7 +14,10 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string name { get; set; }
         public GameCenterLeaderboardSetImage image { get; set; }
 
-        public GameCenterLeaderboardSetLocalization(AppStoreClient.GameCenterLeaderboardSetLocalization data)
+		public GameCenterLeaderboardSetLocalization()
+		{ }
+
+		public GameCenterLeaderboardSetLocalization(AppStoreClient.GameCenterLeaderboardSetLocalization data)
         {
             this.id = data.id;
             this.locale = data.attributes.locale;
