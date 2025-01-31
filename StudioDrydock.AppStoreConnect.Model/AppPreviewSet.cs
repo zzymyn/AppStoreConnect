@@ -19,14 +19,14 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public AppPreviewSet(AppStoreClient.AppPreviewSet data)
         {
-            this.id = data.id;
-            this.previewType = data.attributes?.previewType;
+            id = data.id;
+            previewType = data.attributes?.previewType;
         }
 
 		public void UpdateWithResponse(AppStoreClient.AppPreviewSet data)
         {
-            this.id = data.id;
-            this.previewType = data.attributes?.previewType;
+            id = data.id;
+            previewType = data.attributes?.previewType;
         }
 
 		public AppStoreClient.AppPreviewSetCreateRequest CreateCreateRequest(string id)
@@ -37,7 +37,7 @@ namespace StudioDrydock.AppStoreConnect.Model
                 {
                     attributes = new()
                     {
-                        previewType = EnumExtensions<AppStoreClient.AppPreviewSetCreateRequest.Data.Attributes.PreviewType>.Convert(this.previewType)!.Value,
+                        previewType = EnumExtensions<AppStoreClient.AppPreviewSetCreateRequest.Data.Attributes.PreviewType>.Convert(previewType)!.Value,
                     },
                     relationships = new()
                     {

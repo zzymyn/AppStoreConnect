@@ -21,26 +21,26 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public Iap(AppStoreClient.InAppPurchaseV2 data)
 		{
-			this.id = data.id;
-			this.name = data.attributes?.name;
-			this.productId = data.attributes?.productId;
-			this.inAppPurchaseType = data.attributes?.inAppPurchaseType;
-			this.state = data.attributes?.state;
-			this.reviewNote = data.attributes?.reviewNote;
-			this.familySharable = data.attributes?.familySharable;
-			this.contentHosting = data.attributes?.contentHosting;
+			id = data.id;
+			name = data.attributes?.name;
+			productId = data.attributes?.productId;
+			inAppPurchaseType = data.attributes?.inAppPurchaseType;
+			state = data.attributes?.state;
+			reviewNote = data.attributes?.reviewNote;
+			familySharable = data.attributes?.familySharable;
+			contentHosting = data.attributes?.contentHosting;
 		}
 
 		public void UpdateWithResponse(AppStoreClient.InAppPurchaseV2 data)
 		{
-			this.id = data.id;
-			this.name = data.attributes?.name;
-			this.productId = data.attributes?.productId;
-			this.inAppPurchaseType = data.attributes?.inAppPurchaseType;
-			this.state = data.attributes?.state;
-			this.reviewNote = data.attributes?.reviewNote;
-			this.familySharable = data.attributes?.familySharable;
-			this.contentHosting = data.attributes?.contentHosting;
+			id = data.id;
+			name = data.attributes?.name;
+			productId = data.attributes?.productId;
+			inAppPurchaseType = data.attributes?.inAppPurchaseType;
+			state = data.attributes?.state;
+			reviewNote = data.attributes?.reviewNote;
+			familySharable = data.attributes?.familySharable;
+			contentHosting = data.attributes?.contentHosting;
 		}
 
 		public AppStoreClient.InAppPurchaseV2CreateRequest CreateCreateRequest(string appId)
@@ -51,11 +51,11 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						name = this.name!,
-						productId = this.productId!,
-						inAppPurchaseType = EnumExtensions<AppStoreClient.InAppPurchaseV2CreateRequest.Data.Attributes.InAppPurchaseType>.Convert(this.inAppPurchaseType)!.Value,
-						reviewNote = this.reviewNote,
-						familySharable = this.familySharable,
+						name = name!,
+						productId = productId!,
+						inAppPurchaseType = EnumExtensions<AppStoreClient.InAppPurchaseV2CreateRequest.Data.Attributes.InAppPurchaseType>.Convert(inAppPurchaseType)!.Value,
+						reviewNote = reviewNote,
+						familySharable = familySharable,
 					},
 					relationships = new()
 					{
@@ -77,12 +77,12 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						name = this.name,
-						reviewNote = this.reviewNote,
-						familySharable = this.familySharable,
+						name = name,
+						reviewNote = reviewNote,
+						familySharable = familySharable,
 					}
 				}
 			};

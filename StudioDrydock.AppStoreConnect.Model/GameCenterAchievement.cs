@@ -25,24 +25,24 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public GameCenterAchievement(AppStoreClient.GameCenterAchievement data)
         {
-            this.id = data.id;
-            this.referenceName = data.attributes?.referenceName;
-            this.vendorIdentifier = data.attributes?.vendorIdentifier;
-            this.points = data.attributes?.points;
-            this.showBeforeEarned = data.attributes?.showBeforeEarned;
-            this.repeatable = data.attributes?.repeatable;
-            this.archived = data.attributes?.archived;
+            id = data.id;
+            referenceName = data.attributes?.referenceName;
+            vendorIdentifier = data.attributes?.vendorIdentifier;
+            points = data.attributes?.points;
+            showBeforeEarned = data.attributes?.showBeforeEarned;
+            repeatable = data.attributes?.repeatable;
+            archived = data.attributes?.archived;
         }
 
 		public void UpdateWithResponse(AppStoreClient.GameCenterAchievement data)
         {
-			this.id = data.id;
-			this.referenceName = data.attributes?.referenceName;
-			this.vendorIdentifier = data.attributes?.vendorIdentifier;
-			this.points = data.attributes?.points;
-			this.showBeforeEarned = data.attributes?.showBeforeEarned;
-			this.repeatable = data.attributes?.repeatable;
-			this.archived = data.attributes?.archived;
+			id = data.id;
+			referenceName = data.attributes?.referenceName;
+			vendorIdentifier = data.attributes?.vendorIdentifier;
+			points = data.attributes?.points;
+			showBeforeEarned = data.attributes?.showBeforeEarned;
+			repeatable = data.attributes?.repeatable;
+			archived = data.attributes?.archived;
 		}
 
 		public AppStoreClient.GameCenterAchievementCreateRequest CreateCreateRequest(string detailId, string? groupId)
@@ -53,11 +53,11 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						referenceName = this.referenceName!,
-						vendorIdentifier = this.vendorIdentifier!,
-						points = this.points!.Value,
-						showBeforeEarned = this.showBeforeEarned!.Value,
-						repeatable = this.repeatable!.Value,
+						referenceName = referenceName!,
+						vendorIdentifier = vendorIdentifier!,
+						points = points!.Value,
+						showBeforeEarned = showBeforeEarned!.Value,
+						repeatable = repeatable!.Value,
 					},
 					relationships = new()
 					{
@@ -93,14 +93,14 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						referenceName = this.referenceName,
-						points = this.points,
-						showBeforeEarned = this.showBeforeEarned,
-						repeatable = this.repeatable,
-						archived = this.archived
+						referenceName = referenceName,
+						points = points,
+						showBeforeEarned = showBeforeEarned,
+						repeatable = repeatable,
+						archived = archived
 					}
 				}
 			};

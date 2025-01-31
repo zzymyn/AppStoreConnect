@@ -16,20 +16,20 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public IapLocalization(AppStoreClient.InAppPurchaseLocalization data)
         {
-            this.id = data.id;
-            this.name = data.attributes?.name;
-            this.locale = data.attributes?.locale;
-            this.description = data.attributes?.description;
-            this.state = data.attributes?.state;
+            id = data.id;
+            name = data.attributes?.name;
+            locale = data.attributes?.locale;
+            description = data.attributes?.description;
+            state = data.attributes?.state;
         }
 
 		public void UpdateWithResponse(AppStoreClient.InAppPurchaseLocalization data)
         {
-            this.id = data.id;
-            this.name = data.attributes?.name;
-            this.locale = data.attributes?.locale;
-            this.description = data.attributes?.description;
-			this.state = data.attributes?.state;
+            id = data.id;
+            name = data.attributes?.name;
+            locale = data.attributes?.locale;
+            description = data.attributes?.description;
+			state = data.attributes?.state;
 		}
 
 		public AppStoreClient.InAppPurchaseLocalizationCreateRequest CreateCreateRequest(string iapId)
@@ -40,9 +40,9 @@ namespace StudioDrydock.AppStoreConnect.Model
                 {
                     attributes = new()
                     {
-                        name = this.name!,
-                        locale = this.locale!,
-                        description = this.description
+                        name = name!,
+                        locale = locale!,
+                        description = description
                     },
                     relationships = new()
                     {
@@ -64,11 +64,11 @@ namespace StudioDrydock.AppStoreConnect.Model
             {
                 data = new()
                 {
-                    id = this.id!,
+                    id = id!,
                     attributes = new()
                     {
-                        name = this.name,
-                        description = this.description
+                        name = name,
+                        description = description
                     },
                 }
             };

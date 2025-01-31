@@ -22,16 +22,16 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public Event(AppStoreClient.AppEvent data)
         {
-            this.id = data.id;
-            this.referenceName = data.attributes?.referenceName;
-            this.badge = data.attributes?.badge;
-            this.eventState = data.attributes?.eventState;
-            this.deepLink = data.attributes?.deepLink;
-            this.purchaseRequirement = data.attributes?.purchaseRequirement;
-            this.primaryLocale = data.attributes?.primaryLocale;
-            this.priority = data.attributes?.priority;
-            this.purpose = data.attributes?.purpose;
-            this.territorySchedules = data.attributes?.territorySchedules?.Select(x => new EventTerritorySchedule()
+            id = data.id;
+            referenceName = data.attributes?.referenceName;
+            badge = data.attributes?.badge;
+            eventState = data.attributes?.eventState;
+            deepLink = data.attributes?.deepLink;
+            purchaseRequirement = data.attributes?.purchaseRequirement;
+            primaryLocale = data.attributes?.primaryLocale;
+            priority = data.attributes?.priority;
+            purpose = data.attributes?.purpose;
+            territorySchedules = data.attributes?.territorySchedules?.Select(x => new EventTerritorySchedule()
             {
                 territories = x.territories?.ToArray(),
                 publishStart = x.publishStart,
@@ -42,16 +42,16 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public void UpdateWithResponse(AppStoreClient.AppEvent data)
         {
-            this.id = data.id;
-            this.referenceName = data.attributes?.referenceName;
-            this.badge = data.attributes?.badge;
-            this.eventState = data.attributes?.eventState;
-            this.deepLink = data.attributes?.deepLink;
-            this.purchaseRequirement = data.attributes?.purchaseRequirement;
-            this.primaryLocale = data.attributes?.primaryLocale;
-            this.priority = data.attributes?.priority;
-            this.purpose = data.attributes?.purpose;
-            this.territorySchedules = data.attributes?.territorySchedules?.Select(x => new EventTerritorySchedule()
+            id = data.id;
+            referenceName = data.attributes?.referenceName;
+            badge = data.attributes?.badge;
+            eventState = data.attributes?.eventState;
+            deepLink = data.attributes?.deepLink;
+            purchaseRequirement = data.attributes?.purchaseRequirement;
+            primaryLocale = data.attributes?.primaryLocale;
+            priority = data.attributes?.priority;
+            purpose = data.attributes?.purpose;
+            territorySchedules = data.attributes?.territorySchedules?.Select(x => new EventTerritorySchedule()
             {
                 territories = x.territories?.ToArray(),
                 publishStart = x.publishStart,
@@ -68,14 +68,14 @@ namespace StudioDrydock.AppStoreConnect.Model
                 {
                     attributes = new()
                     {
-                        referenceName = this.referenceName!,
-                        badge = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Badge>.Convert(this.badge),
-                        deepLink = this.deepLink,
-                        purchaseRequirement = this.purchaseRequirement,
-                        primaryLocale = this.primaryLocale,
-                        priority = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Priority>.Convert(this.priority),
-                        purpose = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Purpose>.Convert(this.purpose),
-                        territorySchedules = this.territorySchedules?.Select(x => new AppStoreClient.AppEventCreateRequest.Data.Attributes.TerritorySchedules()
+                        referenceName = referenceName!,
+                        badge = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Badge>.Convert(badge),
+                        deepLink = deepLink,
+                        purchaseRequirement = purchaseRequirement,
+                        primaryLocale = primaryLocale,
+                        priority = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Priority>.Convert(priority),
+                        purpose = EnumExtensions<AppStoreClient.AppEventCreateRequest.Data.Attributes.Purpose>.Convert(purpose),
+                        territorySchedules = territorySchedules?.Select(x => new AppStoreClient.AppEventCreateRequest.Data.Attributes.TerritorySchedules()
                         {
                             territories = x.territories,
                             publishStart = x.publishStart,
@@ -103,17 +103,17 @@ namespace StudioDrydock.AppStoreConnect.Model
             {
                 data = new()
                 {
-                    id = this.id!,
+                    id = id!,
                     attributes = new()
                     {
-                        referenceName = this.referenceName,
-                        badge = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Badge>.Convert(this.badge),
-                        deepLink = this.deepLink,
-                        purchaseRequirement = this.purchaseRequirement,
-                        primaryLocale = this.primaryLocale,
-                        priority = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Priority>.Convert(this.priority),
-                        purpose = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Purpose>.Convert(this.purpose),
-                        territorySchedules = this.territorySchedules?.Select(x => new AppStoreClient.AppEventUpdateRequest.Data.Attributes.TerritorySchedules()
+                        referenceName = referenceName,
+                        badge = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Badge>.Convert(badge),
+                        deepLink = deepLink,
+                        purchaseRequirement = purchaseRequirement,
+                        primaryLocale = primaryLocale,
+                        priority = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Priority>.Convert(priority),
+                        purpose = EnumExtensions<AppStoreClient.AppEventUpdateRequest.Data.Attributes.Purpose>.Convert(purpose),
+                        territorySchedules = territorySchedules?.Select(x => new AppStoreClient.AppEventUpdateRequest.Data.Attributes.TerritorySchedules()
                         {
                             territories = x.territories,
                             publishStart = x.publishStart,

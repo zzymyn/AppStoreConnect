@@ -24,28 +24,28 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public AppVersion(AppStoreClient.AppStoreVersion data)
 		{
-			this.id = data.id;
-			this.platform = data.attributes?.platform;
-			this.versionString = data.attributes?.versionString;
-			this.appStoreState = data.attributes?.appStoreState;
-			this.copyright = data.attributes?.copyright;
-			this.releaseType = data.attributes?.releaseType;
-			this.earliestReleaseDate = data.attributes?.earliestReleaseDate;
-			this.downloadable = data.attributes?.downloadable;
-			this.createdDate = data.attributes?.createdDate;
+			id = data.id;
+			platform = data.attributes?.platform;
+			versionString = data.attributes?.versionString;
+			appStoreState = data.attributes?.appStoreState;
+			copyright = data.attributes?.copyright;
+			releaseType = data.attributes?.releaseType;
+			earliestReleaseDate = data.attributes?.earliestReleaseDate;
+			downloadable = data.attributes?.downloadable;
+			createdDate = data.attributes?.createdDate;
 		}
 
 		public void UpdateWithResponse(AppStoreClient.AppStoreVersion data)
 		{
-			this.id = data.id;
-			this.platform = data.attributes?.platform;
-			this.versionString = data.attributes?.versionString;
-			this.appStoreState = data.attributes?.appStoreState;
-			this.copyright = data.attributes?.copyright;
-			this.releaseType = data.attributes?.releaseType;
-			this.earliestReleaseDate = data.attributes?.earliestReleaseDate;
-			this.downloadable = data.attributes?.downloadable;
-			this.createdDate = data.attributes?.createdDate;
+			id = data.id;
+			platform = data.attributes?.platform;
+			versionString = data.attributes?.versionString;
+			appStoreState = data.attributes?.appStoreState;
+			copyright = data.attributes?.copyright;
+			releaseType = data.attributes?.releaseType;
+			earliestReleaseDate = data.attributes?.earliestReleaseDate;
+			downloadable = data.attributes?.downloadable;
+			createdDate = data.attributes?.createdDate;
 		}
 
 		public AppStoreClient.AppStoreVersionCreateRequest CreateCreateRequest(string appId)
@@ -56,11 +56,11 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						platform = EnumExtensions<AppStoreClient.AppStoreVersionCreateRequest.Data.Attributes.Platform>.Convert(this.platform)!.Value,
-						versionString = this.versionString!,
-						copyright = this.copyright,
-						releaseType = EnumExtensions<AppStoreClient.AppStoreVersionCreateRequest.Data.Attributes.ReleaseType>.Convert(this.releaseType),
-						earliestReleaseDate = this.earliestReleaseDate,
+						platform = EnumExtensions<AppStoreClient.AppStoreVersionCreateRequest.Data.Attributes.Platform>.Convert(platform)!.Value,
+						versionString = versionString!,
+						copyright = copyright,
+						releaseType = EnumExtensions<AppStoreClient.AppStoreVersionCreateRequest.Data.Attributes.ReleaseType>.Convert(releaseType),
+						earliestReleaseDate = earliestReleaseDate,
 					},
 					relationships = new()
 					{
@@ -82,14 +82,14 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						versionString = this.versionString,
-						copyright = this.copyright,
-						releaseType = EnumExtensions<AppStoreClient.AppStoreVersionUpdateRequest.Data.Attributes.ReleaseType>.Convert(this.releaseType),
-						earliestReleaseDate = this.earliestReleaseDate,
-						downloadable = this.downloadable,
+						versionString = versionString,
+						copyright = copyright,
+						releaseType = EnumExtensions<AppStoreClient.AppStoreVersionUpdateRequest.Data.Attributes.ReleaseType>.Convert(releaseType),
+						earliestReleaseDate = earliestReleaseDate,
+						downloadable = downloadable,
 					},
 				}
 			};

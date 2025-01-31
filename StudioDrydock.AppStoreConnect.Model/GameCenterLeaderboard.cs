@@ -26,34 +26,34 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public GameCenterLeaderboard(AppStoreClient.GameCenterLeaderboard data)
 		{
-			this.id = data.id;
-			this.defaultFormatter = data.attributes?.defaultFormatter;
-			this.referenceName = data.attributes?.referenceName;
-			this.vendorIdentifier = data.attributes?.vendorIdentifier;
-			this.submissionType = data.attributes?.submissionType;
-			this.scoreSortType = data.attributes?.scoreSortType;
-			this.scoreRangeStart = data.attributes?.scoreRangeStart;
-			this.scoreRangeEnd = data.attributes?.scoreRangeEnd;
-			this.recurrenceStartDate = data.attributes?.recurrenceStartDate;
-			this.recurrenceDuration = data.attributes?.recurrenceDuration;
-			this.recurrenceRule = data.attributes?.recurrenceRule;
-			this.archived = data.attributes?.archived;
+			id = data.id;
+			defaultFormatter = data.attributes?.defaultFormatter;
+			referenceName = data.attributes?.referenceName;
+			vendorIdentifier = data.attributes?.vendorIdentifier;
+			submissionType = data.attributes?.submissionType;
+			scoreSortType = data.attributes?.scoreSortType;
+			scoreRangeStart = data.attributes?.scoreRangeStart;
+			scoreRangeEnd = data.attributes?.scoreRangeEnd;
+			recurrenceStartDate = data.attributes?.recurrenceStartDate;
+			recurrenceDuration = data.attributes?.recurrenceDuration;
+			recurrenceRule = data.attributes?.recurrenceRule;
+			archived = data.attributes?.archived;
 		}
 
 		public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboard data)
 		{
-			this.id = data.id;
-			this.defaultFormatter = data.attributes?.defaultFormatter;
-			this.referenceName = data.attributes?.referenceName;
-			this.vendorIdentifier = data.attributes?.vendorIdentifier;
-			this.submissionType = data.attributes?.submissionType;
-			this.scoreSortType = data.attributes?.scoreSortType;
-			this.scoreRangeStart = data.attributes?.scoreRangeStart;
-			this.scoreRangeEnd = data.attributes?.scoreRangeEnd;
-			this.recurrenceStartDate = data.attributes?.recurrenceStartDate;
-			this.recurrenceDuration = data.attributes?.recurrenceDuration;
-			this.recurrenceRule = data.attributes?.recurrenceRule;
-			this.archived = data.attributes?.archived;
+			id = data.id;
+			defaultFormatter = data.attributes?.defaultFormatter;
+			referenceName = data.attributes?.referenceName;
+			vendorIdentifier = data.attributes?.vendorIdentifier;
+			submissionType = data.attributes?.submissionType;
+			scoreSortType = data.attributes?.scoreSortType;
+			scoreRangeStart = data.attributes?.scoreRangeStart;
+			scoreRangeEnd = data.attributes?.scoreRangeEnd;
+			recurrenceStartDate = data.attributes?.recurrenceStartDate;
+			recurrenceDuration = data.attributes?.recurrenceDuration;
+			recurrenceRule = data.attributes?.recurrenceRule;
+			archived = data.attributes?.archived;
 		}
 
 		public AppStoreClient.GameCenterLeaderboardCreateRequest CreateCreateRequest(string detailId, string? groupId)
@@ -64,16 +64,16 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						defaultFormatter = EnumExtensions<AppStoreClient.GameCenterLeaderboardCreateRequest.Data.Attributes.DefaultFormatter>.Convert(this.defaultFormatter)!.Value,
-						referenceName = this.referenceName!,
-						vendorIdentifier = this.vendorIdentifier!,
-						submissionType = EnumExtensions<AppStoreClient.GameCenterLeaderboardCreateRequest.Data.Attributes.SubmissionType>.Convert(this.submissionType)!.Value,
-						scoreSortType = EnumExtensions<AppStoreClient.GameCenterLeaderboardCreateRequest.Data.Attributes.ScoreSortType>.Convert(this.scoreSortType)!.Value,
-						scoreRangeStart = this.scoreRangeStart,
-						scoreRangeEnd = this.scoreRangeEnd,
-						recurrenceStartDate = this.recurrenceStartDate,
-						recurrenceDuration = this.recurrenceDuration,
-						recurrenceRule = this.recurrenceRule,
+						defaultFormatter = EnumExtensions<AppStoreClient.GameCenterLeaderboardCreateRequest.Data.Attributes.DefaultFormatter>.Convert(defaultFormatter)!.Value,
+						referenceName = referenceName!,
+						vendorIdentifier = vendorIdentifier!,
+						submissionType = EnumExtensions<AppStoreClient.GameCenterLeaderboardCreateRequest.Data.Attributes.SubmissionType>.Convert(submissionType)!.Value,
+						scoreSortType = EnumExtensions<AppStoreClient.GameCenterLeaderboardCreateRequest.Data.Attributes.ScoreSortType>.Convert(scoreSortType)!.Value,
+						scoreRangeStart = scoreRangeStart,
+						scoreRangeEnd = scoreRangeEnd,
+						recurrenceStartDate = recurrenceStartDate,
+						recurrenceDuration = recurrenceDuration,
+						recurrenceRule = recurrenceRule,
 					},
 					relationships = new()
 					{
@@ -119,19 +119,19 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						defaultFormatter = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.DefaultFormatter>.Convert(this.defaultFormatter),
-						referenceName = this.referenceName,
-						submissionType = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.SubmissionType>.Convert(this.submissionType),
-						scoreSortType = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.ScoreSortType>.Convert(this.scoreSortType),
-						scoreRangeStart = this.scoreRangeStart,
-						scoreRangeEnd = this.scoreRangeEnd,
-						recurrenceStartDate = this.recurrenceStartDate,
-						recurrenceDuration = this.recurrenceDuration,
-						recurrenceRule = this.recurrenceRule,
-						archived = this.archived,
+						defaultFormatter = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.DefaultFormatter>.Convert(defaultFormatter),
+						referenceName = referenceName,
+						submissionType = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.SubmissionType>.Convert(submissionType),
+						scoreSortType = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.ScoreSortType>.Convert(scoreSortType),
+						scoreRangeStart = scoreRangeStart,
+						scoreRangeEnd = scoreRangeEnd,
+						recurrenceStartDate = recurrenceStartDate,
+						recurrenceDuration = recurrenceDuration,
+						recurrenceRule = recurrenceRule,
+						archived = archived,
 					},
 				}
 			};

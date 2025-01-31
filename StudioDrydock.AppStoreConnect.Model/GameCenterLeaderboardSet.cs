@@ -16,16 +16,16 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public GameCenterLeaderboardSet(AppStoreClient.GameCenterLeaderboardSet data)
 		{
-			this.id = data.id;
-			this.referenceName = data.attributes?.referenceName;
-			this.vendorIdentifier = data.attributes?.vendorIdentifier;
+			id = data.id;
+			referenceName = data.attributes?.referenceName;
+			vendorIdentifier = data.attributes?.vendorIdentifier;
 		}
 
 		public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboardSet data)
 		{
-			this.id = data.id;
-			this.referenceName = data.attributes?.referenceName;
-			this.vendorIdentifier = data.attributes?.vendorIdentifier;
+			id = data.id;
+			referenceName = data.attributes?.referenceName;
+			vendorIdentifier = data.attributes?.vendorIdentifier;
 		}
 
 		public AppStoreClient.GameCenterLeaderboardSetCreateRequest CreateCreateRequest(string detailId, string? groupId)
@@ -36,8 +36,8 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						referenceName = this.referenceName!,
-						vendorIdentifier = this.vendorIdentifier!,
+						referenceName = referenceName!,
+						vendorIdentifier = vendorIdentifier!,
 					},
 					relationships = new()
 					{
@@ -73,10 +73,10 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						referenceName = this.referenceName,
+						referenceName = referenceName,
 					}
 				}
 			};

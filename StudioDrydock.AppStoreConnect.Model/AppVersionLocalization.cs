@@ -21,26 +21,26 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public AppVersionLocalization(AppStoreClient.AppStoreVersionLocalization data)
         {
-            this.id = data.id;
-            this.locale = data.attributes?.locale;
-            this.description = data.attributes?.description;
-            this.keywords = data.attributes?.keywords;
-            this.promotionalText = data.attributes?.promotionalText;
-            this.marketingUrl = data.attributes?.marketingUrl;
-            this.supportUrl = data.attributes?.supportUrl;
-            this.whatsNew = data.attributes?.whatsNew;
+            id = data.id;
+            locale = data.attributes?.locale;
+            description = data.attributes?.description;
+            keywords = data.attributes?.keywords;
+            promotionalText = data.attributes?.promotionalText;
+            marketingUrl = data.attributes?.marketingUrl;
+            supportUrl = data.attributes?.supportUrl;
+            whatsNew = data.attributes?.whatsNew;
         }
 
 		public void UpdateWithResponse(AppStoreClient.AppStoreVersionLocalization data)
         {
-            this.id = data.id;
-            this.locale = data.attributes?.locale;
-            this.description = data.attributes?.description;
-            this.keywords = data.attributes?.keywords;
-            this.promotionalText = data.attributes?.promotionalText;
-            this.marketingUrl = data.attributes?.marketingUrl;
-            this.supportUrl = data.attributes?.supportUrl;
-            this.whatsNew = data.attributes?.whatsNew;
+            id = data.id;
+            locale = data.attributes?.locale;
+            description = data.attributes?.description;
+            keywords = data.attributes?.keywords;
+            promotionalText = data.attributes?.promotionalText;
+            marketingUrl = data.attributes?.marketingUrl;
+            supportUrl = data.attributes?.supportUrl;
+            whatsNew = data.attributes?.whatsNew;
         }
 
 		public AppStoreClient.AppStoreVersionLocalizationCreateRequest CreateCreateRequest(string versionId)
@@ -51,13 +51,13 @@ namespace StudioDrydock.AppStoreConnect.Model
                 {
                     attributes = new()
                     {
-                        description = this.description,
-                        locale = this.locale!,
-                        keywords = this.keywords,
-                        marketingUrl = this.marketingUrl,
-                        promotionalText = this.promotionalText,
-                        supportUrl = this.supportUrl,
-                        whatsNew = this.whatsNew
+                        description = description,
+                        locale = locale!,
+                        keywords = keywords,
+                        marketingUrl = marketingUrl,
+                        promotionalText = promotionalText,
+                        supportUrl = supportUrl,
+                        whatsNew = whatsNew
                     },
                     relationships = new()
                     {
@@ -79,15 +79,15 @@ namespace StudioDrydock.AppStoreConnect.Model
             {
                 data = new()
                 {
-                    id = this.id!,
+                    id = id!,
                     attributes = new()
                     {
-                        description = this.description,
-                        keywords = this.keywords,
-                        marketingUrl = this.marketingUrl,
-                        promotionalText = this.promotionalText,
-                        supportUrl = this.supportUrl,
-                        whatsNew = this.whatsNew
+                        description = description,
+                        keywords = keywords,
+                        marketingUrl = marketingUrl,
+                        promotionalText = promotionalText,
+                        supportUrl = supportUrl,
+                        whatsNew = whatsNew
                     }
                 }
             };

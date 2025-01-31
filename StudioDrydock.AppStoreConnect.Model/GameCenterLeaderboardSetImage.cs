@@ -19,9 +19,9 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public GameCenterLeaderboardSetImage(AppStoreClient.GameCenterLeaderboardSetImage data)
         {
-            this.id = data.id;
-            this.fileSize = data.attributes?.fileSize;
-            this.fileName = data.attributes?.fileName;
+            id = data.id;
+            fileSize = data.attributes?.fileSize;
+            fileName = data.attributes?.fileName;
         }
     }
 }

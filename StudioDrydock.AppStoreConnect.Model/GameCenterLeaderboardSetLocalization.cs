@@ -20,16 +20,16 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public GameCenterLeaderboardSetLocalization(AppStoreClient.GameCenterLeaderboardSetLocalization data)
         {
-            this.id = data.id;
-            this.locale = data.attributes?.locale;
-            this.name = data.attributes?.name;
+            id = data.id;
+            locale = data.attributes?.locale;
+            name = data.attributes?.name;
         }
 
 		public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboardSetLocalization data)
 		{
-			this.id = data.id;
-			this.locale = data.attributes?.locale;
-			this.name = data.attributes?.name;
+			id = data.id;
+			locale = data.attributes?.locale;
+			name = data.attributes?.name;
 		}
 
 		public AppStoreClient.GameCenterLeaderboardSetLocalizationCreateRequest CreateCreateRequest(string lbsetId)
@@ -40,8 +40,8 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						locale = this.locale!,
-						name = this.name!,
+						locale = locale!,
+						name = name!,
 					},
 					relationships = new()
 					{
@@ -63,10 +63,10 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						name = this.name
+						name = name
 					}
 				}
 			};

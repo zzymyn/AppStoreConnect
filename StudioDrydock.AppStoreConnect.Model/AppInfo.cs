@@ -16,11 +16,11 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public AppInfo(AppStoreClient.App data)
         {
-            this.id = data.id;
-            this.bundleId = data.attributes?.bundleId;
-            this.name = data.attributes?.name;
-            this.sku = data.attributes?.sku;
-            this.primaryLocale = data.attributes?.primaryLocale;
+            id = data.id;
+            bundleId = data.attributes?.bundleId;
+            name = data.attributes?.name;
+            sku = data.attributes?.sku;
+            primaryLocale = data.attributes?.primaryLocale;
         }
     }
 }

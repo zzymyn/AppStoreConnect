@@ -22,20 +22,20 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public GameCenterAchievementLocalization(AppStoreClient.GameCenterAchievementLocalization data)
         {
-            this.id = data.id;
-            this.locale = data.attributes?.locale;
-            this.name = data.attributes?.name;
-            this.beforeEarnedDescription = data.attributes?.beforeEarnedDescription;
-            this.afterEarnedDescription = data.attributes?.afterEarnedDescription;
+            id = data.id;
+            locale = data.attributes?.locale;
+            name = data.attributes?.name;
+            beforeEarnedDescription = data.attributes?.beforeEarnedDescription;
+            afterEarnedDescription = data.attributes?.afterEarnedDescription;
         }
 
 		public void UpdateWithResponse(AppStoreClient.GameCenterAchievementLocalization data)
         {
-			this.id = data.id;
-			this.locale = data.attributes?.locale;
-			this.name = data.attributes?.name;
-			this.beforeEarnedDescription = data.attributes?.beforeEarnedDescription;
-			this.afterEarnedDescription = data.attributes?.afterEarnedDescription;
+			id = data.id;
+			locale = data.attributes?.locale;
+			name = data.attributes?.name;
+			beforeEarnedDescription = data.attributes?.beforeEarnedDescription;
+			afterEarnedDescription = data.attributes?.afterEarnedDescription;
 		}
 
 		public AppStoreClient.GameCenterAchievementLocalizationCreateRequest CreateCreateRequest(string achievementId)
@@ -46,10 +46,10 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						locale = this.locale!,
-						name = this.name!,
-						beforeEarnedDescription = this.beforeEarnedDescription!,
-						afterEarnedDescription = this.afterEarnedDescription!,
+						locale = locale!,
+						name = name!,
+						beforeEarnedDescription = beforeEarnedDescription!,
+						afterEarnedDescription = afterEarnedDescription!,
 					},
 					relationships = new()
 					{
@@ -71,12 +71,12 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						name = this.name,
-						beforeEarnedDescription = this.beforeEarnedDescription,
-						afterEarnedDescription = this.afterEarnedDescription
+						name = name,
+						beforeEarnedDescription = beforeEarnedDescription,
+						afterEarnedDescription = afterEarnedDescription
 					}
 				}
 			};

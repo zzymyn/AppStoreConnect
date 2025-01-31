@@ -1,14 +1,8 @@
 ﻿namespace StudioDrydock.AppStoreConnect.Model
 {
-    public class App
-    {
-        public AppInfo appInfo { get; set; }
-        public AppVersion[] appVersions { get; set; }
-
-		public App(AppInfo appInfo, AppVersion[] appVersions)
-		{
-			this.appInfo = appInfo;
-			this.appVersions = appVersions;
-		}
+    public class App(AppInfo appInfo, AppVersion[] appVersions)
+	{
+		public AppInfo appInfo { get; set; } = appInfo;
+		public AppVersion[] appVersions { get; set; } = appVersions;
 	}
 }

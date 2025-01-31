@@ -23,22 +23,22 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public GameCenterLeaderboardLocalization(AppStoreClient.GameCenterLeaderboardLocalization data)
         {
-            this.id = data.id;
-            this.locale = data.attributes?.locale;
-            this.name = data.attributes?.name;
-			this.formatterOverride = data.attributes?.formatterOverride;
-            this.formatterSuffix = data.attributes?.formatterSuffix;
-            this.formatterSuffixSingular = data.attributes?.formatterSuffixSingular;
+            id = data.id;
+            locale = data.attributes?.locale;
+            name = data.attributes?.name;
+			formatterOverride = data.attributes?.formatterOverride;
+            formatterSuffix = data.attributes?.formatterSuffix;
+            formatterSuffixSingular = data.attributes?.formatterSuffixSingular;
         }
 
 		public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboardLocalization data)
 		{
-			this.id = data.id;
-			this.locale = data.attributes?.locale;
-			this.name = data.attributes?.name;
-			this.formatterOverride = data.attributes?.formatterOverride;
-			this.formatterSuffix = data.attributes?.formatterSuffix;
-			this.formatterSuffixSingular = data.attributes?.formatterSuffixSingular;
+			id = data.id;
+			locale = data.attributes?.locale;
+			name = data.attributes?.name;
+			formatterOverride = data.attributes?.formatterOverride;
+			formatterSuffix = data.attributes?.formatterSuffix;
+			formatterSuffixSingular = data.attributes?.formatterSuffixSingular;
 		}
 
 		public AppStoreClient.GameCenterLeaderboardLocalizationCreateRequest CreateCreateRequest(string lbId)
@@ -49,11 +49,11 @@ namespace StudioDrydock.AppStoreConnect.Model
 				{
 					attributes = new()
 					{
-						locale = this.locale!,
-						name = this.name!,
-						formatterOverride = EnumExtensions<AppStoreClient.GameCenterLeaderboardLocalizationCreateRequest.Data.Attributes.FormatterOverride>.Convert(this.formatterOverride),
-						formatterSuffix = this.formatterSuffix,
-						formatterSuffixSingular = this.formatterSuffixSingular
+						locale = locale!,
+						name = name!,
+						formatterOverride = EnumExtensions<AppStoreClient.GameCenterLeaderboardLocalizationCreateRequest.Data.Attributes.FormatterOverride>.Convert(formatterOverride),
+						formatterSuffix = formatterSuffix,
+						formatterSuffixSingular = formatterSuffixSingular
 					},
 					relationships = new()
 					{
@@ -75,13 +75,13 @@ namespace StudioDrydock.AppStoreConnect.Model
 			{
 				data = new()
 				{
-					id = this.id!,
+					id = id!,
 					attributes = new()
 					{
-						name = this.name,
-						formatterOverride = EnumExtensions<AppStoreClient.GameCenterLeaderboardLocalizationUpdateRequest.Data.Attributes.FormatterOverride>.Convert(this.formatterOverride),
-						formatterSuffix = this.formatterSuffix,
-						formatterSuffixSingular = this.formatterSuffixSingular
+						name = name,
+						formatterOverride = EnumExtensions<AppStoreClient.GameCenterLeaderboardLocalizationUpdateRequest.Data.Attributes.FormatterOverride>.Convert(formatterOverride),
+						formatterSuffix = formatterSuffix,
+						formatterSuffixSingular = formatterSuffixSingular
 					}
 				}
 			};

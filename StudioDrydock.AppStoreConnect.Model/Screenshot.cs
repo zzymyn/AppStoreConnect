@@ -20,18 +20,18 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public Screenshot(AppStoreClient.AppScreenshot data)
         {
-            this.id = data.id;
-            this.fileSize = data.attributes?.fileSize;
-            this.fileName = data.attributes?.fileName;
-            this.sourceFileChecksum = data.attributes?.sourceFileChecksum;
+            id = data.id;
+            fileSize = data.attributes?.fileSize;
+            fileName = data.attributes?.fileName;
+            sourceFileChecksum = data.attributes?.sourceFileChecksum;
         }
 
 		public void UpdateWithResponse(AppStoreClient.AppScreenshot data)
         {
-            this.id = data.id;
-            this.fileSize = data.attributes?.fileSize;
-            this.fileName = data.attributes?.fileName;
-            this.sourceFileChecksum = data.attributes?.sourceFileChecksum;
+            id = data.id;
+            fileSize = data.attributes?.fileSize;
+            fileName = data.attributes?.fileName;
+            sourceFileChecksum = data.attributes?.sourceFileChecksum;
         }
 
 		public AppStoreClient.AppScreenshotUpdateRequest CreateUploadCompleteRequest(string fileHash)
@@ -40,7 +40,7 @@ namespace StudioDrydock.AppStoreConnect.Model
             {
                 data = new()
                 {
-                    id = this.id!,
+                    id = id!,
                     attributes = new()
                     {
                         uploaded = true,

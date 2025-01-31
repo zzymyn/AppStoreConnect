@@ -21,20 +21,20 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public AppPreview(AppStoreClient.AppPreview data)
         {
-            this.id = data.id;
-            this.fileSize = data.attributes?.fileSize;
-            this.fileName = data.attributes?.fileName;
-            this.sourceFileChecksum = data.attributes?.sourceFileChecksum;
-            this.previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
+            id = data.id;
+            fileSize = data.attributes?.fileSize;
+            fileName = data.attributes?.fileName;
+            sourceFileChecksum = data.attributes?.sourceFileChecksum;
+            previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
         }
 
 		public void UpdateWithResponse(AppStoreClient.AppPreview data)
         {
-            this.id = data.id;
-            this.fileSize = data.attributes?.fileSize;
-            this.fileName = data.attributes?.fileName;
-            this.sourceFileChecksum = data.attributes?.sourceFileChecksum;
-            this.previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
+            id = data.id;
+            fileSize = data.attributes?.fileSize;
+            fileName = data.attributes?.fileName;
+            sourceFileChecksum = data.attributes?.sourceFileChecksum;
+            previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
         }
 
 		public AppStoreClient.AppPreviewUpdateRequest CreateUpdateRequest()
@@ -43,10 +43,10 @@ namespace StudioDrydock.AppStoreConnect.Model
             {
                 data = new()
                 {
-                    id = this.id!,
+                    id = id!,
 					attributes = new()
                     {
-                        previewFrameTimeCode = this.previewFrameTimeCode
+                        previewFrameTimeCode = previewFrameTimeCode
                     }
                 }
             };
@@ -58,7 +58,7 @@ namespace StudioDrydock.AppStoreConnect.Model
             {
                 data = new()
                 {
-                    id = this.id!,
+                    id = id!,
                     attributes = new()
                     {
                         uploaded = true,

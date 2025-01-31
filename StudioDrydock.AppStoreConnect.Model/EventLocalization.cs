@@ -16,20 +16,20 @@ namespace StudioDrydock.AppStoreConnect.Model
 
         public EventLocalization(AppStoreClient.AppEventLocalization data)
         {
-            this.id = data.id;
-            this.name = data.attributes?.name;
-            this.locale = data.attributes?.locale;
-            this.shortDescription = data.attributes?.shortDescription;
-            this.longDescription = data.attributes?.longDescription;
+            id = data.id;
+            name = data.attributes?.name;
+            locale = data.attributes?.locale;
+            shortDescription = data.attributes?.shortDescription;
+            longDescription = data.attributes?.longDescription;
         }
 
 		public void UpdateWithResponse(AppStoreClient.AppEventLocalization data)
         {
-            this.id = data.id;
-            this.name = data.attributes?.name;
-            this.locale = data.attributes?.locale;
-            this.shortDescription = data.attributes?.shortDescription;
-            this.longDescription = data.attributes?.longDescription;
+            id = data.id;
+            name = data.attributes?.name;
+            locale = data.attributes?.locale;
+            shortDescription = data.attributes?.shortDescription;
+            longDescription = data.attributes?.longDescription;
         }
 
         public AppStoreClient.AppEventLocalizationCreateRequest CreateCreateRequest(string eventId)
@@ -40,10 +40,10 @@ namespace StudioDrydock.AppStoreConnect.Model
                 {
                     attributes = new()
                     {
-                        name = this.name,
-                        locale = this.locale!,
-                        shortDescription = this.shortDescription,
-                        longDescription = this.longDescription,
+                        name = name,
+                        locale = locale!,
+                        shortDescription = shortDescription,
+                        longDescription = longDescription,
                     },
                     relationships = new()
                     {
@@ -65,12 +65,12 @@ namespace StudioDrydock.AppStoreConnect.Model
             {
                 data = new()
                 {
-                    id = this.id!,
+                    id = id!,
                     attributes = new()
                     {
-                        name = this.name,
-                        shortDescription = this.shortDescription,
-                        longDescription = this.longDescription,
+                        name = name,
+                        shortDescription = shortDescription,
+                        longDescription = longDescription,
                     },
                 }
             };

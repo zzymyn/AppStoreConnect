@@ -14,9 +14,9 @@ namespace StudioDrydock.AppStoreConnect.Model
 
 		public GameCenterDetail(AppStoreClient.GameCenterDetail data)
         {
-            this.id = data.id;
-            this.arcadeEnabled = data.attributes?.arcadeEnabled;
-            this.challengeEnabled = data.attributes?.challengeEnabled;
+            id = data.id;
+            arcadeEnabled = data.attributes?.arcadeEnabled;
+            challengeEnabled = data.attributes?.challengeEnabled;
         }
     }
 }
