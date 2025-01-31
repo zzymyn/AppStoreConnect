@@ -10,7 +10,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
     public class ScreenshotSet
     {
         public string id { get; set; }
-        public ScreenshotDisplayType screenshotDisplayType { get; set; }
+        public AppStoreClient.AppScreenshotSet.Attributes.ScreenshotDisplayType screenshotDisplayType { get; set; }
         public Screenshot[] screenshots { get; set; }
 
         public ScreenshotSet()
@@ -20,13 +20,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public ScreenshotSet(AppStoreClient.AppScreenshotSet data)
         {
             this.id = data.id;
-            this.screenshotDisplayType = EnumExtensions<ScreenshotDisplayType>.Convert(data.attributes.screenshotDisplayType.Value);
+            this.screenshotDisplayType = data.attributes.screenshotDisplayType.Value;
         }
 
         internal void UpdateWithResponse(AppStoreClient.AppScreenshotSet data)
         {
             this.id = data.id;
-            this.screenshotDisplayType = EnumExtensions<ScreenshotDisplayType>.Convert(data.attributes.screenshotDisplayType.Value);
+            this.screenshotDisplayType = data.attributes.screenshotDisplayType.Value;
         }
 
         internal AppStoreClient.AppScreenshotSetCreateRequest CreateCreateRequest(string id)

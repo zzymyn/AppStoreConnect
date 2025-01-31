@@ -5,13 +5,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
     public class AppVersion
     {
         public string id { get; set; }
-        public Platform platform { get; set; }
+        public AppStoreClient.AppStoreVersion.Attributes.Platform platform { get; set; }
         public string versionString { get; set; }
         
-        public AppStoreState appStoreState { get; set; }
+        public AppStoreClient.AppStoreVersion.Attributes.AppStoreState appStoreState { get; set; }
         public string copyright { get; set; }
         
-        public ReleaseType releaseType { get; set; }
+        public AppStoreClient.AppStoreVersion.Attributes.ReleaseType releaseType { get; set; }
         public string earliestReleaseDate { get; set; }
         public bool downloadable { get; set; }
         public string createdDate { get; set; }
@@ -24,11 +24,11 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public AppVersion(AppStoreClient.AppStoreVersion data)
         {
             this.id = data.id;
-            this.platform = EnumExtensions<Platform>.Convert(data.attributes.platform.Value);
+            this.platform = data.attributes.platform.Value;
             this.versionString = data.attributes.versionString;
-            this.appStoreState = EnumExtensions<AppStoreState>.Convert(data.attributes.appStoreState.Value);
+            this.appStoreState = data.attributes.appStoreState.Value;
             this.copyright = data.attributes.copyright;
-            this.releaseType = EnumExtensions<ReleaseType>.Convert(data.attributes.releaseType.Value);
+            this.releaseType = data.attributes.releaseType.Value;
             this.earliestReleaseDate = data.attributes.earliestReleaseDate;
             this.downloadable = data.attributes.downloadable.Value;
             this.createdDate = data.attributes.createdDate;
@@ -37,11 +37,11 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         internal void UpdateWithResponse(AppStoreClient.AppStoreVersion data)
         {
             this.id = data.id;
-            this.platform = EnumExtensions<Platform>.Convert(data.attributes.platform.Value);
+            this.platform = data.attributes.platform.Value;
             this.versionString = data.attributes.versionString;
-            this.appStoreState = EnumExtensions<AppStoreState>.Convert(data.attributes.appStoreState.Value);
+            this.appStoreState = data.attributes.appStoreState.Value;
             this.copyright = data.attributes.copyright;
-            this.releaseType = EnumExtensions<ReleaseType>.Convert(data.attributes.releaseType.Value);
+            this.releaseType = data.attributes.releaseType.Value;
             this.earliestReleaseDate = data.attributes.earliestReleaseDate;
             this.downloadable = data.attributes.downloadable.Value;
             this.createdDate = data.attributes.createdDate;
@@ -86,7 +86,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
                     {
                         versionString = this.versionString,
                         copyright = this.copyright,
-                        releaseType = EnumExtensions<AppStoreClient.AppStoreVersionUpdateRequest.Data.Attributes.ReleaseType>.Convert(this.releaseType),
+                        releaseType = EnumExtensions< AppStoreClient.AppStoreVersionUpdateRequest.Data.Attributes.ReleaseType>.Convert(this.releaseType),
                         earliestReleaseDate = this.earliestReleaseDate,
                         downloadable = this.downloadable,
                     },

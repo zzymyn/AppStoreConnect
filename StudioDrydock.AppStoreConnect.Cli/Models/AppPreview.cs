@@ -10,7 +10,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
     public class AppPreview
     {
         public string id { get; set; }
-        public int fileSize { get; set; }
+        public int? fileSize { get; set; }
         public string fileName { get; set; }
         public string sourceFileChecksum { get; set; }
         public string previewFrameTimeCode { get; set; }
@@ -22,7 +22,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public AppPreview(AppStoreClient.AppPreview data)
         {
             this.id = data.id;
-            this.fileSize = data.attributes.fileSize.Value;
+            this.fileSize = data.attributes.fileSize;
             this.fileName = data.attributes.fileName;
             this.sourceFileChecksum = data.attributes.sourceFileChecksum;
             this.previewFrameTimeCode = data.attributes.previewFrameTimeCode;
@@ -31,7 +31,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         internal void UpdateWithResponse(AppStoreClient.AppPreview data)
         {
             this.id = data.id;
-            this.fileSize = data.attributes.fileSize.Value;
+            this.fileSize = data.attributes.fileSize;
             this.fileName = data.attributes.fileName;
             this.sourceFileChecksum = data.attributes.sourceFileChecksum;
             this.previewFrameTimeCode = data.attributes.previewFrameTimeCode;

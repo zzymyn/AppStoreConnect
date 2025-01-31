@@ -9,7 +9,6 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string locale { get; set; }
         public string shortDescription { get; set; }
         public string longDescription { get; set; }
-        public InAppPurchaseLocaliztionState state { get; set; }
 
         public EventLocalization()
         { }

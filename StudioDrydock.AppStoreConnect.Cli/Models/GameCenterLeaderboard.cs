@@ -5,11 +5,11 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
 	public class GameCenterLeaderboard
 	{
 		public string id { get; set; }
-		public DefaultFormatter? defaultFormatter { get; set; }
+		public AppStoreClient.GameCenterLeaderboard.Attributes.DefaultFormatter? defaultFormatter { get; set; }
 		public string referenceName { get; set; }
 		public string vendorIdentifier { get; set; }
-		public SubmissionType? submissionType { get; set; }
-		public ScoreSortType? scoreSortType { get; set; }
+		public AppStoreClient.GameCenterLeaderboard.Attributes.SubmissionType? submissionType { get; set; }
+		public AppStoreClient.GameCenterLeaderboard.Attributes.ScoreSortType? scoreSortType { get; set; }
 		public string scoreRangeStart { get; set; }
 		public string scoreRangeEnd { get; set; }
 		public string recurrenceStartDate { get; set; }
@@ -26,11 +26,11 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
 		public GameCenterLeaderboard(AppStoreClient.GameCenterLeaderboard data)
 		{
 			this.id = data.id;
-			this.defaultFormatter = data.attributes.defaultFormatter.HasValue ? EnumExtensions<DefaultFormatter>.Convert(data.attributes.defaultFormatter.Value) : null;
+			this.defaultFormatter = data.attributes.defaultFormatter;
 			this.referenceName = data.attributes.referenceName;
 			this.vendorIdentifier = data.attributes.vendorIdentifier;
-			this.submissionType = data.attributes.submissionType.HasValue ? EnumExtensions<SubmissionType>.Convert(data.attributes.submissionType.Value) : null;
-			this.scoreSortType = data.attributes.scoreSortType.HasValue ? EnumExtensions<ScoreSortType>.Convert(data.attributes.scoreSortType.Value) : null;
+			this.submissionType = data.attributes.submissionType;
+			this.scoreSortType = data.attributes.scoreSortType;
 			this.scoreRangeStart = data.attributes.scoreRangeStart;
 			this.scoreRangeEnd = data.attributes.scoreRangeEnd;
 			this.recurrenceStartDate = data.attributes.recurrenceStartDate;
@@ -42,11 +42,11 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
 		internal void UpdateWithResponse(AppStoreClient.GameCenterLeaderboard data)
 		{
 			this.id = data.id;
-			this.defaultFormatter = data.attributes.defaultFormatter.HasValue ? EnumExtensions<DefaultFormatter>.Convert(data.attributes.defaultFormatter.Value) : null;
+			this.defaultFormatter = data.attributes.defaultFormatter;
 			this.referenceName = data.attributes.referenceName;
 			this.vendorIdentifier = data.attributes.vendorIdentifier;
-			this.submissionType = data.attributes.submissionType.HasValue ? EnumExtensions<SubmissionType>.Convert(data.attributes.submissionType.Value) : null;
-			this.scoreSortType = data.attributes.scoreSortType.HasValue ? EnumExtensions<ScoreSortType>.Convert(data.attributes.scoreSortType.Value) : null;
+			this.submissionType = data.attributes.submissionType;
+			this.scoreSortType = data.attributes.scoreSortType;
 			this.scoreRangeStart = data.attributes.scoreRangeStart;
 			this.scoreRangeEnd = data.attributes.scoreRangeEnd;
 			this.recurrenceStartDate = data.attributes.recurrenceStartDate;

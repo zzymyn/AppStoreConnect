@@ -15,6 +15,9 @@ namespace StudioDrydock.AppStoreConnect.Api
 		{
 			while (true)
 			{
+				Token? token = null;
+				int? preReturnDelay = null;
+
 				lock (this)
 				{
 					// if m_RequestsRemainingThisHour is -1, we haven't yet made a request to the API to get the rate limit
@@ -23,25 +26,44 @@ namespace StudioDrydock.AppStoreConnect.Api
 					{
 						if (m_OutstandingRequests == 0)
 						{
-							return new Token(this);
+							token = new Token(this);
 						}
 					}
 					else if (m_RequestsRemainingThisHour - m_OutstandingRequests > 1500)
 					{
-						// more than 3000 requests remaining, allow 8 requests at a time:
-						if (m_OutstandingRequests < 8)
+						// more than 3000 requests remaining, allow 16 requests at a time:
+						if (m_OutstandingRequests < 16)
 						{
-							return new Token(this);
+							token = new Token(this);
+						}
+					}
+					else if (m_RequestsRemainingThisHour - m_OutstandingRequests > 600)
+					{
+						// less than 1500 requests remaining, but more than 600, allow one request every second:
+						if (m_OutstandingRequests == 0)
+						{
+							preReturnDelay = 1000;
+							token = new Token(this);
 						}
 					}
 					else if (m_RequestsRemainingThisHour - m_OutstandingRequests > 0)
 					{
-						// less than 1500 requests remaining, but more than 0, allow one request at a time:
+						// less than 600 requests remaining, allow one request every 10 seconds:
 						if (m_OutstandingRequests == 0)
 						{
-							return new Token(this);
+							preReturnDelay = 10000;
+							token = new Token(this);
 						}
 					}
+				}
+
+				if (token != null)
+				{
+					if (preReturnDelay.HasValue)
+					{
+						await Task.Delay(preReturnDelay.Value);
+					}
+					return token;
 				}
 
 				// TODO: don't just spin here, use a semaphore or something

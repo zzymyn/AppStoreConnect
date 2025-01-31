@@ -8,7 +8,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string name { get; set; }
         public string locale { get; set; }
         public string description { get; set; }
-        public InAppPurchaseLocaliztionState state { get; set; }
+        public AppStoreClient.InAppPurchaseLocalization.Attributes.State state { get; set; }
 
         public IapLocalization()
         { }
@@ -19,7 +19,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.name = data.attributes.name;
             this.locale = data.attributes.locale;
             this.description = data.attributes.description;
-            this.state = EnumExtensions<InAppPurchaseLocaliztionState>.Convert(data.attributes.state.Value);
+            this.state = data.attributes.state.Value;
         }
 
         internal void UpdateWithResponse(AppStoreClient.InAppPurchaseLocalization data)
@@ -28,10 +28,10 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.name = data.attributes.name;
             this.locale = data.attributes.locale;
             this.description = data.attributes.description;
-            this.state = EnumExtensions<InAppPurchaseLocaliztionState>.Convert(data.attributes.state.Value);
-        }
+			this.state = data.attributes.state.Value;
+		}
 
-        public AppStoreClient.InAppPurchaseLocalizationCreateRequest CreateCreateRequest(string iapId)
+		public AppStoreClient.InAppPurchaseLocalizationCreateRequest CreateCreateRequest(string iapId)
         {
             return new()
             {

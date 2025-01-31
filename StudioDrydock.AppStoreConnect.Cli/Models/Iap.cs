@@ -7,8 +7,8 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public string id { get; set; }
         public string name { get; set; }
         public string productId { get; set; }
-        public InAppPurchaseType inAppPurchaseType { get; set; }
-        public InAppPurchaseState state { get; set; }
+        public AppStoreClient.InAppPurchaseV2.Attributes.InAppPurchaseType inAppPurchaseType { get; set; }
+        public AppStoreClient.InAppPurchaseV2.Attributes.State state { get; set; }
         public string reviewNote { get; set; }
         public bool? familySharable { get; set; }
         public bool? contentHosting { get; set; }
@@ -23,8 +23,8 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.id = data.id;
             this.name = data.attributes.name;
             this.productId = data.attributes.productId;
-            this.inAppPurchaseType = EnumExtensions<InAppPurchaseType>.Convert(data.attributes.inAppPurchaseType.Value);
-            this.state = EnumExtensions<InAppPurchaseState>.Convert(data.attributes.state.Value);
+            this.inAppPurchaseType = data.attributes.inAppPurchaseType.Value;
+            this.state = data.attributes.state.Value;
             this.reviewNote = data.attributes.reviewNote;
             this.familySharable = data.attributes.familySharable;
             this.contentHosting = data.attributes.contentHosting;
@@ -35,9 +35,9 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
             this.id = data.id;
             this.name = data.attributes.name;
             this.productId = data.attributes.productId;
-            this.inAppPurchaseType = EnumExtensions<InAppPurchaseType>.Convert(data.attributes.inAppPurchaseType.Value);
-            this.state = EnumExtensions<InAppPurchaseState>.Convert(data.attributes.state.Value);
-            this.reviewNote = data.attributes.reviewNote;
+			this.inAppPurchaseType = data.attributes.inAppPurchaseType.Value;
+			this.state = data.attributes.state.Value;
+			this.reviewNote = data.attributes.reviewNote;
             this.familySharable = data.attributes.familySharable;
             this.contentHosting = data.attributes.contentHosting;
         }

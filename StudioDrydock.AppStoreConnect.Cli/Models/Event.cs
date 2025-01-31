@@ -6,13 +6,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
     {
         public string id { get; set; }
         public string referenceName { get; set; }
-        public Badge badge { get; set; }
-        public EventState eventState { get; set; }
+        public AppStoreClient.AppEvent.Attributes.Badge badge { get; set; }
+        public AppStoreClient.AppEvent.Attributes.EventState eventState { get; set; }
         public string deepLink { get; set; }
         public string purchaseRequirement { get; set; }
         public string primaryLocale { get; set; }
-        public Priority priority { get; set; }
-        public Purpose purpose { get; set; }
+        public AppStoreClient.AppEvent.Attributes.Priority priority { get; set; }
+        public AppStoreClient.AppEvent.Attributes.Purpose purpose { get; set; }
         public EventTerritorySchedule[] territorySchedules { get; set; }
         public EventLocalization[] localizations { get; set; }
 
@@ -23,13 +23,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         {
             this.id = data.id;
             this.referenceName = data.attributes.referenceName;
-            this.badge = EnumExtensions<Badge>.Convert(data.attributes.badge.Value);
-            this.eventState = EnumExtensions<EventState>.Convert(data.attributes.eventState.Value);
+            this.badge = data.attributes.badge.Value;
+            this.eventState = data.attributes.eventState.Value;
             this.deepLink = data.attributes.deepLink;
             this.purchaseRequirement = data.attributes.purchaseRequirement;
             this.primaryLocale = data.attributes.primaryLocale;
-            this.priority = EnumExtensions<Priority>.Convert(data.attributes.priority.Value);
-            this.purpose = EnumExtensions<Purpose>.Convert(data.attributes.purpose.Value);
+            this.priority = data.attributes.priority.Value;
+            this.purpose = data.attributes.purpose.Value;
             this.territorySchedules = data.attributes.territorySchedules.Select(x => new EventTerritorySchedule()
             {
                 territories = x.territories.ToArray(),
@@ -43,13 +43,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         {
             this.id = data.id;
             this.referenceName = data.attributes.referenceName;
-            this.badge = EnumExtensions<Badge>.Convert(data.attributes.badge.Value);
-            this.eventState = EnumExtensions<EventState>.Convert(data.attributes.eventState.Value);
+            this.badge = data.attributes.badge.Value;
+            this.eventState = data.attributes.eventState.Value;
             this.deepLink = data.attributes.deepLink;
             this.purchaseRequirement = data.attributes.purchaseRequirement;
             this.primaryLocale = data.attributes.primaryLocale;
-            this.priority = EnumExtensions<Priority>.Convert(data.attributes.priority.Value);
-            this.purpose = EnumExtensions<Purpose>.Convert(data.attributes.purpose.Value);
+            this.priority = data.attributes.priority.Value;
+            this.purpose = data.attributes.purpose.Value;
             this.territorySchedules = data.attributes.territorySchedules.Select(x => new EventTerritorySchedule()
             {
                 territories = x.territories.ToArray(),

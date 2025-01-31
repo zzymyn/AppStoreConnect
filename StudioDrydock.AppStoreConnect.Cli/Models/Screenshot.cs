@@ -10,7 +10,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
     public class Screenshot
     {
         public string id { get; set; }
-        public int fileSize { get; set; }
+        public int? fileSize { get; set; }
         public string fileName { get; set; }
         public string sourceFileChecksum { get; set; }
 
@@ -21,7 +21,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public Screenshot(AppStoreClient.AppScreenshot data)
         {
             this.id = data.id;
-            this.fileSize = data.attributes.fileSize.Value;
+            this.fileSize = data.attributes.fileSize;
             this.fileName = data.attributes.fileName;
             this.sourceFileChecksum = data.attributes.sourceFileChecksum;
         }
@@ -29,7 +29,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         internal void UpdateWithResponse(AppStoreClient.AppScreenshot data)
         {
             this.id = data.id;
-            this.fileSize = data.attributes.fileSize.Value;
+            this.fileSize = data.attributes.fileSize;
             this.fileName = data.attributes.fileName;
             this.sourceFileChecksum = data.attributes.sourceFileChecksum;
         }

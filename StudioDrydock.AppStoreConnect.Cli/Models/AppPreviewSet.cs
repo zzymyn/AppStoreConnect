@@ -10,7 +10,7 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
     public class AppPreviewSet
     {
         public string id { get; set; }
-        public PreviewType previewType { get; set; }
+        public AppStoreClient.AppPreviewSet.Attributes.PreviewType previewType { get; set; }
         public AppPreview[] appPreviews { get; set; }
 
         public AppPreviewSet()
@@ -20,13 +20,13 @@ namespace StudioDrydock.AppStoreConnect.Cli.Models
         public AppPreviewSet(AppStoreClient.AppPreviewSet data)
         {
             this.id = data.id;
-            this.previewType = EnumExtensions<PreviewType>.Convert(data.attributes.previewType.Value);
+            this.previewType = data.attributes.previewType.Value;
         }
 
         internal void UpdateWithResponse(AppStoreClient.AppPreviewSet data)
         {
             this.id = data.id;
-            this.previewType = EnumExtensions<PreviewType>.Convert(data.attributes.previewType.Value);
+            this.previewType = data.attributes.previewType.Value;
         }
 
         internal AppStoreClient.AppPreviewSetCreateRequest CreateCreateRequest(string id)
