@@ -18,10 +18,8 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
             cs.WriteLine("#nullable enable");
             cs.WriteLine();
             cs.WriteLine("using System.Runtime.Serialization;");
-            cs.WriteLine("using System.Text;");
-            cs.WriteLine("using System.Text.Json;");
             cs.WriteLine("using System.Text.Json.Serialization;");
-            cs.WriteLine("using Macross.Json.Extensions;");
+            cs.WriteLine("using StudioDrydock.AppStoreConnect.Core;");
             cs.WriteLine();
             cs.BeginBlock("namespace StudioDrydock.AppStoreConnect.Api");
         }
@@ -424,6 +422,10 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                 if (!param.Required)
                     cs.Write(" = default");
             }
+
+            cs.WriteCommaIfRequired();
+            cs.Write("INestedLog? log = null");
+
             cs.Write(")");
             cs.EndLine();
 
@@ -458,9 +460,9 @@ namespace StudioDrydock.AppStoreConnect.ApiGenerator
                 cs.WriteLine("message.Content = Serialize(request);");
 
             if (responseSchema != null)
-                cs.WriteLine($"return SendAsync<{responseSchemaName}>(message);");
+                cs.WriteLine($"return SendAsync<{responseSchemaName}>(message, log);");
             else
-                cs.WriteLine("return SendAsync(message);");
+                cs.WriteLine("return SendAsync(message, log);");
             cs.EndBlock();
         }
 

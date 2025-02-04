@@ -1,10 +1,8 @@
 #nullable enable
 
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using Macross.Json.Extensions;
+using StudioDrydock.AppStoreConnect.Core;
 
 namespace StudioDrydock.AppStoreConnect.Api
 {
@@ -22928,7 +22926,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/actors
-        public Task<ActorsResponse> Actors_getCollection(string[] filterId, Actors_getCollectionFieldsActors[]? fieldsActors = default, int? limit = default)
+        public Task<ActorsResponse> Actors_getCollection(string[] filterId, Actors_getCollectionFieldsActors[]? fieldsActors = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/actors";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -22940,7 +22938,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ActorsResponse>(message);
+            return SendAsync<ActorsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -22954,7 +22952,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/actors/{id}
-        public Task<ActorResponse> Actors_getInstance(string id, Actors_getInstanceFieldsActors[]? fieldsActors = default)
+        public Task<ActorResponse> Actors_getInstance(string id, Actors_getInstanceFieldsActors[]? fieldsActors = default, INestedLog? log = null)
         {
             string path = "/v1/actors/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -22963,11 +22961,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[actors]", string.Join(",", fieldsActors));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ActorResponse>(message);
+            return SendAsync<ActorResponse>(message, log);
         }
 
         // /v1/ageRatingDeclarations/{id}
-        public Task<AgeRatingDeclarationResponse> AgeRatingDeclarations_updateInstance(string id, AgeRatingDeclarationUpdateRequest request)
+        public Task<AgeRatingDeclarationResponse> AgeRatingDeclarations_updateInstance(string id, AgeRatingDeclarationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/ageRatingDeclarations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -22975,7 +22973,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AgeRatingDeclarationResponse>(message);
+            return SendAsync<AgeRatingDeclarationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -22987,7 +22985,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionDomains
-        public Task<AlternativeDistributionDomainsResponse> AlternativeDistributionDomains_getCollection(AlternativeDistributionDomains_getCollectionFieldsAlternativeDistributionDomains[]? fieldsAlternativeDistributionDomains = default, int? limit = default)
+        public Task<AlternativeDistributionDomainsResponse> AlternativeDistributionDomains_getCollection(AlternativeDistributionDomains_getCollectionFieldsAlternativeDistributionDomains[]? fieldsAlternativeDistributionDomains = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionDomains";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -22997,18 +22995,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionDomainsResponse>(message);
+            return SendAsync<AlternativeDistributionDomainsResponse>(message, log);
         }
 
         // /v1/alternativeDistributionDomains
-        public Task<AlternativeDistributionDomainResponse> AlternativeDistributionDomains_createInstance(AlternativeDistributionDomainCreateRequest request)
+        public Task<AlternativeDistributionDomainResponse> AlternativeDistributionDomains_createInstance(AlternativeDistributionDomainCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionDomains";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AlternativeDistributionDomainResponse>(message);
+            return SendAsync<AlternativeDistributionDomainResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23020,7 +23018,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionDomains/{id}
-        public Task<AlternativeDistributionDomainResponse> AlternativeDistributionDomains_getInstance(string id, AlternativeDistributionDomains_getInstanceFieldsAlternativeDistributionDomains[]? fieldsAlternativeDistributionDomains = default)
+        public Task<AlternativeDistributionDomainResponse> AlternativeDistributionDomains_getInstance(string id, AlternativeDistributionDomains_getInstanceFieldsAlternativeDistributionDomains[]? fieldsAlternativeDistributionDomains = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionDomains/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23029,22 +23027,22 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[alternativeDistributionDomains]", string.Join(",", fieldsAlternativeDistributionDomains));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionDomainResponse>(message);
+            return SendAsync<AlternativeDistributionDomainResponse>(message, log);
         }
 
         // /v1/alternativeDistributionDomains/{id}
-        public Task AlternativeDistributionDomains_deleteInstance(string id)
+        public Task AlternativeDistributionDomains_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionDomains/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/alternativeDistributionKeys
-        public Task<AlternativeDistributionKeysResponse> AlternativeDistributionKeys_getCollection(bool? existsApp = default, string[]? fieldsAlternativeDistributionKeys = default, int? limit = default)
+        public Task<AlternativeDistributionKeysResponse> AlternativeDistributionKeys_getCollection(bool? existsApp = default, string[]? fieldsAlternativeDistributionKeys = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionKeys";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -23056,22 +23054,22 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionKeysResponse>(message);
+            return SendAsync<AlternativeDistributionKeysResponse>(message, log);
         }
 
         // /v1/alternativeDistributionKeys
-        public Task<AlternativeDistributionKeyResponse> AlternativeDistributionKeys_createInstance(AlternativeDistributionKeyCreateRequest request)
+        public Task<AlternativeDistributionKeyResponse> AlternativeDistributionKeys_createInstance(AlternativeDistributionKeyCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionKeys";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AlternativeDistributionKeyResponse>(message);
+            return SendAsync<AlternativeDistributionKeyResponse>(message, log);
         }
 
         // /v1/alternativeDistributionKeys/{id}
-        public Task<AlternativeDistributionKeyResponse> AlternativeDistributionKeys_getInstance(string id, string[]? fieldsAlternativeDistributionKeys = default)
+        public Task<AlternativeDistributionKeyResponse> AlternativeDistributionKeys_getInstance(string id, string[]? fieldsAlternativeDistributionKeys = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionKeys/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23080,18 +23078,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[alternativeDistributionKeys]", string.Join(",", fieldsAlternativeDistributionKeys));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionKeyResponse>(message);
+            return SendAsync<AlternativeDistributionKeyResponse>(message, log);
         }
 
         // /v1/alternativeDistributionKeys/{id}
-        public Task AlternativeDistributionKeys_deleteInstance(string id)
+        public Task AlternativeDistributionKeys_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionKeys/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23104,7 +23102,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionPackageDeltas/{id}
-        public Task<AlternativeDistributionPackageDeltaResponse> AlternativeDistributionPackageDeltas_getInstance(string id, AlternativeDistributionPackageDeltas_getInstanceFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default)
+        public Task<AlternativeDistributionPackageDeltaResponse> AlternativeDistributionPackageDeltas_getInstance(string id, AlternativeDistributionPackageDeltas_getInstanceFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackageDeltas/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23113,18 +23111,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[alternativeDistributionPackageDeltas]", string.Join(",", fieldsAlternativeDistributionPackageDeltas));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageDeltaResponse>(message);
+            return SendAsync<AlternativeDistributionPackageDeltaResponse>(message, log);
         }
 
         // /v1/alternativeDistributionPackages
-        public Task<AlternativeDistributionPackageResponse> AlternativeDistributionPackages_createInstance(AlternativeDistributionPackageCreateRequest request)
+        public Task<AlternativeDistributionPackageResponse> AlternativeDistributionPackages_createInstance(AlternativeDistributionPackageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AlternativeDistributionPackageResponse>(message);
+            return SendAsync<AlternativeDistributionPackageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23141,7 +23139,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionPackages/{id}
-        public Task<AlternativeDistributionPackageResponse> AlternativeDistributionPackages_getInstance(string id, string[]? fieldsAlternativeDistributionPackages = default, AlternativeDistributionPackages_getInstanceFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, string[]? include = default, int? limitVersions = default)
+        public Task<AlternativeDistributionPackageResponse> AlternativeDistributionPackages_getInstance(string id, string[]? fieldsAlternativeDistributionPackages = default, AlternativeDistributionPackages_getInstanceFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, string[]? include = default, int? limitVersions = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23156,7 +23154,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[versions]", limitVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageResponse>(message);
+            return SendAsync<AlternativeDistributionPackageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23206,7 +23204,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionPackages/{id}/versions
-        public Task<AlternativeDistributionPackageVersionsResponse> AlternativeDistributionPackages_versions_getToManyRelated(string id, AlternativeDistributionPackages_versions_getToManyRelatedFilterState[]? filterState = default, AlternativeDistributionPackages_versions_getToManyRelatedFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, AlternativeDistributionPackages_versions_getToManyRelatedFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default, AlternativeDistributionPackages_versions_getToManyRelatedFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default, string[]? fieldsAlternativeDistributionPackages = default, int? limit = default, AlternativeDistributionPackages_versions_getToManyRelatedInclude[]? include = default, int? limitVariants = default, int? limitDeltas = default)
+        public Task<AlternativeDistributionPackageVersionsResponse> AlternativeDistributionPackages_versions_getToManyRelated(string id, AlternativeDistributionPackages_versions_getToManyRelatedFilterState[]? filterState = default, AlternativeDistributionPackages_versions_getToManyRelatedFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, AlternativeDistributionPackages_versions_getToManyRelatedFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default, AlternativeDistributionPackages_versions_getToManyRelatedFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default, string[]? fieldsAlternativeDistributionPackages = default, int? limit = default, AlternativeDistributionPackages_versions_getToManyRelatedInclude[]? include = default, int? limitVariants = default, int? limitDeltas = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackages/{id}/versions";
             path = path.Replace("{id}", id.ToString());
@@ -23231,7 +23229,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[deltas]", limitDeltas.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageVersionsResponse>(message);
+            return SendAsync<AlternativeDistributionPackageVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23244,7 +23242,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionPackageVariants/{id}
-        public Task<AlternativeDistributionPackageVariantResponse> AlternativeDistributionPackageVariants_getInstance(string id, AlternativeDistributionPackageVariants_getInstanceFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default)
+        public Task<AlternativeDistributionPackageVariantResponse> AlternativeDistributionPackageVariants_getInstance(string id, AlternativeDistributionPackageVariants_getInstanceFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackageVariants/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23253,7 +23251,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[alternativeDistributionPackageVariants]", string.Join(",", fieldsAlternativeDistributionPackageVariants));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageVariantResponse>(message);
+            return SendAsync<AlternativeDistributionPackageVariantResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23296,7 +23294,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionPackageVersions/{id}
-        public Task<AlternativeDistributionPackageVersionResponse> AlternativeDistributionPackageVersions_getInstance(string id, AlternativeDistributionPackageVersions_getInstanceFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, AlternativeDistributionPackageVersions_getInstanceFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default, AlternativeDistributionPackageVersions_getInstanceFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default, AlternativeDistributionPackageVersions_getInstanceInclude[]? include = default, int? limitDeltas = default, int? limitVariants = default)
+        public Task<AlternativeDistributionPackageVersionResponse> AlternativeDistributionPackageVersions_getInstance(string id, AlternativeDistributionPackageVersions_getInstanceFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, AlternativeDistributionPackageVersions_getInstanceFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default, AlternativeDistributionPackageVersions_getInstanceFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default, AlternativeDistributionPackageVersions_getInstanceInclude[]? include = default, int? limitDeltas = default, int? limitVariants = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackageVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23315,7 +23313,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[variants]", limitVariants.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageVersionResponse>(message);
+            return SendAsync<AlternativeDistributionPackageVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23328,7 +23326,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionPackageVersions/{id}/deltas
-        public Task<AlternativeDistributionPackageDeltasResponse> AlternativeDistributionPackageVersions_deltas_getToManyRelated(string id, AlternativeDistributionPackageVersions_deltas_getToManyRelatedFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default, int? limit = default)
+        public Task<AlternativeDistributionPackageDeltasResponse> AlternativeDistributionPackageVersions_deltas_getToManyRelated(string id, AlternativeDistributionPackageVersions_deltas_getToManyRelatedFieldsAlternativeDistributionPackageDeltas[]? fieldsAlternativeDistributionPackageDeltas = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackageVersions/{id}/deltas";
             path = path.Replace("{id}", id.ToString());
@@ -23339,7 +23337,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageDeltasResponse>(message);
+            return SendAsync<AlternativeDistributionPackageDeltasResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23352,7 +23350,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/alternativeDistributionPackageVersions/{id}/variants
-        public Task<AlternativeDistributionPackageVariantsResponse> AlternativeDistributionPackageVersions_variants_getToManyRelated(string id, AlternativeDistributionPackageVersions_variants_getToManyRelatedFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default, int? limit = default)
+        public Task<AlternativeDistributionPackageVariantsResponse> AlternativeDistributionPackageVersions_variants_getToManyRelated(string id, AlternativeDistributionPackageVersions_variants_getToManyRelatedFieldsAlternativeDistributionPackageVariants[]? fieldsAlternativeDistributionPackageVariants = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/alternativeDistributionPackageVersions/{id}/variants";
             path = path.Replace("{id}", id.ToString());
@@ -23363,7 +23361,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageVariantsResponse>(message);
+            return SendAsync<AlternativeDistributionPackageVariantsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23375,7 +23373,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/analyticsReportInstances/{id}
-        public Task<AnalyticsReportInstanceResponse> AnalyticsReportInstances_getInstance(string id, AnalyticsReportInstances_getInstanceFieldsAnalyticsReportInstances[]? fieldsAnalyticsReportInstances = default)
+        public Task<AnalyticsReportInstanceResponse> AnalyticsReportInstances_getInstance(string id, AnalyticsReportInstances_getInstanceFieldsAnalyticsReportInstances[]? fieldsAnalyticsReportInstances = default, INestedLog? log = null)
         {
             string path = "/v1/analyticsReportInstances/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23384,7 +23382,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[analyticsReportInstances]", string.Join(",", fieldsAnalyticsReportInstances));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportInstanceResponse>(message);
+            return SendAsync<AnalyticsReportInstanceResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23396,7 +23394,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/analyticsReportInstances/{id}/segments
-        public Task<AnalyticsReportSegmentsResponse> AnalyticsReportInstances_segments_getToManyRelated(string id, AnalyticsReportInstances_segments_getToManyRelatedFieldsAnalyticsReportSegments[]? fieldsAnalyticsReportSegments = default, int? limit = default)
+        public Task<AnalyticsReportSegmentsResponse> AnalyticsReportInstances_segments_getToManyRelated(string id, AnalyticsReportInstances_segments_getToManyRelatedFieldsAnalyticsReportSegments[]? fieldsAnalyticsReportSegments = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/analyticsReportInstances/{id}/segments";
             path = path.Replace("{id}", id.ToString());
@@ -23407,18 +23405,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportSegmentsResponse>(message);
+            return SendAsync<AnalyticsReportSegmentsResponse>(message, log);
         }
 
         // /v1/analyticsReportRequests
-        public Task<AnalyticsReportRequestResponse> AnalyticsReportRequests_createInstance(AnalyticsReportRequestCreateRequest request)
+        public Task<AnalyticsReportRequestResponse> AnalyticsReportRequests_createInstance(AnalyticsReportRequestCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/analyticsReportRequests";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AnalyticsReportRequestResponse>(message);
+            return SendAsync<AnalyticsReportRequestResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23438,7 +23436,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/analyticsReportRequests/{id}
-        public Task<AnalyticsReportRequestResponse> AnalyticsReportRequests_getInstance(string id, AnalyticsReportRequests_getInstanceFieldsAnalyticsReportRequests[]? fieldsAnalyticsReportRequests = default, AnalyticsReportRequests_getInstanceFieldsAnalyticsReports[]? fieldsAnalyticsReports = default, string[]? include = default, int? limitReports = default)
+        public Task<AnalyticsReportRequestResponse> AnalyticsReportRequests_getInstance(string id, AnalyticsReportRequests_getInstanceFieldsAnalyticsReportRequests[]? fieldsAnalyticsReportRequests = default, AnalyticsReportRequests_getInstanceFieldsAnalyticsReports[]? fieldsAnalyticsReports = default, string[]? include = default, int? limitReports = default, INestedLog? log = null)
         {
             string path = "/v1/analyticsReportRequests/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23453,18 +23451,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[reports]", limitReports.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportRequestResponse>(message);
+            return SendAsync<AnalyticsReportRequestResponse>(message, log);
         }
 
         // /v1/analyticsReportRequests/{id}
-        public Task AnalyticsReportRequests_deleteInstance(string id)
+        public Task AnalyticsReportRequests_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/analyticsReportRequests/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23486,7 +23484,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/analyticsReportRequests/{id}/reports
-        public Task<AnalyticsReportsResponse> AnalyticsReportRequests_reports_getToManyRelated(string id, string[]? filterName = default, AnalyticsReportRequests_reports_getToManyRelatedFilterCategory[]? filterCategory = default, AnalyticsReportRequests_reports_getToManyRelatedFieldsAnalyticsReports[]? fieldsAnalyticsReports = default, int? limit = default)
+        public Task<AnalyticsReportsResponse> AnalyticsReportRequests_reports_getToManyRelated(string id, string[]? filterName = default, AnalyticsReportRequests_reports_getToManyRelatedFilterCategory[]? filterCategory = default, AnalyticsReportRequests_reports_getToManyRelatedFieldsAnalyticsReports[]? fieldsAnalyticsReports = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/analyticsReportRequests/{id}/reports";
             path = path.Replace("{id}", id.ToString());
@@ -23501,7 +23499,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportsResponse>(message);
+            return SendAsync<AnalyticsReportsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23513,7 +23511,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/analyticsReports/{id}
-        public Task<AnalyticsReportResponse> AnalyticsReports_getInstance(string id, AnalyticsReports_getInstanceFieldsAnalyticsReports[]? fieldsAnalyticsReports = default)
+        public Task<AnalyticsReportResponse> AnalyticsReports_getInstance(string id, AnalyticsReports_getInstanceFieldsAnalyticsReports[]? fieldsAnalyticsReports = default, INestedLog? log = null)
         {
             string path = "/v1/analyticsReports/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23522,7 +23520,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[analyticsReports]", string.Join(",", fieldsAnalyticsReports));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportResponse>(message);
+            return SendAsync<AnalyticsReportResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23542,7 +23540,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/analyticsReports/{id}/instances
-        public Task<AnalyticsReportInstancesResponse> AnalyticsReports_instances_getToManyRelated(string id, AnalyticsReports_instances_getToManyRelatedFilterGranularity[]? filterGranularity = default, string[]? filterProcessingDate = default, AnalyticsReports_instances_getToManyRelatedFieldsAnalyticsReportInstances[]? fieldsAnalyticsReportInstances = default, int? limit = default)
+        public Task<AnalyticsReportInstancesResponse> AnalyticsReports_instances_getToManyRelated(string id, AnalyticsReports_instances_getToManyRelatedFilterGranularity[]? filterGranularity = default, string[]? filterProcessingDate = default, AnalyticsReports_instances_getToManyRelatedFieldsAnalyticsReportInstances[]? fieldsAnalyticsReportInstances = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/analyticsReports/{id}/instances";
             path = path.Replace("{id}", id.ToString());
@@ -23557,7 +23555,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportInstancesResponse>(message);
+            return SendAsync<AnalyticsReportInstancesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23569,7 +23567,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/analyticsReportSegments/{id}
-        public Task<AnalyticsReportSegmentResponse> AnalyticsReportSegments_getInstance(string id, AnalyticsReportSegments_getInstanceFieldsAnalyticsReportSegments[]? fieldsAnalyticsReportSegments = default)
+        public Task<AnalyticsReportSegmentResponse> AnalyticsReportSegments_getInstance(string id, AnalyticsReportSegments_getInstanceFieldsAnalyticsReportSegments[]? fieldsAnalyticsReportSegments = default, INestedLog? log = null)
         {
             string path = "/v1/analyticsReportSegments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23578,7 +23576,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[analyticsReportSegments]", string.Join(",", fieldsAnalyticsReportSegments));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportSegmentResponse>(message);
+            return SendAsync<AnalyticsReportSegmentResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23606,7 +23604,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCategories
-        public Task<AppCategoriesResponse> AppCategories_getCollection(AppCategories_getCollectionFilterPlatforms[]? filterPlatforms = default, bool? existsParent = default, AppCategories_getCollectionFieldsAppCategories[]? fieldsAppCategories = default, int? limit = default, AppCategories_getCollectionInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoriesResponse> AppCategories_getCollection(AppCategories_getCollectionFilterPlatforms[]? filterPlatforms = default, bool? existsParent = default, AppCategories_getCollectionFieldsAppCategories[]? fieldsAppCategories = default, int? limit = default, AppCategories_getCollectionInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appCategories";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -23624,7 +23622,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoriesResponse>(message);
+            return SendAsync<AppCategoriesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23643,7 +23641,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCategories/{id}
-        public Task<AppCategoryResponse> AppCategories_getInstance(string id, AppCategories_getInstanceFieldsAppCategories[]? fieldsAppCategories = default, AppCategories_getInstanceInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoryResponse> AppCategories_getInstance(string id, AppCategories_getInstanceFieldsAppCategories[]? fieldsAppCategories = default, AppCategories_getInstanceInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appCategories/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23656,7 +23654,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryResponse>(message);
+            return SendAsync<AppCategoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23668,7 +23666,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCategories/{id}/parent
-        public Task<AppCategoryWithoutIncludesResponse> AppCategories_parent_getToOneRelated(string id, AppCategories_parent_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default)
+        public Task<AppCategoryWithoutIncludesResponse> AppCategories_parent_getToOneRelated(string id, AppCategories_parent_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, INestedLog? log = null)
         {
             string path = "/v1/appCategories/{id}/parent";
             path = path.Replace("{id}", id.ToString());
@@ -23677,7 +23675,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appCategories]", string.Join(",", fieldsAppCategories));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryWithoutIncludesResponse>(message);
+            return SendAsync<AppCategoryWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23689,7 +23687,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCategories/{id}/subcategories
-        public Task<AppCategoriesWithoutIncludesResponse> AppCategories_subcategories_getToManyRelated(string id, AppCategories_subcategories_getToManyRelatedFieldsAppCategories[]? fieldsAppCategories = default, int? limit = default)
+        public Task<AppCategoriesWithoutIncludesResponse> AppCategories_subcategories_getToManyRelated(string id, AppCategories_subcategories_getToManyRelatedFieldsAppCategories[]? fieldsAppCategories = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/appCategories/{id}/subcategories";
             path = path.Replace("{id}", id.ToString());
@@ -23700,18 +23698,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoriesWithoutIncludesResponse>(message);
+            return SendAsync<AppCategoriesWithoutIncludesResponse>(message, log);
         }
 
         // /v1/appClipAdvancedExperienceImages
-        public Task<AppClipAdvancedExperienceImageResponse> AppClipAdvancedExperienceImages_createInstance(AppClipAdvancedExperienceImageCreateRequest request)
+        public Task<AppClipAdvancedExperienceImageResponse> AppClipAdvancedExperienceImages_createInstance(AppClipAdvancedExperienceImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipAdvancedExperienceImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipAdvancedExperienceImageResponse>(message);
+            return SendAsync<AppClipAdvancedExperienceImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23726,7 +23724,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipAdvancedExperienceImages/{id}
-        public Task<AppClipAdvancedExperienceImageResponse> AppClipAdvancedExperienceImages_getInstance(string id, AppClipAdvancedExperienceImages_getInstanceFieldsAppClipAdvancedExperienceImages[]? fieldsAppClipAdvancedExperienceImages = default)
+        public Task<AppClipAdvancedExperienceImageResponse> AppClipAdvancedExperienceImages_getInstance(string id, AppClipAdvancedExperienceImages_getInstanceFieldsAppClipAdvancedExperienceImages[]? fieldsAppClipAdvancedExperienceImages = default, INestedLog? log = null)
         {
             string path = "/v1/appClipAdvancedExperienceImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23735,11 +23733,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appClipAdvancedExperienceImages]", string.Join(",", fieldsAppClipAdvancedExperienceImages));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipAdvancedExperienceImageResponse>(message);
+            return SendAsync<AppClipAdvancedExperienceImageResponse>(message, log);
         }
 
         // /v1/appClipAdvancedExperienceImages/{id}
-        public Task<AppClipAdvancedExperienceImageResponse> AppClipAdvancedExperienceImages_updateInstance(string id, AppClipAdvancedExperienceImageUpdateRequest request)
+        public Task<AppClipAdvancedExperienceImageResponse> AppClipAdvancedExperienceImages_updateInstance(string id, AppClipAdvancedExperienceImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipAdvancedExperienceImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23747,18 +23745,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipAdvancedExperienceImageResponse>(message);
+            return SendAsync<AppClipAdvancedExperienceImageResponse>(message, log);
         }
 
         // /v1/appClipAdvancedExperiences
-        public Task<AppClipAdvancedExperienceResponse> AppClipAdvancedExperiences_createInstance(AppClipAdvancedExperienceCreateRequest request)
+        public Task<AppClipAdvancedExperienceResponse> AppClipAdvancedExperiences_createInstance(AppClipAdvancedExperienceCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipAdvancedExperiences";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipAdvancedExperienceResponse>(message);
+            return SendAsync<AppClipAdvancedExperienceResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23787,7 +23785,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipAdvancedExperiences/{id}
-        public Task<AppClipAdvancedExperienceResponse> AppClipAdvancedExperiences_getInstance(string id, AppClipAdvancedExperiences_getInstanceFieldsAppClipAdvancedExperiences[]? fieldsAppClipAdvancedExperiences = default, AppClipAdvancedExperiences_getInstanceInclude[]? include = default, int? limitLocalizations = default)
+        public Task<AppClipAdvancedExperienceResponse> AppClipAdvancedExperiences_getInstance(string id, AppClipAdvancedExperiences_getInstanceFieldsAppClipAdvancedExperiences[]? fieldsAppClipAdvancedExperiences = default, AppClipAdvancedExperiences_getInstanceInclude[]? include = default, int? limitLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appClipAdvancedExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23800,11 +23798,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[localizations]", limitLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipAdvancedExperienceResponse>(message);
+            return SendAsync<AppClipAdvancedExperienceResponse>(message, log);
         }
 
         // /v1/appClipAdvancedExperiences/{id}
-        public Task<AppClipAdvancedExperienceResponse> AppClipAdvancedExperiences_updateInstance(string id, AppClipAdvancedExperienceUpdateRequest request)
+        public Task<AppClipAdvancedExperienceResponse> AppClipAdvancedExperiences_updateInstance(string id, AppClipAdvancedExperienceUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipAdvancedExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23812,18 +23810,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipAdvancedExperienceResponse>(message);
+            return SendAsync<AppClipAdvancedExperienceResponse>(message, log);
         }
 
         // /v1/appClipAppStoreReviewDetails
-        public Task<AppClipAppStoreReviewDetailResponse> AppClipAppStoreReviewDetails_createInstance(AppClipAppStoreReviewDetailCreateRequest request)
+        public Task<AppClipAppStoreReviewDetailResponse> AppClipAppStoreReviewDetails_createInstance(AppClipAppStoreReviewDetailCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipAppStoreReviewDetails";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipAppStoreReviewDetailResponse>(message);
+            return SendAsync<AppClipAppStoreReviewDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23834,7 +23832,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipAppStoreReviewDetails/{id}
-        public Task<AppClipAppStoreReviewDetailResponse> AppClipAppStoreReviewDetails_getInstance(string id, AppClipAppStoreReviewDetails_getInstanceFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, string[]? include = default)
+        public Task<AppClipAppStoreReviewDetailResponse> AppClipAppStoreReviewDetails_getInstance(string id, AppClipAppStoreReviewDetails_getInstanceFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appClipAppStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23845,11 +23843,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipAppStoreReviewDetailResponse>(message);
+            return SendAsync<AppClipAppStoreReviewDetailResponse>(message, log);
         }
 
         // /v1/appClipAppStoreReviewDetails/{id}
-        public Task<AppClipAppStoreReviewDetailResponse> AppClipAppStoreReviewDetails_updateInstance(string id, AppClipAppStoreReviewDetailUpdateRequest request)
+        public Task<AppClipAppStoreReviewDetailResponse> AppClipAppStoreReviewDetails_updateInstance(string id, AppClipAppStoreReviewDetailUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipAppStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23857,18 +23855,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipAppStoreReviewDetailResponse>(message);
+            return SendAsync<AppClipAppStoreReviewDetailResponse>(message, log);
         }
 
         // /v1/appClipDefaultExperienceLocalizations
-        public Task<AppClipDefaultExperienceLocalizationResponse> AppClipDefaultExperienceLocalizations_createInstance(AppClipDefaultExperienceLocalizationCreateRequest request)
+        public Task<AppClipDefaultExperienceLocalizationResponse> AppClipDefaultExperienceLocalizations_createInstance(AppClipDefaultExperienceLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperienceLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipDefaultExperienceLocalizationResponse>(message);
+            return SendAsync<AppClipDefaultExperienceLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23900,7 +23898,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipDefaultExperienceLocalizations/{id}
-        public Task<AppClipDefaultExperienceLocalizationResponse> AppClipDefaultExperienceLocalizations_getInstance(string id, AppClipDefaultExperienceLocalizations_getInstanceFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClipDefaultExperienceLocalizations_getInstanceFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, AppClipDefaultExperienceLocalizations_getInstanceInclude[]? include = default)
+        public Task<AppClipDefaultExperienceLocalizationResponse> AppClipDefaultExperienceLocalizations_getInstance(string id, AppClipDefaultExperienceLocalizations_getInstanceFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClipDefaultExperienceLocalizations_getInstanceFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, AppClipDefaultExperienceLocalizations_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23913,11 +23911,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDefaultExperienceLocalizationResponse>(message);
+            return SendAsync<AppClipDefaultExperienceLocalizationResponse>(message, log);
         }
 
         // /v1/appClipDefaultExperienceLocalizations/{id}
-        public Task<AppClipDefaultExperienceLocalizationResponse> AppClipDefaultExperienceLocalizations_updateInstance(string id, AppClipDefaultExperienceLocalizationUpdateRequest request)
+        public Task<AppClipDefaultExperienceLocalizationResponse> AppClipDefaultExperienceLocalizations_updateInstance(string id, AppClipDefaultExperienceLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -23925,18 +23923,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipDefaultExperienceLocalizationResponse>(message);
+            return SendAsync<AppClipDefaultExperienceLocalizationResponse>(message, log);
         }
 
         // /v1/appClipDefaultExperienceLocalizations/{id}
-        public Task AppClipDefaultExperienceLocalizations_deleteInstance(string id)
+        public Task AppClipDefaultExperienceLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -23961,7 +23959,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipDefaultExperienceLocalizations/{id}/appClipHeaderImage
-        public Task<AppClipHeaderImageResponse> AppClipDefaultExperienceLocalizations_appClipHeaderImage_getToOneRelated(string id, AppClipDefaultExperienceLocalizations_appClipHeaderImage_getToOneRelatedFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, AppClipDefaultExperienceLocalizations_appClipHeaderImage_getToOneRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, string[]? include = default)
+        public Task<AppClipHeaderImageResponse> AppClipDefaultExperienceLocalizations_appClipHeaderImage_getToOneRelated(string id, AppClipDefaultExperienceLocalizations_appClipHeaderImage_getToOneRelatedFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, AppClipDefaultExperienceLocalizations_appClipHeaderImage_getToOneRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperienceLocalizations/{id}/appClipHeaderImage";
             path = path.Replace("{id}", id.ToString());
@@ -23974,18 +23972,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipHeaderImageResponse>(message);
+            return SendAsync<AppClipHeaderImageResponse>(message, log);
         }
 
         // /v1/appClipDefaultExperiences
-        public Task<AppClipDefaultExperienceResponse> AppClipDefaultExperiences_createInstance(AppClipDefaultExperienceCreateRequest request)
+        public Task<AppClipDefaultExperienceResponse> AppClipDefaultExperiences_createInstance(AppClipDefaultExperienceCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipDefaultExperienceResponse>(message);
+            return SendAsync<AppClipDefaultExperienceResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24053,7 +24051,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipDefaultExperiences/{id}
-        public Task<AppClipDefaultExperienceResponse> AppClipDefaultExperiences_getInstance(string id, AppClipDefaultExperiences_getInstanceFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClipDefaultExperiences_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppClipDefaultExperiences_getInstanceFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClipDefaultExperiences_getInstanceFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, AppClipDefaultExperiences_getInstanceInclude[]? include = default, int? limitAppClipDefaultExperienceLocalizations = default)
+        public Task<AppClipDefaultExperienceResponse> AppClipDefaultExperiences_getInstance(string id, AppClipDefaultExperiences_getInstanceFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClipDefaultExperiences_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppClipDefaultExperiences_getInstanceFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClipDefaultExperiences_getInstanceFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, AppClipDefaultExperiences_getInstanceInclude[]? include = default, int? limitAppClipDefaultExperienceLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -24072,11 +24070,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appClipDefaultExperienceLocalizations]", limitAppClipDefaultExperienceLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDefaultExperienceResponse>(message);
+            return SendAsync<AppClipDefaultExperienceResponse>(message, log);
         }
 
         // /v1/appClipDefaultExperiences/{id}
-        public Task<AppClipDefaultExperienceResponse> AppClipDefaultExperiences_updateInstance(string id, AppClipDefaultExperienceUpdateRequest request)
+        public Task<AppClipDefaultExperienceResponse> AppClipDefaultExperiences_updateInstance(string id, AppClipDefaultExperienceUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -24084,18 +24082,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipDefaultExperienceResponse>(message);
+            return SendAsync<AppClipDefaultExperienceResponse>(message, log);
         }
 
         // /v1/appClipDefaultExperiences/{id}
-        public Task AppClipDefaultExperiences_deleteInstance(string id)
+        public Task AppClipDefaultExperiences_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24116,7 +24114,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipDefaultExperiences/{id}/appClipAppStoreReviewDetail
-        public Task<AppClipAppStoreReviewDetailResponse> AppClipDefaultExperiences_appClipAppStoreReviewDetail_getToOneRelated(string id, AppClipDefaultExperiences_appClipAppStoreReviewDetail_getToOneRelatedFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, AppClipDefaultExperiences_appClipAppStoreReviewDetail_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, string[]? include = default)
+        public Task<AppClipAppStoreReviewDetailResponse> AppClipDefaultExperiences_appClipAppStoreReviewDetail_getToOneRelated(string id, AppClipDefaultExperiences_appClipAppStoreReviewDetail_getToOneRelatedFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, AppClipDefaultExperiences_appClipAppStoreReviewDetail_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}/appClipAppStoreReviewDetail";
             path = path.Replace("{id}", id.ToString());
@@ -24129,7 +24127,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipAppStoreReviewDetailResponse>(message);
+            return SendAsync<AppClipAppStoreReviewDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24171,7 +24169,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipDefaultExperiences/{id}/appClipDefaultExperienceLocalizations
-        public Task<AppClipDefaultExperienceLocalizationsResponse> AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, int? limit = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedInclude[]? include = default)
+        public Task<AppClipDefaultExperienceLocalizationsResponse> AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, int? limit = default, AppClipDefaultExperiences_appClipDefaultExperienceLocalizations_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}/appClipDefaultExperienceLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -24190,18 +24188,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDefaultExperienceLocalizationsResponse>(message);
+            return SendAsync<AppClipDefaultExperienceLocalizationsResponse>(message, log);
         }
 
         // /v1/appClipDefaultExperiences/{id}/relationships/releaseWithAppStoreVersion
-        public Task<AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageResponse> AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelationship(string id)
+        public Task<AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageResponse> AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelationship(string id, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}/relationships/releaseWithAppStoreVersion";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageResponse>(message);
+            return SendAsync<AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageResponse>(message, log);
         }
 
         public class AppClipDefaultExperiences_releaseWithAppStoreVersion_updateToOneRelationshipRequest
@@ -24216,7 +24214,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipDefaultExperiences/{id}/relationships/releaseWithAppStoreVersion
-        public Task AppClipDefaultExperiences_releaseWithAppStoreVersion_updateToOneRelationship(string id, AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageRequest request)
+        public Task AppClipDefaultExperiences_releaseWithAppStoreVersion_updateToOneRelationship(string id, AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}/relationships/releaseWithAppStoreVersion";
             path = path.Replace("{id}", id.ToString());
@@ -24224,7 +24222,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24462,7 +24460,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipDefaultExperiences/{id}/releaseWithAppStoreVersion
-        public Task<AppStoreVersionResponse> AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelated(string id, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsApps[]? fieldsApps = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default)
+        public Task<AppStoreVersionResponse> AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelated(string id, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsApps[]? fieldsApps = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, AppClipDefaultExperiences_releaseWithAppStoreVersion_getToOneRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default, INestedLog? log = null)
         {
             string path = "/v1/appClipDefaultExperiences/{id}/releaseWithAppStoreVersion";
             path = path.Replace("{id}", id.ToString());
@@ -24501,18 +24499,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentsV2]", limitAppStoreVersionExperimentsV2.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionResponse>(message);
+            return SendAsync<AppStoreVersionResponse>(message, log);
         }
 
         // /v1/appClipHeaderImages
-        public Task<AppClipHeaderImageResponse> AppClipHeaderImages_createInstance(AppClipHeaderImageCreateRequest request)
+        public Task<AppClipHeaderImageResponse> AppClipHeaderImages_createInstance(AppClipHeaderImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipHeaderImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipHeaderImageResponse>(message);
+            return SendAsync<AppClipHeaderImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24528,7 +24526,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClipHeaderImages/{id}
-        public Task<AppClipHeaderImageResponse> AppClipHeaderImages_getInstance(string id, AppClipHeaderImages_getInstanceFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, string[]? include = default)
+        public Task<AppClipHeaderImageResponse> AppClipHeaderImages_getInstance(string id, AppClipHeaderImages_getInstanceFieldsAppClipHeaderImages[]? fieldsAppClipHeaderImages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appClipHeaderImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -24539,11 +24537,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipHeaderImageResponse>(message);
+            return SendAsync<AppClipHeaderImageResponse>(message, log);
         }
 
         // /v1/appClipHeaderImages/{id}
-        public Task<AppClipHeaderImageResponse> AppClipHeaderImages_updateInstance(string id, AppClipHeaderImageUpdateRequest request)
+        public Task<AppClipHeaderImageResponse> AppClipHeaderImages_updateInstance(string id, AppClipHeaderImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appClipHeaderImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -24551,18 +24549,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppClipHeaderImageResponse>(message);
+            return SendAsync<AppClipHeaderImageResponse>(message, log);
         }
 
         // /v1/appClipHeaderImages/{id}
-        public Task AppClipHeaderImages_deleteInstance(string id)
+        public Task AppClipHeaderImages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appClipHeaderImages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24592,7 +24590,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClips/{id}
-        public Task<AppClipResponse> AppClips_getInstance(string id, AppClips_getInstanceFieldsAppClips[]? fieldsAppClips = default, AppClips_getInstanceFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClips_getInstanceInclude[]? include = default, int? limitAppClipDefaultExperiences = default)
+        public Task<AppClipResponse> AppClips_getInstance(string id, AppClips_getInstanceFieldsAppClips[]? fieldsAppClips = default, AppClips_getInstanceFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClips_getInstanceInclude[]? include = default, int? limitAppClipDefaultExperiences = default, INestedLog? log = null)
         {
             string path = "/v1/appClips/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -24607,7 +24605,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appClipDefaultExperiences]", limitAppClipDefaultExperiences.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipResponse>(message);
+            return SendAsync<AppClipResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24688,7 +24686,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClips/{id}/appClipAdvancedExperiences
-        public Task<AppClipAdvancedExperiencesResponse> AppClips_appClipAdvancedExperiences_getToManyRelated(string id, AppClips_appClipAdvancedExperiences_getToManyRelatedFilterStatus[]? filterStatus = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFilterPlaceStatus[]? filterPlaceStatus = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFilterAction[]? filterAction = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClipAdvancedExperiences[]? fieldsAppClipAdvancedExperiences = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClips[]? fieldsAppClips = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClipAdvancedExperienceImages[]? fieldsAppClipAdvancedExperienceImages = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClipAdvancedExperienceLocalizations[]? fieldsAppClipAdvancedExperienceLocalizations = default, int? limit = default, AppClips_appClipAdvancedExperiences_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default)
+        public Task<AppClipAdvancedExperiencesResponse> AppClips_appClipAdvancedExperiences_getToManyRelated(string id, AppClips_appClipAdvancedExperiences_getToManyRelatedFilterStatus[]? filterStatus = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFilterPlaceStatus[]? filterPlaceStatus = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFilterAction[]? filterAction = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClipAdvancedExperiences[]? fieldsAppClipAdvancedExperiences = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClips[]? fieldsAppClips = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClipAdvancedExperienceImages[]? fieldsAppClipAdvancedExperienceImages = default, AppClips_appClipAdvancedExperiences_getToManyRelatedFieldsAppClipAdvancedExperienceLocalizations[]? fieldsAppClipAdvancedExperienceLocalizations = default, int? limit = default, AppClips_appClipAdvancedExperiences_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appClips/{id}/appClipAdvancedExperiences";
             path = path.Replace("{id}", id.ToString());
@@ -24715,7 +24713,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[localizations]", limitLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipAdvancedExperiencesResponse>(message);
+            return SendAsync<AppClipAdvancedExperiencesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24792,7 +24790,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appClips/{id}/appClipDefaultExperiences
-        public Task<AppClipDefaultExperiencesResponse> AppClips_appClipDefaultExperiences_getToManyRelated(string id, bool? existsReleaseWithAppStoreVersion = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClips[]? fieldsAppClips = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, int? limit = default, AppClips_appClipDefaultExperiences_getToManyRelatedInclude[]? include = default, int? limitAppClipDefaultExperienceLocalizations = default)
+        public Task<AppClipDefaultExperiencesResponse> AppClips_appClipDefaultExperiences_getToManyRelated(string id, bool? existsReleaseWithAppStoreVersion = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClips[]? fieldsAppClips = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppClips_appClipDefaultExperiences_getToManyRelatedFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, int? limit = default, AppClips_appClipDefaultExperiences_getToManyRelatedInclude[]? include = default, int? limitAppClipDefaultExperienceLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appClips/{id}/appClipDefaultExperiences";
             path = path.Replace("{id}", id.ToString());
@@ -24817,18 +24815,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appClipDefaultExperienceLocalizations]", limitAppClipDefaultExperienceLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDefaultExperiencesResponse>(message);
+            return SendAsync<AppClipDefaultExperiencesResponse>(message, log);
         }
 
         // /v1/appCustomProductPageLocalizations
-        public Task<AppCustomProductPageLocalizationResponse> AppCustomProductPageLocalizations_createInstance(AppCustomProductPageLocalizationCreateRequest request)
+        public Task<AppCustomProductPageLocalizationResponse> AppCustomProductPageLocalizations_createInstance(AppCustomProductPageLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppCustomProductPageLocalizationResponse>(message);
+            return SendAsync<AppCustomProductPageLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -24870,7 +24868,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCustomProductPageLocalizations/{id}
-        public Task<AppCustomProductPageLocalizationResponse> AppCustomProductPageLocalizations_getInstance(string id, AppCustomProductPageLocalizations_getInstanceFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageLocalizations_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppCustomProductPageLocalizations_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppCustomProductPageLocalizations_getInstanceInclude[]? include = default, int? limitAppPreviewSets = default, int? limitAppScreenshotSets = default)
+        public Task<AppCustomProductPageLocalizationResponse> AppCustomProductPageLocalizations_getInstance(string id, AppCustomProductPageLocalizations_getInstanceFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageLocalizations_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppCustomProductPageLocalizations_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppCustomProductPageLocalizations_getInstanceInclude[]? include = default, int? limitAppPreviewSets = default, int? limitAppScreenshotSets = default, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -24889,11 +24887,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appScreenshotSets]", limitAppScreenshotSets.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCustomProductPageLocalizationResponse>(message);
+            return SendAsync<AppCustomProductPageLocalizationResponse>(message, log);
         }
 
         // /v1/appCustomProductPageLocalizations/{id}
-        public Task<AppCustomProductPageLocalizationResponse> AppCustomProductPageLocalizations_updateInstance(string id, AppCustomProductPageLocalizationUpdateRequest request)
+        public Task<AppCustomProductPageLocalizationResponse> AppCustomProductPageLocalizations_updateInstance(string id, AppCustomProductPageLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -24901,18 +24899,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppCustomProductPageLocalizationResponse>(message);
+            return SendAsync<AppCustomProductPageLocalizationResponse>(message, log);
         }
 
         // /v1/appCustomProductPageLocalizations/{id}
-        public Task AppCustomProductPageLocalizations_deleteInstance(string id)
+        public Task AppCustomProductPageLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25007,7 +25005,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCustomProductPageLocalizations/{id}/appPreviewSets
-        public Task<AppPreviewSetsResponse> AppCustomProductPageLocalizations_appPreviewSets_getToManyRelated(string id, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFilterPreviewType[]? filterPreviewType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, int? limit = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedInclude[]? include = default, int? limitAppPreviews = default)
+        public Task<AppPreviewSetsResponse> AppCustomProductPageLocalizations_appPreviewSets_getToManyRelated(string id, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFilterPreviewType[]? filterPreviewType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, int? limit = default, AppCustomProductPageLocalizations_appPreviewSets_getToManyRelatedInclude[]? include = default, int? limitAppPreviews = default, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}/appPreviewSets";
             path = path.Replace("{id}", id.ToString());
@@ -25036,7 +25034,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appPreviews]", limitAppPreviews.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPreviewSetsResponse>(message);
+            return SendAsync<AppPreviewSetsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25145,7 +25143,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCustomProductPageLocalizations/{id}/appScreenshotSets
-        public Task<AppScreenshotSetsResponse> AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelated(string id, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFilterScreenshotDisplayType[]? filterScreenshotDisplayType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, int? limit = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedInclude[]? include = default, int? limitAppScreenshots = default)
+        public Task<AppScreenshotSetsResponse> AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelated(string id, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFilterScreenshotDisplayType[]? filterScreenshotDisplayType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, int? limit = default, AppCustomProductPageLocalizations_appScreenshotSets_getToManyRelatedInclude[]? include = default, int? limitAppScreenshots = default, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageLocalizations/{id}/appScreenshotSets";
             path = path.Replace("{id}", id.ToString());
@@ -25174,18 +25172,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appScreenshots]", limitAppScreenshots.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppScreenshotSetsResponse>(message);
+            return SendAsync<AppScreenshotSetsResponse>(message, log);
         }
 
         // /v1/appCustomProductPages
-        public Task<AppCustomProductPageResponse> AppCustomProductPages_createInstance(AppCustomProductPageCreateRequest request)
+        public Task<AppCustomProductPageResponse> AppCustomProductPages_createInstance(AppCustomProductPageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppCustomProductPageResponse>(message);
+            return SendAsync<AppCustomProductPageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25216,7 +25214,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCustomProductPages/{id}
-        public Task<AppCustomProductPageResponse> AppCustomProductPages_getInstance(string id, AppCustomProductPages_getInstanceFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, AppCustomProductPages_getInstanceFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPages_getInstanceInclude[]? include = default, int? limitAppCustomProductPageVersions = default)
+        public Task<AppCustomProductPageResponse> AppCustomProductPages_getInstance(string id, AppCustomProductPages_getInstanceFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, AppCustomProductPages_getInstanceFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPages_getInstanceInclude[]? include = default, int? limitAppCustomProductPageVersions = default, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25231,11 +25229,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appCustomProductPageVersions]", limitAppCustomProductPageVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCustomProductPageResponse>(message);
+            return SendAsync<AppCustomProductPageResponse>(message, log);
         }
 
         // /v1/appCustomProductPages/{id}
-        public Task<AppCustomProductPageResponse> AppCustomProductPages_updateInstance(string id, AppCustomProductPageUpdateRequest request)
+        public Task<AppCustomProductPageResponse> AppCustomProductPages_updateInstance(string id, AppCustomProductPageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25243,18 +25241,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppCustomProductPageResponse>(message);
+            return SendAsync<AppCustomProductPageResponse>(message, log);
         }
 
         // /v1/appCustomProductPages/{id}
-        public Task AppCustomProductPages_deleteInstance(string id)
+        public Task AppCustomProductPages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25308,7 +25306,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCustomProductPages/{id}/appCustomProductPageVersions
-        public Task<AppCustomProductPageVersionsResponse> AppCustomProductPages_appCustomProductPageVersions_getToManyRelated(string id, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFilterState[]? filterState = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, int? limit = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedInclude[]? include = default, int? limitAppCustomProductPageLocalizations = default)
+        public Task<AppCustomProductPageVersionsResponse> AppCustomProductPages_appCustomProductPageVersions_getToManyRelated(string id, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFilterState[]? filterState = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, int? limit = default, AppCustomProductPages_appCustomProductPageVersions_getToManyRelatedInclude[]? include = default, int? limitAppCustomProductPageLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPages/{id}/appCustomProductPageVersions";
             path = path.Replace("{id}", id.ToString());
@@ -25329,18 +25327,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appCustomProductPageLocalizations]", limitAppCustomProductPageLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCustomProductPageVersionsResponse>(message);
+            return SendAsync<AppCustomProductPageVersionsResponse>(message, log);
         }
 
         // /v1/appCustomProductPageVersions
-        public Task<AppCustomProductPageVersionResponse> AppCustomProductPageVersions_createInstance(AppCustomProductPageVersionCreateRequest request)
+        public Task<AppCustomProductPageVersionResponse> AppCustomProductPageVersions_createInstance(AppCustomProductPageVersionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageVersions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppCustomProductPageVersionResponse>(message);
+            return SendAsync<AppCustomProductPageVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25371,7 +25369,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCustomProductPageVersions/{id}
-        public Task<AppCustomProductPageVersionResponse> AppCustomProductPageVersions_getInstance(string id, AppCustomProductPageVersions_getInstanceFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPageVersions_getInstanceFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageVersions_getInstanceInclude[]? include = default, int? limitAppCustomProductPageLocalizations = default)
+        public Task<AppCustomProductPageVersionResponse> AppCustomProductPageVersions_getInstance(string id, AppCustomProductPageVersions_getInstanceFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPageVersions_getInstanceFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageVersions_getInstanceInclude[]? include = default, int? limitAppCustomProductPageLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25386,11 +25384,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appCustomProductPageLocalizations]", limitAppCustomProductPageLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCustomProductPageVersionResponse>(message);
+            return SendAsync<AppCustomProductPageVersionResponse>(message, log);
         }
 
         // /v1/appCustomProductPageVersions/{id}
-        public Task<AppCustomProductPageVersionResponse> AppCustomProductPageVersions_updateInstance(string id, AppCustomProductPageVersionUpdateRequest request)
+        public Task<AppCustomProductPageVersionResponse> AppCustomProductPageVersions_updateInstance(string id, AppCustomProductPageVersionUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25398,7 +25396,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppCustomProductPageVersionResponse>(message);
+            return SendAsync<AppCustomProductPageVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25450,7 +25448,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appCustomProductPageVersions/{id}/appCustomProductPageLocalizations
-        public Task<AppCustomProductPageLocalizationsResponse> AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedInclude[]? include = default, int? limitAppScreenshotSets = default, int? limitAppPreviewSets = default)
+        public Task<AppCustomProductPageLocalizationsResponse> AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, AppCustomProductPageVersions_appCustomProductPageLocalizations_getToManyRelatedInclude[]? include = default, int? limitAppScreenshotSets = default, int? limitAppPreviewSets = default, INestedLog? log = null)
         {
             string path = "/v1/appCustomProductPageVersions/{id}/appCustomProductPageLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -25475,18 +25473,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appPreviewSets]", limitAppPreviewSets.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCustomProductPageLocalizationsResponse>(message);
+            return SendAsync<AppCustomProductPageLocalizationsResponse>(message, log);
         }
 
         // /v1/appEncryptionDeclarationDocuments
-        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarationDocuments_createInstance(AppEncryptionDeclarationDocumentCreateRequest request)
+        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarationDocuments_createInstance(AppEncryptionDeclarationDocumentCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarationDocuments";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message);
+            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25502,7 +25500,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEncryptionDeclarationDocuments/{id}
-        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarationDocuments_getInstance(string id, AppEncryptionDeclarationDocuments_getInstanceFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default)
+        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarationDocuments_getInstance(string id, AppEncryptionDeclarationDocuments_getInstanceFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarationDocuments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25511,11 +25509,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appEncryptionDeclarationDocuments]", string.Join(",", fieldsAppEncryptionDeclarationDocuments));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message);
+            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message, log);
         }
 
         // /v1/appEncryptionDeclarationDocuments/{id}
-        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarationDocuments_updateInstance(string id, AppEncryptionDeclarationDocumentUpdateRequest request)
+        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarationDocuments_updateInstance(string id, AppEncryptionDeclarationDocumentUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarationDocuments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25523,7 +25521,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message);
+            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25578,7 +25576,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEncryptionDeclarations
-        public Task<AppEncryptionDeclarationsResponse> AppEncryptionDeclarations_getCollection(AppEncryptionDeclarations_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterApp = default, string[]? filterBuilds = default, AppEncryptionDeclarations_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, AppEncryptionDeclarations_getCollectionFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, int? limit = default, AppEncryptionDeclarations_getCollectionInclude[]? include = default, int? limitBuilds = default)
+        public Task<AppEncryptionDeclarationsResponse> AppEncryptionDeclarations_getCollection(AppEncryptionDeclarations_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterApp = default, string[]? filterBuilds = default, AppEncryptionDeclarations_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, AppEncryptionDeclarations_getCollectionFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, int? limit = default, AppEncryptionDeclarations_getCollectionInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -25600,18 +25598,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEncryptionDeclarationsResponse>(message);
+            return SendAsync<AppEncryptionDeclarationsResponse>(message, log);
         }
 
         // /v1/appEncryptionDeclarations
-        public Task<AppEncryptionDeclarationResponse> AppEncryptionDeclarations_createInstance(AppEncryptionDeclarationCreateRequest request)
+        public Task<AppEncryptionDeclarationResponse> AppEncryptionDeclarations_createInstance(AppEncryptionDeclarationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEncryptionDeclarationResponse>(message);
+            return SendAsync<AppEncryptionDeclarationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25657,7 +25655,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEncryptionDeclarations/{id}
-        public Task<AppEncryptionDeclarationResponse> AppEncryptionDeclarations_getInstance(string id, AppEncryptionDeclarations_getInstanceFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, AppEncryptionDeclarations_getInstanceFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, AppEncryptionDeclarations_getInstanceInclude[]? include = default, int? limitBuilds = default)
+        public Task<AppEncryptionDeclarationResponse> AppEncryptionDeclarations_getInstance(string id, AppEncryptionDeclarations_getInstanceFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, AppEncryptionDeclarations_getInstanceFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, AppEncryptionDeclarations_getInstanceInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25672,7 +25670,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEncryptionDeclarationResponse>(message);
+            return SendAsync<AppEncryptionDeclarationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25725,7 +25723,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/appEncryptionDeclarations/{id}/app
         [Obsolete]
-        public Task<AppWithoutIncludesResponse> AppEncryptionDeclarations_app_getToOneRelated(string id, AppEncryptionDeclarations_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> AppEncryptionDeclarations_app_getToOneRelated(string id, AppEncryptionDeclarations_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarations/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -25734,7 +25732,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25750,7 +25748,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEncryptionDeclarations/{id}/appEncryptionDeclarationDocument
-        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarations_appEncryptionDeclarationDocument_getToOneRelated(string id, AppEncryptionDeclarations_appEncryptionDeclarationDocument_getToOneRelatedFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default)
+        public Task<AppEncryptionDeclarationDocumentResponse> AppEncryptionDeclarations_appEncryptionDeclarationDocument_getToOneRelated(string id, AppEncryptionDeclarations_appEncryptionDeclarationDocument_getToOneRelatedFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarations/{id}/appEncryptionDeclarationDocument";
             path = path.Replace("{id}", id.ToString());
@@ -25759,7 +25757,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appEncryptionDeclarationDocuments]", string.Join(",", fieldsAppEncryptionDeclarationDocuments));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message);
+            return SendAsync<AppEncryptionDeclarationDocumentResponse>(message, log);
         }
 
         public class AppEncryptionDeclarations_builds_createToManyRelationshipRequest
@@ -25775,7 +25773,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/appEncryptionDeclarations/{id}/relationships/builds
         [Obsolete]
-        public Task AppEncryptionDeclarations_builds_createToManyRelationship(string id, AppEncryptionDeclarationBuildsLinkagesRequest request)
+        public Task AppEncryptionDeclarations_builds_createToManyRelationship(string id, AppEncryptionDeclarationBuildsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEncryptionDeclarations/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
@@ -25783,18 +25781,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appEventLocalizations
-        public Task<AppEventLocalizationResponse> AppEventLocalizations_createInstance(AppEventLocalizationCreateRequest request)
+        public Task<AppEventLocalizationResponse> AppEventLocalizations_createInstance(AppEventLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEventLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventLocalizationResponse>(message);
+            return SendAsync<AppEventLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25847,7 +25845,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEventLocalizations/{id}
-        public Task<AppEventLocalizationResponse> AppEventLocalizations_getInstance(string id, AppEventLocalizations_getInstanceFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, AppEventLocalizations_getInstanceFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, AppEventLocalizations_getInstanceFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, AppEventLocalizations_getInstanceInclude[]? include = default, int? limitAppEventScreenshots = default, int? limitAppEventVideoClips = default)
+        public Task<AppEventLocalizationResponse> AppEventLocalizations_getInstance(string id, AppEventLocalizations_getInstanceFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, AppEventLocalizations_getInstanceFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, AppEventLocalizations_getInstanceFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, AppEventLocalizations_getInstanceInclude[]? include = default, int? limitAppEventScreenshots = default, int? limitAppEventVideoClips = default, INestedLog? log = null)
         {
             string path = "/v1/appEventLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25866,11 +25864,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appEventVideoClips]", limitAppEventVideoClips.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventLocalizationResponse>(message);
+            return SendAsync<AppEventLocalizationResponse>(message, log);
         }
 
         // /v1/appEventLocalizations/{id}
-        public Task<AppEventLocalizationResponse> AppEventLocalizations_updateInstance(string id, AppEventLocalizationUpdateRequest request)
+        public Task<AppEventLocalizationResponse> AppEventLocalizations_updateInstance(string id, AppEventLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEventLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -25878,18 +25876,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventLocalizationResponse>(message);
+            return SendAsync<AppEventLocalizationResponse>(message, log);
         }
 
         // /v1/appEventLocalizations/{id}
-        public Task AppEventLocalizations_deleteInstance(string id)
+        public Task AppEventLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appEventLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25918,7 +25916,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEventLocalizations/{id}/appEventScreenshots
-        public Task<AppEventScreenshotsResponse> AppEventLocalizations_appEventScreenshots_getToManyRelated(string id, AppEventLocalizations_appEventScreenshots_getToManyRelatedFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, AppEventLocalizations_appEventScreenshots_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, int? limit = default, string[]? include = default)
+        public Task<AppEventScreenshotsResponse> AppEventLocalizations_appEventScreenshots_getToManyRelated(string id, AppEventLocalizations_appEventScreenshots_getToManyRelatedFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, AppEventLocalizations_appEventScreenshots_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appEventLocalizations/{id}/appEventScreenshots";
             path = path.Replace("{id}", id.ToString());
@@ -25933,7 +25931,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventScreenshotsResponse>(message);
+            return SendAsync<AppEventScreenshotsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -25965,7 +25963,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEventLocalizations/{id}/appEventVideoClips
-        public Task<AppEventVideoClipsResponse> AppEventLocalizations_appEventVideoClips_getToManyRelated(string id, AppEventLocalizations_appEventVideoClips_getToManyRelatedFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, AppEventLocalizations_appEventVideoClips_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, int? limit = default, string[]? include = default)
+        public Task<AppEventVideoClipsResponse> AppEventLocalizations_appEventVideoClips_getToManyRelated(string id, AppEventLocalizations_appEventVideoClips_getToManyRelatedFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, AppEventLocalizations_appEventVideoClips_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appEventLocalizations/{id}/appEventVideoClips";
             path = path.Replace("{id}", id.ToString());
@@ -25980,18 +25978,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventVideoClipsResponse>(message);
+            return SendAsync<AppEventVideoClipsResponse>(message, log);
         }
 
         // /v1/appEvents
-        public Task<AppEventResponse> AppEvents_createInstance(AppEventCreateRequest request)
+        public Task<AppEventResponse> AppEvents_createInstance(AppEventCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEvents";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventResponse>(message);
+            return SendAsync<AppEventResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26023,7 +26021,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEvents/{id}
-        public Task<AppEventResponse> AppEvents_getInstance(string id, AppEvents_getInstanceFieldsAppEvents[]? fieldsAppEvents = default, AppEvents_getInstanceFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, string[]? include = default, int? limitLocalizations = default)
+        public Task<AppEventResponse> AppEvents_getInstance(string id, AppEvents_getInstanceFieldsAppEvents[]? fieldsAppEvents = default, AppEvents_getInstanceFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, string[]? include = default, int? limitLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appEvents/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26038,11 +26036,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[localizations]", limitLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventResponse>(message);
+            return SendAsync<AppEventResponse>(message, log);
         }
 
         // /v1/appEvents/{id}
-        public Task<AppEventResponse> AppEvents_updateInstance(string id, AppEventUpdateRequest request)
+        public Task<AppEventResponse> AppEvents_updateInstance(string id, AppEventUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEvents/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26050,18 +26048,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventResponse>(message);
+            return SendAsync<AppEventResponse>(message, log);
         }
 
         // /v1/appEvents/{id}
-        public Task AppEvents_deleteInstance(string id)
+        public Task AppEvents_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appEvents/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26130,7 +26128,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEvents/{id}/localizations
-        public Task<AppEventLocalizationsResponse> AppEvents_localizations_getToManyRelated(string id, AppEvents_localizations_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, AppEvents_localizations_getToManyRelatedFieldsAppEvents[]? fieldsAppEvents = default, AppEvents_localizations_getToManyRelatedFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, AppEvents_localizations_getToManyRelatedFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, int? limit = default, AppEvents_localizations_getToManyRelatedInclude[]? include = default, int? limitAppEventScreenshots = default, int? limitAppEventVideoClips = default)
+        public Task<AppEventLocalizationsResponse> AppEvents_localizations_getToManyRelated(string id, AppEvents_localizations_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, AppEvents_localizations_getToManyRelatedFieldsAppEvents[]? fieldsAppEvents = default, AppEvents_localizations_getToManyRelatedFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, AppEvents_localizations_getToManyRelatedFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, int? limit = default, AppEvents_localizations_getToManyRelatedInclude[]? include = default, int? limitAppEventScreenshots = default, int? limitAppEventVideoClips = default, INestedLog? log = null)
         {
             string path = "/v1/appEvents/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
@@ -26153,18 +26151,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appEventVideoClips]", limitAppEventVideoClips.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventLocalizationsResponse>(message);
+            return SendAsync<AppEventLocalizationsResponse>(message, log);
         }
 
         // /v1/appEventScreenshots
-        public Task<AppEventScreenshotResponse> AppEventScreenshots_createInstance(AppEventScreenshotCreateRequest request)
+        public Task<AppEventScreenshotResponse> AppEventScreenshots_createInstance(AppEventScreenshotCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEventScreenshots";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventScreenshotResponse>(message);
+            return SendAsync<AppEventScreenshotResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26181,7 +26179,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEventScreenshots/{id}
-        public Task<AppEventScreenshotResponse> AppEventScreenshots_getInstance(string id, AppEventScreenshots_getInstanceFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, string[]? include = default)
+        public Task<AppEventScreenshotResponse> AppEventScreenshots_getInstance(string id, AppEventScreenshots_getInstanceFieldsAppEventScreenshots[]? fieldsAppEventScreenshots = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appEventScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26192,11 +26190,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventScreenshotResponse>(message);
+            return SendAsync<AppEventScreenshotResponse>(message, log);
         }
 
         // /v1/appEventScreenshots/{id}
-        public Task<AppEventScreenshotResponse> AppEventScreenshots_updateInstance(string id, AppEventScreenshotUpdateRequest request)
+        public Task<AppEventScreenshotResponse> AppEventScreenshots_updateInstance(string id, AppEventScreenshotUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEventScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26204,29 +26202,29 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventScreenshotResponse>(message);
+            return SendAsync<AppEventScreenshotResponse>(message, log);
         }
 
         // /v1/appEventScreenshots/{id}
-        public Task AppEventScreenshots_deleteInstance(string id)
+        public Task AppEventScreenshots_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appEventScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appEventVideoClips
-        public Task<AppEventVideoClipResponse> AppEventVideoClips_createInstance(AppEventVideoClipCreateRequest request)
+        public Task<AppEventVideoClipResponse> AppEventVideoClips_createInstance(AppEventVideoClipCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEventVideoClips";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventVideoClipResponse>(message);
+            return SendAsync<AppEventVideoClipResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26246,7 +26244,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appEventVideoClips/{id}
-        public Task<AppEventVideoClipResponse> AppEventVideoClips_getInstance(string id, AppEventVideoClips_getInstanceFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, string[]? include = default)
+        public Task<AppEventVideoClipResponse> AppEventVideoClips_getInstance(string id, AppEventVideoClips_getInstanceFieldsAppEventVideoClips[]? fieldsAppEventVideoClips = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appEventVideoClips/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26257,11 +26255,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventVideoClipResponse>(message);
+            return SendAsync<AppEventVideoClipResponse>(message, log);
         }
 
         // /v1/appEventVideoClips/{id}
-        public Task<AppEventVideoClipResponse> AppEventVideoClips_updateInstance(string id, AppEventVideoClipUpdateRequest request)
+        public Task<AppEventVideoClipResponse> AppEventVideoClips_updateInstance(string id, AppEventVideoClipUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appEventVideoClips/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26269,29 +26267,29 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppEventVideoClipResponse>(message);
+            return SendAsync<AppEventVideoClipResponse>(message, log);
         }
 
         // /v1/appEventVideoClips/{id}
-        public Task AppEventVideoClips_deleteInstance(string id)
+        public Task AppEventVideoClips_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appEventVideoClips/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appInfoLocalizations
-        public Task<AppInfoLocalizationResponse> AppInfoLocalizations_createInstance(AppInfoLocalizationCreateRequest request)
+        public Task<AppInfoLocalizationResponse> AppInfoLocalizations_createInstance(AppInfoLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appInfoLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppInfoLocalizationResponse>(message);
+            return SendAsync<AppInfoLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26307,7 +26305,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfoLocalizations/{id}
-        public Task<AppInfoLocalizationResponse> AppInfoLocalizations_getInstance(string id, AppInfoLocalizations_getInstanceFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, string[]? include = default)
+        public Task<AppInfoLocalizationResponse> AppInfoLocalizations_getInstance(string id, AppInfoLocalizations_getInstanceFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appInfoLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26318,11 +26316,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppInfoLocalizationResponse>(message);
+            return SendAsync<AppInfoLocalizationResponse>(message, log);
         }
 
         // /v1/appInfoLocalizations/{id}
-        public Task<AppInfoLocalizationResponse> AppInfoLocalizations_updateInstance(string id, AppInfoLocalizationUpdateRequest request)
+        public Task<AppInfoLocalizationResponse> AppInfoLocalizations_updateInstance(string id, AppInfoLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appInfoLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26330,18 +26328,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppInfoLocalizationResponse>(message);
+            return SendAsync<AppInfoLocalizationResponse>(message, log);
         }
 
         // /v1/appInfoLocalizations/{id}
-        public Task AppInfoLocalizations_deleteInstance(string id)
+        public Task AppInfoLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appInfoLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26427,7 +26425,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}
-        public Task<AppInfoResponse> AppInfos_getInstance(string id, AppInfos_getInstanceFieldsAppInfos[]? fieldsAppInfos = default, AppInfos_getInstanceFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, AppInfos_getInstanceFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, AppInfos_getInstanceFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_getInstanceInclude[]? include = default, int? limitAppInfoLocalizations = default)
+        public Task<AppInfoResponse> AppInfos_getInstance(string id, AppInfos_getInstanceFieldsAppInfos[]? fieldsAppInfos = default, AppInfos_getInstanceFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, AppInfos_getInstanceFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, AppInfos_getInstanceFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_getInstanceInclude[]? include = default, int? limitAppInfoLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26446,11 +26444,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appInfoLocalizations]", limitAppInfoLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppInfoResponse>(message);
+            return SendAsync<AppInfoResponse>(message, log);
         }
 
         // /v1/appInfos/{id}
-        public Task<AppInfoResponse> AppInfos_updateInstance(string id, AppInfoUpdateRequest request)
+        public Task<AppInfoResponse> AppInfos_updateInstance(string id, AppInfoUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26458,7 +26456,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppInfoResponse>(message);
+            return SendAsync<AppInfoResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26487,7 +26485,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/ageRatingDeclaration
-        public Task<AgeRatingDeclarationResponse> AppInfos_ageRatingDeclaration_getToOneRelated(string id, AppInfos_ageRatingDeclaration_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default)
+        public Task<AgeRatingDeclarationResponse> AppInfos_ageRatingDeclaration_getToOneRelated(string id, AppInfos_ageRatingDeclaration_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/ageRatingDeclaration";
             path = path.Replace("{id}", id.ToString());
@@ -26496,7 +26494,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[ageRatingDeclarations]", string.Join(",", fieldsAgeRatingDeclarations));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AgeRatingDeclarationResponse>(message);
+            return SendAsync<AgeRatingDeclarationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26535,7 +26533,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/appInfoLocalizations
-        public Task<AppInfoLocalizationsResponse> AppInfos_appInfoLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppInfos_appInfoLocalizations_getToManyRelatedFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, AppInfos_appInfoLocalizations_getToManyRelatedFieldsAppInfos[]? fieldsAppInfos = default, int? limit = default, string[]? include = default)
+        public Task<AppInfoLocalizationsResponse> AppInfos_appInfoLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppInfos_appInfoLocalizations_getToManyRelatedFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, AppInfos_appInfoLocalizations_getToManyRelatedFieldsAppInfos[]? fieldsAppInfos = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/appInfoLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -26552,7 +26550,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppInfoLocalizationsResponse>(message);
+            return SendAsync<AppInfoLocalizationsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26571,7 +26569,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/primaryCategory
-        public Task<AppCategoryResponse> AppInfos_primaryCategory_getToOneRelated(string id, AppInfos_primaryCategory_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_primaryCategory_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoryResponse> AppInfos_primaryCategory_getToOneRelated(string id, AppInfos_primaryCategory_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_primaryCategory_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/primaryCategory";
             path = path.Replace("{id}", id.ToString());
@@ -26584,7 +26582,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryResponse>(message);
+            return SendAsync<AppCategoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26603,7 +26601,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/primarySubcategoryOne
-        public Task<AppCategoryResponse> AppInfos_primarySubcategoryOne_getToOneRelated(string id, AppInfos_primarySubcategoryOne_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_primarySubcategoryOne_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoryResponse> AppInfos_primarySubcategoryOne_getToOneRelated(string id, AppInfos_primarySubcategoryOne_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_primarySubcategoryOne_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/primarySubcategoryOne";
             path = path.Replace("{id}", id.ToString());
@@ -26616,7 +26614,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryResponse>(message);
+            return SendAsync<AppCategoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26635,7 +26633,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/primarySubcategoryTwo
-        public Task<AppCategoryResponse> AppInfos_primarySubcategoryTwo_getToOneRelated(string id, AppInfos_primarySubcategoryTwo_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_primarySubcategoryTwo_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoryResponse> AppInfos_primarySubcategoryTwo_getToOneRelated(string id, AppInfos_primarySubcategoryTwo_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_primarySubcategoryTwo_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/primarySubcategoryTwo";
             path = path.Replace("{id}", id.ToString());
@@ -26648,7 +26646,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryResponse>(message);
+            return SendAsync<AppCategoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26667,7 +26665,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/secondaryCategory
-        public Task<AppCategoryResponse> AppInfos_secondaryCategory_getToOneRelated(string id, AppInfos_secondaryCategory_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_secondaryCategory_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoryResponse> AppInfos_secondaryCategory_getToOneRelated(string id, AppInfos_secondaryCategory_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_secondaryCategory_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/secondaryCategory";
             path = path.Replace("{id}", id.ToString());
@@ -26680,7 +26678,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryResponse>(message);
+            return SendAsync<AppCategoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26699,7 +26697,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/secondarySubcategoryOne
-        public Task<AppCategoryResponse> AppInfos_secondarySubcategoryOne_getToOneRelated(string id, AppInfos_secondarySubcategoryOne_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_secondarySubcategoryOne_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoryResponse> AppInfos_secondarySubcategoryOne_getToOneRelated(string id, AppInfos_secondarySubcategoryOne_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_secondarySubcategoryOne_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/secondarySubcategoryOne";
             path = path.Replace("{id}", id.ToString());
@@ -26712,7 +26710,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryResponse>(message);
+            return SendAsync<AppCategoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26731,7 +26729,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appInfos/{id}/secondarySubcategoryTwo
-        public Task<AppCategoryResponse> AppInfos_secondarySubcategoryTwo_getToOneRelated(string id, AppInfos_secondarySubcategoryTwo_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_secondarySubcategoryTwo_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default)
+        public Task<AppCategoryResponse> AppInfos_secondarySubcategoryTwo_getToOneRelated(string id, AppInfos_secondarySubcategoryTwo_getToOneRelatedFieldsAppCategories[]? fieldsAppCategories = default, AppInfos_secondarySubcategoryTwo_getToOneRelatedInclude[]? include = default, int? limitSubcategories = default, INestedLog? log = null)
         {
             string path = "/v1/appInfos/{id}/secondarySubcategoryTwo";
             path = path.Replace("{id}", id.ToString());
@@ -26744,18 +26742,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subcategories]", limitSubcategories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCategoryResponse>(message);
+            return SendAsync<AppCategoryResponse>(message, log);
         }
 
         // /v1/appPreviews
-        public Task<AppPreviewResponse> AppPreviews_createInstance(AppPreviewCreateRequest request)
+        public Task<AppPreviewResponse> AppPreviews_createInstance(AppPreviewCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appPreviews";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppPreviewResponse>(message);
+            return SendAsync<AppPreviewResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26776,7 +26774,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appPreviews/{id}
-        public Task<AppPreviewResponse> AppPreviews_getInstance(string id, AppPreviews_getInstanceFieldsAppPreviews[]? fieldsAppPreviews = default, string[]? include = default)
+        public Task<AppPreviewResponse> AppPreviews_getInstance(string id, AppPreviews_getInstanceFieldsAppPreviews[]? fieldsAppPreviews = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appPreviews/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26787,11 +26785,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPreviewResponse>(message);
+            return SendAsync<AppPreviewResponse>(message, log);
         }
 
         // /v1/appPreviews/{id}
-        public Task<AppPreviewResponse> AppPreviews_updateInstance(string id, AppPreviewUpdateRequest request)
+        public Task<AppPreviewResponse> AppPreviews_updateInstance(string id, AppPreviewUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appPreviews/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26799,29 +26797,29 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppPreviewResponse>(message);
+            return SendAsync<AppPreviewResponse>(message, log);
         }
 
         // /v1/appPreviews/{id}
-        public Task AppPreviews_deleteInstance(string id)
+        public Task AppPreviews_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appPreviews/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appPreviewSets
-        public Task<AppPreviewSetResponse> AppPreviewSets_createInstance(AppPreviewSetCreateRequest request)
+        public Task<AppPreviewSetResponse> AppPreviewSets_createInstance(AppPreviewSetCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appPreviewSets";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppPreviewSetResponse>(message);
+            return SendAsync<AppPreviewSetResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26861,7 +26859,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appPreviewSets/{id}
-        public Task<AppPreviewSetResponse> AppPreviewSets_getInstance(string id, AppPreviewSets_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppPreviewSets_getInstanceFieldsAppPreviews[]? fieldsAppPreviews = default, AppPreviewSets_getInstanceInclude[]? include = default, int? limitAppPreviews = default)
+        public Task<AppPreviewSetResponse> AppPreviewSets_getInstance(string id, AppPreviewSets_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppPreviewSets_getInstanceFieldsAppPreviews[]? fieldsAppPreviews = default, AppPreviewSets_getInstanceInclude[]? include = default, int? limitAppPreviews = default, INestedLog? log = null)
         {
             string path = "/v1/appPreviewSets/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -26876,18 +26874,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appPreviews]", limitAppPreviews.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPreviewSetResponse>(message);
+            return SendAsync<AppPreviewSetResponse>(message, log);
         }
 
         // /v1/appPreviewSets/{id}
-        public Task AppPreviewSets_deleteInstance(string id)
+        public Task AppPreviewSets_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appPreviewSets/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -26918,7 +26916,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appPreviewSets/{id}/appPreviews
-        public Task<AppPreviewsResponse> AppPreviewSets_appPreviews_getToManyRelated(string id, AppPreviewSets_appPreviews_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, AppPreviewSets_appPreviews_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, string[]? include = default)
+        public Task<AppPreviewsResponse> AppPreviewSets_appPreviews_getToManyRelated(string id, AppPreviewSets_appPreviews_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, AppPreviewSets_appPreviews_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appPreviewSets/{id}/appPreviews";
             path = path.Replace("{id}", id.ToString());
@@ -26933,11 +26931,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPreviewsResponse>(message);
+            return SendAsync<AppPreviewsResponse>(message, log);
         }
 
         // /v1/appPreviewSets/{id}/relationships/appPreviews
-        public Task<AppPreviewSetAppPreviewsLinkagesResponse> AppPreviewSets_appPreviews_getToManyRelationship(string id, int? limit = default)
+        public Task<AppPreviewSetAppPreviewsLinkagesResponse> AppPreviewSets_appPreviews_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/appPreviewSets/{id}/relationships/appPreviews";
             path = path.Replace("{id}", id.ToString());
@@ -26946,7 +26944,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPreviewSetAppPreviewsLinkagesResponse>(message);
+            return SendAsync<AppPreviewSetAppPreviewsLinkagesResponse>(message, log);
         }
 
         public class AppPreviewSets_appPreviews_replaceToManyRelationshipRequest
@@ -26961,7 +26959,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appPreviewSets/{id}/relationships/appPreviews
-        public Task AppPreviewSets_appPreviews_replaceToManyRelationship(string id, AppPreviewSetAppPreviewsLinkagesRequest request)
+        public Task AppPreviewSets_appPreviews_replaceToManyRelationship(string id, AppPreviewSetAppPreviewsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/appPreviewSets/{id}/relationships/appPreviews";
             path = path.Replace("{id}", id.ToString());
@@ -26969,18 +26967,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appPriceSchedules
-        public Task<AppPriceScheduleResponse> AppPriceSchedules_createInstance(AppPriceScheduleCreateRequest request)
+        public Task<AppPriceScheduleResponse> AppPriceSchedules_createInstance(AppPriceScheduleCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appPriceSchedules";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppPriceScheduleResponse>(message);
+            return SendAsync<AppPriceScheduleResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -27012,7 +27010,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appPriceSchedules/{id}
-        public Task<AppPriceScheduleResponse> AppPriceSchedules_getInstance(string id, AppPriceSchedules_getInstanceFieldsAppPriceSchedules[]? fieldsAppPriceSchedules = default, string[]? fieldsTerritories = default, AppPriceSchedules_getInstanceFieldsAppPrices[]? fieldsAppPrices = default, AppPriceSchedules_getInstanceInclude[]? include = default, int? limitAutomaticPrices = default, int? limitManualPrices = default)
+        public Task<AppPriceScheduleResponse> AppPriceSchedules_getInstance(string id, AppPriceSchedules_getInstanceFieldsAppPriceSchedules[]? fieldsAppPriceSchedules = default, string[]? fieldsTerritories = default, AppPriceSchedules_getInstanceFieldsAppPrices[]? fieldsAppPrices = default, AppPriceSchedules_getInstanceInclude[]? include = default, int? limitAutomaticPrices = default, int? limitManualPrices = default, INestedLog? log = null)
         {
             string path = "/v1/appPriceSchedules/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -27031,7 +27029,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[manualPrices]", limitManualPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPriceScheduleResponse>(message);
+            return SendAsync<AppPriceScheduleResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -27062,7 +27060,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appPriceSchedules/{id}/automaticPrices
-        public Task<AppPricesV2Response> AppPriceSchedules_automaticPrices_getToManyRelated(string id, string[]? filterStartDate = default, string[]? filterEndDate = default, string[]? filterTerritory = default, AppPriceSchedules_automaticPrices_getToManyRelatedFieldsAppPrices[]? fieldsAppPrices = default, AppPriceSchedules_automaticPrices_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, AppPriceSchedules_automaticPrices_getToManyRelatedInclude[]? include = default)
+        public Task<AppPricesV2Response> AppPriceSchedules_automaticPrices_getToManyRelated(string id, string[]? filterStartDate = default, string[]? filterEndDate = default, string[]? filterTerritory = default, AppPriceSchedules_automaticPrices_getToManyRelatedFieldsAppPrices[]? fieldsAppPrices = default, AppPriceSchedules_automaticPrices_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, AppPriceSchedules_automaticPrices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appPriceSchedules/{id}/automaticPrices";
             path = path.Replace("{id}", id.ToString());
@@ -27085,11 +27083,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPricesV2Response>(message);
+            return SendAsync<AppPricesV2Response>(message, log);
         }
 
         // /v1/appPriceSchedules/{id}/baseTerritory
-        public Task<TerritoryResponse> AppPriceSchedules_baseTerritory_getToOneRelated(string id, string[]? fieldsTerritories = default)
+        public Task<TerritoryResponse> AppPriceSchedules_baseTerritory_getToOneRelated(string id, string[]? fieldsTerritories = default, INestedLog? log = null)
         {
             string path = "/v1/appPriceSchedules/{id}/baseTerritory";
             path = path.Replace("{id}", id.ToString());
@@ -27098,7 +27096,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<TerritoryResponse>(message);
+            return SendAsync<TerritoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -27129,7 +27127,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appPriceSchedules/{id}/manualPrices
-        public Task<AppPricesV2Response> AppPriceSchedules_manualPrices_getToManyRelated(string id, string[]? filterStartDate = default, string[]? filterEndDate = default, string[]? filterTerritory = default, AppPriceSchedules_manualPrices_getToManyRelatedFieldsAppPrices[]? fieldsAppPrices = default, AppPriceSchedules_manualPrices_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, AppPriceSchedules_manualPrices_getToManyRelatedInclude[]? include = default)
+        public Task<AppPricesV2Response> AppPriceSchedules_manualPrices_getToManyRelated(string id, string[]? filterStartDate = default, string[]? filterEndDate = default, string[]? filterTerritory = default, AppPriceSchedules_manualPrices_getToManyRelatedFieldsAppPrices[]? fieldsAppPrices = default, AppPriceSchedules_manualPrices_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, AppPriceSchedules_manualPrices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appPriceSchedules/{id}/manualPrices";
             path = path.Replace("{id}", id.ToString());
@@ -27152,7 +27150,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPricesV2Response>(message);
+            return SendAsync<AppPricesV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -27639,7 +27637,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps
-        public Task<AppsResponse> Apps_getCollection(string[]? filterName = default, string[]? filterBundleId = default, string[]? filterSku = default, Apps_getCollectionFilterAppStoreVersionsAppStoreState[]? filterAppStoreVersionsAppStoreState = default, Apps_getCollectionFilterAppStoreVersionsPlatform[]? filterAppStoreVersionsPlatform = default, Apps_getCollectionFilterAppStoreVersionsAppVersionState[]? filterAppStoreVersionsAppVersionState = default, Apps_getCollectionFilterReviewSubmissionsState[]? filterReviewSubmissionsState = default, Apps_getCollectionFilterReviewSubmissionsPlatform[]? filterReviewSubmissionsPlatform = default, string[]? filterAppStoreVersions = default, string[]? filterId = default, Apps_getCollectionSort[]? sort = default, Apps_getCollectionFieldsApps[]? fieldsApps = default, Apps_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Apps_getCollectionFieldsCiProducts[]? fieldsCiProducts = default, Apps_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, Apps_getCollectionFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Apps_getCollectionFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, Apps_getCollectionFieldsBuilds[]? fieldsBuilds = default, Apps_getCollectionFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, Apps_getCollectionFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, Apps_getCollectionFieldsAppInfos[]? fieldsAppInfos = default, Apps_getCollectionFieldsAppClips[]? fieldsAppClips = default, Apps_getCollectionFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, Apps_getCollectionFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_getCollectionFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, Apps_getCollectionFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, Apps_getCollectionFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_getCollectionFieldsAppEvents[]? fieldsAppEvents = default, Apps_getCollectionFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, Apps_getCollectionFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, Apps_getCollectionFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, Apps_getCollectionFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, int? limit = default, Apps_getCollectionInclude[]? include = default, int? limitAppClips = default, int? limitAppCustomProductPages = default, int? limitAppEncryptionDeclarations = default, int? limitAppEvents = default, int? limitAppInfos = default, int? limitAppStoreVersionExperimentsV2 = default, int? limitAppStoreVersions = default, int? limitBetaAppLocalizations = default, int? limitBetaGroups = default, int? limitBuilds = default, int? limitInAppPurchasesV2 = default, int? limitPreReleaseVersions = default, int? limitPromotedPurchases = default, int? limitReviewSubmissions = default, int? limitSubscriptionGroups = default)
+        public Task<AppsResponse> Apps_getCollection(string[]? filterName = default, string[]? filterBundleId = default, string[]? filterSku = default, Apps_getCollectionFilterAppStoreVersionsAppStoreState[]? filterAppStoreVersionsAppStoreState = default, Apps_getCollectionFilterAppStoreVersionsPlatform[]? filterAppStoreVersionsPlatform = default, Apps_getCollectionFilterAppStoreVersionsAppVersionState[]? filterAppStoreVersionsAppVersionState = default, Apps_getCollectionFilterReviewSubmissionsState[]? filterReviewSubmissionsState = default, Apps_getCollectionFilterReviewSubmissionsPlatform[]? filterReviewSubmissionsPlatform = default, string[]? filterAppStoreVersions = default, string[]? filterId = default, Apps_getCollectionSort[]? sort = default, Apps_getCollectionFieldsApps[]? fieldsApps = default, Apps_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Apps_getCollectionFieldsCiProducts[]? fieldsCiProducts = default, Apps_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, Apps_getCollectionFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Apps_getCollectionFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, Apps_getCollectionFieldsBuilds[]? fieldsBuilds = default, Apps_getCollectionFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, Apps_getCollectionFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, Apps_getCollectionFieldsAppInfos[]? fieldsAppInfos = default, Apps_getCollectionFieldsAppClips[]? fieldsAppClips = default, Apps_getCollectionFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, Apps_getCollectionFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_getCollectionFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, Apps_getCollectionFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, Apps_getCollectionFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_getCollectionFieldsAppEvents[]? fieldsAppEvents = default, Apps_getCollectionFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, Apps_getCollectionFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, Apps_getCollectionFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, Apps_getCollectionFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, int? limit = default, Apps_getCollectionInclude[]? include = default, int? limitAppClips = default, int? limitAppCustomProductPages = default, int? limitAppEncryptionDeclarations = default, int? limitAppEvents = default, int? limitAppInfos = default, int? limitAppStoreVersionExperimentsV2 = default, int? limitAppStoreVersions = default, int? limitBetaAppLocalizations = default, int? limitBetaGroups = default, int? limitBuilds = default, int? limitInAppPurchasesV2 = default, int? limitPreReleaseVersions = default, int? limitPromotedPurchases = default, int? limitReviewSubmissions = default, int? limitSubscriptionGroups = default, INestedLog? log = null)
         {
             string path = "/v1/apps";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -27745,7 +27743,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subscriptionGroups]", limitSubscriptionGroups.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppsResponse>(message);
+            return SendAsync<AppsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28143,7 +28141,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}
-        public Task<AppResponse> Apps_getInstance(string id, Apps_getInstanceFieldsApps[]? fieldsApps = default, Apps_getInstanceFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Apps_getInstanceFieldsCiProducts[]? fieldsCiProducts = default, Apps_getInstanceFieldsBetaGroups[]? fieldsBetaGroups = default, Apps_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_getInstanceFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Apps_getInstanceFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, Apps_getInstanceFieldsBuilds[]? fieldsBuilds = default, Apps_getInstanceFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, Apps_getInstanceFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, Apps_getInstanceFieldsAppInfos[]? fieldsAppInfos = default, Apps_getInstanceFieldsAppClips[]? fieldsAppClips = default, Apps_getInstanceFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, Apps_getInstanceFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_getInstanceFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, Apps_getInstanceFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, Apps_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_getInstanceFieldsAppEvents[]? fieldsAppEvents = default, Apps_getInstanceFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, Apps_getInstanceFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, Apps_getInstanceFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, Apps_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, Apps_getInstanceInclude[]? include = default, int? limitAppClips = default, int? limitAppCustomProductPages = default, int? limitAppEncryptionDeclarations = default, int? limitAppEvents = default, int? limitAppInfos = default, int? limitAppStoreVersionExperimentsV2 = default, int? limitAppStoreVersions = default, int? limitBetaAppLocalizations = default, int? limitBetaGroups = default, int? limitBuilds = default, int? limitInAppPurchasesV2 = default, int? limitPreReleaseVersions = default, int? limitPromotedPurchases = default, int? limitReviewSubmissions = default, int? limitSubscriptionGroups = default)
+        public Task<AppResponse> Apps_getInstance(string id, Apps_getInstanceFieldsApps[]? fieldsApps = default, Apps_getInstanceFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Apps_getInstanceFieldsCiProducts[]? fieldsCiProducts = default, Apps_getInstanceFieldsBetaGroups[]? fieldsBetaGroups = default, Apps_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_getInstanceFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Apps_getInstanceFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, Apps_getInstanceFieldsBuilds[]? fieldsBuilds = default, Apps_getInstanceFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, Apps_getInstanceFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, Apps_getInstanceFieldsAppInfos[]? fieldsAppInfos = default, Apps_getInstanceFieldsAppClips[]? fieldsAppClips = default, Apps_getInstanceFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, Apps_getInstanceFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_getInstanceFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, Apps_getInstanceFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, Apps_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_getInstanceFieldsAppEvents[]? fieldsAppEvents = default, Apps_getInstanceFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, Apps_getInstanceFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, Apps_getInstanceFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, Apps_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, Apps_getInstanceInclude[]? include = default, int? limitAppClips = default, int? limitAppCustomProductPages = default, int? limitAppEncryptionDeclarations = default, int? limitAppEvents = default, int? limitAppInfos = default, int? limitAppStoreVersionExperimentsV2 = default, int? limitAppStoreVersions = default, int? limitBetaAppLocalizations = default, int? limitBetaGroups = default, int? limitBuilds = default, int? limitInAppPurchasesV2 = default, int? limitPreReleaseVersions = default, int? limitPromotedPurchases = default, int? limitReviewSubmissions = default, int? limitSubscriptionGroups = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -28226,11 +28224,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subscriptionGroups]", limitSubscriptionGroups.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppResponse>(message);
+            return SendAsync<AppResponse>(message, log);
         }
 
         // /v1/apps/{id}
-        public Task<AppResponse> Apps_updateInstance(string id, AppUpdateRequest request)
+        public Task<AppResponse> Apps_updateInstance(string id, AppUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -28238,11 +28236,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppResponse>(message);
+            return SendAsync<AppResponse>(message, log);
         }
 
         // /v1/apps/{id}/alternativeDistributionKey
-        public Task<AlternativeDistributionKeyResponse> Apps_alternativeDistributionKey_getToOneRelated(string id, string[]? fieldsAlternativeDistributionKeys = default)
+        public Task<AlternativeDistributionKeyResponse> Apps_alternativeDistributionKey_getToOneRelated(string id, string[]? fieldsAlternativeDistributionKeys = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/alternativeDistributionKey";
             path = path.Replace("{id}", id.ToString());
@@ -28251,7 +28249,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[alternativeDistributionKeys]", string.Join(",", fieldsAlternativeDistributionKeys));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionKeyResponse>(message);
+            return SendAsync<AlternativeDistributionKeyResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28278,7 +28276,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/analyticsReportRequests
-        public Task<AnalyticsReportRequestsResponse> Apps_analyticsReportRequests_getToManyRelated(string id, Apps_analyticsReportRequests_getToManyRelatedFilterAccessType[]? filterAccessType = default, Apps_analyticsReportRequests_getToManyRelatedFieldsAnalyticsReportRequests[]? fieldsAnalyticsReportRequests = default, Apps_analyticsReportRequests_getToManyRelatedFieldsAnalyticsReports[]? fieldsAnalyticsReports = default, int? limit = default, string[]? include = default, int? limitReports = default)
+        public Task<AnalyticsReportRequestsResponse> Apps_analyticsReportRequests_getToManyRelated(string id, Apps_analyticsReportRequests_getToManyRelatedFilterAccessType[]? filterAccessType = default, Apps_analyticsReportRequests_getToManyRelatedFieldsAnalyticsReportRequests[]? fieldsAnalyticsReportRequests = default, Apps_analyticsReportRequests_getToManyRelatedFieldsAnalyticsReports[]? fieldsAnalyticsReports = default, int? limit = default, string[]? include = default, int? limitReports = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/analyticsReportRequests";
             path = path.Replace("{id}", id.ToString());
@@ -28297,7 +28295,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[reports]", limitReports.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AnalyticsReportRequestsResponse>(message);
+            return SendAsync<AnalyticsReportRequestsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28319,7 +28317,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appAvailabilityV2
-        public Task<AppAvailabilityV2Response> Apps_appAvailabilityV2_getToOneRelated(string id, Apps_appAvailabilityV2_getToOneRelatedFieldsAppAvailabilities[]? fieldsAppAvailabilities = default, Apps_appAvailabilityV2_getToOneRelatedFieldsTerritoryAvailabilities[]? fieldsTerritoryAvailabilities = default, string[]? include = default, int? limitTerritoryAvailabilities = default)
+        public Task<AppAvailabilityV2Response> Apps_appAvailabilityV2_getToOneRelated(string id, Apps_appAvailabilityV2_getToOneRelatedFieldsAppAvailabilities[]? fieldsAppAvailabilities = default, Apps_appAvailabilityV2_getToOneRelatedFieldsTerritoryAvailabilities[]? fieldsTerritoryAvailabilities = default, string[]? include = default, int? limitTerritoryAvailabilities = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appAvailabilityV2";
             path = path.Replace("{id}", id.ToString());
@@ -28334,7 +28332,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[territoryAvailabilities]", limitTerritoryAvailabilities.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppAvailabilityV2Response>(message);
+            return SendAsync<AppAvailabilityV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28412,7 +28410,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appClips
-        public Task<AppClipsResponse> Apps_appClips_getToManyRelated(string id, string[]? filterBundleId = default, Apps_appClips_getToManyRelatedFieldsAppClips[]? fieldsAppClips = default, Apps_appClips_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appClips_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, int? limit = default, Apps_appClips_getToManyRelatedInclude[]? include = default, int? limitAppClipDefaultExperiences = default)
+        public Task<AppClipsResponse> Apps_appClips_getToManyRelated(string id, string[]? filterBundleId = default, Apps_appClips_getToManyRelatedFieldsAppClips[]? fieldsAppClips = default, Apps_appClips_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appClips_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, int? limit = default, Apps_appClips_getToManyRelatedInclude[]? include = default, int? limitAppClipDefaultExperiences = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appClips";
             path = path.Replace("{id}", id.ToString());
@@ -28433,7 +28431,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appClipDefaultExperiences]", limitAppClipDefaultExperiences.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipsResponse>(message);
+            return SendAsync<AppClipsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28512,7 +28510,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appCustomProductPages
-        public Task<AppCustomProductPagesResponse> Apps_appCustomProductPages_getToManyRelated(string id, string[]? filterVisible = default, Apps_appCustomProductPages_getToManyRelatedFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, Apps_appCustomProductPages_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appCustomProductPages_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, int? limit = default, Apps_appCustomProductPages_getToManyRelatedInclude[]? include = default, int? limitAppCustomProductPageVersions = default)
+        public Task<AppCustomProductPagesResponse> Apps_appCustomProductPages_getToManyRelated(string id, string[]? filterVisible = default, Apps_appCustomProductPages_getToManyRelatedFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, Apps_appCustomProductPages_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appCustomProductPages_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, int? limit = default, Apps_appCustomProductPages_getToManyRelatedInclude[]? include = default, int? limitAppCustomProductPageVersions = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appCustomProductPages";
             path = path.Replace("{id}", id.ToString());
@@ -28533,7 +28531,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appCustomProductPageVersions]", limitAppCustomProductPageVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppCustomProductPagesResponse>(message);
+            return SendAsync<AppCustomProductPagesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28665,7 +28663,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appEncryptionDeclarations
-        public Task<AppEncryptionDeclarationsResponse> Apps_appEncryptionDeclarations_getToManyRelated(string id, Apps_appEncryptionDeclarations_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterBuilds = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, int? limit = default, Apps_appEncryptionDeclarations_getToManyRelatedInclude[]? include = default, int? limitBuilds = default)
+        public Task<AppEncryptionDeclarationsResponse> Apps_appEncryptionDeclarations_getToManyRelated(string id, Apps_appEncryptionDeclarations_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterBuilds = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, Apps_appEncryptionDeclarations_getToManyRelatedFieldsAppEncryptionDeclarationDocuments[]? fieldsAppEncryptionDeclarationDocuments = default, int? limit = default, Apps_appEncryptionDeclarations_getToManyRelatedInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appEncryptionDeclarations";
             path = path.Replace("{id}", id.ToString());
@@ -28690,7 +28688,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEncryptionDeclarationsResponse>(message);
+            return SendAsync<AppEncryptionDeclarationsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28737,7 +28735,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appEvents
-        public Task<AppEventsResponse> Apps_appEvents_getToManyRelated(string id, Apps_appEvents_getToManyRelatedFilterEventState[]? filterEventState = default, string[]? filterId = default, Apps_appEvents_getToManyRelatedFieldsAppEvents[]? fieldsAppEvents = default, Apps_appEvents_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, int? limit = default, string[]? include = default, int? limitLocalizations = default)
+        public Task<AppEventsResponse> Apps_appEvents_getToManyRelated(string id, Apps_appEvents_getToManyRelatedFilterEventState[]? filterEventState = default, string[]? filterId = default, Apps_appEvents_getToManyRelatedFieldsAppEvents[]? fieldsAppEvents = default, Apps_appEvents_getToManyRelatedFieldsAppEventLocalizations[]? fieldsAppEventLocalizations = default, int? limit = default, string[]? include = default, int? limitLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appEvents";
             path = path.Replace("{id}", id.ToString());
@@ -28758,7 +28756,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[localizations]", limitLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEventsResponse>(message);
+            return SendAsync<AppEventsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28892,7 +28890,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appInfos
-        public Task<AppInfosResponse> Apps_appInfos_getToManyRelated(string id, Apps_appInfos_getToManyRelatedFieldsAppInfos[]? fieldsAppInfos = default, Apps_appInfos_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appInfos_getToManyRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, Apps_appInfos_getToManyRelatedFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, Apps_appInfos_getToManyRelatedFieldsAppCategories[]? fieldsAppCategories = default, int? limit = default, Apps_appInfos_getToManyRelatedInclude[]? include = default, int? limitAppInfoLocalizations = default)
+        public Task<AppInfosResponse> Apps_appInfos_getToManyRelated(string id, Apps_appInfos_getToManyRelatedFieldsAppInfos[]? fieldsAppInfos = default, Apps_appInfos_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appInfos_getToManyRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, Apps_appInfos_getToManyRelatedFieldsAppInfoLocalizations[]? fieldsAppInfoLocalizations = default, Apps_appInfos_getToManyRelatedFieldsAppCategories[]? fieldsAppCategories = default, int? limit = default, Apps_appInfos_getToManyRelatedInclude[]? include = default, int? limitAppInfoLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appInfos";
             path = path.Replace("{id}", id.ToString());
@@ -28915,7 +28913,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appInfoLocalizations]", limitAppInfoLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppInfosResponse>(message);
+            return SendAsync<AppInfosResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -28984,7 +28982,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appPricePoints
-        public Task<AppPricePointsV3Response> Apps_appPricePoints_getToManyRelated(string id, string[]? filterTerritory = default, Apps_appPricePoints_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, Apps_appPricePoints_getToManyRelatedFieldsApps[]? fieldsApps = default, string[]? fieldsTerritories = default, int? limit = default, Apps_appPricePoints_getToManyRelatedInclude[]? include = default)
+        public Task<AppPricePointsV3Response> Apps_appPricePoints_getToManyRelated(string id, string[]? filterTerritory = default, Apps_appPricePoints_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, Apps_appPricePoints_getToManyRelatedFieldsApps[]? fieldsApps = default, string[]? fieldsTerritories = default, int? limit = default, Apps_appPricePoints_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appPricePoints";
             path = path.Replace("{id}", id.ToString());
@@ -29003,7 +29001,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPricePointsV3Response>(message);
+            return SendAsync<AppPricePointsV3Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29083,7 +29081,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appPriceSchedule
-        public Task<AppPriceScheduleResponse> Apps_appPriceSchedule_getToOneRelated(string id, Apps_appPriceSchedule_getToOneRelatedFieldsAppPriceSchedules[]? fieldsAppPriceSchedules = default, Apps_appPriceSchedule_getToOneRelatedFieldsApps[]? fieldsApps = default, string[]? fieldsTerritories = default, Apps_appPriceSchedule_getToOneRelatedFieldsAppPrices[]? fieldsAppPrices = default, Apps_appPriceSchedule_getToOneRelatedInclude[]? include = default, int? limitManualPrices = default, int? limitAutomaticPrices = default)
+        public Task<AppPriceScheduleResponse> Apps_appPriceSchedule_getToOneRelated(string id, Apps_appPriceSchedule_getToOneRelatedFieldsAppPriceSchedules[]? fieldsAppPriceSchedules = default, Apps_appPriceSchedule_getToOneRelatedFieldsApps[]? fieldsApps = default, string[]? fieldsTerritories = default, Apps_appPriceSchedule_getToOneRelatedFieldsAppPrices[]? fieldsAppPrices = default, Apps_appPriceSchedule_getToOneRelatedInclude[]? include = default, int? limitManualPrices = default, int? limitAutomaticPrices = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appPriceSchedule";
             path = path.Replace("{id}", id.ToString());
@@ -29104,7 +29102,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[automaticPrices]", limitAutomaticPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPriceScheduleResponse>(message);
+            return SendAsync<AppPriceScheduleResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29236,7 +29234,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appStoreVersionExperimentsV2
-        public Task<AppStoreVersionExperimentsV2Response> Apps_appStoreVersionExperimentsV2_getToManyRelated(string id, Apps_appStoreVersionExperimentsV2_getToManyRelatedFilterState[]? filterState = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, int? limit = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedInclude[]? include = default, int? limitControlVersions = default, int? limitAppStoreVersionExperimentTreatments = default)
+        public Task<AppStoreVersionExperimentsV2Response> Apps_appStoreVersionExperimentsV2_getToManyRelated(string id, Apps_appStoreVersionExperimentsV2_getToManyRelatedFilterState[]? filterState = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, int? limit = default, Apps_appStoreVersionExperimentsV2_getToManyRelatedInclude[]? include = default, int? limitControlVersions = default, int? limitAppStoreVersionExperimentTreatments = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appStoreVersionExperimentsV2";
             path = path.Replace("{id}", id.ToString());
@@ -29261,7 +29259,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentTreatments]", limitAppStoreVersionExperimentTreatments.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentsV2Response>(message);
+            return SendAsync<AppStoreVersionExperimentsV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29553,7 +29551,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/appStoreVersions
-        public Task<AppStoreVersionsResponse> Apps_appStoreVersions_getToManyRelated(string id, Apps_appStoreVersions_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterVersionString = default, Apps_appStoreVersions_getToManyRelatedFilterAppStoreState[]? filterAppStoreState = default, Apps_appStoreVersions_getToManyRelatedFilterAppVersionState[]? filterAppVersionState = default, string[]? filterId = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_appStoreVersions_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appStoreVersions_getToManyRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, Apps_appStoreVersions_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, Apps_appStoreVersions_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, Apps_appStoreVersions_getToManyRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, Apps_appStoreVersions_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, int? limit = default, Apps_appStoreVersions_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default)
+        public Task<AppStoreVersionsResponse> Apps_appStoreVersions_getToManyRelated(string id, Apps_appStoreVersions_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterVersionString = default, Apps_appStoreVersions_getToManyRelatedFilterAppStoreState[]? filterAppStoreState = default, Apps_appStoreVersions_getToManyRelatedFilterAppVersionState[]? filterAppVersionState = default, string[]? filterId = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_appStoreVersions_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_appStoreVersions_getToManyRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, Apps_appStoreVersions_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, Apps_appStoreVersions_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, Apps_appStoreVersions_getToManyRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, Apps_appStoreVersions_getToManyRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, Apps_appStoreVersions_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, int? limit = default, Apps_appStoreVersions_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/appStoreVersions";
             path = path.Replace("{id}", id.ToString());
@@ -29604,7 +29602,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentsV2]", limitAppStoreVersionExperimentsV2.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionsResponse>(message);
+            return SendAsync<AppStoreVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29620,7 +29618,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/betaAppLocalizations
-        public Task<BetaAppLocalizationsWithoutIncludesResponse> Apps_betaAppLocalizations_getToManyRelated(string id, Apps_betaAppLocalizations_getToManyRelatedFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, int? limit = default)
+        public Task<BetaAppLocalizationsWithoutIncludesResponse> Apps_betaAppLocalizations_getToManyRelated(string id, Apps_betaAppLocalizations_getToManyRelatedFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/betaAppLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -29631,7 +29629,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppLocalizationsWithoutIncludesResponse>(message);
+            return SendAsync<BetaAppLocalizationsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29649,7 +29647,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/betaAppReviewDetail
-        public Task<BetaAppReviewDetailWithoutIncludesResponse> Apps_betaAppReviewDetail_getToOneRelated(string id, Apps_betaAppReviewDetail_getToOneRelatedFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default)
+        public Task<BetaAppReviewDetailWithoutIncludesResponse> Apps_betaAppReviewDetail_getToOneRelated(string id, Apps_betaAppReviewDetail_getToOneRelatedFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/betaAppReviewDetail";
             path = path.Replace("{id}", id.ToString());
@@ -29658,7 +29656,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[betaAppReviewDetails]", string.Join(",", fieldsBetaAppReviewDetails));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppReviewDetailWithoutIncludesResponse>(message);
+            return SendAsync<BetaAppReviewDetailWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29681,7 +29679,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/betaGroups
-        public Task<BetaGroupsWithoutIncludesResponse> Apps_betaGroups_getToManyRelated(string id, Apps_betaGroups_getToManyRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, int? limit = default)
+        public Task<BetaGroupsWithoutIncludesResponse> Apps_betaGroups_getToManyRelated(string id, Apps_betaGroups_getToManyRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/betaGroups";
             path = path.Replace("{id}", id.ToString());
@@ -29692,7 +29690,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaGroupsWithoutIncludesResponse>(message);
+            return SendAsync<BetaGroupsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29703,7 +29701,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/betaLicenseAgreement
-        public Task<BetaLicenseAgreementWithoutIncludesResponse> Apps_betaLicenseAgreement_getToOneRelated(string id, Apps_betaLicenseAgreement_getToOneRelatedFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default)
+        public Task<BetaLicenseAgreementWithoutIncludesResponse> Apps_betaLicenseAgreement_getToOneRelated(string id, Apps_betaLicenseAgreement_getToOneRelatedFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/betaLicenseAgreement";
             path = path.Replace("{id}", id.ToString());
@@ -29712,7 +29710,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[betaLicenseAgreements]", string.Join(",", fieldsBetaLicenseAgreements));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaLicenseAgreementWithoutIncludesResponse>(message);
+            return SendAsync<BetaLicenseAgreementWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29745,7 +29743,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/builds
-        public Task<BuildsWithoutIncludesResponse> Apps_builds_getToManyRelated(string id, Apps_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default)
+        public Task<BuildsWithoutIncludesResponse> Apps_builds_getToManyRelated(string id, Apps_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/builds";
             path = path.Replace("{id}", id.ToString());
@@ -29756,7 +29754,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildsWithoutIncludesResponse>(message);
+            return SendAsync<BuildsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -29856,7 +29854,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/ciProduct
-        public Task<CiProductResponse> Apps_ciProduct_getToOneRelated(string id, Apps_ciProduct_getToOneRelatedFieldsCiProducts[]? fieldsCiProducts = default, Apps_ciProduct_getToOneRelatedFieldsApps[]? fieldsApps = default, Apps_ciProduct_getToOneRelatedFieldsBundleIds[]? fieldsBundleIds = default, Apps_ciProduct_getToOneRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, Apps_ciProduct_getToOneRelatedInclude[]? include = default, int? limitPrimaryRepositories = default)
+        public Task<CiProductResponse> Apps_ciProduct_getToOneRelated(string id, Apps_ciProduct_getToOneRelatedFieldsCiProducts[]? fieldsCiProducts = default, Apps_ciProduct_getToOneRelatedFieldsApps[]? fieldsApps = default, Apps_ciProduct_getToOneRelatedFieldsBundleIds[]? fieldsBundleIds = default, Apps_ciProduct_getToOneRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, Apps_ciProduct_getToOneRelatedInclude[]? include = default, int? limitPrimaryRepositories = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/ciProduct";
             path = path.Replace("{id}", id.ToString());
@@ -29875,7 +29873,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[primaryRepositories]", limitPrimaryRepositories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiProductResponse>(message);
+            return SendAsync<CiProductResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30148,7 +30146,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/customerReviews
-        public Task<CustomerReviewsResponse> Apps_customerReviews_getToManyRelated(string id, Apps_customerReviews_getToManyRelatedFilterTerritory[]? filterTerritory = default, string[]? filterRating = default, bool? existsPublishedResponse = default, Apps_customerReviews_getToManyRelatedSort[]? sort = default, Apps_customerReviews_getToManyRelatedFieldsCustomerReviews[]? fieldsCustomerReviews = default, Apps_customerReviews_getToManyRelatedFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, int? limit = default, string[]? include = default)
+        public Task<CustomerReviewsResponse> Apps_customerReviews_getToManyRelated(string id, Apps_customerReviews_getToManyRelatedFilterTerritory[]? filterTerritory = default, string[]? filterRating = default, bool? existsPublishedResponse = default, Apps_customerReviews_getToManyRelatedSort[]? sort = default, Apps_customerReviews_getToManyRelatedFieldsCustomerReviews[]? fieldsCustomerReviews = default, Apps_customerReviews_getToManyRelatedFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/customerReviews";
             path = path.Replace("{id}", id.ToString());
@@ -30171,7 +30169,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CustomerReviewsResponse>(message);
+            return SendAsync<CustomerReviewsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30183,7 +30181,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/endUserLicenseAgreement
-        public Task<EndUserLicenseAgreementWithoutIncludesResponse> Apps_endUserLicenseAgreement_getToOneRelated(string id, Apps_endUserLicenseAgreement_getToOneRelatedFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default)
+        public Task<EndUserLicenseAgreementWithoutIncludesResponse> Apps_endUserLicenseAgreement_getToOneRelated(string id, Apps_endUserLicenseAgreement_getToOneRelatedFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/endUserLicenseAgreement";
             path = path.Replace("{id}", id.ToString());
@@ -30192,7 +30190,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[endUserLicenseAgreements]", string.Join(",", fieldsEndUserLicenseAgreements));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<EndUserLicenseAgreementWithoutIncludesResponse>(message);
+            return SendAsync<EndUserLicenseAgreementWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30371,7 +30369,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/gameCenterDetail
-        public Task<GameCenterDetailResponse> Apps_gameCenterDetail_getToOneRelated(string id, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, Apps_gameCenterDetail_getToOneRelatedFieldsApps[]? fieldsApps = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, Apps_gameCenterDetail_getToOneRelatedInclude[]? include = default, int? limitGameCenterAppVersions = default, int? limitGameCenterLeaderboards = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterAchievements = default, int? limitAchievementReleases = default, int? limitLeaderboardReleases = default, int? limitLeaderboardSetReleases = default)
+        public Task<GameCenterDetailResponse> Apps_gameCenterDetail_getToOneRelated(string id, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, Apps_gameCenterDetail_getToOneRelatedFieldsApps[]? fieldsApps = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, Apps_gameCenterDetail_getToOneRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, Apps_gameCenterDetail_getToOneRelatedInclude[]? include = default, int? limitGameCenterAppVersions = default, int? limitGameCenterLeaderboards = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterAchievements = default, int? limitAchievementReleases = default, int? limitLeaderboardReleases = default, int? limitLeaderboardSetReleases = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/gameCenterDetail";
             path = path.Replace("{id}", id.ToString());
@@ -30414,7 +30412,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[leaderboardSetReleases]", limitLeaderboardSetReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterDetailResponse>(message);
+            return SendAsync<GameCenterDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30501,7 +30499,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/apps/{id}/gameCenterEnabledVersions
         [Obsolete]
-        public Task<GameCenterEnabledVersionsResponse> Apps_gameCenterEnabledVersions_getToManyRelated(string id, Apps_gameCenterEnabledVersions_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterVersionString = default, string[]? filterId = default, Apps_gameCenterEnabledVersions_getToManyRelatedSort[]? sort = default, Apps_gameCenterEnabledVersions_getToManyRelatedFieldsGameCenterEnabledVersions[]? fieldsGameCenterEnabledVersions = default, Apps_gameCenterEnabledVersions_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, Apps_gameCenterEnabledVersions_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterEnabledVersionsResponse> Apps_gameCenterEnabledVersions_getToManyRelated(string id, Apps_gameCenterEnabledVersions_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterVersionString = default, string[]? filterId = default, Apps_gameCenterEnabledVersions_getToManyRelatedSort[]? sort = default, Apps_gameCenterEnabledVersions_getToManyRelatedFieldsGameCenterEnabledVersions[]? fieldsGameCenterEnabledVersions = default, Apps_gameCenterEnabledVersions_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, Apps_gameCenterEnabledVersions_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/gameCenterEnabledVersions";
             path = path.Replace("{id}", id.ToString());
@@ -30524,7 +30522,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterEnabledVersionsResponse>(message);
+            return SendAsync<GameCenterEnabledVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30611,7 +30609,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/apps/{id}/inAppPurchases
         [Obsolete]
-        public Task<InAppPurchasesResponse> Apps_inAppPurchases_getToManyRelated(string id, Apps_inAppPurchases_getToManyRelatedFilterInAppPurchaseType[]? filterInAppPurchaseType = default, string[]? filterCanBeSubmitted = default, Apps_inAppPurchases_getToManyRelatedSort[]? sort = default, Apps_inAppPurchases_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_inAppPurchases_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitApps = default)
+        public Task<InAppPurchasesResponse> Apps_inAppPurchases_getToManyRelated(string id, Apps_inAppPurchases_getToManyRelatedFilterInAppPurchaseType[]? filterInAppPurchaseType = default, string[]? filterCanBeSubmitted = default, Apps_inAppPurchases_getToManyRelatedSort[]? sort = default, Apps_inAppPurchases_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_inAppPurchases_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitApps = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/inAppPurchases";
             path = path.Replace("{id}", id.ToString());
@@ -30634,7 +30632,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[apps]", limitApps.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasesResponse>(message);
+            return SendAsync<InAppPurchasesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30779,7 +30777,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/inAppPurchasesV2
-        public Task<InAppPurchasesV2Response> Apps_inAppPurchasesV2_getToManyRelated(string id, string[]? filterProductId = default, string[]? filterName = default, Apps_inAppPurchasesV2_getToManyRelatedFilterState[]? filterState = default, Apps_inAppPurchasesV2_getToManyRelatedFilterInAppPurchaseType[]? filterInAppPurchaseType = default, Apps_inAppPurchasesV2_getToManyRelatedSort[]? sort = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, int? limit = default, Apps_inAppPurchasesV2_getToManyRelatedInclude[]? include = default, int? limitInAppPurchaseLocalizations = default, int? limitImages = default)
+        public Task<InAppPurchasesV2Response> Apps_inAppPurchasesV2_getToManyRelated(string id, string[]? filterProductId = default, string[]? filterName = default, Apps_inAppPurchasesV2_getToManyRelatedFilterState[]? filterState = default, Apps_inAppPurchasesV2_getToManyRelatedFilterInAppPurchaseType[]? filterInAppPurchaseType = default, Apps_inAppPurchasesV2_getToManyRelatedSort[]? sort = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, Apps_inAppPurchasesV2_getToManyRelatedFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, int? limit = default, Apps_inAppPurchasesV2_getToManyRelatedInclude[]? include = default, int? limitInAppPurchaseLocalizations = default, int? limitImages = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/inAppPurchasesV2";
             path = path.Replace("{id}", id.ToString());
@@ -30820,11 +30818,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[images]", limitImages.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasesV2Response>(message);
+            return SendAsync<InAppPurchasesV2Response>(message, log);
         }
 
         // /v1/apps/{id}/marketplaceSearchDetail
-        public Task<MarketplaceSearchDetailResponse> Apps_marketplaceSearchDetail_getToOneRelated(string id, string[]? fieldsMarketplaceSearchDetails = default)
+        public Task<MarketplaceSearchDetailResponse> Apps_marketplaceSearchDetail_getToOneRelated(string id, string[]? fieldsMarketplaceSearchDetails = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/marketplaceSearchDetail";
             path = path.Replace("{id}", id.ToString());
@@ -30833,7 +30831,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[marketplaceSearchDetails]", string.Join(",", fieldsMarketplaceSearchDetails));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<MarketplaceSearchDetailResponse>(message);
+            return SendAsync<MarketplaceSearchDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30846,7 +30844,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/metrics/betaTesterUsages
-        public Task<AppsBetaTesterUsagesV1MetricResponse> Apps_betaTesterUsages_getMetrics(string id, Apps_betaTesterUsages_getMetricsPeriod? period = default, string[]? groupBy = default, string? filterBetaTesters = default, int? limit = default)
+        public Task<AppsBetaTesterUsagesV1MetricResponse> Apps_betaTesterUsages_getMetrics(string id, Apps_betaTesterUsages_getMetricsPeriod? period = default, string[]? groupBy = default, string? filterBetaTesters = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/metrics/betaTesterUsages";
             path = path.Replace("{id}", id.ToString());
@@ -30861,7 +30859,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppsBetaTesterUsagesV1MetricResponse>(message);
+            return SendAsync<AppsBetaTesterUsagesV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30877,7 +30875,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/perfPowerMetrics
-        public Task Apps_perfPowerMetrics_getToManyRelated(string id, string[]? filterPlatform = default, Apps_perfPowerMetrics_getToManyRelatedFilterMetricType[]? filterMetricType = default, string[]? filterDeviceType = default)
+        public Task Apps_perfPowerMetrics_getToManyRelated(string id, string[]? filterPlatform = default, Apps_perfPowerMetrics_getToManyRelatedFilterMetricType[]? filterMetricType = default, string[]? filterDeviceType = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/perfPowerMetrics";
             path = path.Replace("{id}", id.ToString());
@@ -30890,7 +30888,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("filter[deviceType]", string.Join(",", filterDeviceType));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30903,7 +30901,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/preReleaseVersions
-        public Task<PreReleaseVersionsWithoutIncludesResponse> Apps_preReleaseVersions_getToManyRelated(string id, Apps_preReleaseVersions_getToManyRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, int? limit = default)
+        public Task<PreReleaseVersionsWithoutIncludesResponse> Apps_preReleaseVersions_getToManyRelated(string id, Apps_preReleaseVersions_getToManyRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/preReleaseVersions";
             path = path.Replace("{id}", id.ToString());
@@ -30914,7 +30912,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PreReleaseVersionsWithoutIncludesResponse>(message);
+            return SendAsync<PreReleaseVersionsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -30995,7 +30993,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/promotedPurchases
-        public Task<PromotedPurchasesResponse> Apps_promotedPurchases_getToManyRelated(string id, Apps_promotedPurchases_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_promotedPurchases_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_promotedPurchases_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Apps_promotedPurchases_getToManyRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, int? limit = default, Apps_promotedPurchases_getToManyRelatedInclude[]? include = default)
+        public Task<PromotedPurchasesResponse> Apps_promotedPurchases_getToManyRelated(string id, Apps_promotedPurchases_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Apps_promotedPurchases_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Apps_promotedPurchases_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Apps_promotedPurchases_getToManyRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, int? limit = default, Apps_promotedPurchases_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/promotedPurchases";
             path = path.Replace("{id}", id.ToString());
@@ -31014,7 +31012,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PromotedPurchasesResponse>(message);
+            return SendAsync<PromotedPurchasesResponse>(message, log);
         }
 
         public class Apps_betaTesters_deleteToManyRelationshipRequest
@@ -31029,7 +31027,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/relationships/betaTesters
-        public Task Apps_betaTesters_deleteToManyRelationship(string id, AppBetaTestersLinkagesRequest request)
+        public Task Apps_betaTesters_deleteToManyRelationship(string id, AppBetaTestersLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
@@ -31037,11 +31035,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/apps/{id}/relationships/promotedPurchases
-        public Task<AppPromotedPurchasesLinkagesResponse> Apps_promotedPurchases_getToManyRelationship(string id, int? limit = default)
+        public Task<AppPromotedPurchasesLinkagesResponse> Apps_promotedPurchases_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/relationships/promotedPurchases";
             path = path.Replace("{id}", id.ToString());
@@ -31050,7 +31048,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPromotedPurchasesLinkagesResponse>(message);
+            return SendAsync<AppPromotedPurchasesLinkagesResponse>(message, log);
         }
 
         public class Apps_promotedPurchases_replaceToManyRelationshipRequest
@@ -31065,7 +31063,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/relationships/promotedPurchases
-        public Task Apps_promotedPurchases_replaceToManyRelationship(string id, AppPromotedPurchasesLinkagesRequest request)
+        public Task Apps_promotedPurchases_replaceToManyRelationship(string id, AppPromotedPurchasesLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/relationships/promotedPurchases";
             path = path.Replace("{id}", id.ToString());
@@ -31073,7 +31071,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31219,7 +31217,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/reviewSubmissions
-        public Task<ReviewSubmissionsResponse> Apps_reviewSubmissions_getToManyRelated(string id, Apps_reviewSubmissions_getToManyRelatedFilterPlatform[]? filterPlatform = default, Apps_reviewSubmissions_getToManyRelatedFilterState[]? filterState = default, Apps_reviewSubmissions_getToManyRelatedFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, Apps_reviewSubmissions_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_reviewSubmissions_getToManyRelatedFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, Apps_reviewSubmissions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_reviewSubmissions_getToManyRelatedFieldsActors[]? fieldsActors = default, int? limit = default, Apps_reviewSubmissions_getToManyRelatedInclude[]? include = default, int? limitItems = default)
+        public Task<ReviewSubmissionsResponse> Apps_reviewSubmissions_getToManyRelated(string id, Apps_reviewSubmissions_getToManyRelatedFilterPlatform[]? filterPlatform = default, Apps_reviewSubmissions_getToManyRelatedFilterState[]? filterState = default, Apps_reviewSubmissions_getToManyRelatedFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, Apps_reviewSubmissions_getToManyRelatedFieldsApps[]? fieldsApps = default, Apps_reviewSubmissions_getToManyRelatedFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, Apps_reviewSubmissions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Apps_reviewSubmissions_getToManyRelatedFieldsActors[]? fieldsActors = default, int? limit = default, Apps_reviewSubmissions_getToManyRelatedInclude[]? include = default, int? limitItems = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/reviewSubmissions";
             path = path.Replace("{id}", id.ToString());
@@ -31246,7 +31244,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[items]", limitItems.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ReviewSubmissionsResponse>(message);
+            return SendAsync<ReviewSubmissionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31259,7 +31257,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/subscriptionGracePeriod
-        public Task<SubscriptionGracePeriodResponse> Apps_subscriptionGracePeriod_getToOneRelated(string id, Apps_subscriptionGracePeriod_getToOneRelatedFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default)
+        public Task<SubscriptionGracePeriodResponse> Apps_subscriptionGracePeriod_getToOneRelated(string id, Apps_subscriptionGracePeriod_getToOneRelatedFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/subscriptionGracePeriod";
             path = path.Replace("{id}", id.ToString());
@@ -31268,7 +31266,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[subscriptionGracePeriods]", string.Join(",", fieldsSubscriptionGracePeriods));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionGracePeriodResponse>(message);
+            return SendAsync<SubscriptionGracePeriodResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31344,7 +31342,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/apps/{id}/subscriptionGroups
-        public Task<SubscriptionGroupsResponse> Apps_subscriptionGroups_getToManyRelated(string id, string[]? filterReferenceName = default, Apps_subscriptionGroups_getToManyRelatedFilterSubscriptionsState[]? filterSubscriptionsState = default, Apps_subscriptionGroups_getToManyRelatedSort[]? sort = default, Apps_subscriptionGroups_getToManyRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, Apps_subscriptionGroups_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Apps_subscriptionGroups_getToManyRelatedFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, int? limit = default, Apps_subscriptionGroups_getToManyRelatedInclude[]? include = default, int? limitSubscriptions = default, int? limitSubscriptionGroupLocalizations = default)
+        public Task<SubscriptionGroupsResponse> Apps_subscriptionGroups_getToManyRelated(string id, string[]? filterReferenceName = default, Apps_subscriptionGroups_getToManyRelatedFilterSubscriptionsState[]? filterSubscriptionsState = default, Apps_subscriptionGroups_getToManyRelatedSort[]? sort = default, Apps_subscriptionGroups_getToManyRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, Apps_subscriptionGroups_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Apps_subscriptionGroups_getToManyRelatedFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, int? limit = default, Apps_subscriptionGroups_getToManyRelatedInclude[]? include = default, int? limitSubscriptions = default, int? limitSubscriptionGroupLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/apps/{id}/subscriptionGroups";
             path = path.Replace("{id}", id.ToString());
@@ -31371,18 +31369,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[subscriptionGroupLocalizations]", limitSubscriptionGroupLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionGroupsResponse>(message);
+            return SendAsync<SubscriptionGroupsResponse>(message, log);
         }
 
         // /v1/appScreenshots
-        public Task<AppScreenshotResponse> AppScreenshots_createInstance(AppScreenshotCreateRequest request)
+        public Task<AppScreenshotResponse> AppScreenshots_createInstance(AppScreenshotCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appScreenshots";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppScreenshotResponse>(message);
+            return SendAsync<AppScreenshotResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31400,7 +31398,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appScreenshots/{id}
-        public Task<AppScreenshotResponse> AppScreenshots_getInstance(string id, AppScreenshots_getInstanceFieldsAppScreenshots[]? fieldsAppScreenshots = default, string[]? include = default)
+        public Task<AppScreenshotResponse> AppScreenshots_getInstance(string id, AppScreenshots_getInstanceFieldsAppScreenshots[]? fieldsAppScreenshots = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31411,11 +31409,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppScreenshotResponse>(message);
+            return SendAsync<AppScreenshotResponse>(message, log);
         }
 
         // /v1/appScreenshots/{id}
-        public Task<AppScreenshotResponse> AppScreenshots_updateInstance(string id, AppScreenshotUpdateRequest request)
+        public Task<AppScreenshotResponse> AppScreenshots_updateInstance(string id, AppScreenshotUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31423,29 +31421,29 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppScreenshotResponse>(message);
+            return SendAsync<AppScreenshotResponse>(message, log);
         }
 
         // /v1/appScreenshots/{id}
-        public Task AppScreenshots_deleteInstance(string id)
+        public Task AppScreenshots_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appScreenshotSets
-        public Task<AppScreenshotSetResponse> AppScreenshotSets_createInstance(AppScreenshotSetCreateRequest request)
+        public Task<AppScreenshotSetResponse> AppScreenshotSets_createInstance(AppScreenshotSetCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appScreenshotSets";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppScreenshotSetResponse>(message);
+            return SendAsync<AppScreenshotSetResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31482,7 +31480,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appScreenshotSets/{id}
-        public Task<AppScreenshotSetResponse> AppScreenshotSets_getInstance(string id, AppScreenshotSets_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppScreenshotSets_getInstanceFieldsAppScreenshots[]? fieldsAppScreenshots = default, AppScreenshotSets_getInstanceInclude[]? include = default, int? limitAppScreenshots = default)
+        public Task<AppScreenshotSetResponse> AppScreenshotSets_getInstance(string id, AppScreenshotSets_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppScreenshotSets_getInstanceFieldsAppScreenshots[]? fieldsAppScreenshots = default, AppScreenshotSets_getInstanceInclude[]? include = default, int? limitAppScreenshots = default, INestedLog? log = null)
         {
             string path = "/v1/appScreenshotSets/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31497,18 +31495,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appScreenshots]", limitAppScreenshots.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppScreenshotSetResponse>(message);
+            return SendAsync<AppScreenshotSetResponse>(message, log);
         }
 
         // /v1/appScreenshotSets/{id}
-        public Task AppScreenshotSets_deleteInstance(string id)
+        public Task AppScreenshotSets_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appScreenshotSets/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31536,7 +31534,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appScreenshotSets/{id}/appScreenshots
-        public Task<AppScreenshotsResponse> AppScreenshotSets_appScreenshots_getToManyRelated(string id, AppScreenshotSets_appScreenshots_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, AppScreenshotSets_appScreenshots_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, int? limit = default, string[]? include = default)
+        public Task<AppScreenshotsResponse> AppScreenshotSets_appScreenshots_getToManyRelated(string id, AppScreenshotSets_appScreenshots_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, AppScreenshotSets_appScreenshots_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appScreenshotSets/{id}/appScreenshots";
             path = path.Replace("{id}", id.ToString());
@@ -31551,11 +31549,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppScreenshotsResponse>(message);
+            return SendAsync<AppScreenshotsResponse>(message, log);
         }
 
         // /v1/appScreenshotSets/{id}/relationships/appScreenshots
-        public Task<AppScreenshotSetAppScreenshotsLinkagesResponse> AppScreenshotSets_appScreenshots_getToManyRelationship(string id, int? limit = default)
+        public Task<AppScreenshotSetAppScreenshotsLinkagesResponse> AppScreenshotSets_appScreenshots_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/appScreenshotSets/{id}/relationships/appScreenshots";
             path = path.Replace("{id}", id.ToString());
@@ -31564,7 +31562,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppScreenshotSetAppScreenshotsLinkagesResponse>(message);
+            return SendAsync<AppScreenshotSetAppScreenshotsLinkagesResponse>(message, log);
         }
 
         public class AppScreenshotSets_appScreenshots_replaceToManyRelationshipRequest
@@ -31579,7 +31577,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appScreenshotSets/{id}/relationships/appScreenshots
-        public Task AppScreenshotSets_appScreenshots_replaceToManyRelationship(string id, AppScreenshotSetAppScreenshotsLinkagesRequest request)
+        public Task AppScreenshotSets_appScreenshots_replaceToManyRelationship(string id, AppScreenshotSetAppScreenshotsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/appScreenshotSets/{id}/relationships/appScreenshots";
             path = path.Replace("{id}", id.ToString());
@@ -31587,18 +31585,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appStoreReviewAttachments
-        public Task<AppStoreReviewAttachmentResponse> AppStoreReviewAttachments_createInstance(AppStoreReviewAttachmentCreateRequest request)
+        public Task<AppStoreReviewAttachmentResponse> AppStoreReviewAttachments_createInstance(AppStoreReviewAttachmentCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewAttachments";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreReviewAttachmentResponse>(message);
+            return SendAsync<AppStoreReviewAttachmentResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31613,7 +31611,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreReviewAttachments/{id}
-        public Task<AppStoreReviewAttachmentResponse> AppStoreReviewAttachments_getInstance(string id, AppStoreReviewAttachments_getInstanceFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, string[]? include = default)
+        public Task<AppStoreReviewAttachmentResponse> AppStoreReviewAttachments_getInstance(string id, AppStoreReviewAttachments_getInstanceFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewAttachments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31624,11 +31622,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreReviewAttachmentResponse>(message);
+            return SendAsync<AppStoreReviewAttachmentResponse>(message, log);
         }
 
         // /v1/appStoreReviewAttachments/{id}
-        public Task<AppStoreReviewAttachmentResponse> AppStoreReviewAttachments_updateInstance(string id, AppStoreReviewAttachmentUpdateRequest request)
+        public Task<AppStoreReviewAttachmentResponse> AppStoreReviewAttachments_updateInstance(string id, AppStoreReviewAttachmentUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewAttachments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31636,29 +31634,29 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreReviewAttachmentResponse>(message);
+            return SendAsync<AppStoreReviewAttachmentResponse>(message, log);
         }
 
         // /v1/appStoreReviewAttachments/{id}
-        public Task AppStoreReviewAttachments_deleteInstance(string id)
+        public Task AppStoreReviewAttachments_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewAttachments/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appStoreReviewDetails
-        public Task<AppStoreReviewDetailResponse> AppStoreReviewDetails_createInstance(AppStoreReviewDetailCreateRequest request)
+        public Task<AppStoreReviewDetailResponse> AppStoreReviewDetails_createInstance(AppStoreReviewDetailCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewDetails";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreReviewDetailResponse>(message);
+            return SendAsync<AppStoreReviewDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31695,7 +31693,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreReviewDetails/{id}
-        public Task<AppStoreReviewDetailResponse> AppStoreReviewDetails_getInstance(string id, AppStoreReviewDetails_getInstanceFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, AppStoreReviewDetails_getInstanceFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, AppStoreReviewDetails_getInstanceInclude[]? include = default, int? limitAppStoreReviewAttachments = default)
+        public Task<AppStoreReviewDetailResponse> AppStoreReviewDetails_getInstance(string id, AppStoreReviewDetails_getInstanceFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, AppStoreReviewDetails_getInstanceFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, AppStoreReviewDetails_getInstanceInclude[]? include = default, int? limitAppStoreReviewAttachments = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31710,11 +31708,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreReviewAttachments]", limitAppStoreReviewAttachments.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreReviewDetailResponse>(message);
+            return SendAsync<AppStoreReviewDetailResponse>(message, log);
         }
 
         // /v1/appStoreReviewDetails/{id}
-        public Task<AppStoreReviewDetailResponse> AppStoreReviewDetails_updateInstance(string id, AppStoreReviewDetailUpdateRequest request)
+        public Task<AppStoreReviewDetailResponse> AppStoreReviewDetails_updateInstance(string id, AppStoreReviewDetailUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31722,7 +31720,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreReviewDetailResponse>(message);
+            return SendAsync<AppStoreReviewDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31752,7 +31750,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreReviewDetails/{id}/appStoreReviewAttachments
-        public Task<AppStoreReviewAttachmentsResponse> AppStoreReviewDetails_appStoreReviewAttachments_getToManyRelated(string id, AppStoreReviewDetails_appStoreReviewAttachments_getToManyRelatedFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, AppStoreReviewDetails_appStoreReviewAttachments_getToManyRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, int? limit = default, string[]? include = default)
+        public Task<AppStoreReviewAttachmentsResponse> AppStoreReviewDetails_appStoreReviewAttachments_getToManyRelated(string id, AppStoreReviewDetails_appStoreReviewAttachments_getToManyRelatedFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, AppStoreReviewDetails_appStoreReviewAttachments_getToManyRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreReviewDetails/{id}/appStoreReviewAttachments";
             path = path.Replace("{id}", id.ToString());
@@ -31767,19 +31765,19 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreReviewAttachmentsResponse>(message);
+            return SendAsync<AppStoreReviewAttachmentsResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperiments
         [Obsolete]
-        public Task<AppStoreVersionExperimentResponse> AppStoreVersionExperiments_createInstance(AppStoreVersionExperimentCreateRequest request)
+        public Task<AppStoreVersionExperimentResponse> AppStoreVersionExperiments_createInstance(AppStoreVersionExperimentCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperiments";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionExperimentResponse>(message);
+            return SendAsync<AppStoreVersionExperimentResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31816,7 +31814,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/appStoreVersionExperiments/{id}
         [Obsolete]
-        public Task<AppStoreVersionExperimentResponse> AppStoreVersionExperiments_getInstance(string id, AppStoreVersionExperiments_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperiments_getInstanceFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperiments_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentTreatments = default)
+        public Task<AppStoreVersionExperimentResponse> AppStoreVersionExperiments_getInstance(string id, AppStoreVersionExperiments_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperiments_getInstanceFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperiments_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentTreatments = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31831,12 +31829,12 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentTreatments]", limitAppStoreVersionExperimentTreatments.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentResponse>(message);
+            return SendAsync<AppStoreVersionExperimentResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperiments/{id}
         [Obsolete]
-        public Task<AppStoreVersionExperimentResponse> AppStoreVersionExperiments_updateInstance(string id, AppStoreVersionExperimentUpdateRequest request)
+        public Task<AppStoreVersionExperimentResponse> AppStoreVersionExperiments_updateInstance(string id, AppStoreVersionExperimentUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31844,19 +31842,19 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionExperimentResponse>(message);
+            return SendAsync<AppStoreVersionExperimentResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperiments/{id}
         [Obsolete]
-        public Task AppStoreVersionExperiments_deleteInstance(string id)
+        public Task AppStoreVersionExperiments_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31907,7 +31905,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments
         [Obsolete]
-        public Task<AppStoreVersionExperimentTreatmentsResponse> AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelated(string id, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, int? limit = default, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionExperimentTreatmentLocalizations = default)
+        public Task<AppStoreVersionExperimentTreatmentsResponse> AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelated(string id, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, int? limit = default, AppStoreVersionExperiments_appStoreVersionExperimentTreatments_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionExperimentTreatmentLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments";
             path = path.Replace("{id}", id.ToString());
@@ -31926,18 +31924,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentTreatmentLocalizations]", limitAppStoreVersionExperimentTreatmentLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentTreatmentsResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentsResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperimentTreatmentLocalizations
-        public Task<AppStoreVersionExperimentTreatmentLocalizationResponse> AppStoreVersionExperimentTreatmentLocalizations_createInstance(AppStoreVersionExperimentTreatmentLocalizationCreateRequest request)
+        public Task<AppStoreVersionExperimentTreatmentLocalizationResponse> AppStoreVersionExperimentTreatmentLocalizations_createInstance(AppStoreVersionExperimentTreatmentLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionExperimentTreatmentLocalizationResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -31978,7 +31976,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionExperimentTreatmentLocalizations/{id}
-        public Task<AppStoreVersionExperimentTreatmentLocalizationResponse> AppStoreVersionExperimentTreatmentLocalizations_getInstance(string id, AppStoreVersionExperimentTreatmentLocalizations_getInstanceFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionExperimentTreatmentLocalizations_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionExperimentTreatmentLocalizations_getInstanceInclude[]? include = default, int? limitAppPreviewSets = default, int? limitAppScreenshotSets = default)
+        public Task<AppStoreVersionExperimentTreatmentLocalizationResponse> AppStoreVersionExperimentTreatmentLocalizations_getInstance(string id, AppStoreVersionExperimentTreatmentLocalizations_getInstanceFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionExperimentTreatmentLocalizations_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionExperimentTreatmentLocalizations_getInstanceInclude[]? include = default, int? limitAppPreviewSets = default, int? limitAppScreenshotSets = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -31997,18 +31995,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appScreenshotSets]", limitAppScreenshotSets.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentTreatmentLocalizationResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentLocalizationResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperimentTreatmentLocalizations/{id}
-        public Task AppStoreVersionExperimentTreatmentLocalizations_deleteInstance(string id)
+        public Task AppStoreVersionExperimentTreatmentLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -32103,7 +32101,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionExperimentTreatmentLocalizations/{id}/appPreviewSets
-        public Task<AppPreviewSetsResponse> AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelated(string id, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFilterPreviewType[]? filterPreviewType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppCustomProductPageLocalization = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, int? limit = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedInclude[]? include = default, int? limitAppPreviews = default)
+        public Task<AppPreviewSetsResponse> AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelated(string id, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFilterPreviewType[]? filterPreviewType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppCustomProductPageLocalization = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, int? limit = default, AppStoreVersionExperimentTreatmentLocalizations_appPreviewSets_getToManyRelatedInclude[]? include = default, int? limitAppPreviews = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}/appPreviewSets";
             path = path.Replace("{id}", id.ToString());
@@ -32132,7 +32130,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appPreviews]", limitAppPreviews.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPreviewSetsResponse>(message);
+            return SendAsync<AppPreviewSetsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -32241,7 +32239,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionExperimentTreatmentLocalizations/{id}/appScreenshotSets
-        public Task<AppScreenshotSetsResponse> AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelated(string id, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFilterScreenshotDisplayType[]? filterScreenshotDisplayType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppCustomProductPageLocalization = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, int? limit = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedInclude[]? include = default, int? limitAppScreenshots = default)
+        public Task<AppScreenshotSetsResponse> AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelated(string id, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFilterScreenshotDisplayType[]? filterScreenshotDisplayType = default, string[]? filterAppStoreVersionLocalization = default, string[]? filterAppCustomProductPageLocalization = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, int? limit = default, AppStoreVersionExperimentTreatmentLocalizations_appScreenshotSets_getToManyRelatedInclude[]? include = default, int? limitAppScreenshots = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatmentLocalizations/{id}/appScreenshotSets";
             path = path.Replace("{id}", id.ToString());
@@ -32270,18 +32268,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appScreenshots]", limitAppScreenshots.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppScreenshotSetsResponse>(message);
+            return SendAsync<AppScreenshotSetsResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperimentTreatments
-        public Task<AppStoreVersionExperimentTreatmentResponse> AppStoreVersionExperimentTreatments_createInstance(AppStoreVersionExperimentTreatmentCreateRequest request)
+        public Task<AppStoreVersionExperimentTreatmentResponse> AppStoreVersionExperimentTreatments_createInstance(AppStoreVersionExperimentTreatmentCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatments";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionExperimentTreatmentResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -32314,7 +32312,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionExperimentTreatments/{id}
-        public Task<AppStoreVersionExperimentTreatmentResponse> AppStoreVersionExperimentTreatments_getInstance(string id, AppStoreVersionExperimentTreatments_getInstanceFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentTreatments_getInstanceFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatments_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentTreatmentLocalizations = default)
+        public Task<AppStoreVersionExperimentTreatmentResponse> AppStoreVersionExperimentTreatments_getInstance(string id, AppStoreVersionExperimentTreatments_getInstanceFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentTreatments_getInstanceFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatments_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentTreatmentLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -32329,11 +32327,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentTreatmentLocalizations]", limitAppStoreVersionExperimentTreatmentLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentTreatmentResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperimentTreatments/{id}
-        public Task<AppStoreVersionExperimentTreatmentResponse> AppStoreVersionExperimentTreatments_updateInstance(string id, AppStoreVersionExperimentTreatmentUpdateRequest request)
+        public Task<AppStoreVersionExperimentTreatmentResponse> AppStoreVersionExperimentTreatments_updateInstance(string id, AppStoreVersionExperimentTreatmentUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -32341,18 +32339,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionExperimentTreatmentResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentResponse>(message, log);
         }
 
         // /v1/appStoreVersionExperimentTreatments/{id}
-        public Task AppStoreVersionExperimentTreatments_deleteInstance(string id)
+        public Task AppStoreVersionExperimentTreatments_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -32405,7 +32403,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionExperimentTreatments/{id}/appStoreVersionExperimentTreatmentLocalizations
-        public Task<AppStoreVersionExperimentTreatmentLocalizationsResponse> AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedInclude[]? include = default, int? limitAppScreenshotSets = default, int? limitAppPreviewSets = default)
+        public Task<AppStoreVersionExperimentTreatmentLocalizationsResponse> AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, AppStoreVersionExperimentTreatments_appStoreVersionExperimentTreatmentLocalizations_getToManyRelatedInclude[]? include = default, int? limitAppScreenshotSets = default, int? limitAppPreviewSets = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionExperimentTreatments/{id}/appStoreVersionExperimentTreatmentLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -32430,18 +32428,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appPreviewSets]", limitAppPreviewSets.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentTreatmentLocalizationsResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentLocalizationsResponse>(message, log);
         }
 
         // /v1/appStoreVersionLocalizations
-        public Task<AppStoreVersionLocalizationResponse> AppStoreVersionLocalizations_createInstance(AppStoreVersionLocalizationCreateRequest request)
+        public Task<AppStoreVersionLocalizationResponse> AppStoreVersionLocalizations_createInstance(AppStoreVersionLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionLocalizationResponse>(message);
+            return SendAsync<AppStoreVersionLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -32488,7 +32486,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionLocalizations/{id}
-        public Task<AppStoreVersionLocalizationResponse> AppStoreVersionLocalizations_getInstance(string id, AppStoreVersionLocalizations_getInstanceFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionLocalizations_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionLocalizations_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionLocalizations_getInstanceInclude[]? include = default, int? limitAppPreviewSets = default, int? limitAppScreenshotSets = default)
+        public Task<AppStoreVersionLocalizationResponse> AppStoreVersionLocalizations_getInstance(string id, AppStoreVersionLocalizations_getInstanceFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionLocalizations_getInstanceFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionLocalizations_getInstanceFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionLocalizations_getInstanceInclude[]? include = default, int? limitAppPreviewSets = default, int? limitAppScreenshotSets = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -32507,11 +32505,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appScreenshotSets]", limitAppScreenshotSets.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionLocalizationResponse>(message);
+            return SendAsync<AppStoreVersionLocalizationResponse>(message, log);
         }
 
         // /v1/appStoreVersionLocalizations/{id}
-        public Task<AppStoreVersionLocalizationResponse> AppStoreVersionLocalizations_updateInstance(string id, AppStoreVersionLocalizationUpdateRequest request)
+        public Task<AppStoreVersionLocalizationResponse> AppStoreVersionLocalizations_updateInstance(string id, AppStoreVersionLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -32519,18 +32517,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionLocalizationResponse>(message);
+            return SendAsync<AppStoreVersionLocalizationResponse>(message, log);
         }
 
         // /v1/appStoreVersionLocalizations/{id}
-        public Task AppStoreVersionLocalizations_deleteInstance(string id)
+        public Task AppStoreVersionLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -32625,7 +32623,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionLocalizations/{id}/appPreviewSets
-        public Task<AppPreviewSetsResponse> AppStoreVersionLocalizations_appPreviewSets_getToManyRelated(string id, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFilterPreviewType[]? filterPreviewType = default, string[]? filterAppCustomProductPageLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, int? limit = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedInclude[]? include = default, int? limitAppPreviews = default)
+        public Task<AppPreviewSetsResponse> AppStoreVersionLocalizations_appPreviewSets_getToManyRelated(string id, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFilterPreviewType[]? filterPreviewType = default, string[]? filterAppCustomProductPageLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedFieldsAppPreviews[]? fieldsAppPreviews = default, int? limit = default, AppStoreVersionLocalizations_appPreviewSets_getToManyRelatedInclude[]? include = default, int? limitAppPreviews = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionLocalizations/{id}/appPreviewSets";
             path = path.Replace("{id}", id.ToString());
@@ -32654,7 +32652,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appPreviews]", limitAppPreviews.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPreviewSetsResponse>(message);
+            return SendAsync<AppPreviewSetsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -32763,7 +32761,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersionLocalizations/{id}/appScreenshotSets
-        public Task<AppScreenshotSetsResponse> AppStoreVersionLocalizations_appScreenshotSets_getToManyRelated(string id, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFilterScreenshotDisplayType[]? filterScreenshotDisplayType = default, string[]? filterAppCustomProductPageLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, int? limit = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedInclude[]? include = default, int? limitAppScreenshots = default)
+        public Task<AppScreenshotSetsResponse> AppStoreVersionLocalizations_appScreenshotSets_getToManyRelated(string id, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFilterScreenshotDisplayType[]? filterScreenshotDisplayType = default, string[]? filterAppCustomProductPageLocalization = default, string[]? filterAppStoreVersionExperimentTreatmentLocalization = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppCustomProductPageLocalizations[]? fieldsAppCustomProductPageLocalizations = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedFieldsAppScreenshots[]? fieldsAppScreenshots = default, int? limit = default, AppStoreVersionLocalizations_appScreenshotSets_getToManyRelatedInclude[]? include = default, int? limitAppScreenshots = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionLocalizations/{id}/appScreenshotSets";
             path = path.Replace("{id}", id.ToString());
@@ -32792,22 +32790,22 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appScreenshots]", limitAppScreenshots.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppScreenshotSetsResponse>(message);
+            return SendAsync<AppScreenshotSetsResponse>(message, log);
         }
 
         // /v1/appStoreVersionPhasedReleases
-        public Task<AppStoreVersionPhasedReleaseResponse> AppStoreVersionPhasedReleases_createInstance(AppStoreVersionPhasedReleaseCreateRequest request)
+        public Task<AppStoreVersionPhasedReleaseResponse> AppStoreVersionPhasedReleases_createInstance(AppStoreVersionPhasedReleaseCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionPhasedReleases";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionPhasedReleaseResponse>(message);
+            return SendAsync<AppStoreVersionPhasedReleaseResponse>(message, log);
         }
 
         // /v1/appStoreVersionPhasedReleases/{id}
-        public Task<AppStoreVersionPhasedReleaseResponse> AppStoreVersionPhasedReleases_updateInstance(string id, AppStoreVersionPhasedReleaseUpdateRequest request)
+        public Task<AppStoreVersionPhasedReleaseResponse> AppStoreVersionPhasedReleases_updateInstance(string id, AppStoreVersionPhasedReleaseUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionPhasedReleases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -32815,51 +32813,51 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionPhasedReleaseResponse>(message);
+            return SendAsync<AppStoreVersionPhasedReleaseResponse>(message, log);
         }
 
         // /v1/appStoreVersionPhasedReleases/{id}
-        public Task AppStoreVersionPhasedReleases_deleteInstance(string id)
+        public Task AppStoreVersionPhasedReleases_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionPhasedReleases/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appStoreVersionPromotions
-        public Task<AppStoreVersionPromotionResponse> AppStoreVersionPromotions_createInstance(AppStoreVersionPromotionCreateRequest request)
+        public Task<AppStoreVersionPromotionResponse> AppStoreVersionPromotions_createInstance(AppStoreVersionPromotionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionPromotions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionPromotionResponse>(message);
+            return SendAsync<AppStoreVersionPromotionResponse>(message, log);
         }
 
         // /v1/appStoreVersionReleaseRequests
-        public Task<AppStoreVersionReleaseRequestResponse> AppStoreVersionReleaseRequests_createInstance(AppStoreVersionReleaseRequestCreateRequest request)
+        public Task<AppStoreVersionReleaseRequestResponse> AppStoreVersionReleaseRequests_createInstance(AppStoreVersionReleaseRequestCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionReleaseRequests";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionReleaseRequestResponse>(message);
+            return SendAsync<AppStoreVersionReleaseRequestResponse>(message, log);
         }
 
         // /v1/appStoreVersions
-        public Task<AppStoreVersionResponse> AppStoreVersions_createInstance(AppStoreVersionCreateRequest request)
+        public Task<AppStoreVersionResponse> AppStoreVersions_createInstance(AppStoreVersionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionResponse>(message);
+            return SendAsync<AppStoreVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33024,7 +33022,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}
-        public Task<AppStoreVersionResponse> AppStoreVersions_getInstance(string id, AppStoreVersions_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_getInstanceFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersions_getInstanceFieldsBuilds[]? fieldsBuilds = default, AppStoreVersions_getInstanceFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, AppStoreVersions_getInstanceFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, AppStoreVersions_getInstanceFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, AppStoreVersions_getInstanceFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, AppStoreVersions_getInstanceFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppStoreVersions_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, AppStoreVersions_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentsV2 = default, int? limitAppStoreVersionLocalizations = default)
+        public Task<AppStoreVersionResponse> AppStoreVersions_getInstance(string id, AppStoreVersions_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_getInstanceFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersions_getInstanceFieldsBuilds[]? fieldsBuilds = default, AppStoreVersions_getInstanceFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, AppStoreVersions_getInstanceFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, AppStoreVersions_getInstanceFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, AppStoreVersions_getInstanceFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, AppStoreVersions_getInstanceFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppStoreVersions_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, AppStoreVersions_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentsV2 = default, int? limitAppStoreVersionLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -33057,11 +33055,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionLocalizations]", limitAppStoreVersionLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionResponse>(message);
+            return SendAsync<AppStoreVersionResponse>(message, log);
         }
 
         // /v1/appStoreVersions/{id}
-        public Task<AppStoreVersionResponse> AppStoreVersions_updateInstance(string id, AppStoreVersionUpdateRequest request)
+        public Task<AppStoreVersionResponse> AppStoreVersions_updateInstance(string id, AppStoreVersionUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -33069,18 +33067,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionResponse>(message);
+            return SendAsync<AppStoreVersionResponse>(message, log);
         }
 
         // /v1/appStoreVersions/{id}
-        public Task AppStoreVersions_deleteInstance(string id)
+        public Task AppStoreVersions_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33110,7 +33108,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/appStoreVersions/{id}/ageRatingDeclaration
         [Obsolete]
-        public Task<AgeRatingDeclarationWithoutIncludesResponse> AppStoreVersions_ageRatingDeclaration_getToOneRelated(string id, AppStoreVersions_ageRatingDeclaration_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default)
+        public Task<AgeRatingDeclarationWithoutIncludesResponse> AppStoreVersions_ageRatingDeclaration_getToOneRelated(string id, AppStoreVersions_ageRatingDeclaration_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/ageRatingDeclaration";
             path = path.Replace("{id}", id.ToString());
@@ -33119,7 +33117,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[ageRatingDeclarations]", string.Join(",", fieldsAgeRatingDeclarations));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AgeRatingDeclarationWithoutIncludesResponse>(message);
+            return SendAsync<AgeRatingDeclarationWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33136,7 +33134,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/alternativeDistributionPackage
-        public Task<AlternativeDistributionPackageResponse> AppStoreVersions_alternativeDistributionPackage_getToOneRelated(string id, string[]? fieldsAlternativeDistributionPackages = default, AppStoreVersions_alternativeDistributionPackage_getToOneRelatedFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, string[]? include = default, int? limitVersions = default)
+        public Task<AlternativeDistributionPackageResponse> AppStoreVersions_alternativeDistributionPackage_getToOneRelated(string id, string[]? fieldsAlternativeDistributionPackages = default, AppStoreVersions_alternativeDistributionPackage_getToOneRelatedFieldsAlternativeDistributionPackageVersions[]? fieldsAlternativeDistributionPackageVersions = default, string[]? include = default, int? limitVersions = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/alternativeDistributionPackage";
             path = path.Replace("{id}", id.ToString());
@@ -33151,7 +33149,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[versions]", limitVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AlternativeDistributionPackageResponse>(message);
+            return SendAsync<AlternativeDistributionPackageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33228,7 +33226,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/appClipDefaultExperience
-        public Task<AppClipDefaultExperienceResponse> AppStoreVersions_appClipDefaultExperience_getToOneRelated(string id, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClips[]? fieldsAppClips = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedInclude[]? include = default, int? limitAppClipDefaultExperienceLocalizations = default)
+        public Task<AppClipDefaultExperienceResponse> AppStoreVersions_appClipDefaultExperience_getToOneRelated(string id, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClips[]? fieldsAppClips = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClipDefaultExperienceLocalizations[]? fieldsAppClipDefaultExperienceLocalizations = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedFieldsAppClipAppStoreReviewDetails[]? fieldsAppClipAppStoreReviewDetails = default, AppStoreVersions_appClipDefaultExperience_getToOneRelatedInclude[]? include = default, int? limitAppClipDefaultExperienceLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/appClipDefaultExperience";
             path = path.Replace("{id}", id.ToString());
@@ -33249,7 +33247,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appClipDefaultExperienceLocalizations]", limitAppClipDefaultExperienceLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDefaultExperienceResponse>(message);
+            return SendAsync<AppClipDefaultExperienceResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33315,7 +33313,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/appStoreReviewDetail
-        public Task<AppStoreReviewDetailResponse> AppStoreVersions_appStoreReviewDetail_getToOneRelated(string id, AppStoreVersions_appStoreReviewDetail_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, AppStoreVersions_appStoreReviewDetail_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreReviewDetail_getToOneRelatedFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, AppStoreVersions_appStoreReviewDetail_getToOneRelatedInclude[]? include = default, int? limitAppStoreReviewAttachments = default)
+        public Task<AppStoreReviewDetailResponse> AppStoreVersions_appStoreReviewDetail_getToOneRelated(string id, AppStoreVersions_appStoreReviewDetail_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, AppStoreVersions_appStoreReviewDetail_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreReviewDetail_getToOneRelatedFieldsAppStoreReviewAttachments[]? fieldsAppStoreReviewAttachments = default, AppStoreVersions_appStoreReviewDetail_getToOneRelatedInclude[]? include = default, int? limitAppStoreReviewAttachments = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/appStoreReviewDetail";
             path = path.Replace("{id}", id.ToString());
@@ -33332,7 +33330,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreReviewAttachments]", limitAppStoreReviewAttachments.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreReviewDetailResponse>(message);
+            return SendAsync<AppStoreReviewDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33412,7 +33410,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/appStoreVersions/{id}/appStoreVersionExperiments
         [Obsolete]
-        public Task<AppStoreVersionExperimentsResponse> AppStoreVersions_appStoreVersionExperiments_getToManyRelated(string id, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFilterState[]? filterState = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, int? limit = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionExperimentTreatments = default)
+        public Task<AppStoreVersionExperimentsResponse> AppStoreVersions_appStoreVersionExperiments_getToManyRelated(string id, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFilterState[]? filterState = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, int? limit = default, AppStoreVersions_appStoreVersionExperiments_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionExperimentTreatments = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionExperiments";
             path = path.Replace("{id}", id.ToString());
@@ -33433,7 +33431,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentTreatments]", limitAppStoreVersionExperimentTreatments.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentsResponse>(message);
+            return SendAsync<AppStoreVersionExperimentsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33565,7 +33563,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/appStoreVersionExperimentsV2
-        public Task<AppStoreVersionExperimentsV2Response> AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelated(string id, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFilterState[]? filterState = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsApps[]? fieldsApps = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, int? limit = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedInclude[]? include = default, int? limitControlVersions = default, int? limitAppStoreVersionExperimentTreatments = default)
+        public Task<AppStoreVersionExperimentsV2Response> AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelated(string id, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFilterState[]? filterState = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsApps[]? fieldsApps = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, int? limit = default, AppStoreVersions_appStoreVersionExperimentsV2_getToManyRelatedInclude[]? include = default, int? limitControlVersions = default, int? limitAppStoreVersionExperimentTreatments = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionExperimentsV2";
             path = path.Replace("{id}", id.ToString());
@@ -33590,7 +33588,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentTreatments]", limitAppStoreVersionExperimentTreatments.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentsV2Response>(message);
+            return SendAsync<AppStoreVersionExperimentsV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33666,7 +33664,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/appStoreVersionLocalizations
-        public Task<AppStoreVersionLocalizationsResponse> AppStoreVersions_appStoreVersionLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedInclude[]? include = default, int? limitAppScreenshotSets = default, int? limitAppPreviewSets = default)
+        public Task<AppStoreVersionLocalizationsResponse> AppStoreVersions_appStoreVersionLocalizations_getToManyRelated(string id, string[]? filterLocale = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppScreenshotSets[]? fieldsAppScreenshotSets = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedFieldsAppPreviewSets[]? fieldsAppPreviewSets = default, int? limit = default, AppStoreVersions_appStoreVersionLocalizations_getToManyRelatedInclude[]? include = default, int? limitAppScreenshotSets = default, int? limitAppPreviewSets = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -33691,7 +33689,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appPreviewSets]", limitAppPreviewSets.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionLocalizationsResponse>(message);
+            return SendAsync<AppStoreVersionLocalizationsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33704,7 +33702,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/appStoreVersionPhasedRelease
-        public Task<AppStoreVersionPhasedReleaseWithoutIncludesResponse> AppStoreVersions_appStoreVersionPhasedRelease_getToOneRelated(string id, AppStoreVersions_appStoreVersionPhasedRelease_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default)
+        public Task<AppStoreVersionPhasedReleaseWithoutIncludesResponse> AppStoreVersions_appStoreVersionPhasedRelease_getToOneRelated(string id, AppStoreVersions_appStoreVersionPhasedRelease_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionPhasedRelease";
             path = path.Replace("{id}", id.ToString());
@@ -33713,7 +33711,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appStoreVersionPhasedReleases]", string.Join(",", fieldsAppStoreVersionPhasedReleases));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionPhasedReleaseWithoutIncludesResponse>(message);
+            return SendAsync<AppStoreVersionPhasedReleaseWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33747,7 +33745,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/appStoreVersions/{id}/appStoreVersionSubmission
         [Obsolete]
-        public Task<AppStoreVersionSubmissionResponse> AppStoreVersions_appStoreVersionSubmission_getToOneRelated(string id, string[]? fieldsAppStoreVersionSubmissions = default, AppStoreVersions_appStoreVersionSubmission_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, string[]? include = default)
+        public Task<AppStoreVersionSubmissionResponse> AppStoreVersions_appStoreVersionSubmission_getToOneRelated(string id, string[]? fieldsAppStoreVersionSubmissions = default, AppStoreVersions_appStoreVersionSubmission_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/appStoreVersionSubmission";
             path = path.Replace("{id}", id.ToString());
@@ -33760,7 +33758,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionSubmissionResponse>(message);
+            return SendAsync<AppStoreVersionSubmissionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -33793,7 +33791,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/build
-        public Task<BuildWithoutIncludesResponse> AppStoreVersions_build_getToOneRelated(string id, AppStoreVersions_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default)
+        public Task<BuildWithoutIncludesResponse> AppStoreVersions_build_getToOneRelated(string id, AppStoreVersions_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/build";
             path = path.Replace("{id}", id.ToString());
@@ -33802,7 +33800,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildWithoutIncludesResponse>(message);
+            return SendAsync<BuildWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34075,7 +34073,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/customerReviews
-        public Task<CustomerReviewsResponse> AppStoreVersions_customerReviews_getToManyRelated(string id, AppStoreVersions_customerReviews_getToManyRelatedFilterTerritory[]? filterTerritory = default, string[]? filterRating = default, bool? existsPublishedResponse = default, AppStoreVersions_customerReviews_getToManyRelatedSort[]? sort = default, AppStoreVersions_customerReviews_getToManyRelatedFieldsCustomerReviews[]? fieldsCustomerReviews = default, AppStoreVersions_customerReviews_getToManyRelatedFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, int? limit = default, string[]? include = default)
+        public Task<CustomerReviewsResponse> AppStoreVersions_customerReviews_getToManyRelated(string id, AppStoreVersions_customerReviews_getToManyRelatedFilterTerritory[]? filterTerritory = default, string[]? filterRating = default, bool? existsPublishedResponse = default, AppStoreVersions_customerReviews_getToManyRelatedSort[]? sort = default, AppStoreVersions_customerReviews_getToManyRelatedFieldsCustomerReviews[]? fieldsCustomerReviews = default, AppStoreVersions_customerReviews_getToManyRelatedFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/customerReviews";
             path = path.Replace("{id}", id.ToString());
@@ -34098,7 +34096,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CustomerReviewsResponse>(message);
+            return SendAsync<CustomerReviewsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34146,7 +34144,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/gameCenterAppVersion
-        public Task<GameCenterAppVersionResponse> AppStoreVersions_gameCenterAppVersion_getToOneRelated(string id, AppStoreVersions_gameCenterAppVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, AppStoreVersions_gameCenterAppVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_gameCenterAppVersion_getToOneRelatedInclude[]? include = default, int? limitCompatibilityVersions = default)
+        public Task<GameCenterAppVersionResponse> AppStoreVersions_gameCenterAppVersion_getToOneRelated(string id, AppStoreVersions_gameCenterAppVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, AppStoreVersions_gameCenterAppVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, AppStoreVersions_gameCenterAppVersion_getToOneRelatedInclude[]? include = default, int? limitCompatibilityVersions = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/gameCenterAppVersion";
             path = path.Replace("{id}", id.ToString());
@@ -34161,18 +34159,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[compatibilityVersions]", limitCompatibilityVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAppVersionResponse>(message);
+            return SendAsync<GameCenterAppVersionResponse>(message, log);
         }
 
         // /v1/appStoreVersions/{id}/relationships/appClipDefaultExperience
-        public Task<AppStoreVersionAppClipDefaultExperienceLinkageResponse> AppStoreVersions_appClipDefaultExperience_getToOneRelationship(string id)
+        public Task<AppStoreVersionAppClipDefaultExperienceLinkageResponse> AppStoreVersions_appClipDefaultExperience_getToOneRelationship(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/relationships/appClipDefaultExperience";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionAppClipDefaultExperienceLinkageResponse>(message);
+            return SendAsync<AppStoreVersionAppClipDefaultExperienceLinkageResponse>(message, log);
         }
 
         public class AppStoreVersions_appClipDefaultExperience_updateToOneRelationshipRequest
@@ -34187,7 +34185,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/relationships/appClipDefaultExperience
-        public Task AppStoreVersions_appClipDefaultExperience_updateToOneRelationship(string id, AppStoreVersionAppClipDefaultExperienceLinkageRequest request)
+        public Task AppStoreVersions_appClipDefaultExperience_updateToOneRelationship(string id, AppStoreVersionAppClipDefaultExperienceLinkageRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/relationships/appClipDefaultExperience";
             path = path.Replace("{id}", id.ToString());
@@ -34195,18 +34193,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/appStoreVersions/{id}/relationships/build
-        public Task<AppStoreVersionBuildLinkageResponse> AppStoreVersions_build_getToOneRelationship(string id)
+        public Task<AppStoreVersionBuildLinkageResponse> AppStoreVersions_build_getToOneRelationship(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/relationships/build";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionBuildLinkageResponse>(message);
+            return SendAsync<AppStoreVersionBuildLinkageResponse>(message, log);
         }
 
         public class AppStoreVersions_build_updateToOneRelationshipRequest
@@ -34221,7 +34219,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/relationships/build
-        public Task AppStoreVersions_build_updateToOneRelationship(string id, AppStoreVersionBuildLinkageRequest request)
+        public Task AppStoreVersions_build_updateToOneRelationship(string id, AppStoreVersionBuildLinkageRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/relationships/build";
             path = path.Replace("{id}", id.ToString());
@@ -34229,7 +34227,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34244,7 +34242,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/appStoreVersions/{id}/routingAppCoverage
-        public Task<RoutingAppCoverageWithoutIncludesResponse> AppStoreVersions_routingAppCoverage_getToOneRelated(string id, AppStoreVersions_routingAppCoverage_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default)
+        public Task<RoutingAppCoverageWithoutIncludesResponse> AppStoreVersions_routingAppCoverage_getToOneRelated(string id, AppStoreVersions_routingAppCoverage_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersions/{id}/routingAppCoverage";
             path = path.Replace("{id}", id.ToString());
@@ -34253,46 +34251,46 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[routingAppCoverages]", string.Join(",", fieldsRoutingAppCoverages));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<RoutingAppCoverageWithoutIncludesResponse>(message);
+            return SendAsync<RoutingAppCoverageWithoutIncludesResponse>(message, log);
         }
 
         // /v1/appStoreVersionSubmissions
         [Obsolete]
-        public Task<AppStoreVersionSubmissionResponse> AppStoreVersionSubmissions_createInstance(AppStoreVersionSubmissionCreateRequest request)
+        public Task<AppStoreVersionSubmissionResponse> AppStoreVersionSubmissions_createInstance(AppStoreVersionSubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionSubmissionResponse>(message);
+            return SendAsync<AppStoreVersionSubmissionResponse>(message, log);
         }
 
         // /v1/appStoreVersionSubmissions/{id}
         [Obsolete]
-        public Task AppStoreVersionSubmissions_deleteInstance(string id)
+        public Task AppStoreVersionSubmissions_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/appStoreVersionSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/betaAppClipInvocationLocalizations
-        public Task<BetaAppClipInvocationLocalizationResponse> BetaAppClipInvocationLocalizations_createInstance(BetaAppClipInvocationLocalizationCreateRequest request)
+        public Task<BetaAppClipInvocationLocalizationResponse> BetaAppClipInvocationLocalizations_createInstance(BetaAppClipInvocationLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppClipInvocationLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppClipInvocationLocalizationResponse>(message);
+            return SendAsync<BetaAppClipInvocationLocalizationResponse>(message, log);
         }
 
         // /v1/betaAppClipInvocationLocalizations/{id}
-        public Task<BetaAppClipInvocationLocalizationResponse> BetaAppClipInvocationLocalizations_updateInstance(string id, BetaAppClipInvocationLocalizationUpdateRequest request)
+        public Task<BetaAppClipInvocationLocalizationResponse> BetaAppClipInvocationLocalizations_updateInstance(string id, BetaAppClipInvocationLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppClipInvocationLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34300,29 +34298,29 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppClipInvocationLocalizationResponse>(message);
+            return SendAsync<BetaAppClipInvocationLocalizationResponse>(message, log);
         }
 
         // /v1/betaAppClipInvocationLocalizations/{id}
-        public Task BetaAppClipInvocationLocalizations_deleteInstance(string id)
+        public Task BetaAppClipInvocationLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/betaAppClipInvocationLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/betaAppClipInvocations
-        public Task<BetaAppClipInvocationResponse> BetaAppClipInvocations_createInstance(BetaAppClipInvocationCreateRequest request)
+        public Task<BetaAppClipInvocationResponse> BetaAppClipInvocations_createInstance(BetaAppClipInvocationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppClipInvocations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppClipInvocationResponse>(message);
+            return SendAsync<BetaAppClipInvocationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34333,7 +34331,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppClipInvocations/{id}
-        public Task<BetaAppClipInvocationResponse> BetaAppClipInvocations_getInstance(string id, BetaAppClipInvocations_getInstanceFieldsBetaAppClipInvocations[]? fieldsBetaAppClipInvocations = default, string[]? include = default, int? limitBetaAppClipInvocationLocalizations = default)
+        public Task<BetaAppClipInvocationResponse> BetaAppClipInvocations_getInstance(string id, BetaAppClipInvocations_getInstanceFieldsBetaAppClipInvocations[]? fieldsBetaAppClipInvocations = default, string[]? include = default, int? limitBetaAppClipInvocationLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppClipInvocations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34346,11 +34344,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[betaAppClipInvocationLocalizations]", limitBetaAppClipInvocationLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppClipInvocationResponse>(message);
+            return SendAsync<BetaAppClipInvocationResponse>(message, log);
         }
 
         // /v1/betaAppClipInvocations/{id}
-        public Task<BetaAppClipInvocationResponse> BetaAppClipInvocations_updateInstance(string id, BetaAppClipInvocationUpdateRequest request)
+        public Task<BetaAppClipInvocationResponse> BetaAppClipInvocations_updateInstance(string id, BetaAppClipInvocationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppClipInvocations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34358,18 +34356,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppClipInvocationResponse>(message);
+            return SendAsync<BetaAppClipInvocationResponse>(message, log);
         }
 
         // /v1/betaAppClipInvocations/{id}
-        public Task BetaAppClipInvocations_deleteInstance(string id)
+        public Task BetaAppClipInvocations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/betaAppClipInvocations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34433,7 +34431,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppLocalizations
-        public Task<BetaAppLocalizationsResponse> BetaAppLocalizations_getCollection(string[]? filterLocale = default, string[]? filterApp = default, BetaAppLocalizations_getCollectionFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, BetaAppLocalizations_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default)
+        public Task<BetaAppLocalizationsResponse> BetaAppLocalizations_getCollection(string[]? filterLocale = default, string[]? filterApp = default, BetaAppLocalizations_getCollectionFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, BetaAppLocalizations_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -34451,18 +34449,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppLocalizationsResponse>(message);
+            return SendAsync<BetaAppLocalizationsResponse>(message, log);
         }
 
         // /v1/betaAppLocalizations
-        public Task<BetaAppLocalizationResponse> BetaAppLocalizations_createInstance(BetaAppLocalizationCreateRequest request)
+        public Task<BetaAppLocalizationResponse> BetaAppLocalizations_createInstance(BetaAppLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppLocalizationResponse>(message);
+            return SendAsync<BetaAppLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34526,7 +34524,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppLocalizations/{id}
-        public Task<BetaAppLocalizationResponse> BetaAppLocalizations_getInstance(string id, BetaAppLocalizations_getInstanceFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, BetaAppLocalizations_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default)
+        public Task<BetaAppLocalizationResponse> BetaAppLocalizations_getInstance(string id, BetaAppLocalizations_getInstanceFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, BetaAppLocalizations_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34539,11 +34537,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppLocalizationResponse>(message);
+            return SendAsync<BetaAppLocalizationResponse>(message, log);
         }
 
         // /v1/betaAppLocalizations/{id}
-        public Task<BetaAppLocalizationResponse> BetaAppLocalizations_updateInstance(string id, BetaAppLocalizationUpdateRequest request)
+        public Task<BetaAppLocalizationResponse> BetaAppLocalizations_updateInstance(string id, BetaAppLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34551,18 +34549,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppLocalizationResponse>(message);
+            return SendAsync<BetaAppLocalizationResponse>(message, log);
         }
 
         // /v1/betaAppLocalizations/{id}
-        public Task BetaAppLocalizations_deleteInstance(string id)
+        public Task BetaAppLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/betaAppLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34614,7 +34612,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppLocalizations/{id}/app
-        public Task<AppWithoutIncludesResponse> BetaAppLocalizations_app_getToOneRelated(string id, BetaAppLocalizations_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> BetaAppLocalizations_app_getToOneRelated(string id, BetaAppLocalizations_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppLocalizations/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -34623,7 +34621,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34689,7 +34687,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppReviewDetails
-        public Task<BetaAppReviewDetailsResponse> BetaAppReviewDetails_getCollection(string[] filterApp, BetaAppReviewDetails_getCollectionFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, BetaAppReviewDetails_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default)
+        public Task<BetaAppReviewDetailsResponse> BetaAppReviewDetails_getCollection(string[] filterApp, BetaAppReviewDetails_getCollectionFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, BetaAppReviewDetails_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewDetails";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -34705,7 +34703,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppReviewDetailsResponse>(message);
+            return SendAsync<BetaAppReviewDetailsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34771,7 +34769,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppReviewDetails/{id}
-        public Task<BetaAppReviewDetailResponse> BetaAppReviewDetails_getInstance(string id, BetaAppReviewDetails_getInstanceFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, BetaAppReviewDetails_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default)
+        public Task<BetaAppReviewDetailResponse> BetaAppReviewDetails_getInstance(string id, BetaAppReviewDetails_getInstanceFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, BetaAppReviewDetails_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34784,11 +34782,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppReviewDetailResponse>(message);
+            return SendAsync<BetaAppReviewDetailResponse>(message, log);
         }
 
         // /v1/betaAppReviewDetails/{id}
-        public Task<BetaAppReviewDetailResponse> BetaAppReviewDetails_updateInstance(string id, BetaAppReviewDetailUpdateRequest request)
+        public Task<BetaAppReviewDetailResponse> BetaAppReviewDetails_updateInstance(string id, BetaAppReviewDetailUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34796,7 +34794,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppReviewDetailResponse>(message);
+            return SendAsync<BetaAppReviewDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34848,7 +34846,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppReviewDetails/{id}/app
-        public Task<AppWithoutIncludesResponse> BetaAppReviewDetails_app_getToOneRelated(string id, BetaAppReviewDetails_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> BetaAppReviewDetails_app_getToOneRelated(string id, BetaAppReviewDetails_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewDetails/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -34857,7 +34855,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34907,7 +34905,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppReviewSubmissions
-        public Task<BetaAppReviewSubmissionsResponse> BetaAppReviewSubmissions_getCollection(string[] filterBuild, BetaAppReviewSubmissions_getCollectionFilterBetaReviewState[]? filterBetaReviewState = default, BetaAppReviewSubmissions_getCollectionFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, BetaAppReviewSubmissions_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default)
+        public Task<BetaAppReviewSubmissionsResponse> BetaAppReviewSubmissions_getCollection(string[] filterBuild, BetaAppReviewSubmissions_getCollectionFilterBetaReviewState[]? filterBetaReviewState = default, BetaAppReviewSubmissions_getCollectionFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, BetaAppReviewSubmissions_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -34925,18 +34923,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppReviewSubmissionsResponse>(message);
+            return SendAsync<BetaAppReviewSubmissionsResponse>(message, log);
         }
 
         // /v1/betaAppReviewSubmissions
-        public Task<BetaAppReviewSubmissionResponse> BetaAppReviewSubmissions_createInstance(BetaAppReviewSubmissionCreateRequest request)
+        public Task<BetaAppReviewSubmissionResponse> BetaAppReviewSubmissions_createInstance(BetaAppReviewSubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaAppReviewSubmissionResponse>(message);
+            return SendAsync<BetaAppReviewSubmissionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -34977,7 +34975,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppReviewSubmissions/{id}
-        public Task<BetaAppReviewSubmissionResponse> BetaAppReviewSubmissions_getInstance(string id, BetaAppReviewSubmissions_getInstanceFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, BetaAppReviewSubmissions_getInstanceFieldsBuilds[]? fieldsBuilds = default, string[]? include = default)
+        public Task<BetaAppReviewSubmissionResponse> BetaAppReviewSubmissions_getInstance(string id, BetaAppReviewSubmissions_getInstanceFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, BetaAppReviewSubmissions_getInstanceFieldsBuilds[]? fieldsBuilds = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -34990,7 +34988,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppReviewSubmissionResponse>(message);
+            return SendAsync<BetaAppReviewSubmissionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35023,7 +35021,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaAppReviewSubmissions/{id}/build
-        public Task<BuildWithoutIncludesResponse> BetaAppReviewSubmissions_build_getToOneRelated(string id, BetaAppReviewSubmissions_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default)
+        public Task<BuildWithoutIncludesResponse> BetaAppReviewSubmissions_build_getToOneRelated(string id, BetaAppReviewSubmissions_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/betaAppReviewSubmissions/{id}/build";
             path = path.Replace("{id}", id.ToString());
@@ -35032,7 +35030,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildWithoutIncludesResponse>(message);
+            return SendAsync<BuildWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35073,7 +35071,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaBuildLocalizations
-        public Task<BetaBuildLocalizationsResponse> BetaBuildLocalizations_getCollection(string[]? filterLocale = default, string[]? filterBuild = default, BetaBuildLocalizations_getCollectionFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, BetaBuildLocalizations_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default)
+        public Task<BetaBuildLocalizationsResponse> BetaBuildLocalizations_getCollection(string[]? filterLocale = default, string[]? filterBuild = default, BetaBuildLocalizations_getCollectionFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, BetaBuildLocalizations_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaBuildLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -35091,18 +35089,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaBuildLocalizationsResponse>(message);
+            return SendAsync<BetaBuildLocalizationsResponse>(message, log);
         }
 
         // /v1/betaBuildLocalizations
-        public Task<BetaBuildLocalizationResponse> BetaBuildLocalizations_createInstance(BetaBuildLocalizationCreateRequest request)
+        public Task<BetaBuildLocalizationResponse> BetaBuildLocalizations_createInstance(BetaBuildLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaBuildLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaBuildLocalizationResponse>(message);
+            return SendAsync<BetaBuildLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35143,7 +35141,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaBuildLocalizations/{id}
-        public Task<BetaBuildLocalizationResponse> BetaBuildLocalizations_getInstance(string id, BetaBuildLocalizations_getInstanceFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, BetaBuildLocalizations_getInstanceFieldsBuilds[]? fieldsBuilds = default, string[]? include = default)
+        public Task<BetaBuildLocalizationResponse> BetaBuildLocalizations_getInstance(string id, BetaBuildLocalizations_getInstanceFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, BetaBuildLocalizations_getInstanceFieldsBuilds[]? fieldsBuilds = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaBuildLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -35156,11 +35154,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaBuildLocalizationResponse>(message);
+            return SendAsync<BetaBuildLocalizationResponse>(message, log);
         }
 
         // /v1/betaBuildLocalizations/{id}
-        public Task<BetaBuildLocalizationResponse> BetaBuildLocalizations_updateInstance(string id, BetaBuildLocalizationUpdateRequest request)
+        public Task<BetaBuildLocalizationResponse> BetaBuildLocalizations_updateInstance(string id, BetaBuildLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaBuildLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -35168,18 +35166,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaBuildLocalizationResponse>(message);
+            return SendAsync<BetaBuildLocalizationResponse>(message, log);
         }
 
         // /v1/betaBuildLocalizations/{id}
-        public Task BetaBuildLocalizations_deleteInstance(string id)
+        public Task BetaBuildLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/betaBuildLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35212,7 +35210,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaBuildLocalizations/{id}/build
-        public Task<BuildWithoutIncludesResponse> BetaBuildLocalizations_build_getToOneRelated(string id, BetaBuildLocalizations_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default)
+        public Task<BuildWithoutIncludesResponse> BetaBuildLocalizations_build_getToOneRelated(string id, BetaBuildLocalizations_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/betaBuildLocalizations/{id}/build";
             path = path.Replace("{id}", id.ToString());
@@ -35221,7 +35219,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildWithoutIncludesResponse>(message);
+            return SendAsync<BuildWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35359,7 +35357,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups
-        public Task<BetaGroupsResponse> BetaGroups_getCollection(string[]? filterName = default, string[]? filterIsInternalGroup = default, string[]? filterPublicLinkEnabled = default, string[]? filterPublicLinkLimitEnabled = default, string[]? filterPublicLink = default, string[]? filterApp = default, string[]? filterBuilds = default, string[]? filterId = default, BetaGroups_getCollectionSort[]? sort = default, BetaGroups_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, BetaGroups_getCollectionFieldsApps[]? fieldsApps = default, BetaGroups_getCollectionFieldsBuilds[]? fieldsBuilds = default, BetaGroups_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, int? limit = default, BetaGroups_getCollectionInclude[]? include = default, int? limitBetaTesters = default, int? limitBuilds = default)
+        public Task<BetaGroupsResponse> BetaGroups_getCollection(string[]? filterName = default, string[]? filterIsInternalGroup = default, string[]? filterPublicLinkEnabled = default, string[]? filterPublicLinkLimitEnabled = default, string[]? filterPublicLink = default, string[]? filterApp = default, string[]? filterBuilds = default, string[]? filterId = default, BetaGroups_getCollectionSort[]? sort = default, BetaGroups_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, BetaGroups_getCollectionFieldsApps[]? fieldsApps = default, BetaGroups_getCollectionFieldsBuilds[]? fieldsBuilds = default, BetaGroups_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, int? limit = default, BetaGroups_getCollectionInclude[]? include = default, int? limitBetaTesters = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -35399,18 +35397,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaGroupsResponse>(message);
+            return SendAsync<BetaGroupsResponse>(message, log);
         }
 
         // /v1/betaGroups
-        public Task<BetaGroupResponse> BetaGroups_createInstance(BetaGroupCreateRequest request)
+        public Task<BetaGroupResponse> BetaGroups_createInstance(BetaGroupCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaGroups";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaGroupResponse>(message);
+            return SendAsync<BetaGroupResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35531,7 +35529,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}
-        public Task<BetaGroupResponse> BetaGroups_getInstance(string id, BetaGroups_getInstanceFieldsBetaGroups[]? fieldsBetaGroups = default, BetaGroups_getInstanceFieldsApps[]? fieldsApps = default, BetaGroups_getInstanceFieldsBuilds[]? fieldsBuilds = default, BetaGroups_getInstanceFieldsBetaTesters[]? fieldsBetaTesters = default, BetaGroups_getInstanceInclude[]? include = default, int? limitBetaTesters = default, int? limitBuilds = default)
+        public Task<BetaGroupResponse> BetaGroups_getInstance(string id, BetaGroups_getInstanceFieldsBetaGroups[]? fieldsBetaGroups = default, BetaGroups_getInstanceFieldsApps[]? fieldsApps = default, BetaGroups_getInstanceFieldsBuilds[]? fieldsBuilds = default, BetaGroups_getInstanceFieldsBetaTesters[]? fieldsBetaTesters = default, BetaGroups_getInstanceInclude[]? include = default, int? limitBetaTesters = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -35552,11 +35550,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaGroupResponse>(message);
+            return SendAsync<BetaGroupResponse>(message, log);
         }
 
         // /v1/betaGroups/{id}
-        public Task<BetaGroupResponse> BetaGroups_updateInstance(string id, BetaGroupUpdateRequest request)
+        public Task<BetaGroupResponse> BetaGroups_updateInstance(string id, BetaGroupUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -35564,18 +35562,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaGroupResponse>(message);
+            return SendAsync<BetaGroupResponse>(message, log);
         }
 
         // /v1/betaGroups/{id}
-        public Task BetaGroups_deleteInstance(string id)
+        public Task BetaGroups_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35627,7 +35625,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/app
-        public Task<AppWithoutIncludesResponse> BetaGroups_app_getToOneRelated(string id, BetaGroups_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> BetaGroups_app_getToOneRelated(string id, BetaGroups_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -35636,7 +35634,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35653,7 +35651,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/betaTesters
-        public Task<BetaTestersWithoutIncludesResponse> BetaGroups_betaTesters_getToManyRelated(string id, BetaGroups_betaTesters_getToManyRelatedFieldsBetaTesters[]? fieldsBetaTesters = default, int? limit = default)
+        public Task<BetaTestersWithoutIncludesResponse> BetaGroups_betaTesters_getToManyRelated(string id, BetaGroups_betaTesters_getToManyRelatedFieldsBetaTesters[]? fieldsBetaTesters = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/betaTesters";
             path = path.Replace("{id}", id.ToString());
@@ -35664,7 +35662,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTestersWithoutIncludesResponse>(message);
+            return SendAsync<BetaTestersWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35697,7 +35695,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/builds
-        public Task<BuildsWithoutIncludesResponse> BetaGroups_builds_getToManyRelated(string id, BetaGroups_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default)
+        public Task<BuildsWithoutIncludesResponse> BetaGroups_builds_getToManyRelated(string id, BetaGroups_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/builds";
             path = path.Replace("{id}", id.ToString());
@@ -35708,7 +35706,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildsWithoutIncludesResponse>(message);
+            return SendAsync<BuildsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35721,7 +35719,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/metrics/betaTesterUsages
-        public Task<AppsBetaTesterUsagesV1MetricResponse> BetaGroups_betaTesterUsages_getMetrics(string id, BetaGroups_betaTesterUsages_getMetricsPeriod? period = default, string[]? groupBy = default, string? filterBetaTesters = default, int? limit = default)
+        public Task<AppsBetaTesterUsagesV1MetricResponse> BetaGroups_betaTesterUsages_getMetrics(string id, BetaGroups_betaTesterUsages_getMetricsPeriod? period = default, string[]? groupBy = default, string? filterBetaTesters = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/metrics/betaTesterUsages";
             path = path.Replace("{id}", id.ToString());
@@ -35736,11 +35734,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppsBetaTesterUsagesV1MetricResponse>(message);
+            return SendAsync<AppsBetaTesterUsagesV1MetricResponse>(message, log);
         }
 
         // /v1/betaGroups/{id}/relationships/betaTesters
-        public Task<BetaGroupBetaTestersLinkagesResponse> BetaGroups_betaTesters_getToManyRelationship(string id, int? limit = default)
+        public Task<BetaGroupBetaTestersLinkagesResponse> BetaGroups_betaTesters_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
@@ -35749,7 +35747,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaGroupBetaTestersLinkagesResponse>(message);
+            return SendAsync<BetaGroupBetaTestersLinkagesResponse>(message, log);
         }
 
         public class BetaGroups_betaTesters_createToManyRelationshipRequest
@@ -35764,7 +35762,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/relationships/betaTesters
-        public Task BetaGroups_betaTesters_createToManyRelationship(string id, BetaGroupBetaTestersLinkagesRequest request)
+        public Task BetaGroups_betaTesters_createToManyRelationship(string id, BetaGroupBetaTestersLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
@@ -35772,7 +35770,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class BetaGroups_betaTesters_deleteToManyRelationshipRequest
@@ -35787,7 +35785,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/relationships/betaTesters
-        public Task BetaGroups_betaTesters_deleteToManyRelationship(string id, BetaGroupBetaTestersLinkagesRequest request)
+        public Task BetaGroups_betaTesters_deleteToManyRelationship(string id, BetaGroupBetaTestersLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/relationships/betaTesters";
             path = path.Replace("{id}", id.ToString());
@@ -35795,11 +35793,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/betaGroups/{id}/relationships/builds
-        public Task<BetaGroupBuildsLinkagesResponse> BetaGroups_builds_getToManyRelationship(string id, int? limit = default)
+        public Task<BetaGroupBuildsLinkagesResponse> BetaGroups_builds_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
@@ -35808,7 +35806,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaGroupBuildsLinkagesResponse>(message);
+            return SendAsync<BetaGroupBuildsLinkagesResponse>(message, log);
         }
 
         public class BetaGroups_builds_createToManyRelationshipRequest
@@ -35823,7 +35821,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/relationships/builds
-        public Task BetaGroups_builds_createToManyRelationship(string id, BetaGroupBuildsLinkagesRequest request)
+        public Task BetaGroups_builds_createToManyRelationship(string id, BetaGroupBuildsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
@@ -35831,7 +35829,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class BetaGroups_builds_deleteToManyRelationshipRequest
@@ -35846,7 +35844,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaGroups/{id}/relationships/builds
-        public Task BetaGroups_builds_deleteToManyRelationship(string id, BetaGroupBuildsLinkagesRequest request)
+        public Task BetaGroups_builds_deleteToManyRelationship(string id, BetaGroupBuildsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaGroups/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
@@ -35854,7 +35852,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35913,7 +35911,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaLicenseAgreements
-        public Task<BetaLicenseAgreementsResponse> BetaLicenseAgreements_getCollection(string[]? filterApp = default, BetaLicenseAgreements_getCollectionFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, BetaLicenseAgreements_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default)
+        public Task<BetaLicenseAgreementsResponse> BetaLicenseAgreements_getCollection(string[]? filterApp = default, BetaLicenseAgreements_getCollectionFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, BetaLicenseAgreements_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaLicenseAgreements";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -35929,7 +35927,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaLicenseAgreementsResponse>(message);
+            return SendAsync<BetaLicenseAgreementsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -35988,7 +35986,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaLicenseAgreements/{id}
-        public Task<BetaLicenseAgreementResponse> BetaLicenseAgreements_getInstance(string id, BetaLicenseAgreements_getInstanceFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, BetaLicenseAgreements_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default)
+        public Task<BetaLicenseAgreementResponse> BetaLicenseAgreements_getInstance(string id, BetaLicenseAgreements_getInstanceFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, BetaLicenseAgreements_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/betaLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -36001,11 +35999,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaLicenseAgreementResponse>(message);
+            return SendAsync<BetaLicenseAgreementResponse>(message, log);
         }
 
         // /v1/betaLicenseAgreements/{id}
-        public Task<BetaLicenseAgreementResponse> BetaLicenseAgreements_updateInstance(string id, BetaLicenseAgreementUpdateRequest request)
+        public Task<BetaLicenseAgreementResponse> BetaLicenseAgreements_updateInstance(string id, BetaLicenseAgreementUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -36013,7 +36011,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaLicenseAgreementResponse>(message);
+            return SendAsync<BetaLicenseAgreementResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36065,7 +36063,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaLicenseAgreements/{id}/app
-        public Task<AppWithoutIncludesResponse> BetaLicenseAgreements_app_getToOneRelated(string id, BetaLicenseAgreements_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> BetaLicenseAgreements_app_getToOneRelated(string id, BetaLicenseAgreements_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/betaLicenseAgreements/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -36074,18 +36072,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         // /v1/betaTesterInvitations
-        public Task<BetaTesterInvitationResponse> BetaTesterInvitations_createInstance(BetaTesterInvitationCreateRequest request)
+        public Task<BetaTesterInvitationResponse> BetaTesterInvitations_createInstance(BetaTesterInvitationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaTesterInvitations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaTesterInvitationResponse>(message);
+            return SendAsync<BetaTesterInvitationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36233,7 +36231,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters
-        public Task<BetaTestersResponse> BetaTesters_getCollection(string[]? filterFirstName = default, string[]? filterLastName = default, string[]? filterEmail = default, BetaTesters_getCollectionFilterInviteType[]? filterInviteType = default, string[]? filterApps = default, string[]? filterBetaGroups = default, string[]? filterBuilds = default, string[]? filterId = default, BetaTesters_getCollectionSort[]? sort = default, BetaTesters_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, BetaTesters_getCollectionFieldsApps[]? fieldsApps = default, BetaTesters_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, BetaTesters_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, BetaTesters_getCollectionInclude[]? include = default, int? limitApps = default, int? limitBetaGroups = default, int? limitBuilds = default)
+        public Task<BetaTestersResponse> BetaTesters_getCollection(string[]? filterFirstName = default, string[]? filterLastName = default, string[]? filterEmail = default, BetaTesters_getCollectionFilterInviteType[]? filterInviteType = default, string[]? filterApps = default, string[]? filterBetaGroups = default, string[]? filterBuilds = default, string[]? filterId = default, BetaTesters_getCollectionSort[]? sort = default, BetaTesters_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, BetaTesters_getCollectionFieldsApps[]? fieldsApps = default, BetaTesters_getCollectionFieldsBetaGroups[]? fieldsBetaGroups = default, BetaTesters_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, BetaTesters_getCollectionInclude[]? include = default, int? limitApps = default, int? limitBetaGroups = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -36275,18 +36273,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTestersResponse>(message);
+            return SendAsync<BetaTestersResponse>(message, log);
         }
 
         // /v1/betaTesters
-        public Task<BetaTesterResponse> BetaTesters_createInstance(BetaTesterCreateRequest request)
+        public Task<BetaTesterResponse> BetaTesters_createInstance(BetaTesterCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaTesters";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BetaTesterResponse>(message);
+            return SendAsync<BetaTesterResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36407,7 +36405,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}
-        public Task<BetaTesterResponse> BetaTesters_getInstance(string id, BetaTesters_getInstanceFieldsBetaTesters[]? fieldsBetaTesters = default, BetaTesters_getInstanceFieldsApps[]? fieldsApps = default, BetaTesters_getInstanceFieldsBetaGroups[]? fieldsBetaGroups = default, BetaTesters_getInstanceFieldsBuilds[]? fieldsBuilds = default, BetaTesters_getInstanceInclude[]? include = default, int? limitApps = default, int? limitBetaGroups = default, int? limitBuilds = default)
+        public Task<BetaTesterResponse> BetaTesters_getInstance(string id, BetaTesters_getInstanceFieldsBetaTesters[]? fieldsBetaTesters = default, BetaTesters_getInstanceFieldsApps[]? fieldsApps = default, BetaTesters_getInstanceFieldsBetaGroups[]? fieldsBetaGroups = default, BetaTesters_getInstanceFieldsBuilds[]? fieldsBuilds = default, BetaTesters_getInstanceInclude[]? include = default, int? limitApps = default, int? limitBetaGroups = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -36430,18 +36428,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTesterResponse>(message);
+            return SendAsync<BetaTesterResponse>(message, log);
         }
 
         // /v1/betaTesters/{id}
-        public Task BetaTesters_deleteInstance(string id)
+        public Task BetaTesters_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36493,7 +36491,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/apps
-        public Task<AppsWithoutIncludesResponse> BetaTesters_apps_getToManyRelated(string id, BetaTesters_apps_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default)
+        public Task<AppsWithoutIncludesResponse> BetaTesters_apps_getToManyRelated(string id, BetaTesters_apps_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/apps";
             path = path.Replace("{id}", id.ToString());
@@ -36504,7 +36502,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppsWithoutIncludesResponse>(message);
+            return SendAsync<AppsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36527,7 +36525,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/betaGroups
-        public Task<BetaGroupsWithoutIncludesResponse> BetaTesters_betaGroups_getToManyRelated(string id, BetaTesters_betaGroups_getToManyRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, int? limit = default)
+        public Task<BetaGroupsWithoutIncludesResponse> BetaTesters_betaGroups_getToManyRelated(string id, BetaTesters_betaGroups_getToManyRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/betaGroups";
             path = path.Replace("{id}", id.ToString());
@@ -36538,7 +36536,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaGroupsWithoutIncludesResponse>(message);
+            return SendAsync<BetaGroupsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36571,7 +36569,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/builds
-        public Task<BuildsWithoutIncludesResponse> BetaTesters_builds_getToManyRelated(string id, BetaTesters_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default)
+        public Task<BuildsWithoutIncludesResponse> BetaTesters_builds_getToManyRelated(string id, BetaTesters_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/builds";
             path = path.Replace("{id}", id.ToString());
@@ -36582,7 +36580,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildsWithoutIncludesResponse>(message);
+            return SendAsync<BuildsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36595,7 +36593,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/metrics/betaTesterUsages
-        public Task<BetaTesterUsagesV1MetricResponse> BetaTesters_betaTesterUsages_getMetrics(string id, string filterApps, BetaTesters_betaTesterUsages_getMetricsPeriod? period = default, int? limit = default)
+        public Task<BetaTesterUsagesV1MetricResponse> BetaTesters_betaTesterUsages_getMetrics(string id, string filterApps, BetaTesters_betaTesterUsages_getMetricsPeriod? period = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/metrics/betaTesterUsages";
             path = path.Replace("{id}", id.ToString());
@@ -36608,11 +36606,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTesterUsagesV1MetricResponse>(message);
+            return SendAsync<BetaTesterUsagesV1MetricResponse>(message, log);
         }
 
         // /v1/betaTesters/{id}/relationships/apps
-        public Task<BetaTesterAppsLinkagesResponse> BetaTesters_apps_getToManyRelationship(string id, int? limit = default)
+        public Task<BetaTesterAppsLinkagesResponse> BetaTesters_apps_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/apps";
             path = path.Replace("{id}", id.ToString());
@@ -36621,7 +36619,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTesterAppsLinkagesResponse>(message);
+            return SendAsync<BetaTesterAppsLinkagesResponse>(message, log);
         }
 
         public class BetaTesters_apps_deleteToManyRelationshipRequest
@@ -36636,7 +36634,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/relationships/apps
-        public Task BetaTesters_apps_deleteToManyRelationship(string id, BetaTesterAppsLinkagesRequest request)
+        public Task BetaTesters_apps_deleteToManyRelationship(string id, BetaTesterAppsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/apps";
             path = path.Replace("{id}", id.ToString());
@@ -36644,11 +36642,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/betaTesters/{id}/relationships/betaGroups
-        public Task<BetaTesterBetaGroupsLinkagesResponse> BetaTesters_betaGroups_getToManyRelationship(string id, int? limit = default)
+        public Task<BetaTesterBetaGroupsLinkagesResponse> BetaTesters_betaGroups_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
@@ -36657,7 +36655,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTesterBetaGroupsLinkagesResponse>(message);
+            return SendAsync<BetaTesterBetaGroupsLinkagesResponse>(message, log);
         }
 
         public class BetaTesters_betaGroups_createToManyRelationshipRequest
@@ -36672,7 +36670,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/relationships/betaGroups
-        public Task BetaTesters_betaGroups_createToManyRelationship(string id, BetaTesterBetaGroupsLinkagesRequest request)
+        public Task BetaTesters_betaGroups_createToManyRelationship(string id, BetaTesterBetaGroupsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
@@ -36680,7 +36678,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class BetaTesters_betaGroups_deleteToManyRelationshipRequest
@@ -36695,7 +36693,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/relationships/betaGroups
-        public Task BetaTesters_betaGroups_deleteToManyRelationship(string id, BetaTesterBetaGroupsLinkagesRequest request)
+        public Task BetaTesters_betaGroups_deleteToManyRelationship(string id, BetaTesterBetaGroupsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
@@ -36703,11 +36701,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/betaTesters/{id}/relationships/builds
-        public Task<BetaTesterBuildsLinkagesResponse> BetaTesters_builds_getToManyRelationship(string id, int? limit = default)
+        public Task<BetaTesterBuildsLinkagesResponse> BetaTesters_builds_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
@@ -36716,7 +36714,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTesterBuildsLinkagesResponse>(message);
+            return SendAsync<BetaTesterBuildsLinkagesResponse>(message, log);
         }
 
         public class BetaTesters_builds_createToManyRelationshipRequest
@@ -36731,7 +36729,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/relationships/builds
-        public Task BetaTesters_builds_createToManyRelationship(string id, BetaTesterBuildsLinkagesRequest request)
+        public Task BetaTesters_builds_createToManyRelationship(string id, BetaTesterBuildsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
@@ -36739,7 +36737,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class BetaTesters_builds_deleteToManyRelationshipRequest
@@ -36754,7 +36752,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/betaTesters/{id}/relationships/builds
-        public Task BetaTesters_builds_deleteToManyRelationship(string id, BetaTesterBuildsLinkagesRequest request)
+        public Task BetaTesters_builds_deleteToManyRelationship(string id, BetaTesterBuildsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/betaTesters/{id}/relationships/builds";
             path = path.Replace("{id}", id.ToString());
@@ -36762,7 +36760,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36804,7 +36802,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/buildBetaDetails
-        public Task<BuildBetaDetailsResponse> BuildBetaDetails_getCollection(string[]? filterBuild = default, string[]? filterId = default, BuildBetaDetails_getCollectionFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, BuildBetaDetails_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default)
+        public Task<BuildBetaDetailsResponse> BuildBetaDetails_getCollection(string[]? filterBuild = default, string[]? filterId = default, BuildBetaDetails_getCollectionFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, BuildBetaDetails_getCollectionFieldsBuilds[]? fieldsBuilds = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/buildBetaDetails";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -36822,7 +36820,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildBetaDetailsResponse>(message);
+            return SendAsync<BuildBetaDetailsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36864,7 +36862,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/buildBetaDetails/{id}
-        public Task<BuildBetaDetailResponse> BuildBetaDetails_getInstance(string id, BuildBetaDetails_getInstanceFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, BuildBetaDetails_getInstanceFieldsBuilds[]? fieldsBuilds = default, string[]? include = default)
+        public Task<BuildBetaDetailResponse> BuildBetaDetails_getInstance(string id, BuildBetaDetails_getInstanceFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, BuildBetaDetails_getInstanceFieldsBuilds[]? fieldsBuilds = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/buildBetaDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -36877,11 +36875,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildBetaDetailResponse>(message);
+            return SendAsync<BuildBetaDetailResponse>(message, log);
         }
 
         // /v1/buildBetaDetails/{id}
-        public Task<BuildBetaDetailResponse> BuildBetaDetails_updateInstance(string id, BuildBetaDetailUpdateRequest request)
+        public Task<BuildBetaDetailResponse> BuildBetaDetails_updateInstance(string id, BuildBetaDetailUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/buildBetaDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -36889,7 +36887,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BuildBetaDetailResponse>(message);
+            return SendAsync<BuildBetaDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36922,7 +36920,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/buildBetaDetails/{id}/build
-        public Task<BuildWithoutIncludesResponse> BuildBetaDetails_build_getToOneRelated(string id, BuildBetaDetails_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default)
+        public Task<BuildWithoutIncludesResponse> BuildBetaDetails_build_getToOneRelated(string id, BuildBetaDetails_build_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/buildBetaDetails/{id}/build";
             path = path.Replace("{id}", id.ToString());
@@ -36931,18 +36929,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[builds]", string.Join(",", fieldsBuilds));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildWithoutIncludesResponse>(message);
+            return SendAsync<BuildWithoutIncludesResponse>(message, log);
         }
 
         // /v1/buildBetaNotifications
-        public Task<BuildBetaNotificationResponse> BuildBetaNotifications_createInstance(BuildBetaNotificationCreateRequest request)
+        public Task<BuildBetaNotificationResponse> BuildBetaNotifications_createInstance(BuildBetaNotificationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/buildBetaNotifications";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BuildBetaNotificationResponse>(message);
+            return SendAsync<BuildBetaNotificationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36953,7 +36951,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/buildBundles/{id}/appClipDomainCacheStatus
-        public Task<AppClipDomainStatusResponse> BuildBundles_appClipDomainCacheStatus_getToOneRelated(string id, BuildBundles_appClipDomainCacheStatus_getToOneRelatedFieldsAppClipDomainStatuses[]? fieldsAppClipDomainStatuses = default)
+        public Task<AppClipDomainStatusResponse> BuildBundles_appClipDomainCacheStatus_getToOneRelated(string id, BuildBundles_appClipDomainCacheStatus_getToOneRelatedFieldsAppClipDomainStatuses[]? fieldsAppClipDomainStatuses = default, INestedLog? log = null)
         {
             string path = "/v1/buildBundles/{id}/appClipDomainCacheStatus";
             path = path.Replace("{id}", id.ToString());
@@ -36962,7 +36960,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appClipDomainStatuses]", string.Join(",", fieldsAppClipDomainStatuses));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDomainStatusResponse>(message);
+            return SendAsync<AppClipDomainStatusResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -36973,7 +36971,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/buildBundles/{id}/appClipDomainDebugStatus
-        public Task<AppClipDomainStatusResponse> BuildBundles_appClipDomainDebugStatus_getToOneRelated(string id, BuildBundles_appClipDomainDebugStatus_getToOneRelatedFieldsAppClipDomainStatuses[]? fieldsAppClipDomainStatuses = default)
+        public Task<AppClipDomainStatusResponse> BuildBundles_appClipDomainDebugStatus_getToOneRelated(string id, BuildBundles_appClipDomainDebugStatus_getToOneRelatedFieldsAppClipDomainStatuses[]? fieldsAppClipDomainStatuses = default, INestedLog? log = null)
         {
             string path = "/v1/buildBundles/{id}/appClipDomainDebugStatus";
             path = path.Replace("{id}", id.ToString());
@@ -36982,7 +36980,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appClipDomainStatuses]", string.Join(",", fieldsAppClipDomainStatuses));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppClipDomainStatusResponse>(message);
+            return SendAsync<AppClipDomainStatusResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37000,7 +36998,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/buildBundles/{id}/betaAppClipInvocations
-        public Task<BetaAppClipInvocationsResponse> BuildBundles_betaAppClipInvocations_getToManyRelated(string id, BuildBundles_betaAppClipInvocations_getToManyRelatedFieldsBetaAppClipInvocations[]? fieldsBetaAppClipInvocations = default, BuildBundles_betaAppClipInvocations_getToManyRelatedFieldsBetaAppClipInvocationLocalizations[]? fieldsBetaAppClipInvocationLocalizations = default, int? limit = default, string[]? include = default, int? limitBetaAppClipInvocationLocalizations = default)
+        public Task<BetaAppClipInvocationsResponse> BuildBundles_betaAppClipInvocations_getToManyRelated(string id, BuildBundles_betaAppClipInvocations_getToManyRelatedFieldsBetaAppClipInvocations[]? fieldsBetaAppClipInvocations = default, BuildBundles_betaAppClipInvocations_getToManyRelatedFieldsBetaAppClipInvocationLocalizations[]? fieldsBetaAppClipInvocationLocalizations = default, int? limit = default, string[]? include = default, int? limitBetaAppClipInvocationLocalizations = default, INestedLog? log = null)
         {
             string path = "/v1/buildBundles/{id}/betaAppClipInvocations";
             path = path.Replace("{id}", id.ToString());
@@ -37017,7 +37015,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[betaAppClipInvocationLocalizations]", limitBetaAppClipInvocationLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppClipInvocationsResponse>(message);
+            return SendAsync<BetaAppClipInvocationsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37030,7 +37028,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/buildBundles/{id}/buildBundleFileSizes
-        public Task<BuildBundleFileSizesResponse> BuildBundles_buildBundleFileSizes_getToManyRelated(string id, BuildBundles_buildBundleFileSizes_getToManyRelatedFieldsBuildBundleFileSizes[]? fieldsBuildBundleFileSizes = default, int? limit = default)
+        public Task<BuildBundleFileSizesResponse> BuildBundles_buildBundleFileSizes_getToManyRelated(string id, BuildBundles_buildBundleFileSizes_getToManyRelatedFieldsBuildBundleFileSizes[]? fieldsBuildBundleFileSizes = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/buildBundles/{id}/buildBundleFileSizes";
             path = path.Replace("{id}", id.ToString());
@@ -37041,7 +37039,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildBundleFileSizesResponse>(message);
+            return SendAsync<BuildBundleFileSizesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37292,7 +37290,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds
-        public Task<BuildsResponse> Builds_getCollection(string[]? filterVersion = default, string[]? filterExpired = default, Builds_getCollectionFilterProcessingState[]? filterProcessingState = default, Builds_getCollectionFilterBetaAppReviewSubmissionBetaReviewState[]? filterBetaAppReviewSubmissionBetaReviewState = default, string[]? filterUsesNonExemptEncryption = default, string[]? filterPreReleaseVersionVersion = default, Builds_getCollectionFilterPreReleaseVersionPlatform[]? filterPreReleaseVersionPlatform = default, Builds_getCollectionFilterBuildAudienceType[]? filterBuildAudienceType = default, string[]? filterPreReleaseVersion = default, string[]? filterApp = default, string[]? filterBetaGroups = default, string[]? filterAppStoreVersion = default, string[]? filterId = default, Builds_getCollectionSort[]? sort = default, Builds_getCollectionFieldsBuilds[]? fieldsBuilds = default, Builds_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Builds_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, Builds_getCollectionFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, Builds_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Builds_getCollectionFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, Builds_getCollectionFieldsApps[]? fieldsApps = default, Builds_getCollectionFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, Builds_getCollectionFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Builds_getCollectionFieldsBuildIcons[]? fieldsBuildIcons = default, int? limit = default, Builds_getCollectionInclude[]? include = default, int? limitBetaBuildLocalizations = default, int? limitBetaGroups = default, int? limitBuildBundles = default, int? limitIcons = default, int? limitIndividualTesters = default)
+        public Task<BuildsResponse> Builds_getCollection(string[]? filterVersion = default, string[]? filterExpired = default, Builds_getCollectionFilterProcessingState[]? filterProcessingState = default, Builds_getCollectionFilterBetaAppReviewSubmissionBetaReviewState[]? filterBetaAppReviewSubmissionBetaReviewState = default, string[]? filterUsesNonExemptEncryption = default, string[]? filterPreReleaseVersionVersion = default, Builds_getCollectionFilterPreReleaseVersionPlatform[]? filterPreReleaseVersionPlatform = default, Builds_getCollectionFilterBuildAudienceType[]? filterBuildAudienceType = default, string[]? filterPreReleaseVersion = default, string[]? filterApp = default, string[]? filterBetaGroups = default, string[]? filterAppStoreVersion = default, string[]? filterId = default, Builds_getCollectionSort[]? sort = default, Builds_getCollectionFieldsBuilds[]? fieldsBuilds = default, Builds_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Builds_getCollectionFieldsBetaTesters[]? fieldsBetaTesters = default, Builds_getCollectionFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, Builds_getCollectionFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Builds_getCollectionFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, Builds_getCollectionFieldsApps[]? fieldsApps = default, Builds_getCollectionFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, Builds_getCollectionFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Builds_getCollectionFieldsBuildIcons[]? fieldsBuildIcons = default, int? limit = default, Builds_getCollectionInclude[]? include = default, int? limitBetaBuildLocalizations = default, int? limitBetaGroups = default, int? limitBuildBundles = default, int? limitIcons = default, int? limitIndividualTesters = default, INestedLog? log = null)
         {
             string path = "/v1/builds";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -37360,7 +37358,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[individualTesters]", limitIndividualTesters.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildsResponse>(message);
+            return SendAsync<BuildsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37563,7 +37561,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}
-        public Task<BuildResponse> Builds_getInstance(string id, Builds_getInstanceFieldsBuilds[]? fieldsBuilds = default, Builds_getInstanceFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Builds_getInstanceFieldsBetaTesters[]? fieldsBetaTesters = default, Builds_getInstanceFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, Builds_getInstanceFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Builds_getInstanceFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, Builds_getInstanceFieldsApps[]? fieldsApps = default, Builds_getInstanceFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, Builds_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Builds_getInstanceFieldsBuildIcons[]? fieldsBuildIcons = default, Builds_getInstanceInclude[]? include = default, int? limitBetaBuildLocalizations = default, int? limitBetaGroups = default, int? limitBuildBundles = default, int? limitIcons = default, int? limitIndividualTesters = default)
+        public Task<BuildResponse> Builds_getInstance(string id, Builds_getInstanceFieldsBuilds[]? fieldsBuilds = default, Builds_getInstanceFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, Builds_getInstanceFieldsBetaTesters[]? fieldsBetaTesters = default, Builds_getInstanceFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, Builds_getInstanceFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, Builds_getInstanceFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, Builds_getInstanceFieldsApps[]? fieldsApps = default, Builds_getInstanceFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, Builds_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Builds_getInstanceFieldsBuildIcons[]? fieldsBuildIcons = default, Builds_getInstanceInclude[]? include = default, int? limitBetaBuildLocalizations = default, int? limitBetaGroups = default, int? limitBuildBundles = default, int? limitIcons = default, int? limitIndividualTesters = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -37602,11 +37600,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[individualTesters]", limitIndividualTesters.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildResponse>(message);
+            return SendAsync<BuildResponse>(message, log);
         }
 
         // /v1/builds/{id}
-        public Task<BuildResponse> Builds_updateInstance(string id, BuildUpdateRequest request)
+        public Task<BuildResponse> Builds_updateInstance(string id, BuildUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -37614,7 +37612,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BuildResponse>(message);
+            return SendAsync<BuildResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37666,7 +37664,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/app
-        public Task<AppWithoutIncludesResponse> Builds_app_getToOneRelated(string id, Builds_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> Builds_app_getToOneRelated(string id, Builds_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -37675,7 +37673,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37701,7 +37699,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/appEncryptionDeclaration
-        public Task<AppEncryptionDeclarationWithoutIncludesResponse> Builds_appEncryptionDeclaration_getToOneRelated(string id, Builds_appEncryptionDeclaration_getToOneRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default)
+        public Task<AppEncryptionDeclarationWithoutIncludesResponse> Builds_appEncryptionDeclaration_getToOneRelated(string id, Builds_appEncryptionDeclaration_getToOneRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/appEncryptionDeclaration";
             path = path.Replace("{id}", id.ToString());
@@ -37710,7 +37708,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[appEncryptionDeclarations]", string.Join(",", fieldsAppEncryptionDeclarations));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppEncryptionDeclarationWithoutIncludesResponse>(message);
+            return SendAsync<AppEncryptionDeclarationWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37948,7 +37946,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/appStoreVersion
-        public Task<AppStoreVersionResponse> Builds_appStoreVersion_getToOneRelated(string id, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Builds_appStoreVersion_getToOneRelatedFieldsApps[]? fieldsApps = default, Builds_appStoreVersion_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, Builds_appStoreVersion_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, Builds_appStoreVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, Builds_appStoreVersion_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, Builds_appStoreVersion_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, Builds_appStoreVersion_getToOneRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default)
+        public Task<AppStoreVersionResponse> Builds_appStoreVersion_getToOneRelated(string id, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, Builds_appStoreVersion_getToOneRelatedFieldsApps[]? fieldsApps = default, Builds_appStoreVersion_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, Builds_appStoreVersion_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, Builds_appStoreVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, Builds_appStoreVersion_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, Builds_appStoreVersion_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, Builds_appStoreVersion_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, Builds_appStoreVersion_getToOneRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/appStoreVersion";
             path = path.Replace("{id}", id.ToString());
@@ -37987,7 +37985,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentsV2]", limitAppStoreVersionExperimentsV2.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionResponse>(message);
+            return SendAsync<AppStoreVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -37999,7 +37997,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/betaAppReviewSubmission
-        public Task<BetaAppReviewSubmissionWithoutIncludesResponse> Builds_betaAppReviewSubmission_getToOneRelated(string id, Builds_betaAppReviewSubmission_getToOneRelatedFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default)
+        public Task<BetaAppReviewSubmissionWithoutIncludesResponse> Builds_betaAppReviewSubmission_getToOneRelated(string id, Builds_betaAppReviewSubmission_getToOneRelatedFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/betaAppReviewSubmission";
             path = path.Replace("{id}", id.ToString());
@@ -38008,7 +38006,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[betaAppReviewSubmissions]", string.Join(",", fieldsBetaAppReviewSubmissions));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaAppReviewSubmissionWithoutIncludesResponse>(message);
+            return SendAsync<BetaAppReviewSubmissionWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38020,7 +38018,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/betaBuildLocalizations
-        public Task<BetaBuildLocalizationsWithoutIncludesResponse> Builds_betaBuildLocalizations_getToManyRelated(string id, Builds_betaBuildLocalizations_getToManyRelatedFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, int? limit = default)
+        public Task<BetaBuildLocalizationsWithoutIncludesResponse> Builds_betaBuildLocalizations_getToManyRelated(string id, Builds_betaBuildLocalizations_getToManyRelatedFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/betaBuildLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -38031,7 +38029,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaBuildLocalizationsWithoutIncludesResponse>(message);
+            return SendAsync<BetaBuildLocalizationsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38073,7 +38071,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/buildBetaDetail
-        public Task<BuildBetaDetailResponse> Builds_buildBetaDetail_getToOneRelated(string id, Builds_buildBetaDetail_getToOneRelatedFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, Builds_buildBetaDetail_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, string[]? include = default)
+        public Task<BuildBetaDetailResponse> Builds_buildBetaDetail_getToOneRelated(string id, Builds_buildBetaDetail_getToOneRelatedFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, Builds_buildBetaDetail_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/buildBetaDetail";
             path = path.Replace("{id}", id.ToString());
@@ -38086,7 +38084,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildBetaDetailResponse>(message);
+            return SendAsync<BuildBetaDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38108,7 +38106,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/diagnosticSignatures
-        public Task<DiagnosticSignaturesResponse> Builds_diagnosticSignatures_getToManyRelated(string id, Builds_diagnosticSignatures_getToManyRelatedFilterDiagnosticType[]? filterDiagnosticType = default, Builds_diagnosticSignatures_getToManyRelatedFieldsDiagnosticSignatures[]? fieldsDiagnosticSignatures = default, int? limit = default)
+        public Task<DiagnosticSignaturesResponse> Builds_diagnosticSignatures_getToManyRelated(string id, Builds_diagnosticSignatures_getToManyRelatedFilterDiagnosticType[]? filterDiagnosticType = default, Builds_diagnosticSignatures_getToManyRelatedFieldsDiagnosticSignatures[]? fieldsDiagnosticSignatures = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/diagnosticSignatures";
             path = path.Replace("{id}", id.ToString());
@@ -38121,7 +38119,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<DiagnosticSignaturesResponse>(message);
+            return SendAsync<DiagnosticSignaturesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38133,7 +38131,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/icons
-        public Task<BuildIconsWithoutIncludesResponse> Builds_icons_getToManyRelated(string id, Builds_icons_getToManyRelatedFieldsBuildIcons[]? fieldsBuildIcons = default, int? limit = default)
+        public Task<BuildIconsWithoutIncludesResponse> Builds_icons_getToManyRelated(string id, Builds_icons_getToManyRelatedFieldsBuildIcons[]? fieldsBuildIcons = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/icons";
             path = path.Replace("{id}", id.ToString());
@@ -38144,7 +38142,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildIconsWithoutIncludesResponse>(message);
+            return SendAsync<BuildIconsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38161,7 +38159,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/individualTesters
-        public Task<BetaTestersWithoutIncludesResponse> Builds_individualTesters_getToManyRelated(string id, Builds_individualTesters_getToManyRelatedFieldsBetaTesters[]? fieldsBetaTesters = default, int? limit = default)
+        public Task<BetaTestersWithoutIncludesResponse> Builds_individualTesters_getToManyRelated(string id, Builds_individualTesters_getToManyRelatedFieldsBetaTesters[]? fieldsBetaTesters = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/individualTesters";
             path = path.Replace("{id}", id.ToString());
@@ -38172,11 +38170,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaTestersWithoutIncludesResponse>(message);
+            return SendAsync<BetaTestersWithoutIncludesResponse>(message, log);
         }
 
         // /v1/builds/{id}/metrics/betaBuildUsages
-        public Task<BetaBuildUsagesV1MetricResponse> Builds_betaBuildUsages_getMetrics(string id, int? limit = default)
+        public Task<BetaBuildUsagesV1MetricResponse> Builds_betaBuildUsages_getMetrics(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/metrics/betaBuildUsages";
             path = path.Replace("{id}", id.ToString());
@@ -38185,7 +38183,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BetaBuildUsagesV1MetricResponse>(message);
+            return SendAsync<BetaBuildUsagesV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38201,7 +38199,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/perfPowerMetrics
-        public Task Builds_perfPowerMetrics_getToManyRelated(string id, string[]? filterPlatform = default, Builds_perfPowerMetrics_getToManyRelatedFilterMetricType[]? filterMetricType = default, string[]? filterDeviceType = default)
+        public Task Builds_perfPowerMetrics_getToManyRelated(string id, string[]? filterPlatform = default, Builds_perfPowerMetrics_getToManyRelatedFilterMetricType[]? filterMetricType = default, string[]? filterDeviceType = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/perfPowerMetrics";
             path = path.Replace("{id}", id.ToString());
@@ -38214,7 +38212,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("filter[deviceType]", string.Join(",", filterDeviceType));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38227,7 +38225,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/preReleaseVersion
-        public Task<PrereleaseVersionWithoutIncludesResponse> Builds_preReleaseVersion_getToOneRelated(string id, Builds_preReleaseVersion_getToOneRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default)
+        public Task<PrereleaseVersionWithoutIncludesResponse> Builds_preReleaseVersion_getToOneRelated(string id, Builds_preReleaseVersion_getToOneRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/preReleaseVersion";
             path = path.Replace("{id}", id.ToString());
@@ -38236,18 +38234,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[preReleaseVersions]", string.Join(",", fieldsPreReleaseVersions));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PrereleaseVersionWithoutIncludesResponse>(message);
+            return SendAsync<PrereleaseVersionWithoutIncludesResponse>(message, log);
         }
 
         // /v1/builds/{id}/relationships/appEncryptionDeclaration
-        public Task<BuildAppEncryptionDeclarationLinkageResponse> Builds_appEncryptionDeclaration_getToOneRelationship(string id)
+        public Task<BuildAppEncryptionDeclarationLinkageResponse> Builds_appEncryptionDeclaration_getToOneRelationship(string id, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/relationships/appEncryptionDeclaration";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildAppEncryptionDeclarationLinkageResponse>(message);
+            return SendAsync<BuildAppEncryptionDeclarationLinkageResponse>(message, log);
         }
 
         public class Builds_appEncryptionDeclaration_updateToOneRelationshipRequest
@@ -38262,7 +38260,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/relationships/appEncryptionDeclaration
-        public Task Builds_appEncryptionDeclaration_updateToOneRelationship(string id, BuildAppEncryptionDeclarationLinkageRequest request)
+        public Task Builds_appEncryptionDeclaration_updateToOneRelationship(string id, BuildAppEncryptionDeclarationLinkageRequest request, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/relationships/appEncryptionDeclaration";
             path = path.Replace("{id}", id.ToString());
@@ -38270,7 +38268,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class Builds_betaGroups_createToManyRelationshipRequest
@@ -38285,7 +38283,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/relationships/betaGroups
-        public Task Builds_betaGroups_createToManyRelationship(string id, BuildBetaGroupsLinkagesRequest request)
+        public Task Builds_betaGroups_createToManyRelationship(string id, BuildBetaGroupsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
@@ -38293,7 +38291,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class Builds_betaGroups_deleteToManyRelationshipRequest
@@ -38308,7 +38306,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/relationships/betaGroups
-        public Task Builds_betaGroups_deleteToManyRelationship(string id, BuildBetaGroupsLinkagesRequest request)
+        public Task Builds_betaGroups_deleteToManyRelationship(string id, BuildBetaGroupsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/relationships/betaGroups";
             path = path.Replace("{id}", id.ToString());
@@ -38316,11 +38314,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/builds/{id}/relationships/individualTesters
-        public Task<BuildIndividualTestersLinkagesResponse> Builds_individualTesters_getToManyRelationship(string id, int? limit = default)
+        public Task<BuildIndividualTestersLinkagesResponse> Builds_individualTesters_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/relationships/individualTesters";
             path = path.Replace("{id}", id.ToString());
@@ -38329,7 +38327,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildIndividualTestersLinkagesResponse>(message);
+            return SendAsync<BuildIndividualTestersLinkagesResponse>(message, log);
         }
 
         public class Builds_individualTesters_createToManyRelationshipRequest
@@ -38344,7 +38342,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/relationships/individualTesters
-        public Task Builds_individualTesters_createToManyRelationship(string id, BuildIndividualTestersLinkagesRequest request)
+        public Task Builds_individualTesters_createToManyRelationship(string id, BuildIndividualTestersLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/relationships/individualTesters";
             path = path.Replace("{id}", id.ToString());
@@ -38352,7 +38350,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class Builds_individualTesters_deleteToManyRelationshipRequest
@@ -38367,7 +38365,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/builds/{id}/relationships/individualTesters
-        public Task Builds_individualTesters_deleteToManyRelationship(string id, BuildIndividualTestersLinkagesRequest request)
+        public Task Builds_individualTesters_deleteToManyRelationship(string id, BuildIndividualTestersLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/builds/{id}/relationships/individualTesters";
             path = path.Replace("{id}", id.ToString());
@@ -38375,22 +38373,22 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/bundleIdCapabilities
-        public Task<BundleIdCapabilityResponse> BundleIdCapabilities_createInstance(BundleIdCapabilityCreateRequest request)
+        public Task<BundleIdCapabilityResponse> BundleIdCapabilities_createInstance(BundleIdCapabilityCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/bundleIdCapabilities";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BundleIdCapabilityResponse>(message);
+            return SendAsync<BundleIdCapabilityResponse>(message, log);
         }
 
         // /v1/bundleIdCapabilities/{id}
-        public Task<BundleIdCapabilityResponse> BundleIdCapabilities_updateInstance(string id, BundleIdCapabilityUpdateRequest request)
+        public Task<BundleIdCapabilityResponse> BundleIdCapabilities_updateInstance(string id, BundleIdCapabilityUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/bundleIdCapabilities/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -38398,18 +38396,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BundleIdCapabilityResponse>(message);
+            return SendAsync<BundleIdCapabilityResponse>(message, log);
         }
 
         // /v1/bundleIdCapabilities/{id}
-        public Task BundleIdCapabilities_deleteInstance(string id)
+        public Task BundleIdCapabilities_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/bundleIdCapabilities/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38532,7 +38530,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/bundleIds
-        public Task<BundleIdsResponse> BundleIds_getCollection(string[]? filterName = default, BundleIds_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterIdentifier = default, string[]? filterSeedId = default, string[]? filterId = default, BundleIds_getCollectionSort[]? sort = default, BundleIds_getCollectionFieldsBundleIds[]? fieldsBundleIds = default, BundleIds_getCollectionFieldsProfiles[]? fieldsProfiles = default, BundleIds_getCollectionFieldsBundleIdCapabilities[]? fieldsBundleIdCapabilities = default, BundleIds_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, BundleIds_getCollectionInclude[]? include = default, int? limitBundleIdCapabilities = default, int? limitProfiles = default)
+        public Task<BundleIdsResponse> BundleIds_getCollection(string[]? filterName = default, BundleIds_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterIdentifier = default, string[]? filterSeedId = default, string[]? filterId = default, BundleIds_getCollectionSort[]? sort = default, BundleIds_getCollectionFieldsBundleIds[]? fieldsBundleIds = default, BundleIds_getCollectionFieldsProfiles[]? fieldsProfiles = default, BundleIds_getCollectionFieldsBundleIdCapabilities[]? fieldsBundleIdCapabilities = default, BundleIds_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, BundleIds_getCollectionInclude[]? include = default, int? limitBundleIdCapabilities = default, int? limitProfiles = default, INestedLog? log = null)
         {
             string path = "/v1/bundleIds";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -38566,18 +38564,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[profiles]", limitProfiles.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BundleIdsResponse>(message);
+            return SendAsync<BundleIdsResponse>(message, log);
         }
 
         // /v1/bundleIds
-        public Task<BundleIdResponse> BundleIds_createInstance(BundleIdCreateRequest request)
+        public Task<BundleIdResponse> BundleIds_createInstance(BundleIdCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/bundleIds";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BundleIdResponse>(message);
+            return SendAsync<BundleIdResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38672,7 +38670,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/bundleIds/{id}
-        public Task<BundleIdResponse> BundleIds_getInstance(string id, BundleIds_getInstanceFieldsBundleIds[]? fieldsBundleIds = default, BundleIds_getInstanceFieldsProfiles[]? fieldsProfiles = default, BundleIds_getInstanceFieldsBundleIdCapabilities[]? fieldsBundleIdCapabilities = default, BundleIds_getInstanceFieldsApps[]? fieldsApps = default, BundleIds_getInstanceInclude[]? include = default, int? limitBundleIdCapabilities = default, int? limitProfiles = default)
+        public Task<BundleIdResponse> BundleIds_getInstance(string id, BundleIds_getInstanceFieldsBundleIds[]? fieldsBundleIds = default, BundleIds_getInstanceFieldsProfiles[]? fieldsProfiles = default, BundleIds_getInstanceFieldsBundleIdCapabilities[]? fieldsBundleIdCapabilities = default, BundleIds_getInstanceFieldsApps[]? fieldsApps = default, BundleIds_getInstanceInclude[]? include = default, int? limitBundleIdCapabilities = default, int? limitProfiles = default, INestedLog? log = null)
         {
             string path = "/v1/bundleIds/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -38693,11 +38691,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[profiles]", limitProfiles.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BundleIdResponse>(message);
+            return SendAsync<BundleIdResponse>(message, log);
         }
 
         // /v1/bundleIds/{id}
-        public Task<BundleIdResponse> BundleIds_updateInstance(string id, BundleIdUpdateRequest request)
+        public Task<BundleIdResponse> BundleIds_updateInstance(string id, BundleIdUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/bundleIds/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -38705,18 +38703,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<BundleIdResponse>(message);
+            return SendAsync<BundleIdResponse>(message, log);
         }
 
         // /v1/bundleIds/{id}
-        public Task BundleIds_deleteInstance(string id)
+        public Task BundleIds_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/bundleIds/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38768,7 +38766,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/bundleIds/{id}/app
-        public Task<AppWithoutIncludesResponse> BundleIds_app_getToOneRelated(string id, BundleIds_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> BundleIds_app_getToOneRelated(string id, BundleIds_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/bundleIds/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -38777,7 +38775,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38788,7 +38786,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/bundleIds/{id}/bundleIdCapabilities
-        public Task<BundleIdCapabilitiesWithoutIncludesResponse> BundleIds_bundleIdCapabilities_getToManyRelated(string id, BundleIds_bundleIdCapabilities_getToManyRelatedFieldsBundleIdCapabilities[]? fieldsBundleIdCapabilities = default, int? limit = default)
+        public Task<BundleIdCapabilitiesWithoutIncludesResponse> BundleIds_bundleIdCapabilities_getToManyRelated(string id, BundleIds_bundleIdCapabilities_getToManyRelatedFieldsBundleIdCapabilities[]? fieldsBundleIdCapabilities = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/bundleIds/{id}/bundleIdCapabilities";
             path = path.Replace("{id}", id.ToString());
@@ -38799,7 +38797,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BundleIdCapabilitiesWithoutIncludesResponse>(message);
+            return SendAsync<BundleIdCapabilitiesWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38819,7 +38817,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/bundleIds/{id}/profiles
-        public Task<ProfilesWithoutIncludesResponse> BundleIds_profiles_getToManyRelated(string id, BundleIds_profiles_getToManyRelatedFieldsProfiles[]? fieldsProfiles = default, int? limit = default)
+        public Task<ProfilesWithoutIncludesResponse> BundleIds_profiles_getToManyRelated(string id, BundleIds_profiles_getToManyRelatedFieldsProfiles[]? fieldsProfiles = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/bundleIds/{id}/profiles";
             path = path.Replace("{id}", id.ToString());
@@ -38830,7 +38828,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ProfilesWithoutIncludesResponse>(message);
+            return SendAsync<ProfilesWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38881,7 +38879,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/certificates
-        public Task<CertificatesResponse> Certificates_getCollection(string[]? filterDisplayName = default, Certificates_getCollectionFilterCertificateType[]? filterCertificateType = default, string[]? filterSerialNumber = default, string[]? filterId = default, Certificates_getCollectionSort[]? sort = default, Certificates_getCollectionFieldsCertificates[]? fieldsCertificates = default, int? limit = default)
+        public Task<CertificatesResponse> Certificates_getCollection(string[]? filterDisplayName = default, Certificates_getCollectionFilterCertificateType[]? filterCertificateType = default, string[]? filterSerialNumber = default, string[]? filterId = default, Certificates_getCollectionSort[]? sort = default, Certificates_getCollectionFieldsCertificates[]? fieldsCertificates = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/certificates";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -38901,18 +38899,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CertificatesResponse>(message);
+            return SendAsync<CertificatesResponse>(message, log);
         }
 
         // /v1/certificates
-        public Task<CertificateResponse> Certificates_createInstance(CertificateCreateRequest request)
+        public Task<CertificateResponse> Certificates_createInstance(CertificateCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/certificates";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<CertificateResponse>(message);
+            return SendAsync<CertificateResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38928,7 +38926,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/certificates/{id}
-        public Task<CertificateResponse> Certificates_getInstance(string id, Certificates_getInstanceFieldsCertificates[]? fieldsCertificates = default)
+        public Task<CertificateResponse> Certificates_getInstance(string id, Certificates_getInstanceFieldsCertificates[]? fieldsCertificates = default, INestedLog? log = null)
         {
             string path = "/v1/certificates/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -38937,18 +38935,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[certificates]", string.Join(",", fieldsCertificates));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CertificateResponse>(message);
+            return SendAsync<CertificateResponse>(message, log);
         }
 
         // /v1/certificates/{id}
-        public Task Certificates_deleteInstance(string id)
+        public Task Certificates_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/certificates/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -38961,7 +38959,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciArtifacts/{id}
-        public Task<CiArtifactResponse> CiArtifacts_getInstance(string id, CiArtifacts_getInstanceFieldsCiArtifacts[]? fieldsCiArtifacts = default)
+        public Task<CiArtifactResponse> CiArtifacts_getInstance(string id, CiArtifacts_getInstanceFieldsCiArtifacts[]? fieldsCiArtifacts = default, INestedLog? log = null)
         {
             string path = "/v1/ciArtifacts/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -38970,7 +38968,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[ciArtifacts]", string.Join(",", fieldsCiArtifacts));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiArtifactResponse>(message);
+            return SendAsync<CiArtifactResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39015,7 +39013,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildActions/{id}
-        public Task<CiBuildActionResponse> CiBuildActions_getInstance(string id, CiBuildActions_getInstanceFieldsCiBuildActions[]? fieldsCiBuildActions = default, CiBuildActions_getInstanceFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, string[]? include = default)
+        public Task<CiBuildActionResponse> CiBuildActions_getInstance(string id, CiBuildActions_getInstanceFieldsCiBuildActions[]? fieldsCiBuildActions = default, CiBuildActions_getInstanceFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildActions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -39028,7 +39026,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiBuildActionResponse>(message);
+            return SendAsync<CiBuildActionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39041,7 +39039,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildActions/{id}/artifacts
-        public Task<CiArtifactsResponse> CiBuildActions_artifacts_getToManyRelated(string id, CiBuildActions_artifacts_getToManyRelatedFieldsCiArtifacts[]? fieldsCiArtifacts = default, int? limit = default)
+        public Task<CiArtifactsResponse> CiBuildActions_artifacts_getToManyRelated(string id, CiBuildActions_artifacts_getToManyRelatedFieldsCiArtifacts[]? fieldsCiArtifacts = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildActions/{id}/artifacts";
             path = path.Replace("{id}", id.ToString());
@@ -39052,7 +39050,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiArtifactsResponse>(message);
+            return SendAsync<CiArtifactsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39186,7 +39184,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildActions/{id}/buildRun
-        public Task<CiBuildRunResponse> CiBuildActions_buildRun_getToOneRelated(string id, CiBuildActions_buildRun_getToOneRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiBuildActions_buildRun_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, CiBuildActions_buildRun_getToOneRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiBuildActions_buildRun_getToOneRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiBuildActions_buildRun_getToOneRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiBuildActions_buildRun_getToOneRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, CiBuildActions_buildRun_getToOneRelatedInclude[]? include = default, int? limitBuilds = default)
+        public Task<CiBuildRunResponse> CiBuildActions_buildRun_getToOneRelated(string id, CiBuildActions_buildRun_getToOneRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiBuildActions_buildRun_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, CiBuildActions_buildRun_getToOneRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiBuildActions_buildRun_getToOneRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiBuildActions_buildRun_getToOneRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiBuildActions_buildRun_getToOneRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, CiBuildActions_buildRun_getToOneRelatedInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildActions/{id}/buildRun";
             path = path.Replace("{id}", id.ToString());
@@ -39209,7 +39207,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiBuildRunResponse>(message);
+            return SendAsync<CiBuildRunResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39222,7 +39220,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildActions/{id}/issues
-        public Task<CiIssuesResponse> CiBuildActions_issues_getToManyRelated(string id, CiBuildActions_issues_getToManyRelatedFieldsCiIssues[]? fieldsCiIssues = default, int? limit = default)
+        public Task<CiIssuesResponse> CiBuildActions_issues_getToManyRelated(string id, CiBuildActions_issues_getToManyRelatedFieldsCiIssues[]? fieldsCiIssues = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildActions/{id}/issues";
             path = path.Replace("{id}", id.ToString());
@@ -39233,7 +39231,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiIssuesResponse>(message);
+            return SendAsync<CiIssuesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39248,7 +39246,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildActions/{id}/testResults
-        public Task<CiTestResultsResponse> CiBuildActions_testResults_getToManyRelated(string id, CiBuildActions_testResults_getToManyRelatedFieldsCiTestResults[]? fieldsCiTestResults = default, int? limit = default)
+        public Task<CiTestResultsResponse> CiBuildActions_testResults_getToManyRelated(string id, CiBuildActions_testResults_getToManyRelatedFieldsCiTestResults[]? fieldsCiTestResults = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildActions/{id}/testResults";
             path = path.Replace("{id}", id.ToString());
@@ -39259,18 +39257,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiTestResultsResponse>(message);
+            return SendAsync<CiTestResultsResponse>(message, log);
         }
 
         // /v1/ciBuildRuns
-        public Task<CiBuildRunResponse> CiBuildRuns_createInstance(CiBuildRunCreateRequest request)
+        public Task<CiBuildRunResponse> CiBuildRuns_createInstance(CiBuildRunCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/ciBuildRuns";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<CiBuildRunResponse>(message);
+            return SendAsync<CiBuildRunResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39338,7 +39336,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildRuns/{id}
-        public Task<CiBuildRunResponse> CiBuildRuns_getInstance(string id, CiBuildRuns_getInstanceFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiBuildRuns_getInstanceFieldsBuilds[]? fieldsBuilds = default, CiBuildRuns_getInstanceInclude[]? include = default, int? limitBuilds = default)
+        public Task<CiBuildRunResponse> CiBuildRuns_getInstance(string id, CiBuildRuns_getInstanceFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiBuildRuns_getInstanceFieldsBuilds[]? fieldsBuilds = default, CiBuildRuns_getInstanceInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildRuns/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -39353,7 +39351,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiBuildRunResponse>(message);
+            return SendAsync<CiBuildRunResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39398,7 +39396,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildRuns/{id}/actions
-        public Task<CiBuildActionsResponse> CiBuildRuns_actions_getToManyRelated(string id, CiBuildRuns_actions_getToManyRelatedFieldsCiBuildActions[]? fieldsCiBuildActions = default, CiBuildRuns_actions_getToManyRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, int? limit = default, string[]? include = default)
+        public Task<CiBuildActionsResponse> CiBuildRuns_actions_getToManyRelated(string id, CiBuildRuns_actions_getToManyRelatedFieldsCiBuildActions[]? fieldsCiBuildActions = default, CiBuildRuns_actions_getToManyRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildRuns/{id}/actions";
             path = path.Replace("{id}", id.ToString());
@@ -39413,7 +39411,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiBuildActionsResponse>(message);
+            return SendAsync<CiBuildActionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39709,7 +39707,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciBuildRuns/{id}/builds
-        public Task<BuildsResponse> CiBuildRuns_builds_getToManyRelated(string id, string[]? filterVersion = default, string[]? filterExpired = default, CiBuildRuns_builds_getToManyRelatedFilterProcessingState[]? filterProcessingState = default, CiBuildRuns_builds_getToManyRelatedFilterBetaAppReviewSubmissionBetaReviewState[]? filterBetaAppReviewSubmissionBetaReviewState = default, string[]? filterUsesNonExemptEncryption = default, string[]? filterPreReleaseVersionVersion = default, CiBuildRuns_builds_getToManyRelatedFilterPreReleaseVersionPlatform[]? filterPreReleaseVersionPlatform = default, CiBuildRuns_builds_getToManyRelatedFilterBuildAudienceType[]? filterBuildAudienceType = default, string[]? filterPreReleaseVersion = default, string[]? filterApp = default, string[]? filterBetaGroups = default, string[]? filterAppStoreVersion = default, string[]? filterId = default, CiBuildRuns_builds_getToManyRelatedSort[]? sort = default, CiBuildRuns_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, CiBuildRuns_builds_getToManyRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaTesters[]? fieldsBetaTesters = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, CiBuildRuns_builds_getToManyRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, CiBuildRuns_builds_getToManyRelatedFieldsApps[]? fieldsApps = default, CiBuildRuns_builds_getToManyRelatedFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, CiBuildRuns_builds_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, CiBuildRuns_builds_getToManyRelatedFieldsBuildIcons[]? fieldsBuildIcons = default, CiBuildRuns_builds_getToManyRelatedFieldsBuildBundles[]? fieldsBuildBundles = default, int? limit = default, CiBuildRuns_builds_getToManyRelatedInclude[]? include = default, int? limitIndividualTesters = default, int? limitBetaGroups = default, int? limitBetaBuildLocalizations = default, int? limitIcons = default, int? limitBuildBundles = default)
+        public Task<BuildsResponse> CiBuildRuns_builds_getToManyRelated(string id, string[]? filterVersion = default, string[]? filterExpired = default, CiBuildRuns_builds_getToManyRelatedFilterProcessingState[]? filterProcessingState = default, CiBuildRuns_builds_getToManyRelatedFilterBetaAppReviewSubmissionBetaReviewState[]? filterBetaAppReviewSubmissionBetaReviewState = default, string[]? filterUsesNonExemptEncryption = default, string[]? filterPreReleaseVersionVersion = default, CiBuildRuns_builds_getToManyRelatedFilterPreReleaseVersionPlatform[]? filterPreReleaseVersionPlatform = default, CiBuildRuns_builds_getToManyRelatedFilterBuildAudienceType[]? filterBuildAudienceType = default, string[]? filterPreReleaseVersion = default, string[]? filterApp = default, string[]? filterBetaGroups = default, string[]? filterAppStoreVersion = default, string[]? filterId = default, CiBuildRuns_builds_getToManyRelatedSort[]? sort = default, CiBuildRuns_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, CiBuildRuns_builds_getToManyRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaTesters[]? fieldsBetaTesters = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaBuildLocalizations[]? fieldsBetaBuildLocalizations = default, CiBuildRuns_builds_getToManyRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, CiBuildRuns_builds_getToManyRelatedFieldsBetaAppReviewSubmissions[]? fieldsBetaAppReviewSubmissions = default, CiBuildRuns_builds_getToManyRelatedFieldsApps[]? fieldsApps = default, CiBuildRuns_builds_getToManyRelatedFieldsBuildBetaDetails[]? fieldsBuildBetaDetails = default, CiBuildRuns_builds_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, CiBuildRuns_builds_getToManyRelatedFieldsBuildIcons[]? fieldsBuildIcons = default, CiBuildRuns_builds_getToManyRelatedFieldsBuildBundles[]? fieldsBuildBundles = default, int? limit = default, CiBuildRuns_builds_getToManyRelatedInclude[]? include = default, int? limitIndividualTesters = default, int? limitBetaGroups = default, int? limitBetaBuildLocalizations = default, int? limitIcons = default, int? limitBuildBundles = default, INestedLog? log = null)
         {
             string path = "/v1/ciBuildRuns/{id}/builds";
             path = path.Replace("{id}", id.ToString());
@@ -39782,7 +39780,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[buildBundles]", limitBuildBundles.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildsResponse>(message);
+            return SendAsync<BuildsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39795,7 +39793,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciIssues/{id}
-        public Task<CiIssueResponse> CiIssues_getInstance(string id, CiIssues_getInstanceFieldsCiIssues[]? fieldsCiIssues = default)
+        public Task<CiIssueResponse> CiIssues_getInstance(string id, CiIssues_getInstanceFieldsCiIssues[]? fieldsCiIssues = default, INestedLog? log = null)
         {
             string path = "/v1/ciIssues/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -39804,7 +39802,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[ciIssues]", string.Join(",", fieldsCiIssues));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiIssueResponse>(message);
+            return SendAsync<CiIssueResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39825,7 +39823,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciMacOsVersions
-        public Task<CiMacOsVersionsResponse> CiMacOsVersions_getCollection(CiMacOsVersions_getCollectionFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, CiMacOsVersions_getCollectionFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, int? limit = default, string[]? include = default, int? limitXcodeVersions = default)
+        public Task<CiMacOsVersionsResponse> CiMacOsVersions_getCollection(CiMacOsVersions_getCollectionFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, CiMacOsVersions_getCollectionFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, int? limit = default, string[]? include = default, int? limitXcodeVersions = default, INestedLog? log = null)
         {
             string path = "/v1/ciMacOsVersions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -39841,7 +39839,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[xcodeVersions]", limitXcodeVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiMacOsVersionsResponse>(message);
+            return SendAsync<CiMacOsVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39862,7 +39860,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciMacOsVersions/{id}
-        public Task<CiMacOsVersionResponse> CiMacOsVersions_getInstance(string id, CiMacOsVersions_getInstanceFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, CiMacOsVersions_getInstanceFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, string[]? include = default, int? limitXcodeVersions = default)
+        public Task<CiMacOsVersionResponse> CiMacOsVersions_getInstance(string id, CiMacOsVersions_getInstanceFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, CiMacOsVersions_getInstanceFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, string[]? include = default, int? limitXcodeVersions = default, INestedLog? log = null)
         {
             string path = "/v1/ciMacOsVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -39877,7 +39875,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[xcodeVersions]", limitXcodeVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiMacOsVersionResponse>(message);
+            return SendAsync<CiMacOsVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -39898,7 +39896,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciMacOsVersions/{id}/xcodeVersions
-        public Task<CiXcodeVersionsResponse> CiMacOsVersions_xcodeVersions_getToManyRelated(string id, CiMacOsVersions_xcodeVersions_getToManyRelatedFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiMacOsVersions_xcodeVersions_getToManyRelatedFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, int? limit = default, string[]? include = default, int? limitMacOsVersions = default)
+        public Task<CiXcodeVersionsResponse> CiMacOsVersions_xcodeVersions_getToManyRelated(string id, CiMacOsVersions_xcodeVersions_getToManyRelatedFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiMacOsVersions_xcodeVersions_getToManyRelatedFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, int? limit = default, string[]? include = default, int? limitMacOsVersions = default, INestedLog? log = null)
         {
             string path = "/v1/ciMacOsVersions/{id}/xcodeVersions";
             path = path.Replace("{id}", id.ToString());
@@ -39915,7 +39913,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[macOsVersions]", limitMacOsVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiXcodeVersionsResponse>(message);
+            return SendAsync<CiXcodeVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -40010,7 +40008,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciProducts
-        public Task<CiProductsResponse> CiProducts_getCollection(CiProducts_getCollectionFilterProductType[]? filterProductType = default, string[]? filterApp = default, CiProducts_getCollectionFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_getCollectionFieldsApps[]? fieldsApps = default, CiProducts_getCollectionFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, CiProducts_getCollectionInclude[]? include = default, int? limitPrimaryRepositories = default)
+        public Task<CiProductsResponse> CiProducts_getCollection(CiProducts_getCollectionFilterProductType[]? filterProductType = default, string[]? filterApp = default, CiProducts_getCollectionFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_getCollectionFieldsApps[]? fieldsApps = default, CiProducts_getCollectionFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, CiProducts_getCollectionInclude[]? include = default, int? limitPrimaryRepositories = default, INestedLog? log = null)
         {
             string path = "/v1/ciProducts";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -40032,7 +40030,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[primaryRepositories]", limitPrimaryRepositories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiProductsResponse>(message);
+            return SendAsync<CiProductsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -40120,7 +40118,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciProducts/{id}
-        public Task<CiProductResponse> CiProducts_getInstance(string id, CiProducts_getInstanceFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_getInstanceFieldsApps[]? fieldsApps = default, CiProducts_getInstanceFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_getInstanceInclude[]? include = default, int? limitPrimaryRepositories = default)
+        public Task<CiProductResponse> CiProducts_getInstance(string id, CiProducts_getInstanceFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_getInstanceFieldsApps[]? fieldsApps = default, CiProducts_getInstanceFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_getInstanceInclude[]? include = default, int? limitPrimaryRepositories = default, INestedLog? log = null)
         {
             string path = "/v1/ciProducts/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -40137,18 +40135,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[primaryRepositories]", limitPrimaryRepositories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiProductResponse>(message);
+            return SendAsync<CiProductResponse>(message, log);
         }
 
         // /v1/ciProducts/{id}
-        public Task CiProducts_deleteInstance(string id)
+        public Task CiProducts_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/ciProducts/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -40191,7 +40189,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciProducts/{id}/additionalRepositories
-        public Task<ScmRepositoriesResponse> CiProducts_additionalRepositories_getToManyRelated(string id, string[]? filterId = default, CiProducts_additionalRepositories_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_additionalRepositories_getToManyRelatedFieldsScmProviders[]? fieldsScmProviders = default, CiProducts_additionalRepositories_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, int? limit = default, CiProducts_additionalRepositories_getToManyRelatedInclude[]? include = default)
+        public Task<ScmRepositoriesResponse> CiProducts_additionalRepositories_getToManyRelated(string id, string[]? filterId = default, CiProducts_additionalRepositories_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_additionalRepositories_getToManyRelatedFieldsScmProviders[]? fieldsScmProviders = default, CiProducts_additionalRepositories_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, int? limit = default, CiProducts_additionalRepositories_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/ciProducts/{id}/additionalRepositories";
             path = path.Replace("{id}", id.ToString());
@@ -40210,7 +40208,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmRepositoriesResponse>(message);
+            return SendAsync<ScmRepositoriesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -40618,7 +40616,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciProducts/{id}/app
-        public Task<AppResponse> CiProducts_app_getToOneRelated(string id, CiProducts_app_getToOneRelatedFieldsApps[]? fieldsApps = default, CiProducts_app_getToOneRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, CiProducts_app_getToOneRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_app_getToOneRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, CiProducts_app_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, CiProducts_app_getToOneRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, CiProducts_app_getToOneRelatedFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, CiProducts_app_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, CiProducts_app_getToOneRelatedFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, CiProducts_app_getToOneRelatedFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, CiProducts_app_getToOneRelatedFieldsAppInfos[]? fieldsAppInfos = default, CiProducts_app_getToOneRelatedFieldsAppClips[]? fieldsAppClips = default, CiProducts_app_getToOneRelatedFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, CiProducts_app_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, CiProducts_app_getToOneRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, CiProducts_app_getToOneRelatedFieldsGameCenterEnabledVersions[]? fieldsGameCenterEnabledVersions = default, CiProducts_app_getToOneRelatedFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, CiProducts_app_getToOneRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, CiProducts_app_getToOneRelatedFieldsAppEvents[]? fieldsAppEvents = default, CiProducts_app_getToOneRelatedFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, CiProducts_app_getToOneRelatedFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, CiProducts_app_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, CiProducts_app_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, CiProducts_app_getToOneRelatedInclude[]? include = default, int? limitAppEncryptionDeclarations = default, int? limitBetaGroups = default, int? limitAppStoreVersions = default, int? limitPreReleaseVersions = default, int? limitBetaAppLocalizations = default, int? limitBuilds = default, int? limitAppInfos = default, int? limitAppClips = default, int? limitSubscriptionGroups = default, int? limitAppCustomProductPages = default, int? limitInAppPurchasesV2 = default, int? limitPromotedPurchases = default, int? limitAppEvents = default, int? limitReviewSubmissions = default, int? limitAppStoreVersionExperimentsV2 = default)
+        public Task<AppResponse> CiProducts_app_getToOneRelated(string id, CiProducts_app_getToOneRelatedFieldsApps[]? fieldsApps = default, CiProducts_app_getToOneRelatedFieldsAppEncryptionDeclarations[]? fieldsAppEncryptionDeclarations = default, CiProducts_app_getToOneRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_app_getToOneRelatedFieldsBetaGroups[]? fieldsBetaGroups = default, CiProducts_app_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, CiProducts_app_getToOneRelatedFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, CiProducts_app_getToOneRelatedFieldsBetaAppLocalizations[]? fieldsBetaAppLocalizations = default, CiProducts_app_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, CiProducts_app_getToOneRelatedFieldsBetaLicenseAgreements[]? fieldsBetaLicenseAgreements = default, CiProducts_app_getToOneRelatedFieldsBetaAppReviewDetails[]? fieldsBetaAppReviewDetails = default, CiProducts_app_getToOneRelatedFieldsAppInfos[]? fieldsAppInfos = default, CiProducts_app_getToOneRelatedFieldsAppClips[]? fieldsAppClips = default, CiProducts_app_getToOneRelatedFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, CiProducts_app_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, CiProducts_app_getToOneRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, CiProducts_app_getToOneRelatedFieldsGameCenterEnabledVersions[]? fieldsGameCenterEnabledVersions = default, CiProducts_app_getToOneRelatedFieldsAppCustomProductPages[]? fieldsAppCustomProductPages = default, CiProducts_app_getToOneRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, CiProducts_app_getToOneRelatedFieldsAppEvents[]? fieldsAppEvents = default, CiProducts_app_getToOneRelatedFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, CiProducts_app_getToOneRelatedFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, CiProducts_app_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, CiProducts_app_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, CiProducts_app_getToOneRelatedInclude[]? include = default, int? limitAppEncryptionDeclarations = default, int? limitBetaGroups = default, int? limitAppStoreVersions = default, int? limitPreReleaseVersions = default, int? limitBetaAppLocalizations = default, int? limitBuilds = default, int? limitAppInfos = default, int? limitAppClips = default, int? limitSubscriptionGroups = default, int? limitAppCustomProductPages = default, int? limitInAppPurchasesV2 = default, int? limitPromotedPurchases = default, int? limitAppEvents = default, int? limitReviewSubmissions = default, int? limitAppStoreVersionExperimentsV2 = default, INestedLog? log = null)
         {
             string path = "/v1/ciProducts/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -40703,7 +40701,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentsV2]", limitAppStoreVersionExperimentsV2.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppResponse>(message);
+            return SendAsync<AppResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -40845,7 +40843,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciProducts/{id}/buildRuns
-        public Task<CiBuildRunsResponse> CiProducts_buildRuns_getToManyRelated(string id, string[]? filterBuilds = default, CiProducts_buildRuns_getToManyRelatedSort[]? sort = default, CiProducts_buildRuns_getToManyRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiProducts_buildRuns_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, CiProducts_buildRuns_getToManyRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiProducts_buildRuns_getToManyRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_buildRuns_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiProducts_buildRuns_getToManyRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, int? limit = default, CiProducts_buildRuns_getToManyRelatedInclude[]? include = default, int? limitBuilds = default)
+        public Task<CiBuildRunsResponse> CiProducts_buildRuns_getToManyRelated(string id, string[]? filterBuilds = default, CiProducts_buildRuns_getToManyRelatedSort[]? sort = default, CiProducts_buildRuns_getToManyRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiProducts_buildRuns_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, CiProducts_buildRuns_getToManyRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiProducts_buildRuns_getToManyRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_buildRuns_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiProducts_buildRuns_getToManyRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, int? limit = default, CiProducts_buildRuns_getToManyRelatedInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/ciProducts/{id}/buildRuns";
             path = path.Replace("{id}", id.ToString());
@@ -40874,7 +40872,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiBuildRunsResponse>(message);
+            return SendAsync<CiBuildRunsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -40917,7 +40915,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciProducts/{id}/primaryRepositories
-        public Task<ScmRepositoriesResponse> CiProducts_primaryRepositories_getToManyRelated(string id, string[]? filterId = default, CiProducts_primaryRepositories_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_primaryRepositories_getToManyRelatedFieldsScmProviders[]? fieldsScmProviders = default, CiProducts_primaryRepositories_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, int? limit = default, CiProducts_primaryRepositories_getToManyRelatedInclude[]? include = default)
+        public Task<ScmRepositoriesResponse> CiProducts_primaryRepositories_getToManyRelated(string id, string[]? filterId = default, CiProducts_primaryRepositories_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_primaryRepositories_getToManyRelatedFieldsScmProviders[]? fieldsScmProviders = default, CiProducts_primaryRepositories_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, int? limit = default, CiProducts_primaryRepositories_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/ciProducts/{id}/primaryRepositories";
             path = path.Replace("{id}", id.ToString());
@@ -40936,7 +40934,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmRepositoriesResponse>(message);
+            return SendAsync<ScmRepositoriesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41019,7 +41017,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciProducts/{id}/workflows
-        public Task<CiWorkflowsResponse> CiProducts_workflows_getToManyRelated(string id, CiProducts_workflows_getToManyRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiProducts_workflows_getToManyRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_workflows_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_workflows_getToManyRelatedFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiProducts_workflows_getToManyRelatedFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, int? limit = default, CiProducts_workflows_getToManyRelatedInclude[]? include = default)
+        public Task<CiWorkflowsResponse> CiProducts_workflows_getToManyRelated(string id, CiProducts_workflows_getToManyRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiProducts_workflows_getToManyRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiProducts_workflows_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiProducts_workflows_getToManyRelatedFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiProducts_workflows_getToManyRelatedFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, int? limit = default, CiProducts_workflows_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/ciProducts/{id}/workflows";
             path = path.Replace("{id}", id.ToString());
@@ -41040,7 +41038,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiWorkflowsResponse>(message);
+            return SendAsync<CiWorkflowsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41055,7 +41053,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciTestResults/{id}
-        public Task<CiTestResultResponse> CiTestResults_getInstance(string id, CiTestResults_getInstanceFieldsCiTestResults[]? fieldsCiTestResults = default)
+        public Task<CiTestResultResponse> CiTestResults_getInstance(string id, CiTestResults_getInstanceFieldsCiTestResults[]? fieldsCiTestResults = default, INestedLog? log = null)
         {
             string path = "/v1/ciTestResults/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41064,18 +41062,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[ciTestResults]", string.Join(",", fieldsCiTestResults));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiTestResultResponse>(message);
+            return SendAsync<CiTestResultResponse>(message, log);
         }
 
         // /v1/ciWorkflows
-        public Task<CiWorkflowResponse> CiWorkflows_createInstance(CiWorkflowCreateRequest request)
+        public Task<CiWorkflowResponse> CiWorkflows_createInstance(CiWorkflowCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/ciWorkflows";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<CiWorkflowResponse>(message);
+            return SendAsync<CiWorkflowResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41127,7 +41125,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciWorkflows/{id}
-        public Task<CiWorkflowResponse> CiWorkflows_getInstance(string id, CiWorkflows_getInstanceFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiWorkflows_getInstanceFieldsScmRepositories[]? fieldsScmRepositories = default, CiWorkflows_getInstanceInclude[]? include = default)
+        public Task<CiWorkflowResponse> CiWorkflows_getInstance(string id, CiWorkflows_getInstanceFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiWorkflows_getInstanceFieldsScmRepositories[]? fieldsScmRepositories = default, CiWorkflows_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/ciWorkflows/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41140,11 +41138,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiWorkflowResponse>(message);
+            return SendAsync<CiWorkflowResponse>(message, log);
         }
 
         // /v1/ciWorkflows/{id}
-        public Task<CiWorkflowResponse> CiWorkflows_updateInstance(string id, CiWorkflowUpdateRequest request)
+        public Task<CiWorkflowResponse> CiWorkflows_updateInstance(string id, CiWorkflowUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/ciWorkflows/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41152,18 +41150,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<CiWorkflowResponse>(message);
+            return SendAsync<CiWorkflowResponse>(message, log);
         }
 
         // /v1/ciWorkflows/{id}
-        public Task CiWorkflows_deleteInstance(string id)
+        public Task CiWorkflows_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/ciWorkflows/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41305,7 +41303,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciWorkflows/{id}/buildRuns
-        public Task<CiBuildRunsResponse> CiWorkflows_buildRuns_getToManyRelated(string id, string[]? filterBuilds = default, CiWorkflows_buildRuns_getToManyRelatedSort[]? sort = default, CiWorkflows_buildRuns_getToManyRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiWorkflows_buildRuns_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, CiWorkflows_buildRuns_getToManyRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiWorkflows_buildRuns_getToManyRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiWorkflows_buildRuns_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiWorkflows_buildRuns_getToManyRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, int? limit = default, CiWorkflows_buildRuns_getToManyRelatedInclude[]? include = default, int? limitBuilds = default)
+        public Task<CiBuildRunsResponse> CiWorkflows_buildRuns_getToManyRelated(string id, string[]? filterBuilds = default, CiWorkflows_buildRuns_getToManyRelatedSort[]? sort = default, CiWorkflows_buildRuns_getToManyRelatedFieldsCiBuildRuns[]? fieldsCiBuildRuns = default, CiWorkflows_buildRuns_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, CiWorkflows_buildRuns_getToManyRelatedFieldsCiWorkflows[]? fieldsCiWorkflows = default, CiWorkflows_buildRuns_getToManyRelatedFieldsCiProducts[]? fieldsCiProducts = default, CiWorkflows_buildRuns_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiWorkflows_buildRuns_getToManyRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, int? limit = default, CiWorkflows_buildRuns_getToManyRelatedInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/ciWorkflows/{id}/buildRuns";
             path = path.Replace("{id}", id.ToString());
@@ -41334,7 +41332,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiBuildRunsResponse>(message);
+            return SendAsync<CiBuildRunsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41377,7 +41375,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciWorkflows/{id}/repository
-        public Task<ScmRepositoryResponse> CiWorkflows_repository_getToOneRelated(string id, CiWorkflows_repository_getToOneRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiWorkflows_repository_getToOneRelatedFieldsScmProviders[]? fieldsScmProviders = default, CiWorkflows_repository_getToOneRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiWorkflows_repository_getToOneRelatedInclude[]? include = default)
+        public Task<ScmRepositoryResponse> CiWorkflows_repository_getToOneRelated(string id, CiWorkflows_repository_getToOneRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, CiWorkflows_repository_getToOneRelatedFieldsScmProviders[]? fieldsScmProviders = default, CiWorkflows_repository_getToOneRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, CiWorkflows_repository_getToOneRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/ciWorkflows/{id}/repository";
             path = path.Replace("{id}", id.ToString());
@@ -41392,7 +41390,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmRepositoryResponse>(message);
+            return SendAsync<ScmRepositoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41413,7 +41411,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciXcodeVersions
-        public Task<CiXcodeVersionsResponse> CiXcodeVersions_getCollection(CiXcodeVersions_getCollectionFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiXcodeVersions_getCollectionFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, int? limit = default, string[]? include = default, int? limitMacOsVersions = default)
+        public Task<CiXcodeVersionsResponse> CiXcodeVersions_getCollection(CiXcodeVersions_getCollectionFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiXcodeVersions_getCollectionFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, int? limit = default, string[]? include = default, int? limitMacOsVersions = default, INestedLog? log = null)
         {
             string path = "/v1/ciXcodeVersions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -41429,7 +41427,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[macOsVersions]", limitMacOsVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiXcodeVersionsResponse>(message);
+            return SendAsync<CiXcodeVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41450,7 +41448,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciXcodeVersions/{id}
-        public Task<CiXcodeVersionResponse> CiXcodeVersions_getInstance(string id, CiXcodeVersions_getInstanceFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiXcodeVersions_getInstanceFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, string[]? include = default, int? limitMacOsVersions = default)
+        public Task<CiXcodeVersionResponse> CiXcodeVersions_getInstance(string id, CiXcodeVersions_getInstanceFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, CiXcodeVersions_getInstanceFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, string[]? include = default, int? limitMacOsVersions = default, INestedLog? log = null)
         {
             string path = "/v1/ciXcodeVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41465,7 +41463,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[macOsVersions]", limitMacOsVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiXcodeVersionResponse>(message);
+            return SendAsync<CiXcodeVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41486,7 +41484,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/ciXcodeVersions/{id}/macOsVersions
-        public Task<CiMacOsVersionsResponse> CiXcodeVersions_macOsVersions_getToManyRelated(string id, CiXcodeVersions_macOsVersions_getToManyRelatedFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, CiXcodeVersions_macOsVersions_getToManyRelatedFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, int? limit = default, string[]? include = default, int? limitXcodeVersions = default)
+        public Task<CiMacOsVersionsResponse> CiXcodeVersions_macOsVersions_getToManyRelated(string id, CiXcodeVersions_macOsVersions_getToManyRelatedFieldsCiMacOsVersions[]? fieldsCiMacOsVersions = default, CiXcodeVersions_macOsVersions_getToManyRelatedFieldsCiXcodeVersions[]? fieldsCiXcodeVersions = default, int? limit = default, string[]? include = default, int? limitXcodeVersions = default, INestedLog? log = null)
         {
             string path = "/v1/ciXcodeVersions/{id}/macOsVersions";
             path = path.Replace("{id}", id.ToString());
@@ -41503,18 +41501,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[xcodeVersions]", limitXcodeVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CiMacOsVersionsResponse>(message);
+            return SendAsync<CiMacOsVersionsResponse>(message, log);
         }
 
         // /v1/customerReviewResponses
-        public Task<CustomerReviewResponseV1Response> CustomerReviewResponses_createInstance(CustomerReviewResponseV1CreateRequest request)
+        public Task<CustomerReviewResponseV1Response> CustomerReviewResponses_createInstance(CustomerReviewResponseV1CreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/customerReviewResponses";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<CustomerReviewResponseV1Response>(message);
+            return SendAsync<CustomerReviewResponseV1Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41527,7 +41525,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/customerReviewResponses/{id}
-        public Task<CustomerReviewResponseV1Response> CustomerReviewResponses_getInstance(string id, CustomerReviewResponses_getInstanceFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, string[]? include = default)
+        public Task<CustomerReviewResponseV1Response> CustomerReviewResponses_getInstance(string id, CustomerReviewResponses_getInstanceFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/customerReviewResponses/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41538,18 +41536,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CustomerReviewResponseV1Response>(message);
+            return SendAsync<CustomerReviewResponseV1Response>(message, log);
         }
 
         // /v1/customerReviewResponses/{id}
-        public Task CustomerReviewResponses_deleteInstance(string id)
+        public Task CustomerReviewResponses_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/customerReviewResponses/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41574,7 +41572,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/customerReviews/{id}
-        public Task<CustomerReviewResponse> CustomerReviews_getInstance(string id, CustomerReviews_getInstanceFieldsCustomerReviews[]? fieldsCustomerReviews = default, CustomerReviews_getInstanceFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, string[]? include = default)
+        public Task<CustomerReviewResponse> CustomerReviews_getInstance(string id, CustomerReviews_getInstanceFieldsCustomerReviews[]? fieldsCustomerReviews = default, CustomerReviews_getInstanceFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/customerReviews/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41587,7 +41585,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CustomerReviewResponse>(message);
+            return SendAsync<CustomerReviewResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41612,7 +41610,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/customerReviews/{id}/response
-        public Task<CustomerReviewResponseV1Response> CustomerReviews_response_getToOneRelated(string id, CustomerReviews_response_getToOneRelatedFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, CustomerReviews_response_getToOneRelatedFieldsCustomerReviews[]? fieldsCustomerReviews = default, string[]? include = default)
+        public Task<CustomerReviewResponseV1Response> CustomerReviews_response_getToOneRelated(string id, CustomerReviews_response_getToOneRelatedFieldsCustomerReviewResponses[]? fieldsCustomerReviewResponses = default, CustomerReviews_response_getToOneRelatedFieldsCustomerReviews[]? fieldsCustomerReviews = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/customerReviews/{id}/response";
             path = path.Replace("{id}", id.ToString());
@@ -41625,7 +41623,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CustomerReviewResponseV1Response>(message);
+            return SendAsync<CustomerReviewResponseV1Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41676,7 +41674,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/devices
-        public Task<DevicesResponse> Devices_getCollection(string[]? filterName = default, Devices_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterUdid = default, Devices_getCollectionFilterStatus[]? filterStatus = default, string[]? filterId = default, Devices_getCollectionSort[]? sort = default, Devices_getCollectionFieldsDevices[]? fieldsDevices = default, int? limit = default)
+        public Task<DevicesResponse> Devices_getCollection(string[]? filterName = default, Devices_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterUdid = default, Devices_getCollectionFilterStatus[]? filterStatus = default, string[]? filterId = default, Devices_getCollectionSort[]? sort = default, Devices_getCollectionFieldsDevices[]? fieldsDevices = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/devices";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -41698,18 +41696,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<DevicesResponse>(message);
+            return SendAsync<DevicesResponse>(message, log);
         }
 
         // /v1/devices
-        public Task<DeviceResponse> Devices_createInstance(DeviceCreateRequest request)
+        public Task<DeviceResponse> Devices_createInstance(DeviceCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/devices";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<DeviceResponse>(message);
+            return SendAsync<DeviceResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41725,7 +41723,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/devices/{id}
-        public Task<DeviceResponse> Devices_getInstance(string id, Devices_getInstanceFieldsDevices[]? fieldsDevices = default)
+        public Task<DeviceResponse> Devices_getInstance(string id, Devices_getInstanceFieldsDevices[]? fieldsDevices = default, INestedLog? log = null)
         {
             string path = "/v1/devices/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41734,11 +41732,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("fields[devices]", string.Join(",", fieldsDevices));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<DeviceResponse>(message);
+            return SendAsync<DeviceResponse>(message, log);
         }
 
         // /v1/devices/{id}
-        public Task<DeviceResponse> Devices_updateInstance(string id, DeviceUpdateRequest request)
+        public Task<DeviceResponse> Devices_updateInstance(string id, DeviceUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/devices/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41746,11 +41744,11 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<DeviceResponse>(message);
+            return SendAsync<DeviceResponse>(message, log);
         }
 
         // /v1/diagnosticSignatures/{id}/logs
-        public Task DiagnosticSignatures_logs_getToManyRelated(string id, int? limit = default)
+        public Task DiagnosticSignatures_logs_getToManyRelated(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/diagnosticSignatures/{id}/logs";
             path = path.Replace("{id}", id.ToString());
@@ -41759,29 +41757,29 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/endAppAvailabilityPreOrders
-        public Task<EndAppAvailabilityPreOrderResponse> EndAppAvailabilityPreOrders_createInstance(EndAppAvailabilityPreOrderCreateRequest request)
+        public Task<EndAppAvailabilityPreOrderResponse> EndAppAvailabilityPreOrders_createInstance(EndAppAvailabilityPreOrderCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/endAppAvailabilityPreOrders";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<EndAppAvailabilityPreOrderResponse>(message);
+            return SendAsync<EndAppAvailabilityPreOrderResponse>(message, log);
         }
 
         // /v1/endUserLicenseAgreements
-        public Task<EndUserLicenseAgreementResponse> EndUserLicenseAgreements_createInstance(EndUserLicenseAgreementCreateRequest request)
+        public Task<EndUserLicenseAgreementResponse> EndUserLicenseAgreements_createInstance(EndUserLicenseAgreementCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/endUserLicenseAgreements";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<EndUserLicenseAgreementResponse>(message);
+            return SendAsync<EndUserLicenseAgreementResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41800,7 +41798,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/endUserLicenseAgreements/{id}
-        public Task<EndUserLicenseAgreementResponse> EndUserLicenseAgreements_getInstance(string id, EndUserLicenseAgreements_getInstanceFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, string[]? fieldsTerritories = default, EndUserLicenseAgreements_getInstanceInclude[]? include = default, int? limitTerritories = default)
+        public Task<EndUserLicenseAgreementResponse> EndUserLicenseAgreements_getInstance(string id, EndUserLicenseAgreements_getInstanceFieldsEndUserLicenseAgreements[]? fieldsEndUserLicenseAgreements = default, string[]? fieldsTerritories = default, EndUserLicenseAgreements_getInstanceInclude[]? include = default, int? limitTerritories = default, INestedLog? log = null)
         {
             string path = "/v1/endUserLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41815,11 +41813,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[territories]", limitTerritories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<EndUserLicenseAgreementResponse>(message);
+            return SendAsync<EndUserLicenseAgreementResponse>(message, log);
         }
 
         // /v1/endUserLicenseAgreements/{id}
-        public Task<EndUserLicenseAgreementResponse> EndUserLicenseAgreements_updateInstance(string id, EndUserLicenseAgreementUpdateRequest request)
+        public Task<EndUserLicenseAgreementResponse> EndUserLicenseAgreements_updateInstance(string id, EndUserLicenseAgreementUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/endUserLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41827,22 +41825,22 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<EndUserLicenseAgreementResponse>(message);
+            return SendAsync<EndUserLicenseAgreementResponse>(message, log);
         }
 
         // /v1/endUserLicenseAgreements/{id}
-        public Task EndUserLicenseAgreements_deleteInstance(string id)
+        public Task EndUserLicenseAgreements_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/endUserLicenseAgreements/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/endUserLicenseAgreements/{id}/territories
-        public Task<TerritoriesWithoutIncludesResponse> EndUserLicenseAgreements_territories_getToManyRelated(string id, string[]? fieldsTerritories = default, int? limit = default)
+        public Task<TerritoriesWithoutIncludesResponse> EndUserLicenseAgreements_territories_getToManyRelated(string id, string[]? fieldsTerritories = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/endUserLicenseAgreements/{id}/territories";
             path = path.Replace("{id}", id.ToString());
@@ -41853,7 +41851,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<TerritoriesWithoutIncludesResponse>(message);
+            return SendAsync<TerritoriesWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41864,7 +41862,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/financeReports
-        public Task FinanceReports_getCollection(string[] filterVendorNumber, FinanceReports_getCollectionFilterReportType[] filterReportType, string[] filterRegionCode, string[] filterReportDate)
+        public Task FinanceReports_getCollection(string[] filterVendorNumber, FinanceReports_getCollectionFilterReportType[] filterReportType, string[] filterRegionCode, string[] filterReportDate, INestedLog? log = null)
         {
             string path = "/v1/financeReports";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -41878,18 +41876,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("filter[reportDate]", string.Join(",", filterReportDate));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterAchievementImages
-        public Task<GameCenterAchievementImageResponse> GameCenterAchievementImages_createInstance(GameCenterAchievementImageCreateRequest request)
+        public Task<GameCenterAchievementImageResponse> GameCenterAchievementImages_createInstance(GameCenterAchievementImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAchievementImageResponse>(message);
+            return SendAsync<GameCenterAchievementImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41904,7 +41902,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievementImages/{id}
-        public Task<GameCenterAchievementImageResponse> GameCenterAchievementImages_getInstance(string id, GameCenterAchievementImages_getInstanceFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, string[]? include = default)
+        public Task<GameCenterAchievementImageResponse> GameCenterAchievementImages_getInstance(string id, GameCenterAchievementImages_getInstanceFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41915,11 +41913,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementImageResponse>(message);
+            return SendAsync<GameCenterAchievementImageResponse>(message, log);
         }
 
         // /v1/gameCenterAchievementImages/{id}
-        public Task<GameCenterAchievementImageResponse> GameCenterAchievementImages_updateInstance(string id, GameCenterAchievementImageUpdateRequest request)
+        public Task<GameCenterAchievementImageResponse> GameCenterAchievementImages_updateInstance(string id, GameCenterAchievementImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -41927,29 +41925,29 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAchievementImageResponse>(message);
+            return SendAsync<GameCenterAchievementImageResponse>(message, log);
         }
 
         // /v1/gameCenterAchievementImages/{id}
-        public Task GameCenterAchievementImages_deleteInstance(string id)
+        public Task GameCenterAchievementImages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementImages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterAchievementLocalizations
-        public Task<GameCenterAchievementLocalizationResponse> GameCenterAchievementLocalizations_createInstance(GameCenterAchievementLocalizationCreateRequest request)
+        public Task<GameCenterAchievementLocalizationResponse> GameCenterAchievementLocalizations_createInstance(GameCenterAchievementLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAchievementLocalizationResponse>(message);
+            return SendAsync<GameCenterAchievementLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -41998,7 +41996,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievementLocalizations/{id}
-        public Task<GameCenterAchievementLocalizationResponse> GameCenterAchievementLocalizations_getInstance(string id, GameCenterAchievementLocalizations_getInstanceFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievementLocalizations_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievementLocalizations_getInstanceFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, GameCenterAchievementLocalizations_getInstanceInclude[]? include = default)
+        public Task<GameCenterAchievementLocalizationResponse> GameCenterAchievementLocalizations_getInstance(string id, GameCenterAchievementLocalizations_getInstanceFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievementLocalizations_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievementLocalizations_getInstanceFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, GameCenterAchievementLocalizations_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -42013,11 +42011,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementLocalizationResponse>(message);
+            return SendAsync<GameCenterAchievementLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterAchievementLocalizations/{id}
-        public Task<GameCenterAchievementLocalizationResponse> GameCenterAchievementLocalizations_updateInstance(string id, GameCenterAchievementLocalizationUpdateRequest request)
+        public Task<GameCenterAchievementLocalizationResponse> GameCenterAchievementLocalizations_updateInstance(string id, GameCenterAchievementLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -42025,18 +42023,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAchievementLocalizationResponse>(message);
+            return SendAsync<GameCenterAchievementLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterAchievementLocalizations/{id}
-        public Task GameCenterAchievementLocalizations_deleteInstance(string id)
+        public Task GameCenterAchievementLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42113,7 +42111,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievement
-        public Task<GameCenterAchievementResponse> GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelated(string id, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterAchievementResponse> GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelated(string id, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievementLocalizations_gameCenterAchievement_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievement";
             path = path.Replace("{id}", id.ToString());
@@ -42136,7 +42134,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementResponse>(message);
+            return SendAsync<GameCenterAchievementResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42162,7 +42160,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievementImage
-        public Task<GameCenterAchievementImageResponse> GameCenterAchievementLocalizations_gameCenterAchievementImage_getToOneRelated(string id, GameCenterAchievementLocalizations_gameCenterAchievementImage_getToOneRelatedFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, GameCenterAchievementLocalizations_gameCenterAchievementImage_getToOneRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, string[]? include = default)
+        public Task<GameCenterAchievementImageResponse> GameCenterAchievementLocalizations_gameCenterAchievementImage_getToOneRelated(string id, GameCenterAchievementLocalizations_gameCenterAchievementImage_getToOneRelatedFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, GameCenterAchievementLocalizations_gameCenterAchievementImage_getToOneRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievementImage";
             path = path.Replace("{id}", id.ToString());
@@ -42175,18 +42173,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementImageResponse>(message);
+            return SendAsync<GameCenterAchievementImageResponse>(message, log);
         }
 
         // /v1/gameCenterAchievementReleases
-        public Task<GameCenterAchievementReleaseResponse> GameCenterAchievementReleases_createInstance(GameCenterAchievementReleaseCreateRequest request)
+        public Task<GameCenterAchievementReleaseResponse> GameCenterAchievementReleases_createInstance(GameCenterAchievementReleaseCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementReleases";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAchievementReleaseResponse>(message);
+            return SendAsync<GameCenterAchievementReleaseResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42205,7 +42203,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievementReleases/{id}
-        public Task<GameCenterAchievementReleaseResponse> GameCenterAchievementReleases_getInstance(string id, GameCenterAchievementReleases_getInstanceFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievementReleases_getInstanceInclude[]? include = default)
+        public Task<GameCenterAchievementReleaseResponse> GameCenterAchievementReleases_getInstance(string id, GameCenterAchievementReleases_getInstanceFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievementReleases_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementReleases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -42216,29 +42214,29 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementReleaseResponse>(message);
+            return SendAsync<GameCenterAchievementReleaseResponse>(message, log);
         }
 
         // /v1/gameCenterAchievementReleases/{id}
-        public Task GameCenterAchievementReleases_deleteInstance(string id)
+        public Task GameCenterAchievementReleases_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievementReleases/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterAchievements
-        public Task<GameCenterAchievementResponse> GameCenterAchievements_createInstance(GameCenterAchievementCreateRequest request)
+        public Task<GameCenterAchievementResponse> GameCenterAchievements_createInstance(GameCenterAchievementCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAchievementResponse>(message);
+            return SendAsync<GameCenterAchievementResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42287,7 +42285,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievements/{id}
-        public Task<GameCenterAchievementResponse> GameCenterAchievements_getInstance(string id, GameCenterAchievements_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievements_getInstanceFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievements_getInstanceFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievements_getInstanceInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterAchievementResponse> GameCenterAchievements_getInstance(string id, GameCenterAchievements_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievements_getInstanceFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievements_getInstanceFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievements_getInstanceInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -42306,11 +42304,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementResponse>(message);
+            return SendAsync<GameCenterAchievementResponse>(message, log);
         }
 
         // /v1/gameCenterAchievements/{id}
-        public Task<GameCenterAchievementResponse> GameCenterAchievements_updateInstance(string id, GameCenterAchievementUpdateRequest request)
+        public Task<GameCenterAchievementResponse> GameCenterAchievements_updateInstance(string id, GameCenterAchievementUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -42318,18 +42316,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAchievementResponse>(message);
+            return SendAsync<GameCenterAchievementResponse>(message, log);
         }
 
         // /v1/gameCenterAchievements/{id}
-        public Task GameCenterAchievements_deleteInstance(string id)
+        public Task GameCenterAchievements_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42407,7 +42405,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/gameCenterAchievements/{id}/groupAchievement
         [Obsolete]
-        public Task<GameCenterAchievementResponse> GameCenterAchievements_groupAchievement_getToOneRelated(string id, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievements_groupAchievement_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterAchievementResponse> GameCenterAchievements_groupAchievement_getToOneRelated(string id, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievements_groupAchievement_getToOneRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievements_groupAchievement_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}/groupAchievement";
             path = path.Replace("{id}", id.ToString());
@@ -42430,7 +42428,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementResponse>(message);
+            return SendAsync<GameCenterAchievementResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42479,7 +42477,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievements/{id}/localizations
-        public Task<GameCenterAchievementLocalizationsResponse> GameCenterAchievements_localizations_getToManyRelated(string id, GameCenterAchievements_localizations_getToManyRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievements_localizations_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievements_localizations_getToManyRelatedFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, int? limit = default, GameCenterAchievements_localizations_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterAchievementLocalizationsResponse> GameCenterAchievements_localizations_getToManyRelated(string id, GameCenterAchievements_localizations_getToManyRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterAchievements_localizations_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterAchievements_localizations_getToManyRelatedFieldsGameCenterAchievementImages[]? fieldsGameCenterAchievementImages = default, int? limit = default, GameCenterAchievements_localizations_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
@@ -42496,19 +42494,19 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementLocalizationsResponse>(message);
+            return SendAsync<GameCenterAchievementLocalizationsResponse>(message, log);
         }
 
         // /v1/gameCenterAchievements/{id}/relationships/groupAchievement
         [Obsolete]
-        public Task<GameCenterAchievementGroupAchievementLinkageResponse> GameCenterAchievements_groupAchievement_getToOneRelationship(string id)
+        public Task<GameCenterAchievementGroupAchievementLinkageResponse> GameCenterAchievements_groupAchievement_getToOneRelationship(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}/relationships/groupAchievement";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementGroupAchievementLinkageResponse>(message);
+            return SendAsync<GameCenterAchievementGroupAchievementLinkageResponse>(message, log);
         }
 
         public class GameCenterAchievements_groupAchievement_updateToOneRelationshipRequest
@@ -42524,7 +42522,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
         // /v1/gameCenterAchievements/{id}/relationships/groupAchievement
         [Obsolete]
-        public Task GameCenterAchievements_groupAchievement_updateToOneRelationship(string id, GameCenterAchievementGroupAchievementLinkageRequest request)
+        public Task GameCenterAchievements_groupAchievement_updateToOneRelationship(string id, GameCenterAchievementGroupAchievementLinkageRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}/relationships/groupAchievement";
             path = path.Replace("{id}", id.ToString());
@@ -42532,7 +42530,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42585,7 +42583,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAchievements/{id}/releases
-        public Task<GameCenterAchievementReleasesResponse> GameCenterAchievements_releases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterDetail = default, GameCenterAchievements_releases_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievements_releases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterAchievements_releases_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, int? limit = default, GameCenterAchievements_releases_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterAchievementReleasesResponse> GameCenterAchievements_releases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterDetail = default, GameCenterAchievements_releases_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterAchievements_releases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterAchievements_releases_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, int? limit = default, GameCenterAchievements_releases_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAchievements/{id}/releases";
             path = path.Replace("{id}", id.ToString());
@@ -42606,18 +42604,18 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementReleasesResponse>(message);
+            return SendAsync<GameCenterAchievementReleasesResponse>(message, log);
         }
 
         // /v1/gameCenterAppVersions
-        public Task<GameCenterAppVersionResponse> GameCenterAppVersions_createInstance(GameCenterAppVersionCreateRequest request)
+        public Task<GameCenterAppVersionResponse> GameCenterAppVersions_createInstance(GameCenterAppVersionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAppVersionResponse>(message);
+            return SendAsync<GameCenterAppVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42665,7 +42663,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAppVersions/{id}
-        public Task<GameCenterAppVersionResponse> GameCenterAppVersions_getInstance(string id, GameCenterAppVersions_getInstanceFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterAppVersions_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, GameCenterAppVersions_getInstanceInclude[]? include = default, int? limitCompatibilityVersions = default)
+        public Task<GameCenterAppVersionResponse> GameCenterAppVersions_getInstance(string id, GameCenterAppVersions_getInstanceFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterAppVersions_getInstanceFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, GameCenterAppVersions_getInstanceInclude[]? include = default, int? limitCompatibilityVersions = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -42680,11 +42678,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[compatibilityVersions]", limitCompatibilityVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAppVersionResponse>(message);
+            return SendAsync<GameCenterAppVersionResponse>(message, log);
         }
 
         // /v1/gameCenterAppVersions/{id}
-        public Task<GameCenterAppVersionResponse> GameCenterAppVersions_updateInstance(string id, GameCenterAppVersionUpdateRequest request)
+        public Task<GameCenterAppVersionResponse> GameCenterAppVersions_updateInstance(string id, GameCenterAppVersionUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -42692,7 +42690,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterAppVersionResponse>(message);
+            return SendAsync<GameCenterAppVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -42930,7 +42928,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAppVersions/{id}/appStoreVersion
-        public Task<AppStoreVersionResponse> GameCenterAppVersions_appStoreVersion_getToOneRelated(string id, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsApps[]? fieldsApps = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default)
+        public Task<AppStoreVersionResponse> GameCenterAppVersions_appStoreVersion_getToOneRelated(string id, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsApps[]? fieldsApps = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAgeRatingDeclarations[]? fieldsAgeRatingDeclarations = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersionLocalizations[]? fieldsAppStoreVersionLocalizations = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsBuilds[]? fieldsBuilds = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersionPhasedReleases[]? fieldsAppStoreVersionPhasedReleases = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreReviewDetails[]? fieldsAppStoreReviewDetails = default, string[]? fieldsAppStoreVersionSubmissions = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppClipDefaultExperiences[]? fieldsAppClipDefaultExperiences = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, string[]? fieldsAlternativeDistributionPackages = default, GameCenterAppVersions_appStoreVersion_getToOneRelatedInclude[]? include = default, int? limitAppStoreVersionLocalizations = default, int? limitAppStoreVersionExperimentsV2 = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions/{id}/appStoreVersion";
             path = path.Replace("{id}", id.ToString());
@@ -42969,7 +42967,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentsV2]", limitAppStoreVersionExperimentsV2.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionResponse>(message);
+            return SendAsync<AppStoreVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43017,7 +43015,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAppVersions/{id}/compatibilityVersions
-        public Task<GameCenterAppVersionsResponse> GameCenterAppVersions_compatibilityVersions_getToManyRelated(string id, string[]? filterEnabled = default, GameCenterAppVersions_compatibilityVersions_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterAppVersions_compatibilityVersions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, int? limit = default, GameCenterAppVersions_compatibilityVersions_getToManyRelatedInclude[]? include = default, int? limitCompatibilityVersions = default)
+        public Task<GameCenterAppVersionsResponse> GameCenterAppVersions_compatibilityVersions_getToManyRelated(string id, string[]? filterEnabled = default, GameCenterAppVersions_compatibilityVersions_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterAppVersions_compatibilityVersions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, int? limit = default, GameCenterAppVersions_compatibilityVersions_getToManyRelatedInclude[]? include = default, int? limitCompatibilityVersions = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions/{id}/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
@@ -43036,11 +43034,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[compatibilityVersions]", limitCompatibilityVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAppVersionsResponse>(message);
+            return SendAsync<GameCenterAppVersionsResponse>(message, log);
         }
 
         // /v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions
-        public Task<GameCenterAppVersionCompatibilityVersionsLinkagesResponse> GameCenterAppVersions_compatibilityVersions_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterAppVersionCompatibilityVersionsLinkagesResponse> GameCenterAppVersions_compatibilityVersions_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
@@ -43049,7 +43047,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAppVersionCompatibilityVersionsLinkagesResponse>(message);
+            return SendAsync<GameCenterAppVersionCompatibilityVersionsLinkagesResponse>(message, log);
         }
 
         public class GameCenterAppVersions_compatibilityVersions_createToManyRelationshipRequest
@@ -43064,7 +43062,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions
-        public Task GameCenterAppVersions_compatibilityVersions_createToManyRelationship(string id, GameCenterAppVersionCompatibilityVersionsLinkagesRequest request)
+        public Task GameCenterAppVersions_compatibilityVersions_createToManyRelationship(string id, GameCenterAppVersionCompatibilityVersionsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
@@ -43072,7 +43070,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class GameCenterAppVersions_compatibilityVersions_deleteToManyRelationshipRequest
@@ -43087,7 +43085,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions
-        public Task GameCenterAppVersions_compatibilityVersions_deleteToManyRelationship(string id, GameCenterAppVersionCompatibilityVersionsLinkagesRequest request)
+        public Task GameCenterAppVersions_compatibilityVersions_deleteToManyRelationship(string id, GameCenterAppVersionCompatibilityVersionsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions";
             path = path.Replace("{id}", id.ToString());
@@ -43095,18 +43093,18 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterDetails
-        public Task<GameCenterDetailResponse> GameCenterDetails_createInstance(GameCenterDetailCreateRequest request)
+        public Task<GameCenterDetailResponse> GameCenterDetails_createInstance(GameCenterDetailCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterDetailResponse>(message);
+            return SendAsync<GameCenterDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43237,7 +43235,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}
-        public Task<GameCenterDetailResponse> GameCenterDetails_getInstance(string id, GameCenterDetails_getInstanceFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_getInstanceFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterDetails_getInstanceFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterDetails_getInstanceFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterDetails_getInstanceInclude[]? include = default, int? limitAchievementReleases = default, int? limitGameCenterAchievements = default, int? limitGameCenterAppVersions = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterLeaderboards = default, int? limitLeaderboardReleases = default, int? limitLeaderboardSetReleases = default)
+        public Task<GameCenterDetailResponse> GameCenterDetails_getInstance(string id, GameCenterDetails_getInstanceFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_getInstanceFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterDetails_getInstanceFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterDetails_getInstanceFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterDetails_getInstanceFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterDetails_getInstanceInclude[]? include = default, int? limitAchievementReleases = default, int? limitGameCenterAchievements = default, int? limitGameCenterAppVersions = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterLeaderboards = default, int? limitLeaderboardReleases = default, int? limitLeaderboardSetReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -43278,11 +43276,11 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[leaderboardSetReleases]", limitLeaderboardSetReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterDetailResponse>(message);
+            return SendAsync<GameCenterDetailResponse>(message, log);
         }
 
         // /v1/gameCenterDetails/{id}
-        public Task<GameCenterDetailResponse> GameCenterDetails_updateInstance(string id, GameCenterDetailUpdateRequest request)
+        public Task<GameCenterDetailResponse> GameCenterDetails_updateInstance(string id, GameCenterDetailUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -43290,7 +43288,7 @@ namespace StudioDrydock.AppStoreConnect.Api
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterDetailResponse>(message);
+            return SendAsync<GameCenterDetailResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43343,7 +43341,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/achievementReleases
-        public Task<GameCenterAchievementReleasesResponse> GameCenterDetails_achievementReleases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterAchievement = default, GameCenterDetails_achievementReleases_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterDetails_achievementReleases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_achievementReleases_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, int? limit = default, GameCenterDetails_achievementReleases_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterAchievementReleasesResponse> GameCenterDetails_achievementReleases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterAchievement = default, GameCenterDetails_achievementReleases_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterDetails_achievementReleases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_achievementReleases_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, int? limit = default, GameCenterDetails_achievementReleases_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/achievementReleases";
             path = path.Replace("{id}", id.ToString());
@@ -43364,7 +43362,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementReleasesResponse>(message);
+            return SendAsync<GameCenterAchievementReleasesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43441,7 +43439,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/gameCenterAchievements
-        public Task<GameCenterAchievementsResponse> GameCenterDetails_gameCenterAchievements_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, int? limit = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterAchievementsResponse> GameCenterDetails_gameCenterAchievements_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, int? limit = default, GameCenterDetails_gameCenterAchievements_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
@@ -43472,7 +43470,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementsResponse>(message);
+            return SendAsync<GameCenterAchievementsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43520,7 +43518,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/gameCenterAppVersions
-        public Task<GameCenterAppVersionsResponse> GameCenterDetails_gameCenterAppVersions_getToManyRelated(string id, string[]? filterEnabled = default, GameCenterDetails_gameCenterAppVersions_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterDetails_gameCenterAppVersions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, int? limit = default, GameCenterDetails_gameCenterAppVersions_getToManyRelatedInclude[]? include = default, int? limitCompatibilityVersions = default)
+        public Task<GameCenterAppVersionsResponse> GameCenterDetails_gameCenterAppVersions_getToManyRelated(string id, string[]? filterEnabled = default, GameCenterDetails_gameCenterAppVersions_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterDetails_gameCenterAppVersions_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, int? limit = default, GameCenterDetails_gameCenterAppVersions_getToManyRelatedInclude[]? include = default, int? limitCompatibilityVersions = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterAppVersions";
             path = path.Replace("{id}", id.ToString());
@@ -43539,7 +43537,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[compatibilityVersions]", limitCompatibilityVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAppVersionsResponse>(message);
+            return SendAsync<GameCenterAppVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43631,7 +43629,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/gameCenterGroup
-        public Task<GameCenterGroupResponse> GameCenterDetails_gameCenterGroup_getToOneRelated(string id, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterDetails_gameCenterGroup_getToOneRelatedInclude[]? include = default, int? limitGameCenterDetails = default, int? limitGameCenterLeaderboards = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterAchievements = default)
+        public Task<GameCenterGroupResponse> GameCenterDetails_gameCenterGroup_getToOneRelated(string id, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_gameCenterGroup_getToOneRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterDetails_gameCenterGroup_getToOneRelatedInclude[]? include = default, int? limitGameCenterDetails = default, int? limitGameCenterLeaderboards = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterAchievements = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterGroup";
             path = path.Replace("{id}", id.ToString());
@@ -43658,7 +43656,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[gameCenterAchievements]", limitGameCenterAchievements.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterGroupResponse>(message);
+            return SendAsync<GameCenterGroupResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43756,7 +43754,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/gameCenterLeaderboards
-        public Task<GameCenterLeaderboardsResponse> GameCenterDetails_gameCenterLeaderboards_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, int? limit = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardsResponse> GameCenterDetails_gameCenterLeaderboards_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, int? limit = default, GameCenterDetails_gameCenterLeaderboards_getToManyRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -43791,7 +43789,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardsResponse>(message);
+            return SendAsync<GameCenterLeaderboardsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43886,7 +43884,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/gameCenterLeaderboardSets
-        public Task<GameCenterLeaderboardSetsResponse> GameCenterDetails_gameCenterLeaderboardSets_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterId = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, int? limit = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardSetsResponse> GameCenterDetails_gameCenterLeaderboardSets_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterId = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, int? limit = default, GameCenterDetails_gameCenterLeaderboardSets_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
@@ -43919,7 +43917,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetsResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -43978,7 +43976,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/leaderboardReleases
-        public Task<GameCenterLeaderboardReleasesResponse> GameCenterDetails_leaderboardReleases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterLeaderboard = default, GameCenterDetails_leaderboardReleases_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterDetails_leaderboardReleases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_leaderboardReleases_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, int? limit = default, GameCenterDetails_leaderboardReleases_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterLeaderboardReleasesResponse> GameCenterDetails_leaderboardReleases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterLeaderboard = default, GameCenterDetails_leaderboardReleases_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterDetails_leaderboardReleases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_leaderboardReleases_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, int? limit = default, GameCenterDetails_leaderboardReleases_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/leaderboardReleases";
             path = path.Replace("{id}", id.ToString());
@@ -43999,7 +43997,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardReleasesResponse>(message);
+            return SendAsync<GameCenterLeaderboardReleasesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -44049,7 +44047,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/leaderboardSetReleases
-        public Task<GameCenterLeaderboardSetReleasesResponse> GameCenterDetails_leaderboardSetReleases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterLeaderboardSet = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, int? limit = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterLeaderboardSetReleasesResponse> GameCenterDetails_leaderboardSetReleases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterLeaderboardSet = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, int? limit = default, GameCenterDetails_leaderboardSetReleases_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/leaderboardSetReleases";
             path = path.Replace("{id}", id.ToString());
@@ -44070,7 +44068,7 @@ namespace StudioDrydock.AppStoreConnect.Api
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetReleasesResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetReleasesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -44107,7 +44105,7 @@ namespace StudioDrydock.AppStoreConnect.Api
         }
 
         // /v1/gameCenterDetails/{id}/metrics/classicMatchmakingRequests
-        public Task<GameCenterMatchmakingAppRequestsV1MetricResponse> GameCenterDetails_classicMatchmakingRequests_getMetrics(string id, GameCenterDetails_classicMatchmakingRequests_getMetricsGranularity granularity, string[]? groupBy = default, GameCenterDetails_classicMatchmakingRequests_getMetricsFilterResult? filterResult = default, GameCenterDetails_classicMatchmakingRequests_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingAppRequestsV1MetricResponse> GameCenterDetails_classicMatchmakingRequests_getMetrics(string id, GameCenterDetails_classicMatchmakingRequests_getMetricsGranularity granularity, string[]? groupBy = default, GameCenterDetails_classicMatchmakingRequests_getMetricsFilterResult? filterResult = default, GameCenterDetails_classicMatchmakingRequests_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/metrics/classicMatchmakingRequests";
             path = path.Replace("{id}", id.ToString());
@@ -44123,7 +44121,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingAppRequestsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingAppRequestsV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -44160,7 +44158,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterDetails/{id}/metrics/ruleBasedMatchmakingRequests
-        public Task<GameCenterMatchmakingAppRequestsV1MetricResponse> GameCenterDetails_ruleBasedMatchmakingRequests_getMetrics(string id, GameCenterDetails_ruleBasedMatchmakingRequests_getMetricsGranularity granularity, string[]? groupBy = default, GameCenterDetails_ruleBasedMatchmakingRequests_getMetricsFilterResult? filterResult = default, GameCenterDetails_ruleBasedMatchmakingRequests_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingAppRequestsV1MetricResponse> GameCenterDetails_ruleBasedMatchmakingRequests_getMetrics(string id, GameCenterDetails_ruleBasedMatchmakingRequests_getMetricsGranularity granularity, string[]? groupBy = default, GameCenterDetails_ruleBasedMatchmakingRequests_getMetricsFilterResult? filterResult = default, GameCenterDetails_ruleBasedMatchmakingRequests_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/metrics/ruleBasedMatchmakingRequests";
             path = path.Replace("{id}", id.ToString());
@@ -44176,11 +44174,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingAppRequestsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingAppRequestsV1MetricResponse>(message, log);
         }
 
         // /v1/gameCenterDetails/{id}/relationships/gameCenterAchievements
-        public Task<GameCenterDetailGameCenterAchievementsLinkagesResponse> GameCenterDetails_gameCenterAchievements_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterDetailGameCenterAchievementsLinkagesResponse> GameCenterDetails_gameCenterAchievements_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
@@ -44189,7 +44187,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterDetailGameCenterAchievementsLinkagesResponse>(message);
+            return SendAsync<GameCenterDetailGameCenterAchievementsLinkagesResponse>(message, log);
         }
 
         public class GameCenterDetails_gameCenterAchievements_replaceToManyRelationshipRequest
@@ -44204,7 +44202,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterDetails/{id}/relationships/gameCenterAchievements
-        public Task GameCenterDetails_gameCenterAchievements_replaceToManyRelationship(string id, GameCenterDetailGameCenterAchievementsLinkagesRequest request)
+        public Task GameCenterDetails_gameCenterAchievements_replaceToManyRelationship(string id, GameCenterDetailGameCenterAchievementsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
@@ -44212,11 +44210,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboards
-        public Task<GameCenterDetailGameCenterLeaderboardsLinkagesResponse> GameCenterDetails_gameCenterLeaderboards_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterDetailGameCenterLeaderboardsLinkagesResponse> GameCenterDetails_gameCenterLeaderboards_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -44225,7 +44223,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterDetailGameCenterLeaderboardsLinkagesResponse>(message);
+            return SendAsync<GameCenterDetailGameCenterLeaderboardsLinkagesResponse>(message, log);
         }
 
         public class GameCenterDetails_gameCenterLeaderboards_replaceToManyRelationshipRequest
@@ -44240,7 +44238,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboards
-        public Task GameCenterDetails_gameCenterLeaderboards_replaceToManyRelationship(string id, GameCenterDetailGameCenterLeaderboardsLinkagesRequest request)
+        public Task GameCenterDetails_gameCenterLeaderboards_replaceToManyRelationship(string id, GameCenterDetailGameCenterLeaderboardsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -44248,11 +44246,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboardSets
-        public Task<GameCenterDetailGameCenterLeaderboardSetsLinkagesResponse> GameCenterDetails_gameCenterLeaderboardSets_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterDetailGameCenterLeaderboardSetsLinkagesResponse> GameCenterDetails_gameCenterLeaderboardSets_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
@@ -44261,7 +44259,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterDetailGameCenterLeaderboardSetsLinkagesResponse>(message);
+            return SendAsync<GameCenterDetailGameCenterLeaderboardSetsLinkagesResponse>(message, log);
         }
 
         public class GameCenterDetails_gameCenterLeaderboardSets_replaceToManyRelationshipRequest
@@ -44276,7 +44274,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboardSets
-        public Task GameCenterDetails_gameCenterLeaderboardSets_replaceToManyRelationship(string id, GameCenterDetailGameCenterLeaderboardSetsLinkagesRequest request)
+        public Task GameCenterDetails_gameCenterLeaderboardSets_replaceToManyRelationship(string id, GameCenterDetailGameCenterLeaderboardSetsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterDetails/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
@@ -44284,7 +44282,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -44371,7 +44369,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterEnabledVersions/{id}/compatibleVersions
         [Obsolete]
-        public Task<GameCenterEnabledVersionsResponse> GameCenterEnabledVersions_compatibleVersions_getToManyRelated(string id, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterVersionString = default, string[]? filterApp = default, string[]? filterId = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedSort[]? sort = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedFieldsGameCenterEnabledVersions[]? fieldsGameCenterEnabledVersions = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterEnabledVersionsResponse> GameCenterEnabledVersions_compatibleVersions_getToManyRelated(string id, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedFilterPlatform[]? filterPlatform = default, string[]? filterVersionString = default, string[]? filterApp = default, string[]? filterId = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedSort[]? sort = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedFieldsGameCenterEnabledVersions[]? fieldsGameCenterEnabledVersions = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, GameCenterEnabledVersions_compatibleVersions_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
@@ -44396,12 +44394,12 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterEnabledVersionsResponse>(message);
+            return SendAsync<GameCenterEnabledVersionsResponse>(message, log);
         }
 
         // /v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions
         [Obsolete]
-        public Task<GameCenterEnabledVersionCompatibleVersionsLinkagesResponse> GameCenterEnabledVersions_compatibleVersions_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterEnabledVersionCompatibleVersionsLinkagesResponse> GameCenterEnabledVersions_compatibleVersions_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
@@ -44410,7 +44408,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterEnabledVersionCompatibleVersionsLinkagesResponse>(message);
+            return SendAsync<GameCenterEnabledVersionCompatibleVersionsLinkagesResponse>(message, log);
         }
 
         public class GameCenterEnabledVersions_compatibleVersions_createToManyRelationshipRequest
@@ -44426,7 +44424,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions
         [Obsolete]
-        public Task GameCenterEnabledVersions_compatibleVersions_createToManyRelationship(string id, GameCenterEnabledVersionCompatibleVersionsLinkagesRequest request)
+        public Task GameCenterEnabledVersions_compatibleVersions_createToManyRelationship(string id, GameCenterEnabledVersionCompatibleVersionsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
@@ -44434,7 +44432,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class GameCenterEnabledVersions_compatibleVersions_replaceToManyRelationshipRequest
@@ -44450,7 +44448,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions
         [Obsolete]
-        public Task GameCenterEnabledVersions_compatibleVersions_replaceToManyRelationship(string id, GameCenterEnabledVersionCompatibleVersionsLinkagesRequest request)
+        public Task GameCenterEnabledVersions_compatibleVersions_replaceToManyRelationship(string id, GameCenterEnabledVersionCompatibleVersionsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
@@ -44458,7 +44456,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class GameCenterEnabledVersions_compatibleVersions_deleteToManyRelationshipRequest
@@ -44474,7 +44472,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions
         [Obsolete]
-        public Task GameCenterEnabledVersions_compatibleVersions_deleteToManyRelationship(string id, GameCenterEnabledVersionCompatibleVersionsLinkagesRequest request)
+        public Task GameCenterEnabledVersions_compatibleVersions_deleteToManyRelationship(string id, GameCenterEnabledVersionCompatibleVersionsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterEnabledVersions/{id}/relationships/compatibleVersions";
             path = path.Replace("{id}", id.ToString());
@@ -44482,7 +44480,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -44574,7 +44572,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups
-        public Task<GameCenterGroupsResponse> GameCenterGroups_getCollection(string[]? filterGameCenterDetails = default, GameCenterGroups_getCollectionFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_getCollectionFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_getCollectionFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_getCollectionFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_getCollectionFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, int? limit = default, GameCenterGroups_getCollectionInclude[]? include = default, int? limitGameCenterAchievements = default, int? limitGameCenterDetails = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterLeaderboards = default)
+        public Task<GameCenterGroupsResponse> GameCenterGroups_getCollection(string[]? filterGameCenterDetails = default, GameCenterGroups_getCollectionFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_getCollectionFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_getCollectionFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_getCollectionFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_getCollectionFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, int? limit = default, GameCenterGroups_getCollectionInclude[]? include = default, int? limitGameCenterAchievements = default, int? limitGameCenterDetails = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterLeaderboards = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -44604,18 +44602,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[gameCenterLeaderboards]", limitGameCenterLeaderboards.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterGroupsResponse>(message);
+            return SendAsync<GameCenterGroupsResponse>(message, log);
         }
 
         // /v1/gameCenterGroups
-        public Task<GameCenterGroupResponse> GameCenterGroups_createInstance(GameCenterGroupCreateRequest request)
+        public Task<GameCenterGroupResponse> GameCenterGroups_createInstance(GameCenterGroupCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterGroupResponse>(message);
+            return SendAsync<GameCenterGroupResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -44707,7 +44705,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}
-        public Task<GameCenterGroupResponse> GameCenterGroups_getInstance(string id, GameCenterGroups_getInstanceFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_getInstanceFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_getInstanceFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterGroups_getInstanceInclude[]? include = default, int? limitGameCenterAchievements = default, int? limitGameCenterDetails = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterLeaderboards = default)
+        public Task<GameCenterGroupResponse> GameCenterGroups_getInstance(string id, GameCenterGroups_getInstanceFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_getInstanceFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_getInstanceFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_getInstanceFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterGroups_getInstanceInclude[]? include = default, int? limitGameCenterAchievements = default, int? limitGameCenterDetails = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterLeaderboards = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -44734,11 +44732,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[gameCenterLeaderboards]", limitGameCenterLeaderboards.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterGroupResponse>(message);
+            return SendAsync<GameCenterGroupResponse>(message, log);
         }
 
         // /v1/gameCenterGroups/{id}
-        public Task<GameCenterGroupResponse> GameCenterGroups_updateInstance(string id, GameCenterGroupUpdateRequest request)
+        public Task<GameCenterGroupResponse> GameCenterGroups_updateInstance(string id, GameCenterGroupUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -44746,18 +44744,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterGroupResponse>(message);
+            return SendAsync<GameCenterGroupResponse>(message, log);
         }
 
         // /v1/gameCenterGroups/{id}
-        public Task GameCenterGroups_deleteInstance(string id)
+        public Task GameCenterGroups_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -44834,7 +44832,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}/gameCenterAchievements
-        public Task<GameCenterAchievementsResponse> GameCenterGroups_gameCenterAchievements_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, int? limit = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterAchievementsResponse> GameCenterGroups_gameCenterAchievements_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementLocalizations[]? fieldsGameCenterAchievementLocalizations = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, int? limit = default, GameCenterGroups_gameCenterAchievements_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
@@ -44865,7 +44863,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterAchievementsResponse>(message);
+            return SendAsync<GameCenterAchievementsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45044,7 +45042,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}/gameCenterDetails
-        public Task<GameCenterDetailsResponse> GameCenterGroups_gameCenterDetails_getToManyRelated(string id, string[]? filterGameCenterAppVersionsEnabled = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsApps[]? fieldsApps = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, int? limit = default, GameCenterGroups_gameCenterDetails_getToManyRelatedInclude[]? include = default, int? limitGameCenterAppVersions = default, int? limitGameCenterLeaderboards = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterAchievements = default, int? limitAchievementReleases = default, int? limitLeaderboardReleases = default, int? limitLeaderboardSetReleases = default)
+        public Task<GameCenterDetailsResponse> GameCenterGroups_gameCenterDetails_getToManyRelated(string id, string[]? filterGameCenterAppVersionsEnabled = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsApps[]? fieldsApps = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterAppVersions[]? fieldsGameCenterAppVersions = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterAchievements[]? fieldsGameCenterAchievements = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterAchievementReleases[]? fieldsGameCenterAchievementReleases = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterGroups_gameCenterDetails_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, int? limit = default, GameCenterGroups_gameCenterDetails_getToManyRelatedInclude[]? include = default, int? limitGameCenterAppVersions = default, int? limitGameCenterLeaderboards = default, int? limitGameCenterLeaderboardSets = default, int? limitGameCenterAchievements = default, int? limitAchievementReleases = default, int? limitLeaderboardReleases = default, int? limitLeaderboardSetReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterDetails";
             path = path.Replace("{id}", id.ToString());
@@ -45091,7 +45089,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[leaderboardSetReleases]", limitLeaderboardSetReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterDetailsResponse>(message);
+            return SendAsync<GameCenterDetailsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45189,7 +45187,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}/gameCenterLeaderboards
-        public Task<GameCenterLeaderboardsResponse> GameCenterGroups_gameCenterLeaderboards_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, int? limit = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardsResponse> GameCenterGroups_gameCenterLeaderboards_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, int? limit = default, GameCenterGroups_gameCenterLeaderboards_getToManyRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -45224,7 +45222,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardsResponse>(message);
+            return SendAsync<GameCenterLeaderboardsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45319,7 +45317,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}/gameCenterLeaderboardSets
-        public Task<GameCenterLeaderboardSetsResponse> GameCenterGroups_gameCenterLeaderboardSets_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterId = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, int? limit = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardSetsResponse> GameCenterGroups_gameCenterLeaderboardSets_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterId = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, int? limit = default, GameCenterGroups_gameCenterLeaderboardSets_getToManyRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
@@ -45352,11 +45350,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetsResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetsResponse>(message, log);
         }
 
         // /v1/gameCenterGroups/{id}/relationships/gameCenterAchievements
-        public Task<GameCenterGroupGameCenterAchievementsLinkagesResponse> GameCenterGroups_gameCenterAchievements_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterGroupGameCenterAchievementsLinkagesResponse> GameCenterGroups_gameCenterAchievements_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
@@ -45365,7 +45363,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterGroupGameCenterAchievementsLinkagesResponse>(message);
+            return SendAsync<GameCenterGroupGameCenterAchievementsLinkagesResponse>(message, log);
         }
 
         public class GameCenterGroups_gameCenterAchievements_replaceToManyRelationshipRequest
@@ -45380,7 +45378,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}/relationships/gameCenterAchievements
-        public Task GameCenterGroups_gameCenterAchievements_replaceToManyRelationship(string id, GameCenterGroupGameCenterAchievementsLinkagesRequest request)
+        public Task GameCenterGroups_gameCenterAchievements_replaceToManyRelationship(string id, GameCenterGroupGameCenterAchievementsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterAchievements";
             path = path.Replace("{id}", id.ToString());
@@ -45388,11 +45386,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboards
-        public Task<GameCenterGroupGameCenterLeaderboardsLinkagesResponse> GameCenterGroups_gameCenterLeaderboards_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterGroupGameCenterLeaderboardsLinkagesResponse> GameCenterGroups_gameCenterLeaderboards_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -45401,7 +45399,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterGroupGameCenterLeaderboardsLinkagesResponse>(message);
+            return SendAsync<GameCenterGroupGameCenterLeaderboardsLinkagesResponse>(message, log);
         }
 
         public class GameCenterGroups_gameCenterLeaderboards_replaceToManyRelationshipRequest
@@ -45416,7 +45414,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboards
-        public Task GameCenterGroups_gameCenterLeaderboards_replaceToManyRelationship(string id, GameCenterGroupGameCenterLeaderboardsLinkagesRequest request)
+        public Task GameCenterGroups_gameCenterLeaderboards_replaceToManyRelationship(string id, GameCenterGroupGameCenterLeaderboardsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -45424,11 +45422,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboardSets
-        public Task<GameCenterGroupGameCenterLeaderboardSetsLinkagesResponse> GameCenterGroups_gameCenterLeaderboardSets_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterGroupGameCenterLeaderboardSetsLinkagesResponse> GameCenterGroups_gameCenterLeaderboardSets_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
@@ -45437,7 +45435,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterGroupGameCenterLeaderboardSetsLinkagesResponse>(message);
+            return SendAsync<GameCenterGroupGameCenterLeaderboardSetsLinkagesResponse>(message, log);
         }
 
         public class GameCenterGroups_gameCenterLeaderboardSets_replaceToManyRelationshipRequest
@@ -45452,7 +45450,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboardSets
-        public Task GameCenterGroups_gameCenterLeaderboardSets_replaceToManyRelationship(string id, GameCenterGroupGameCenterLeaderboardSetsLinkagesRequest request)
+        public Task GameCenterGroups_gameCenterLeaderboardSets_replaceToManyRelationship(string id, GameCenterGroupGameCenterLeaderboardSetsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterGroups/{id}/relationships/gameCenterLeaderboardSets";
             path = path.Replace("{id}", id.ToString());
@@ -45460,29 +45458,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterLeaderboardEntrySubmissions
-        public Task<GameCenterLeaderboardEntrySubmissionResponse> GameCenterLeaderboardEntrySubmissions_createInstance(GameCenterLeaderboardEntrySubmissionCreateRequest request)
+        public Task<GameCenterLeaderboardEntrySubmissionResponse> GameCenterLeaderboardEntrySubmissions_createInstance(GameCenterLeaderboardEntrySubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardEntrySubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardEntrySubmissionResponse>(message);
+            return SendAsync<GameCenterLeaderboardEntrySubmissionResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardImages
-        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardImages_createInstance(GameCenterLeaderboardImageCreateRequest request)
+        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardImages_createInstance(GameCenterLeaderboardImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45497,7 +45495,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardImages/{id}
-        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardImages_getInstance(string id, GameCenterLeaderboardImages_getInstanceFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, string[]? include = default)
+        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardImages_getInstance(string id, GameCenterLeaderboardImages_getInstanceFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -45508,11 +45506,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardImageResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardImages/{id}
-        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardImages_updateInstance(string id, GameCenterLeaderboardImageUpdateRequest request)
+        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardImages_updateInstance(string id, GameCenterLeaderboardImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -45520,29 +45518,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardImageResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardImages/{id}
-        public Task GameCenterLeaderboardImages_deleteInstance(string id)
+        public Task GameCenterLeaderboardImages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardImages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterLeaderboardLocalizations
-        public Task<GameCenterLeaderboardLocalizationResponse> GameCenterLeaderboardLocalizations_createInstance(GameCenterLeaderboardLocalizationCreateRequest request)
+        public Task<GameCenterLeaderboardLocalizationResponse> GameCenterLeaderboardLocalizations_createInstance(GameCenterLeaderboardLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45576,7 +45574,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardLocalizations/{id}
-        public Task<GameCenterLeaderboardLocalizationResponse> GameCenterLeaderboardLocalizations_getInstance(string id, GameCenterLeaderboardLocalizations_getInstanceFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboardLocalizations_getInstanceFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, GameCenterLeaderboardLocalizations_getInstanceInclude[]? include = default)
+        public Task<GameCenterLeaderboardLocalizationResponse> GameCenterLeaderboardLocalizations_getInstance(string id, GameCenterLeaderboardLocalizations_getInstanceFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboardLocalizations_getInstanceFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, GameCenterLeaderboardLocalizations_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -45589,11 +45587,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardLocalizations/{id}
-        public Task<GameCenterLeaderboardLocalizationResponse> GameCenterLeaderboardLocalizations_updateInstance(string id, GameCenterLeaderboardLocalizationUpdateRequest request)
+        public Task<GameCenterLeaderboardLocalizationResponse> GameCenterLeaderboardLocalizations_updateInstance(string id, GameCenterLeaderboardLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -45601,18 +45599,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardLocalizations/{id}
-        public Task GameCenterLeaderboardLocalizations_deleteInstance(string id)
+        public Task GameCenterLeaderboardLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45639,7 +45637,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardLocalizations/{id}/gameCenterLeaderboardImage
-        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardLocalizations_gameCenterLeaderboardImage_getToOneRelated(string id, GameCenterLeaderboardLocalizations_gameCenterLeaderboardImage_getToOneRelatedFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, GameCenterLeaderboardLocalizations_gameCenterLeaderboardImage_getToOneRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, string[]? include = default)
+        public Task<GameCenterLeaderboardImageResponse> GameCenterLeaderboardLocalizations_gameCenterLeaderboardImage_getToOneRelated(string id, GameCenterLeaderboardLocalizations_gameCenterLeaderboardImage_getToOneRelatedFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, GameCenterLeaderboardLocalizations_gameCenterLeaderboardImage_getToOneRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardLocalizations/{id}/gameCenterLeaderboardImage";
             path = path.Replace("{id}", id.ToString());
@@ -45652,18 +45650,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardImageResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardReleases
-        public Task<GameCenterLeaderboardReleaseResponse> GameCenterLeaderboardReleases_createInstance(GameCenterLeaderboardReleaseCreateRequest request)
+        public Task<GameCenterLeaderboardReleaseResponse> GameCenterLeaderboardReleases_createInstance(GameCenterLeaderboardReleaseCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardReleases";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardReleaseResponse>(message);
+            return SendAsync<GameCenterLeaderboardReleaseResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45682,7 +45680,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardReleases/{id}
-        public Task<GameCenterLeaderboardReleaseResponse> GameCenterLeaderboardReleases_getInstance(string id, GameCenterLeaderboardReleases_getInstanceFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboardReleases_getInstanceInclude[]? include = default)
+        public Task<GameCenterLeaderboardReleaseResponse> GameCenterLeaderboardReleases_getInstance(string id, GameCenterLeaderboardReleases_getInstanceFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboardReleases_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardReleases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -45693,29 +45691,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardReleaseResponse>(message);
+            return SendAsync<GameCenterLeaderboardReleaseResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardReleases/{id}
-        public Task GameCenterLeaderboardReleases_deleteInstance(string id)
+        public Task GameCenterLeaderboardReleases_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardReleases/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterLeaderboards
-        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_createInstance(GameCenterLeaderboardCreateRequest request)
+        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_createInstance(GameCenterLeaderboardCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardResponse>(message);
+            return SendAsync<GameCenterLeaderboardResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45772,7 +45770,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboards/{id}
-        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_getInstance(string id, GameCenterLeaderboards_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboards_getInstanceFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboards_getInstanceFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboards_getInstanceInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_getInstance(string id, GameCenterLeaderboards_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboards_getInstanceFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboards_getInstanceFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboards_getInstanceInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -45793,11 +45791,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardResponse>(message);
+            return SendAsync<GameCenterLeaderboardResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboards/{id}
-        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_updateInstance(string id, GameCenterLeaderboardUpdateRequest request)
+        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_updateInstance(string id, GameCenterLeaderboardUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -45805,18 +45803,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardResponse>(message);
+            return SendAsync<GameCenterLeaderboardResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboards/{id}
-        public Task GameCenterLeaderboards_deleteInstance(string id)
+        public Task GameCenterLeaderboards_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45915,7 +45913,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterLeaderboards/{id}/groupLeaderboard
         [Obsolete]
-        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_groupLeaderboard_getToOneRelated(string id, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboards_groupLeaderboard_getToOneRelated(string id, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboards_groupLeaderboard_getToOneRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}/groupLeaderboard";
             path = path.Replace("{id}", id.ToString());
@@ -45942,7 +45940,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardResponse>(message);
+            return SendAsync<GameCenterLeaderboardResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -45998,7 +45996,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboards/{id}/localizations
-        public Task<GameCenterLeaderboardLocalizationsResponse> GameCenterLeaderboards_localizations_getToManyRelated(string id, GameCenterLeaderboards_localizations_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboards_localizations_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboards_localizations_getToManyRelatedFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, int? limit = default, GameCenterLeaderboards_localizations_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterLeaderboardLocalizationsResponse> GameCenterLeaderboards_localizations_getToManyRelated(string id, GameCenterLeaderboards_localizations_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboards_localizations_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboards_localizations_getToManyRelatedFieldsGameCenterLeaderboardImages[]? fieldsGameCenterLeaderboardImages = default, int? limit = default, GameCenterLeaderboards_localizations_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
@@ -46015,19 +46013,19 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardLocalizationsResponse>(message);
+            return SendAsync<GameCenterLeaderboardLocalizationsResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboards/{id}/relationships/groupLeaderboard
         [Obsolete]
-        public Task<GameCenterLeaderboardGroupLeaderboardLinkageResponse> GameCenterLeaderboards_groupLeaderboard_getToOneRelationship(string id)
+        public Task<GameCenterLeaderboardGroupLeaderboardLinkageResponse> GameCenterLeaderboards_groupLeaderboard_getToOneRelationship(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}/relationships/groupLeaderboard";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardGroupLeaderboardLinkageResponse>(message);
+            return SendAsync<GameCenterLeaderboardGroupLeaderboardLinkageResponse>(message, log);
         }
 
         public class GameCenterLeaderboards_groupLeaderboard_updateToOneRelationshipRequest
@@ -46043,7 +46041,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterLeaderboards/{id}/relationships/groupLeaderboard
         [Obsolete]
-        public Task GameCenterLeaderboards_groupLeaderboard_updateToOneRelationship(string id, GameCenterLeaderboardGroupLeaderboardLinkageRequest request)
+        public Task GameCenterLeaderboards_groupLeaderboard_updateToOneRelationship(string id, GameCenterLeaderboardGroupLeaderboardLinkageRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}/relationships/groupLeaderboard";
             path = path.Replace("{id}", id.ToString());
@@ -46051,7 +46049,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46110,7 +46108,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboards/{id}/releases
-        public Task<GameCenterLeaderboardReleasesResponse> GameCenterLeaderboards_releases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterDetail = default, GameCenterLeaderboards_releases_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboards_releases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboards_releases_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, int? limit = default, GameCenterLeaderboards_releases_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterLeaderboardReleasesResponse> GameCenterLeaderboards_releases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterDetail = default, GameCenterLeaderboards_releases_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboards_releases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboards_releases_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, int? limit = default, GameCenterLeaderboards_releases_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboards/{id}/releases";
             path = path.Replace("{id}", id.ToString());
@@ -46131,18 +46129,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardReleasesResponse>(message);
+            return SendAsync<GameCenterLeaderboardReleasesResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetImages
-        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetImages_createInstance(GameCenterLeaderboardSetImageCreateRequest request)
+        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetImages_createInstance(GameCenterLeaderboardSetImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46157,7 +46155,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSetImages/{id}
-        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetImages_getInstance(string id, GameCenterLeaderboardSetImages_getInstanceFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, string[]? include = default)
+        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetImages_getInstance(string id, GameCenterLeaderboardSetImages_getInstanceFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46168,11 +46166,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetImageResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetImages/{id}
-        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetImages_updateInstance(string id, GameCenterLeaderboardSetImageUpdateRequest request)
+        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetImages_updateInstance(string id, GameCenterLeaderboardSetImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46180,29 +46178,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetImageResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetImages/{id}
-        public Task GameCenterLeaderboardSetImages_deleteInstance(string id)
+        public Task GameCenterLeaderboardSetImages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetImages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetLocalizations
-        public Task<GameCenterLeaderboardSetLocalizationResponse> GameCenterLeaderboardSetLocalizations_createInstance(GameCenterLeaderboardSetLocalizationCreateRequest request)
+        public Task<GameCenterLeaderboardSetLocalizationResponse> GameCenterLeaderboardSetLocalizations_createInstance(GameCenterLeaderboardSetLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46233,7 +46231,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSetLocalizations/{id}
-        public Task<GameCenterLeaderboardSetLocalizationResponse> GameCenterLeaderboardSetLocalizations_getInstance(string id, GameCenterLeaderboardSetLocalizations_getInstanceFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSetLocalizations_getInstanceFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, GameCenterLeaderboardSetLocalizations_getInstanceInclude[]? include = default)
+        public Task<GameCenterLeaderboardSetLocalizationResponse> GameCenterLeaderboardSetLocalizations_getInstance(string id, GameCenterLeaderboardSetLocalizations_getInstanceFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSetLocalizations_getInstanceFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, GameCenterLeaderboardSetLocalizations_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46246,11 +46244,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetLocalizations/{id}
-        public Task<GameCenterLeaderboardSetLocalizationResponse> GameCenterLeaderboardSetLocalizations_updateInstance(string id, GameCenterLeaderboardSetLocalizationUpdateRequest request)
+        public Task<GameCenterLeaderboardSetLocalizationResponse> GameCenterLeaderboardSetLocalizations_updateInstance(string id, GameCenterLeaderboardSetLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46258,18 +46256,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetLocalizations/{id}
-        public Task GameCenterLeaderboardSetLocalizations_deleteInstance(string id)
+        public Task GameCenterLeaderboardSetLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46293,7 +46291,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSetLocalizations/{id}/gameCenterLeaderboardSetImage
-        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetLocalizations_gameCenterLeaderboardSetImage_getToOneRelated(string id, GameCenterLeaderboardSetLocalizations_gameCenterLeaderboardSetImage_getToOneRelatedFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, GameCenterLeaderboardSetLocalizations_gameCenterLeaderboardSetImage_getToOneRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, string[]? include = default)
+        public Task<GameCenterLeaderboardSetImageResponse> GameCenterLeaderboardSetLocalizations_gameCenterLeaderboardSetImage_getToOneRelated(string id, GameCenterLeaderboardSetLocalizations_gameCenterLeaderboardSetImage_getToOneRelatedFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, GameCenterLeaderboardSetLocalizations_gameCenterLeaderboardSetImage_getToOneRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetLocalizations/{id}/gameCenterLeaderboardSetImage";
             path = path.Replace("{id}", id.ToString());
@@ -46306,7 +46304,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetImageResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46361,7 +46359,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSetMemberLocalizations
-        public Task<GameCenterLeaderboardSetMemberLocalizationsResponse> GameCenterLeaderboardSetMemberLocalizations_getCollection(string[] filterGameCenterLeaderboardSet, string[] filterGameCenterLeaderboard, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboardSetMemberLocalizations[]? fieldsGameCenterLeaderboardSetMemberLocalizations = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, int? limit = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionInclude[]? include = default)
+        public Task<GameCenterLeaderboardSetMemberLocalizationsResponse> GameCenterLeaderboardSetMemberLocalizations_getCollection(string[] filterGameCenterLeaderboardSet, string[] filterGameCenterLeaderboard, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboardSetMemberLocalizations[]? fieldsGameCenterLeaderboardSetMemberLocalizations = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, int? limit = default, GameCenterLeaderboardSetMemberLocalizations_getCollectionInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -46381,22 +46379,22 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetMemberLocalizationsResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetMemberLocalizationsResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetMemberLocalizations
-        public Task<GameCenterLeaderboardSetMemberLocalizationResponse> GameCenterLeaderboardSetMemberLocalizations_createInstance(GameCenterLeaderboardSetMemberLocalizationCreateRequest request)
+        public Task<GameCenterLeaderboardSetMemberLocalizationResponse> GameCenterLeaderboardSetMemberLocalizations_createInstance(GameCenterLeaderboardSetMemberLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetMemberLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetMemberLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetMemberLocalizations/{id}
-        public Task<GameCenterLeaderboardSetMemberLocalizationResponse> GameCenterLeaderboardSetMemberLocalizations_updateInstance(string id, GameCenterLeaderboardSetMemberLocalizationUpdateRequest request)
+        public Task<GameCenterLeaderboardSetMemberLocalizationResponse> GameCenterLeaderboardSetMemberLocalizations_updateInstance(string id, GameCenterLeaderboardSetMemberLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46404,18 +46402,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetMemberLocalizationResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetMemberLocalizationResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetMemberLocalizations/{id}
-        public Task GameCenterLeaderboardSetMemberLocalizations_deleteInstance(string id)
+        public Task GameCenterLeaderboardSetMemberLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46513,7 +46511,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSetMemberLocalizations/{id}/gameCenterLeaderboard
-        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelated(string id, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardResponse> GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelated(string id, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboard_getToOneRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}/gameCenterLeaderboard";
             path = path.Replace("{id}", id.ToString());
@@ -46540,7 +46538,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardResponse>(message);
+            return SendAsync<GameCenterLeaderboardResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46635,7 +46633,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSetMemberLocalizations/{id}/gameCenterLeaderboardSet
-        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelated(string id, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelated(string id, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSetMemberLocalizations_gameCenterLeaderboardSet_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetMemberLocalizations/{id}/gameCenterLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
@@ -46662,18 +46660,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetReleases
-        public Task<GameCenterLeaderboardSetReleaseResponse> GameCenterLeaderboardSetReleases_createInstance(GameCenterLeaderboardSetReleaseCreateRequest request)
+        public Task<GameCenterLeaderboardSetReleaseResponse> GameCenterLeaderboardSetReleases_createInstance(GameCenterLeaderboardSetReleaseCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetReleases";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetReleaseResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetReleaseResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46692,7 +46690,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSetReleases/{id}
-        public Task<GameCenterLeaderboardSetReleaseResponse> GameCenterLeaderboardSetReleases_getInstance(string id, GameCenterLeaderboardSetReleases_getInstanceFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSetReleases_getInstanceInclude[]? include = default)
+        public Task<GameCenterLeaderboardSetReleaseResponse> GameCenterLeaderboardSetReleases_getInstance(string id, GameCenterLeaderboardSetReleases_getInstanceFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSetReleases_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetReleases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46703,29 +46701,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetReleaseResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetReleaseResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSetReleases/{id}
-        public Task GameCenterLeaderboardSetReleases_deleteInstance(string id)
+        public Task GameCenterLeaderboardSetReleases_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSetReleases/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterLeaderboardSets
-        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_createInstance(GameCenterLeaderboardSetCreateRequest request)
+        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_createInstance(GameCenterLeaderboardSetCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46792,7 +46790,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSets/{id}
-        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_getInstance(string id, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSets_getInstanceInclude[]? include = default, int? limitGameCenterLeaderboards = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_getInstance(string id, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSets_getInstanceFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSets_getInstanceInclude[]? include = default, int? limitGameCenterLeaderboards = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46815,11 +46813,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSets/{id}
-        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_updateInstance(string id, GameCenterLeaderboardSetUpdateRequest request)
+        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_updateInstance(string id, GameCenterLeaderboardSetUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -46827,18 +46825,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterLeaderboardSetResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSets/{id}
-        public Task GameCenterLeaderboardSets_deleteInstance(string id)
+        public Task GameCenterLeaderboardSets_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -46936,7 +46934,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/gameCenterLeaderboards
-        public Task<GameCenterLeaderboardsResponse> GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, int? limit = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardsResponse> GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelated(string id, string[]? filterReferenceName = default, string[]? filterArchived = default, string[]? filterId = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardLocalizations[]? fieldsGameCenterLeaderboardLocalizations = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedFieldsGameCenterLeaderboardReleases[]? fieldsGameCenterLeaderboardReleases = default, int? limit = default, GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelatedInclude[]? include = default, int? limitGameCenterLeaderboardSets = default, int? limitLocalizations = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -46971,7 +46969,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardsResponse>(message);
+            return SendAsync<GameCenterLeaderboardsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47067,7 +47065,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterLeaderboardSets/{id}/groupLeaderboardSet
         [Obsolete]
-        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelated(string id, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default)
+        public Task<GameCenterLeaderboardSetResponse> GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelated(string id, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterGroups[]? fieldsGameCenterGroups = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboards[]? fieldsGameCenterLeaderboards = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelatedInclude[]? include = default, int? limitLocalizations = default, int? limitGameCenterLeaderboards = default, int? limitReleases = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/groupLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
@@ -47094,7 +47092,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[releases]", limitReleases.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47138,7 +47136,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/localizations
-        public Task<GameCenterLeaderboardSetLocalizationsResponse> GameCenterLeaderboardSets_localizations_getToManyRelated(string id, GameCenterLeaderboardSets_localizations_getToManyRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSets_localizations_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_localizations_getToManyRelatedFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, int? limit = default, GameCenterLeaderboardSets_localizations_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterLeaderboardSetLocalizationsResponse> GameCenterLeaderboardSets_localizations_getToManyRelated(string id, GameCenterLeaderboardSets_localizations_getToManyRelatedFieldsGameCenterLeaderboardSetLocalizations[]? fieldsGameCenterLeaderboardSetLocalizations = default, GameCenterLeaderboardSets_localizations_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, GameCenterLeaderboardSets_localizations_getToManyRelatedFieldsGameCenterLeaderboardSetImages[]? fieldsGameCenterLeaderboardSetImages = default, int? limit = default, GameCenterLeaderboardSets_localizations_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/localizations";
             path = path.Replace("{id}", id.ToString());
@@ -47155,11 +47153,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetLocalizationsResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetLocalizationsResponse>(message, log);
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards
-        public Task<GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesResponse> GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelationship(string id, int? limit = default)
+        public Task<GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesResponse> GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -47168,7 +47166,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesResponse>(message, log);
         }
 
         public class GameCenterLeaderboardSets_gameCenterLeaderboards_createToManyRelationshipRequest
@@ -47183,7 +47181,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards
-        public Task GameCenterLeaderboardSets_gameCenterLeaderboards_createToManyRelationship(string id, GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest request)
+        public Task GameCenterLeaderboardSets_gameCenterLeaderboards_createToManyRelationship(string id, GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -47191,7 +47189,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class GameCenterLeaderboardSets_gameCenterLeaderboards_replaceToManyRelationshipRequest
@@ -47206,7 +47204,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards
-        public Task GameCenterLeaderboardSets_gameCenterLeaderboards_replaceToManyRelationship(string id, GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest request)
+        public Task GameCenterLeaderboardSets_gameCenterLeaderboards_replaceToManyRelationship(string id, GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -47214,7 +47212,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class GameCenterLeaderboardSets_gameCenterLeaderboards_deleteToManyRelationshipRequest
@@ -47229,7 +47227,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards
-        public Task GameCenterLeaderboardSets_gameCenterLeaderboards_deleteToManyRelationship(string id, GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest request)
+        public Task GameCenterLeaderboardSets_gameCenterLeaderboards_deleteToManyRelationship(string id, GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/gameCenterLeaderboards";
             path = path.Replace("{id}", id.ToString());
@@ -47237,19 +47235,19 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/relationships/groupLeaderboardSet
         [Obsolete]
-        public Task<GameCenterLeaderboardSetGroupLeaderboardSetLinkageResponse> GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelationship(string id)
+        public Task<GameCenterLeaderboardSetGroupLeaderboardSetLinkageResponse> GameCenterLeaderboardSets_groupLeaderboardSet_getToOneRelationship(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/groupLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetGroupLeaderboardSetLinkageResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetGroupLeaderboardSetLinkageResponse>(message, log);
         }
 
         public class GameCenterLeaderboardSets_groupLeaderboardSet_updateToOneRelationshipRequest
@@ -47265,7 +47263,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/gameCenterLeaderboardSets/{id}/relationships/groupLeaderboardSet
         [Obsolete]
-        public Task GameCenterLeaderboardSets_groupLeaderboardSet_updateToOneRelationship(string id, GameCenterLeaderboardSetGroupLeaderboardSetLinkageRequest request)
+        public Task GameCenterLeaderboardSets_groupLeaderboardSet_updateToOneRelationship(string id, GameCenterLeaderboardSetGroupLeaderboardSetLinkageRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/relationships/groupLeaderboardSet";
             path = path.Replace("{id}", id.ToString());
@@ -47273,7 +47271,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47323,7 +47321,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterLeaderboardSets/{id}/releases
-        public Task<GameCenterLeaderboardSetReleasesResponse> GameCenterLeaderboardSets_releases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterDetail = default, GameCenterLeaderboardSets_releases_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSets_releases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSets_releases_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, int? limit = default, GameCenterLeaderboardSets_releases_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterLeaderboardSetReleasesResponse> GameCenterLeaderboardSets_releases_getToManyRelated(string id, string[]? filterLive = default, string[]? filterGameCenterDetail = default, GameCenterLeaderboardSets_releases_getToManyRelatedFieldsGameCenterLeaderboardSetReleases[]? fieldsGameCenterLeaderboardSetReleases = default, GameCenterLeaderboardSets_releases_getToManyRelatedFieldsGameCenterDetails[]? fieldsGameCenterDetails = default, GameCenterLeaderboardSets_releases_getToManyRelatedFieldsGameCenterLeaderboardSets[]? fieldsGameCenterLeaderboardSets = default, int? limit = default, GameCenterLeaderboardSets_releases_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterLeaderboardSets/{id}/releases";
             path = path.Replace("{id}", id.ToString());
@@ -47344,7 +47342,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterLeaderboardSetReleasesResponse>(message);
+            return SendAsync<GameCenterLeaderboardSetReleasesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47364,7 +47362,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingQueues
-        public Task<GameCenterMatchmakingQueuesResponse> GameCenterMatchmakingQueues_getCollection(GameCenterMatchmakingQueues_getCollectionFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, int? limit = default, GameCenterMatchmakingQueues_getCollectionInclude[]? include = default)
+        public Task<GameCenterMatchmakingQueuesResponse> GameCenterMatchmakingQueues_getCollection(GameCenterMatchmakingQueues_getCollectionFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, int? limit = default, GameCenterMatchmakingQueues_getCollectionInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -47376,18 +47374,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingQueuesResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueuesResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingQueues
-        public Task<GameCenterMatchmakingQueueResponse> GameCenterMatchmakingQueues_createInstance(GameCenterMatchmakingQueueCreateRequest request)
+        public Task<GameCenterMatchmakingQueueResponse> GameCenterMatchmakingQueues_createInstance(GameCenterMatchmakingQueueCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingQueueResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueueResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47407,7 +47405,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}
-        public Task<GameCenterMatchmakingQueueResponse> GameCenterMatchmakingQueues_getInstance(string id, GameCenterMatchmakingQueues_getInstanceFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, GameCenterMatchmakingQueues_getInstanceInclude[]? include = default)
+        public Task<GameCenterMatchmakingQueueResponse> GameCenterMatchmakingQueues_getInstance(string id, GameCenterMatchmakingQueues_getInstanceFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, GameCenterMatchmakingQueues_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -47418,11 +47416,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingQueueResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueueResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}
-        public Task<GameCenterMatchmakingQueueResponse> GameCenterMatchmakingQueues_updateInstance(string id, GameCenterMatchmakingQueueUpdateRequest request)
+        public Task<GameCenterMatchmakingQueueResponse> GameCenterMatchmakingQueues_updateInstance(string id, GameCenterMatchmakingQueueUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -47430,18 +47428,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingQueueResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueueResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}
-        public Task GameCenterMatchmakingQueues_deleteInstance(string id)
+        public Task GameCenterMatchmakingQueues_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47470,7 +47468,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}/metrics/experimentMatchmakingQueueSizes
-        public Task<GameCenterMatchmakingQueueSizesV1MetricResponse> GameCenterMatchmakingQueues_experimentMatchmakingQueueSizes_getMetrics(string id, GameCenterMatchmakingQueues_experimentMatchmakingQueueSizes_getMetricsGranularity granularity, GameCenterMatchmakingQueues_experimentMatchmakingQueueSizes_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingQueueSizesV1MetricResponse> GameCenterMatchmakingQueues_experimentMatchmakingQueueSizes_getMetrics(string id, GameCenterMatchmakingQueues_experimentMatchmakingQueueSizes_getMetricsGranularity granularity, GameCenterMatchmakingQueues_experimentMatchmakingQueueSizes_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/experimentMatchmakingQueueSizes";
             path = path.Replace("{id}", id.ToString());
@@ -47482,7 +47480,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingQueueSizesV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueueSizesV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47526,7 +47524,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}/metrics/experimentMatchmakingRequests
-        public Task<GameCenterMatchmakingQueueRequestsV1MetricResponse> GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetrics(string id, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsGranularity granularity, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsGroupBy[]? groupBy = default, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsFilterResult? filterResult = default, string? filterGameCenterDetail = default, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingQueueRequestsV1MetricResponse> GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetrics(string id, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsGranularity granularity, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsGroupBy[]? groupBy = default, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsFilterResult? filterResult = default, string? filterGameCenterDetail = default, GameCenterMatchmakingQueues_experimentMatchmakingRequests_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/experimentMatchmakingRequests";
             path = path.Replace("{id}", id.ToString());
@@ -47544,7 +47542,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingQueueRequestsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueueRequestsV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47573,7 +47571,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingQueueSizes
-        public Task<GameCenterMatchmakingQueueSizesV1MetricResponse> GameCenterMatchmakingQueues_matchmakingQueueSizes_getMetrics(string id, GameCenterMatchmakingQueues_matchmakingQueueSizes_getMetricsGranularity granularity, GameCenterMatchmakingQueues_matchmakingQueueSizes_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingQueueSizesV1MetricResponse> GameCenterMatchmakingQueues_matchmakingQueueSizes_getMetrics(string id, GameCenterMatchmakingQueues_matchmakingQueueSizes_getMetricsGranularity granularity, GameCenterMatchmakingQueues_matchmakingQueueSizes_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingQueueSizes";
             path = path.Replace("{id}", id.ToString());
@@ -47585,7 +47583,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingQueueSizesV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueueSizesV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47629,7 +47627,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingRequests
-        public Task<GameCenterMatchmakingQueueRequestsV1MetricResponse> GameCenterMatchmakingQueues_matchmakingRequests_getMetrics(string id, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsGranularity granularity, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsGroupBy[]? groupBy = default, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsFilterResult? filterResult = default, string? filterGameCenterDetail = default, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingQueueRequestsV1MetricResponse> GameCenterMatchmakingQueues_matchmakingRequests_getMetrics(string id, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsGranularity granularity, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsGroupBy[]? groupBy = default, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsFilterResult? filterResult = default, string? filterGameCenterDetail = default, GameCenterMatchmakingQueues_matchmakingRequests_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingRequests";
             path = path.Replace("{id}", id.ToString());
@@ -47647,7 +47645,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingQueueRequestsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueueRequestsV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47676,7 +47674,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingSessions
-        public Task<GameCenterMatchmakingSessionsV1MetricResponse> GameCenterMatchmakingQueues_matchmakingSessions_getMetrics(string id, GameCenterMatchmakingQueues_matchmakingSessions_getMetricsGranularity granularity, GameCenterMatchmakingQueues_matchmakingSessions_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingSessionsV1MetricResponse> GameCenterMatchmakingQueues_matchmakingSessions_getMetrics(string id, GameCenterMatchmakingQueues_matchmakingSessions_getMetricsGranularity granularity, GameCenterMatchmakingQueues_matchmakingSessions_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingSessions";
             path = path.Replace("{id}", id.ToString());
@@ -47688,22 +47686,22 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingSessionsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingSessionsV1MetricResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingRules
-        public Task<GameCenterMatchmakingRuleResponse> GameCenterMatchmakingRules_createInstance(GameCenterMatchmakingRuleCreateRequest request)
+        public Task<GameCenterMatchmakingRuleResponse> GameCenterMatchmakingRules_createInstance(GameCenterMatchmakingRuleCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRules";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingRuleResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingRules/{id}
-        public Task<GameCenterMatchmakingRuleResponse> GameCenterMatchmakingRules_updateInstance(string id, GameCenterMatchmakingRuleUpdateRequest request)
+        public Task<GameCenterMatchmakingRuleResponse> GameCenterMatchmakingRules_updateInstance(string id, GameCenterMatchmakingRuleUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -47711,18 +47709,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingRuleResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingRules/{id}
-        public Task GameCenterMatchmakingRules_deleteInstance(string id)
+        public Task GameCenterMatchmakingRules_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47749,7 +47747,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingBooleanRuleResults
-        public Task<GameCenterMatchmakingBooleanRuleResultsV1MetricResponse> GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetrics(string id, GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetricsGranularity granularity, GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetricsGroupBy[]? groupBy = default, string? filterResult = default, string? filterGameCenterMatchmakingQueue = default, GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingBooleanRuleResultsV1MetricResponse> GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetrics(string id, GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetricsGranularity granularity, GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetricsGroupBy[]? groupBy = default, string? filterResult = default, string? filterGameCenterMatchmakingQueue = default, GameCenterMatchmakingRules_matchmakingBooleanRuleResults_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingBooleanRuleResults";
             path = path.Replace("{id}", id.ToString());
@@ -47767,7 +47765,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingBooleanRuleResultsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingBooleanRuleResultsV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47796,7 +47794,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingNumberRuleResults
-        public Task<GameCenterMatchmakingNumberRuleResultsV1MetricResponse> GameCenterMatchmakingRules_matchmakingNumberRuleResults_getMetrics(string id, GameCenterMatchmakingRules_matchmakingNumberRuleResults_getMetricsGranularity granularity, string[]? groupBy = default, string? filterGameCenterMatchmakingQueue = default, GameCenterMatchmakingRules_matchmakingNumberRuleResults_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingNumberRuleResultsV1MetricResponse> GameCenterMatchmakingRules_matchmakingNumberRuleResults_getMetrics(string id, GameCenterMatchmakingRules_matchmakingNumberRuleResults_getMetricsGranularity granularity, string[]? groupBy = default, string? filterGameCenterMatchmakingQueue = default, GameCenterMatchmakingRules_matchmakingNumberRuleResults_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingNumberRuleResults";
             path = path.Replace("{id}", id.ToString());
@@ -47812,7 +47810,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingNumberRuleResultsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingNumberRuleResultsV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47832,7 +47830,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingRuleErrors
-        public Task<GameCenterMatchmakingRuleErrorsV1MetricResponse> GameCenterMatchmakingRules_matchmakingRuleErrors_getMetrics(string id, GameCenterMatchmakingRules_matchmakingRuleErrors_getMetricsGranularity granularity, string[]? groupBy = default, string? filterGameCenterMatchmakingQueue = default, GameCenterMatchmakingRules_matchmakingRuleErrors_getMetricsSort[]? sort = default, int? limit = default)
+        public Task<GameCenterMatchmakingRuleErrorsV1MetricResponse> GameCenterMatchmakingRules_matchmakingRuleErrors_getMetrics(string id, GameCenterMatchmakingRules_matchmakingRuleErrors_getMetricsGranularity granularity, string[]? groupBy = default, string? filterGameCenterMatchmakingQueue = default, GameCenterMatchmakingRules_matchmakingRuleErrors_getMetricsSort[]? sort = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingRuleErrors";
             path = path.Replace("{id}", id.ToString());
@@ -47848,7 +47846,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingRuleErrorsV1MetricResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleErrorsV1MetricResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47899,7 +47897,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRuleSets
-        public Task<GameCenterMatchmakingRuleSetsResponse> GameCenterMatchmakingRuleSets_getCollection(GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingRuleSets[]? fieldsGameCenterMatchmakingRuleSets = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingTeams[]? fieldsGameCenterMatchmakingTeams = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingRules[]? fieldsGameCenterMatchmakingRules = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, int? limit = default, GameCenterMatchmakingRuleSets_getCollectionInclude[]? include = default, int? limitMatchmakingQueues = default, int? limitRules = default, int? limitTeams = default)
+        public Task<GameCenterMatchmakingRuleSetsResponse> GameCenterMatchmakingRuleSets_getCollection(GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingRuleSets[]? fieldsGameCenterMatchmakingRuleSets = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingTeams[]? fieldsGameCenterMatchmakingTeams = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingRules[]? fieldsGameCenterMatchmakingRules = default, GameCenterMatchmakingRuleSets_getCollectionFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, int? limit = default, GameCenterMatchmakingRuleSets_getCollectionInclude[]? include = default, int? limitMatchmakingQueues = default, int? limitRules = default, int? limitTeams = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -47923,18 +47921,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[teams]", limitTeams.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingRuleSetsResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleSetsResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingRuleSets
-        public Task<GameCenterMatchmakingRuleSetResponse> GameCenterMatchmakingRuleSets_createInstance(GameCenterMatchmakingRuleSetCreateRequest request)
+        public Task<GameCenterMatchmakingRuleSetResponse> GameCenterMatchmakingRuleSets_createInstance(GameCenterMatchmakingRuleSetCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingRuleSetResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleSetResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -47985,7 +47983,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRuleSets/{id}
-        public Task<GameCenterMatchmakingRuleSetResponse> GameCenterMatchmakingRuleSets_getInstance(string id, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingRuleSets[]? fieldsGameCenterMatchmakingRuleSets = default, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingTeams[]? fieldsGameCenterMatchmakingTeams = default, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingRules[]? fieldsGameCenterMatchmakingRules = default, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, GameCenterMatchmakingRuleSets_getInstanceInclude[]? include = default, int? limitMatchmakingQueues = default, int? limitRules = default, int? limitTeams = default)
+        public Task<GameCenterMatchmakingRuleSetResponse> GameCenterMatchmakingRuleSets_getInstance(string id, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingRuleSets[]? fieldsGameCenterMatchmakingRuleSets = default, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingTeams[]? fieldsGameCenterMatchmakingTeams = default, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingRules[]? fieldsGameCenterMatchmakingRules = default, GameCenterMatchmakingRuleSets_getInstanceFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, GameCenterMatchmakingRuleSets_getInstanceInclude[]? include = default, int? limitMatchmakingQueues = default, int? limitRules = default, int? limitTeams = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48008,11 +48006,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[teams]", limitTeams.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingRuleSetResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleSetResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingRuleSets/{id}
-        public Task<GameCenterMatchmakingRuleSetResponse> GameCenterMatchmakingRuleSets_updateInstance(string id, GameCenterMatchmakingRuleSetUpdateRequest request)
+        public Task<GameCenterMatchmakingRuleSetResponse> GameCenterMatchmakingRuleSets_updateInstance(string id, GameCenterMatchmakingRuleSetUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48020,18 +48018,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingRuleSetResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleSetResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingRuleSets/{id}
-        public Task GameCenterMatchmakingRuleSets_deleteInstance(string id)
+        public Task GameCenterMatchmakingRuleSets_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48063,7 +48061,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRuleSets/{id}/matchmakingQueues
-        public Task<GameCenterMatchmakingQueuesResponse> GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelated(string id, GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelatedFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelatedFieldsGameCenterMatchmakingRuleSets[]? fieldsGameCenterMatchmakingRuleSets = default, int? limit = default, GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelatedInclude[]? include = default)
+        public Task<GameCenterMatchmakingQueuesResponse> GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelated(string id, GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelatedFieldsGameCenterMatchmakingQueues[]? fieldsGameCenterMatchmakingQueues = default, GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelatedFieldsGameCenterMatchmakingRuleSets[]? fieldsGameCenterMatchmakingRuleSets = default, int? limit = default, GameCenterMatchmakingRuleSets_matchmakingQueues_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}/matchmakingQueues";
             path = path.Replace("{id}", id.ToString());
@@ -48078,7 +48076,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingQueuesResponse>(message);
+            return SendAsync<GameCenterMatchmakingQueuesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48092,7 +48090,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRuleSets/{id}/rules
-        public Task<GameCenterMatchmakingRulesResponse> GameCenterMatchmakingRuleSets_rules_getToManyRelated(string id, GameCenterMatchmakingRuleSets_rules_getToManyRelatedFieldsGameCenterMatchmakingRules[]? fieldsGameCenterMatchmakingRules = default, int? limit = default)
+        public Task<GameCenterMatchmakingRulesResponse> GameCenterMatchmakingRuleSets_rules_getToManyRelated(string id, GameCenterMatchmakingRuleSets_rules_getToManyRelatedFieldsGameCenterMatchmakingRules[]? fieldsGameCenterMatchmakingRules = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}/rules";
             path = path.Replace("{id}", id.ToString());
@@ -48103,7 +48101,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingRulesResponse>(message);
+            return SendAsync<GameCenterMatchmakingRulesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48115,7 +48113,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/gameCenterMatchmakingRuleSets/{id}/teams
-        public Task<GameCenterMatchmakingTeamsResponse> GameCenterMatchmakingRuleSets_teams_getToManyRelated(string id, GameCenterMatchmakingRuleSets_teams_getToManyRelatedFieldsGameCenterMatchmakingTeams[]? fieldsGameCenterMatchmakingTeams = default, int? limit = default)
+        public Task<GameCenterMatchmakingTeamsResponse> GameCenterMatchmakingRuleSets_teams_getToManyRelated(string id, GameCenterMatchmakingRuleSets_teams_getToManyRelatedFieldsGameCenterMatchmakingTeams[]? fieldsGameCenterMatchmakingTeams = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSets/{id}/teams";
             path = path.Replace("{id}", id.ToString());
@@ -48126,33 +48124,33 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<GameCenterMatchmakingTeamsResponse>(message);
+            return SendAsync<GameCenterMatchmakingTeamsResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingRuleSetTests
-        public Task<GameCenterMatchmakingRuleSetTestResponse> GameCenterMatchmakingRuleSetTests_createInstance(GameCenterMatchmakingRuleSetTestCreateRequest request)
+        public Task<GameCenterMatchmakingRuleSetTestResponse> GameCenterMatchmakingRuleSetTests_createInstance(GameCenterMatchmakingRuleSetTestCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingRuleSetTests";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingRuleSetTestResponse>(message);
+            return SendAsync<GameCenterMatchmakingRuleSetTestResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingTeams
-        public Task<GameCenterMatchmakingTeamResponse> GameCenterMatchmakingTeams_createInstance(GameCenterMatchmakingTeamCreateRequest request)
+        public Task<GameCenterMatchmakingTeamResponse> GameCenterMatchmakingTeams_createInstance(GameCenterMatchmakingTeamCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingTeams";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingTeamResponse>(message);
+            return SendAsync<GameCenterMatchmakingTeamResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingTeams/{id}
-        public Task<GameCenterMatchmakingTeamResponse> GameCenterMatchmakingTeams_updateInstance(string id, GameCenterMatchmakingTeamUpdateRequest request)
+        public Task<GameCenterMatchmakingTeamResponse> GameCenterMatchmakingTeams_updateInstance(string id, GameCenterMatchmakingTeamUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingTeams/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48160,40 +48158,40 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterMatchmakingTeamResponse>(message);
+            return SendAsync<GameCenterMatchmakingTeamResponse>(message, log);
         }
 
         // /v1/gameCenterMatchmakingTeams/{id}
-        public Task GameCenterMatchmakingTeams_deleteInstance(string id)
+        public Task GameCenterMatchmakingTeams_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/gameCenterMatchmakingTeams/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/gameCenterPlayerAchievementSubmissions
-        public Task<GameCenterPlayerAchievementSubmissionResponse> GameCenterPlayerAchievementSubmissions_createInstance(GameCenterPlayerAchievementSubmissionCreateRequest request)
+        public Task<GameCenterPlayerAchievementSubmissionResponse> GameCenterPlayerAchievementSubmissions_createInstance(GameCenterPlayerAchievementSubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/gameCenterPlayerAchievementSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<GameCenterPlayerAchievementSubmissionResponse>(message);
+            return SendAsync<GameCenterPlayerAchievementSubmissionResponse>(message, log);
         }
 
         // /v1/inAppPurchaseAppStoreReviewScreenshots
-        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchaseAppStoreReviewScreenshots_createInstance(InAppPurchaseAppStoreReviewScreenshotCreateRequest request)
+        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchaseAppStoreReviewScreenshots_createInstance(InAppPurchaseAppStoreReviewScreenshotCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48211,7 +48209,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchaseAppStoreReviewScreenshots/{id}
-        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchaseAppStoreReviewScreenshots_getInstance(string id, InAppPurchaseAppStoreReviewScreenshots_getInstanceFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, string[]? include = default)
+        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchaseAppStoreReviewScreenshots_getInstance(string id, InAppPurchaseAppStoreReviewScreenshots_getInstanceFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48222,11 +48220,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message, log);
         }
 
         // /v1/inAppPurchaseAppStoreReviewScreenshots/{id}
-        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchaseAppStoreReviewScreenshots_updateInstance(string id, InAppPurchaseAppStoreReviewScreenshotUpdateRequest request)
+        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchaseAppStoreReviewScreenshots_updateInstance(string id, InAppPurchaseAppStoreReviewScreenshotUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48234,29 +48232,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message, log);
         }
 
         // /v1/inAppPurchaseAppStoreReviewScreenshots/{id}
-        public Task InAppPurchaseAppStoreReviewScreenshots_deleteInstance(string id)
+        public Task InAppPurchaseAppStoreReviewScreenshots_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/inAppPurchaseAvailabilities
-        public Task<InAppPurchaseAvailabilityResponse> InAppPurchaseAvailabilities_createInstance(InAppPurchaseAvailabilityCreateRequest request)
+        public Task<InAppPurchaseAvailabilityResponse> InAppPurchaseAvailabilities_createInstance(InAppPurchaseAvailabilityCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseAvailabilities";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseAvailabilityResponse>(message);
+            return SendAsync<InAppPurchaseAvailabilityResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48267,7 +48265,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchaseAvailabilities/{id}
-        public Task<InAppPurchaseAvailabilityResponse> InAppPurchaseAvailabilities_getInstance(string id, InAppPurchaseAvailabilities_getInstanceFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default)
+        public Task<InAppPurchaseAvailabilityResponse> InAppPurchaseAvailabilities_getInstance(string id, InAppPurchaseAvailabilities_getInstanceFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48282,11 +48280,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[availableTerritories]", limitAvailableTerritories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseAvailabilityResponse>(message);
+            return SendAsync<InAppPurchaseAvailabilityResponse>(message, log);
         }
 
         // /v1/inAppPurchaseAvailabilities/{id}/availableTerritories
-        public Task<TerritoriesResponse> InAppPurchaseAvailabilities_availableTerritories_getToManyRelated(string id, string[]? fieldsTerritories = default, int? limit = default)
+        public Task<TerritoriesResponse> InAppPurchaseAvailabilities_availableTerritories_getToManyRelated(string id, string[]? fieldsTerritories = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseAvailabilities/{id}/availableTerritories";
             path = path.Replace("{id}", id.ToString());
@@ -48297,7 +48295,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<TerritoriesResponse>(message);
+            return SendAsync<TerritoriesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48311,7 +48309,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchaseContents/{id}
-        public Task<InAppPurchaseContentResponse> InAppPurchaseContents_getInstance(string id, InAppPurchaseContents_getInstanceFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, string[]? include = default)
+        public Task<InAppPurchaseContentResponse> InAppPurchaseContents_getInstance(string id, InAppPurchaseContents_getInstanceFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseContents/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48322,18 +48320,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseContentResponse>(message);
+            return SendAsync<InAppPurchaseContentResponse>(message, log);
         }
 
         // /v1/inAppPurchaseImages
-        public Task<InAppPurchaseImageResponse> InAppPurchaseImages_createInstance(InAppPurchaseImageCreateRequest request)
+        public Task<InAppPurchaseImageResponse> InAppPurchaseImages_createInstance(InAppPurchaseImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseImageResponse>(message);
+            return SendAsync<InAppPurchaseImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48350,7 +48348,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchaseImages/{id}
-        public Task<InAppPurchaseImageResponse> InAppPurchaseImages_getInstance(string id, InAppPurchaseImages_getInstanceFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, string[]? include = default)
+        public Task<InAppPurchaseImageResponse> InAppPurchaseImages_getInstance(string id, InAppPurchaseImages_getInstanceFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48361,11 +48359,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseImageResponse>(message);
+            return SendAsync<InAppPurchaseImageResponse>(message, log);
         }
 
         // /v1/inAppPurchaseImages/{id}
-        public Task<InAppPurchaseImageResponse> InAppPurchaseImages_updateInstance(string id, InAppPurchaseImageUpdateRequest request)
+        public Task<InAppPurchaseImageResponse> InAppPurchaseImages_updateInstance(string id, InAppPurchaseImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48373,29 +48371,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseImageResponse>(message);
+            return SendAsync<InAppPurchaseImageResponse>(message, log);
         }
 
         // /v1/inAppPurchaseImages/{id}
-        public Task InAppPurchaseImages_deleteInstance(string id)
+        public Task InAppPurchaseImages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/inAppPurchaseLocalizations
-        public Task<InAppPurchaseLocalizationResponse> InAppPurchaseLocalizations_createInstance(InAppPurchaseLocalizationCreateRequest request)
+        public Task<InAppPurchaseLocalizationResponse> InAppPurchaseLocalizations_createInstance(InAppPurchaseLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseLocalizationResponse>(message);
+            return SendAsync<InAppPurchaseLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48409,7 +48407,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchaseLocalizations/{id}
-        public Task<InAppPurchaseLocalizationResponse> InAppPurchaseLocalizations_getInstance(string id, InAppPurchaseLocalizations_getInstanceFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, string[]? include = default)
+        public Task<InAppPurchaseLocalizationResponse> InAppPurchaseLocalizations_getInstance(string id, InAppPurchaseLocalizations_getInstanceFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48420,11 +48418,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseLocalizationResponse>(message);
+            return SendAsync<InAppPurchaseLocalizationResponse>(message, log);
         }
 
         // /v1/inAppPurchaseLocalizations/{id}
-        public Task<InAppPurchaseLocalizationResponse> InAppPurchaseLocalizations_updateInstance(string id, InAppPurchaseLocalizationUpdateRequest request)
+        public Task<InAppPurchaseLocalizationResponse> InAppPurchaseLocalizations_updateInstance(string id, InAppPurchaseLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48432,18 +48430,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseLocalizationResponse>(message);
+            return SendAsync<InAppPurchaseLocalizationResponse>(message, log);
         }
 
         // /v1/inAppPurchaseLocalizations/{id}
-        public Task InAppPurchaseLocalizations_deleteInstance(string id)
+        public Task InAppPurchaseLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48456,7 +48454,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchasePricePoints/{id}/equalizations
-        public Task<InAppPurchasePricePointsResponse> InAppPurchasePricePoints_equalizations_getToManyRelated(string id, string[]? filterTerritory = default, string[]? filterInAppPurchaseV2 = default, InAppPurchasePricePoints_equalizations_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default)
+        public Task<InAppPurchasePricePointsResponse> InAppPurchasePricePoints_equalizations_getToManyRelated(string id, string[]? filterTerritory = default, string[]? filterInAppPurchaseV2 = default, InAppPurchasePricePoints_equalizations_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchasePricePoints/{id}/equalizations";
             path = path.Replace("{id}", id.ToString());
@@ -48475,18 +48473,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasePricePointsResponse>(message);
+            return SendAsync<InAppPurchasePricePointsResponse>(message, log);
         }
 
         // /v1/inAppPurchasePriceSchedules
-        public Task<InAppPurchasePriceScheduleResponse> InAppPurchasePriceSchedules_createInstance(InAppPurchasePriceScheduleCreateRequest request)
+        public Task<InAppPurchasePriceScheduleResponse> InAppPurchasePriceSchedules_createInstance(InAppPurchasePriceScheduleCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchasePriceSchedules";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchasePriceScheduleResponse>(message);
+            return SendAsync<InAppPurchasePriceScheduleResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48516,7 +48514,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchasePriceSchedules/{id}
-        public Task<InAppPurchasePriceScheduleResponse> InAppPurchasePriceSchedules_getInstance(string id, InAppPurchasePriceSchedules_getInstanceFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, string[]? fieldsTerritories = default, InAppPurchasePriceSchedules_getInstanceFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasePriceSchedules_getInstanceInclude[]? include = default, int? limitAutomaticPrices = default, int? limitManualPrices = default)
+        public Task<InAppPurchasePriceScheduleResponse> InAppPurchasePriceSchedules_getInstance(string id, InAppPurchasePriceSchedules_getInstanceFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, string[]? fieldsTerritories = default, InAppPurchasePriceSchedules_getInstanceFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasePriceSchedules_getInstanceInclude[]? include = default, int? limitAutomaticPrices = default, int? limitManualPrices = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48535,7 +48533,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[manualPrices]", limitManualPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasePriceScheduleResponse>(message);
+            return SendAsync<InAppPurchasePriceScheduleResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48565,7 +48563,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchasePriceSchedules/{id}/automaticPrices
-        public Task<InAppPurchasePricesResponse> InAppPurchasePriceSchedules_automaticPrices_getToManyRelated(string id, string[]? filterTerritory = default, InAppPurchasePriceSchedules_automaticPrices_getToManyRelatedFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasePriceSchedules_automaticPrices_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, InAppPurchasePriceSchedules_automaticPrices_getToManyRelatedInclude[]? include = default)
+        public Task<InAppPurchasePricesResponse> InAppPurchasePriceSchedules_automaticPrices_getToManyRelated(string id, string[]? filterTerritory = default, InAppPurchasePriceSchedules_automaticPrices_getToManyRelatedFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasePriceSchedules_automaticPrices_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, InAppPurchasePriceSchedules_automaticPrices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}/automaticPrices";
             path = path.Replace("{id}", id.ToString());
@@ -48584,11 +48582,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasePricesResponse>(message);
+            return SendAsync<InAppPurchasePricesResponse>(message, log);
         }
 
         // /v1/inAppPurchasePriceSchedules/{id}/baseTerritory
-        public Task<TerritoryResponse> InAppPurchasePriceSchedules_baseTerritory_getToOneRelated(string id, string[]? fieldsTerritories = default)
+        public Task<TerritoryResponse> InAppPurchasePriceSchedules_baseTerritory_getToOneRelated(string id, string[]? fieldsTerritories = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}/baseTerritory";
             path = path.Replace("{id}", id.ToString());
@@ -48597,7 +48595,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("fields[territories]", string.Join(",", fieldsTerritories));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<TerritoryResponse>(message);
+            return SendAsync<TerritoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48627,7 +48625,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/inAppPurchasePriceSchedules/{id}/manualPrices
-        public Task<InAppPurchasePricesResponse> InAppPurchasePriceSchedules_manualPrices_getToManyRelated(string id, string[]? filterTerritory = default, InAppPurchasePriceSchedules_manualPrices_getToManyRelatedFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasePriceSchedules_manualPrices_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, InAppPurchasePriceSchedules_manualPrices_getToManyRelatedInclude[]? include = default)
+        public Task<InAppPurchasePricesResponse> InAppPurchasePriceSchedules_manualPrices_getToManyRelated(string id, string[]? filterTerritory = default, InAppPurchasePriceSchedules_manualPrices_getToManyRelatedFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasePriceSchedules_manualPrices_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, InAppPurchasePriceSchedules_manualPrices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchasePriceSchedules/{id}/manualPrices";
             path = path.Replace("{id}", id.ToString());
@@ -48646,7 +48644,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasePricesResponse>(message);
+            return SendAsync<InAppPurchasePricesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48661,7 +48659,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/inAppPurchases/{id}
         [Obsolete]
-        public Task<InAppPurchaseResponse> InAppPurchases_getInstance(string id, InAppPurchases_getInstanceFieldsInAppPurchases[]? fieldsInAppPurchases = default, string[]? include = default, int? limitApps = default)
+        public Task<InAppPurchaseResponse> InAppPurchases_getInstance(string id, InAppPurchases_getInstanceFieldsInAppPurchases[]? fieldsInAppPurchases = default, string[]? include = default, int? limitApps = default, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48674,18 +48672,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[apps]", limitApps.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseResponse>(message);
+            return SendAsync<InAppPurchaseResponse>(message, log);
         }
 
         // /v1/inAppPurchaseSubmissions
-        public Task<InAppPurchaseSubmissionResponse> InAppPurchaseSubmissions_createInstance(InAppPurchaseSubmissionCreateRequest request)
+        public Task<InAppPurchaseSubmissionResponse> InAppPurchaseSubmissions_createInstance(InAppPurchaseSubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/inAppPurchaseSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseSubmissionResponse>(message);
+            return SendAsync<InAppPurchaseSubmissionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48698,7 +48696,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/marketplaceDomains
         [Obsolete]
-        public Task<MarketplaceDomainsResponse> MarketplaceDomains_getCollection(MarketplaceDomains_getCollectionFieldsMarketplaceDomains[]? fieldsMarketplaceDomains = default, int? limit = default)
+        public Task<MarketplaceDomainsResponse> MarketplaceDomains_getCollection(MarketplaceDomains_getCollectionFieldsMarketplaceDomains[]? fieldsMarketplaceDomains = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/marketplaceDomains";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -48708,19 +48706,19 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<MarketplaceDomainsResponse>(message);
+            return SendAsync<MarketplaceDomainsResponse>(message, log);
         }
 
         // /v1/marketplaceDomains
         [Obsolete]
-        public Task<MarketplaceDomainResponse> MarketplaceDomains_createInstance(MarketplaceDomainCreateRequest request)
+        public Task<MarketplaceDomainResponse> MarketplaceDomains_createInstance(MarketplaceDomainCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/marketplaceDomains";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<MarketplaceDomainResponse>(message);
+            return SendAsync<MarketplaceDomainResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48733,7 +48731,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/marketplaceDomains/{id}
         [Obsolete]
-        public Task<MarketplaceDomainResponse> MarketplaceDomains_getInstance(string id, MarketplaceDomains_getInstanceFieldsMarketplaceDomains[]? fieldsMarketplaceDomains = default)
+        public Task<MarketplaceDomainResponse> MarketplaceDomains_getInstance(string id, MarketplaceDomains_getInstanceFieldsMarketplaceDomains[]? fieldsMarketplaceDomains = default, INestedLog? log = null)
         {
             string path = "/v1/marketplaceDomains/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48742,34 +48740,34 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("fields[marketplaceDomains]", string.Join(",", fieldsMarketplaceDomains));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<MarketplaceDomainResponse>(message);
+            return SendAsync<MarketplaceDomainResponse>(message, log);
         }
 
         // /v1/marketplaceDomains/{id}
         [Obsolete]
-        public Task MarketplaceDomains_deleteInstance(string id)
+        public Task MarketplaceDomains_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/marketplaceDomains/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/marketplaceSearchDetails
-        public Task<MarketplaceSearchDetailResponse> MarketplaceSearchDetails_createInstance(MarketplaceSearchDetailCreateRequest request)
+        public Task<MarketplaceSearchDetailResponse> MarketplaceSearchDetails_createInstance(MarketplaceSearchDetailCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/marketplaceSearchDetails";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<MarketplaceSearchDetailResponse>(message);
+            return SendAsync<MarketplaceSearchDetailResponse>(message, log);
         }
 
         // /v1/marketplaceSearchDetails/{id}
-        public Task<MarketplaceSearchDetailResponse> MarketplaceSearchDetails_updateInstance(string id, MarketplaceSearchDetailUpdateRequest request)
+        public Task<MarketplaceSearchDetailResponse> MarketplaceSearchDetails_updateInstance(string id, MarketplaceSearchDetailUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/marketplaceSearchDetails/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48777,22 +48775,22 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<MarketplaceSearchDetailResponse>(message);
+            return SendAsync<MarketplaceSearchDetailResponse>(message, log);
         }
 
         // /v1/marketplaceSearchDetails/{id}
-        public Task MarketplaceSearchDetails_deleteInstance(string id)
+        public Task MarketplaceSearchDetails_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/marketplaceSearchDetails/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/marketplaceWebhooks
-        public Task<MarketplaceWebhooksResponse> MarketplaceWebhooks_getCollection(string[]? fieldsMarketplaceWebhooks = default, int? limit = default)
+        public Task<MarketplaceWebhooksResponse> MarketplaceWebhooks_getCollection(string[]? fieldsMarketplaceWebhooks = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/marketplaceWebhooks";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -48802,22 +48800,22 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<MarketplaceWebhooksResponse>(message);
+            return SendAsync<MarketplaceWebhooksResponse>(message, log);
         }
 
         // /v1/marketplaceWebhooks
-        public Task<MarketplaceWebhookResponse> MarketplaceWebhooks_createInstance(MarketplaceWebhookCreateRequest request)
+        public Task<MarketplaceWebhookResponse> MarketplaceWebhooks_createInstance(MarketplaceWebhookCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/marketplaceWebhooks";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<MarketplaceWebhookResponse>(message);
+            return SendAsync<MarketplaceWebhookResponse>(message, log);
         }
 
         // /v1/marketplaceWebhooks/{id}
-        public Task<MarketplaceWebhookResponse> MarketplaceWebhooks_updateInstance(string id, MarketplaceWebhookUpdateRequest request)
+        public Task<MarketplaceWebhookResponse> MarketplaceWebhooks_updateInstance(string id, MarketplaceWebhookUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/marketplaceWebhooks/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -48825,18 +48823,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<MarketplaceWebhookResponse>(message);
+            return SendAsync<MarketplaceWebhookResponse>(message, log);
         }
 
         // /v1/marketplaceWebhooks/{id}
-        public Task MarketplaceWebhooks_deleteInstance(string id)
+        public Task MarketplaceWebhooks_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/marketplaceWebhooks/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -48959,7 +48957,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/preReleaseVersions
-        public Task<PreReleaseVersionsResponse> PreReleaseVersions_getCollection(string[]? filterBuildsExpired = default, PreReleaseVersions_getCollectionFilterBuildsProcessingState[]? filterBuildsProcessingState = default, string[]? filterBuildsVersion = default, PreReleaseVersions_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterVersion = default, string[]? filterApp = default, string[]? filterBuilds = default, PreReleaseVersions_getCollectionSort[]? sort = default, PreReleaseVersions_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, PreReleaseVersions_getCollectionFieldsBuilds[]? fieldsBuilds = default, PreReleaseVersions_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, PreReleaseVersions_getCollectionInclude[]? include = default, int? limitBuilds = default)
+        public Task<PreReleaseVersionsResponse> PreReleaseVersions_getCollection(string[]? filterBuildsExpired = default, PreReleaseVersions_getCollectionFilterBuildsProcessingState[]? filterBuildsProcessingState = default, string[]? filterBuildsVersion = default, PreReleaseVersions_getCollectionFilterPlatform[]? filterPlatform = default, string[]? filterVersion = default, string[]? filterApp = default, string[]? filterBuilds = default, PreReleaseVersions_getCollectionSort[]? sort = default, PreReleaseVersions_getCollectionFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, PreReleaseVersions_getCollectionFieldsBuilds[]? fieldsBuilds = default, PreReleaseVersions_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, PreReleaseVersions_getCollectionInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/preReleaseVersions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -48993,7 +48991,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PreReleaseVersionsResponse>(message);
+            return SendAsync<PreReleaseVersionsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49090,7 +49088,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/preReleaseVersions/{id}
-        public Task<PrereleaseVersionResponse> PreReleaseVersions_getInstance(string id, PreReleaseVersions_getInstanceFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, PreReleaseVersions_getInstanceFieldsBuilds[]? fieldsBuilds = default, PreReleaseVersions_getInstanceFieldsApps[]? fieldsApps = default, PreReleaseVersions_getInstanceInclude[]? include = default, int? limitBuilds = default)
+        public Task<PrereleaseVersionResponse> PreReleaseVersions_getInstance(string id, PreReleaseVersions_getInstanceFieldsPreReleaseVersions[]? fieldsPreReleaseVersions = default, PreReleaseVersions_getInstanceFieldsBuilds[]? fieldsBuilds = default, PreReleaseVersions_getInstanceFieldsApps[]? fieldsApps = default, PreReleaseVersions_getInstanceInclude[]? include = default, int? limitBuilds = default, INestedLog? log = null)
         {
             string path = "/v1/preReleaseVersions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49107,7 +49105,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[builds]", limitBuilds.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PrereleaseVersionResponse>(message);
+            return SendAsync<PrereleaseVersionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49159,7 +49157,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/preReleaseVersions/{id}/app
-        public Task<AppWithoutIncludesResponse> PreReleaseVersions_app_getToOneRelated(string id, PreReleaseVersions_app_getToOneRelatedFieldsApps[]? fieldsApps = default)
+        public Task<AppWithoutIncludesResponse> PreReleaseVersions_app_getToOneRelated(string id, PreReleaseVersions_app_getToOneRelatedFieldsApps[]? fieldsApps = default, INestedLog? log = null)
         {
             string path = "/v1/preReleaseVersions/{id}/app";
             path = path.Replace("{id}", id.ToString());
@@ -49168,7 +49166,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("fields[apps]", string.Join(",", fieldsApps));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppWithoutIncludesResponse>(message);
+            return SendAsync<AppWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49201,7 +49199,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/preReleaseVersions/{id}/builds
-        public Task<BuildsWithoutIncludesResponse> PreReleaseVersions_builds_getToManyRelated(string id, PreReleaseVersions_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default)
+        public Task<BuildsWithoutIncludesResponse> PreReleaseVersions_builds_getToManyRelated(string id, PreReleaseVersions_builds_getToManyRelatedFieldsBuilds[]? fieldsBuilds = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/preReleaseVersions/{id}/builds";
             path = path.Replace("{id}", id.ToString());
@@ -49212,7 +49210,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BuildsWithoutIncludesResponse>(message);
+            return SendAsync<BuildsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49319,7 +49317,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/profiles
-        public Task<ProfilesResponse> Profiles_getCollection(string[]? filterName = default, Profiles_getCollectionFilterProfileType[]? filterProfileType = default, Profiles_getCollectionFilterProfileState[]? filterProfileState = default, string[]? filterId = default, Profiles_getCollectionSort[]? sort = default, Profiles_getCollectionFieldsProfiles[]? fieldsProfiles = default, Profiles_getCollectionFieldsBundleIds[]? fieldsBundleIds = default, Profiles_getCollectionFieldsDevices[]? fieldsDevices = default, Profiles_getCollectionFieldsCertificates[]? fieldsCertificates = default, int? limit = default, Profiles_getCollectionInclude[]? include = default, int? limitCertificates = default, int? limitDevices = default)
+        public Task<ProfilesResponse> Profiles_getCollection(string[]? filterName = default, Profiles_getCollectionFilterProfileType[]? filterProfileType = default, Profiles_getCollectionFilterProfileState[]? filterProfileState = default, string[]? filterId = default, Profiles_getCollectionSort[]? sort = default, Profiles_getCollectionFieldsProfiles[]? fieldsProfiles = default, Profiles_getCollectionFieldsBundleIds[]? fieldsBundleIds = default, Profiles_getCollectionFieldsDevices[]? fieldsDevices = default, Profiles_getCollectionFieldsCertificates[]? fieldsCertificates = default, int? limit = default, Profiles_getCollectionInclude[]? include = default, int? limitCertificates = default, int? limitDevices = default, INestedLog? log = null)
         {
             string path = "/v1/profiles";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -49351,18 +49349,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[devices]", limitDevices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ProfilesResponse>(message);
+            return SendAsync<ProfilesResponse>(message, log);
         }
 
         // /v1/profiles
-        public Task<ProfileResponse> Profiles_createInstance(ProfileCreateRequest request)
+        public Task<ProfileResponse> Profiles_createInstance(ProfileCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/profiles";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<ProfileResponse>(message);
+            return SendAsync<ProfileResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49426,7 +49424,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/profiles/{id}
-        public Task<ProfileResponse> Profiles_getInstance(string id, Profiles_getInstanceFieldsProfiles[]? fieldsProfiles = default, Profiles_getInstanceFieldsBundleIds[]? fieldsBundleIds = default, Profiles_getInstanceFieldsDevices[]? fieldsDevices = default, Profiles_getInstanceFieldsCertificates[]? fieldsCertificates = default, Profiles_getInstanceInclude[]? include = default, int? limitCertificates = default, int? limitDevices = default)
+        public Task<ProfileResponse> Profiles_getInstance(string id, Profiles_getInstanceFieldsProfiles[]? fieldsProfiles = default, Profiles_getInstanceFieldsBundleIds[]? fieldsBundleIds = default, Profiles_getInstanceFieldsDevices[]? fieldsDevices = default, Profiles_getInstanceFieldsCertificates[]? fieldsCertificates = default, Profiles_getInstanceInclude[]? include = default, int? limitCertificates = default, int? limitDevices = default, INestedLog? log = null)
         {
             string path = "/v1/profiles/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49447,18 +49445,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[devices]", limitDevices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ProfileResponse>(message);
+            return SendAsync<ProfileResponse>(message, log);
         }
 
         // /v1/profiles/{id}
-        public Task Profiles_deleteInstance(string id)
+        public Task Profiles_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/profiles/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49474,7 +49472,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/profiles/{id}/bundleId
-        public Task<BundleIdWithoutIncludesResponse> Profiles_bundleId_getToOneRelated(string id, Profiles_bundleId_getToOneRelatedFieldsBundleIds[]? fieldsBundleIds = default)
+        public Task<BundleIdWithoutIncludesResponse> Profiles_bundleId_getToOneRelated(string id, Profiles_bundleId_getToOneRelatedFieldsBundleIds[]? fieldsBundleIds = default, INestedLog? log = null)
         {
             string path = "/v1/profiles/{id}/bundleId";
             path = path.Replace("{id}", id.ToString());
@@ -49483,7 +49481,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("fields[bundleIds]", string.Join(",", fieldsBundleIds));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<BundleIdWithoutIncludesResponse>(message);
+            return SendAsync<BundleIdWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49499,7 +49497,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/profiles/{id}/certificates
-        public Task<CertificatesWithoutIncludesResponse> Profiles_certificates_getToManyRelated(string id, Profiles_certificates_getToManyRelatedFieldsCertificates[]? fieldsCertificates = default, int? limit = default)
+        public Task<CertificatesWithoutIncludesResponse> Profiles_certificates_getToManyRelated(string id, Profiles_certificates_getToManyRelatedFieldsCertificates[]? fieldsCertificates = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/profiles/{id}/certificates";
             path = path.Replace("{id}", id.ToString());
@@ -49510,7 +49508,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<CertificatesWithoutIncludesResponse>(message);
+            return SendAsync<CertificatesWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49526,7 +49524,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/profiles/{id}/devices
-        public Task<DevicesWithoutIncludesResponse> Profiles_devices_getToManyRelated(string id, Profiles_devices_getToManyRelatedFieldsDevices[]? fieldsDevices = default, int? limit = default)
+        public Task<DevicesWithoutIncludesResponse> Profiles_devices_getToManyRelated(string id, Profiles_devices_getToManyRelatedFieldsDevices[]? fieldsDevices = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/profiles/{id}/devices";
             path = path.Replace("{id}", id.ToString());
@@ -49537,19 +49535,19 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<DevicesWithoutIncludesResponse>(message);
+            return SendAsync<DevicesWithoutIncludesResponse>(message, log);
         }
 
         // /v1/promotedPurchaseImages
         [Obsolete]
-        public Task<PromotedPurchaseImageResponse> PromotedPurchaseImages_createInstance(PromotedPurchaseImageCreateRequest request)
+        public Task<PromotedPurchaseImageResponse> PromotedPurchaseImages_createInstance(PromotedPurchaseImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchaseImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<PromotedPurchaseImageResponse>(message);
+            return SendAsync<PromotedPurchaseImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49568,7 +49566,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/promotedPurchaseImages/{id}
         [Obsolete]
-        public Task<PromotedPurchaseImageResponse> PromotedPurchaseImages_getInstance(string id, PromotedPurchaseImages_getInstanceFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, string[]? include = default)
+        public Task<PromotedPurchaseImageResponse> PromotedPurchaseImages_getInstance(string id, PromotedPurchaseImages_getInstanceFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49579,12 +49577,12 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PromotedPurchaseImageResponse>(message);
+            return SendAsync<PromotedPurchaseImageResponse>(message, log);
         }
 
         // /v1/promotedPurchaseImages/{id}
         [Obsolete]
-        public Task<PromotedPurchaseImageResponse> PromotedPurchaseImages_updateInstance(string id, PromotedPurchaseImageUpdateRequest request)
+        public Task<PromotedPurchaseImageResponse> PromotedPurchaseImages_updateInstance(string id, PromotedPurchaseImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49592,30 +49590,30 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<PromotedPurchaseImageResponse>(message);
+            return SendAsync<PromotedPurchaseImageResponse>(message, log);
         }
 
         // /v1/promotedPurchaseImages/{id}
         [Obsolete]
-        public Task PromotedPurchaseImages_deleteInstance(string id)
+        public Task PromotedPurchaseImages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchaseImages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/promotedPurchases
-        public Task<PromotedPurchaseResponse> PromotedPurchases_createInstance(PromotedPurchaseCreateRequest request)
+        public Task<PromotedPurchaseResponse> PromotedPurchases_createInstance(PromotedPurchaseCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchases";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<PromotedPurchaseResponse>(message);
+            return SendAsync<PromotedPurchaseResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49638,7 +49636,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/promotedPurchases/{id}
-        public Task<PromotedPurchaseResponse> PromotedPurchases_getInstance(string id, PromotedPurchases_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, PromotedPurchases_getInstanceInclude[]? include = default)
+        public Task<PromotedPurchaseResponse> PromotedPurchases_getInstance(string id, PromotedPurchases_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, PromotedPurchases_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49649,11 +49647,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PromotedPurchaseResponse>(message);
+            return SendAsync<PromotedPurchaseResponse>(message, log);
         }
 
         // /v1/promotedPurchases/{id}
-        public Task<PromotedPurchaseResponse> PromotedPurchases_updateInstance(string id, PromotedPurchaseUpdateRequest request)
+        public Task<PromotedPurchaseResponse> PromotedPurchases_updateInstance(string id, PromotedPurchaseUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49661,18 +49659,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<PromotedPurchaseResponse>(message);
+            return SendAsync<PromotedPurchaseResponse>(message, log);
         }
 
         // /v1/promotedPurchases/{id}
-        public Task PromotedPurchases_deleteInstance(string id)
+        public Task PromotedPurchases_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49702,7 +49700,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
         // /v1/promotedPurchases/{id}/promotionImages
         [Obsolete]
-        public Task<PromotedPurchaseImagesResponse> PromotedPurchases_promotionImages_getToManyRelated(string id, PromotedPurchases_promotionImages_getToManyRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, PromotedPurchases_promotionImages_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, int? limit = default, string[]? include = default)
+        public Task<PromotedPurchaseImagesResponse> PromotedPurchases_promotionImages_getToManyRelated(string id, PromotedPurchases_promotionImages_getToManyRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, PromotedPurchases_promotionImages_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/promotedPurchases/{id}/promotionImages";
             path = path.Replace("{id}", id.ToString());
@@ -49717,22 +49715,22 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PromotedPurchaseImagesResponse>(message);
+            return SendAsync<PromotedPurchaseImagesResponse>(message, log);
         }
 
         // /v1/reviewSubmissionItems
-        public Task<ReviewSubmissionItemResponse> ReviewSubmissionItems_createInstance(ReviewSubmissionItemCreateRequest request)
+        public Task<ReviewSubmissionItemResponse> ReviewSubmissionItems_createInstance(ReviewSubmissionItemCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissionItems";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<ReviewSubmissionItemResponse>(message);
+            return SendAsync<ReviewSubmissionItemResponse>(message, log);
         }
 
         // /v1/reviewSubmissionItems/{id}
-        public Task<ReviewSubmissionItemResponse> ReviewSubmissionItems_updateInstance(string id, ReviewSubmissionItemUpdateRequest request)
+        public Task<ReviewSubmissionItemResponse> ReviewSubmissionItems_updateInstance(string id, ReviewSubmissionItemUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissionItems/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49740,18 +49738,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<ReviewSubmissionItemResponse>(message);
+            return SendAsync<ReviewSubmissionItemResponse>(message, log);
         }
 
         // /v1/reviewSubmissionItems/{id}
-        public Task ReviewSubmissionItems_deleteInstance(string id)
+        public Task ReviewSubmissionItems_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissionItems/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49810,7 +49808,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/reviewSubmissions
-        public Task<ReviewSubmissionsResponse> ReviewSubmissions_getCollection(string[] filterApp, ReviewSubmissions_getCollectionFilterPlatform[]? filterPlatform = default, ReviewSubmissions_getCollectionFilterState[]? filterState = default, ReviewSubmissions_getCollectionFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, ReviewSubmissions_getCollectionFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, int? limit = default, ReviewSubmissions_getCollectionInclude[]? include = default, int? limitItems = default)
+        public Task<ReviewSubmissionsResponse> ReviewSubmissions_getCollection(string[] filterApp, ReviewSubmissions_getCollectionFilterPlatform[]? filterPlatform = default, ReviewSubmissions_getCollectionFilterState[]? filterState = default, ReviewSubmissions_getCollectionFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, ReviewSubmissions_getCollectionFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, int? limit = default, ReviewSubmissions_getCollectionInclude[]? include = default, int? limitItems = default, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -49832,18 +49830,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[items]", limitItems.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ReviewSubmissionsResponse>(message);
+            return SendAsync<ReviewSubmissionsResponse>(message, log);
         }
 
         // /v1/reviewSubmissions
-        public Task<ReviewSubmissionResponse> ReviewSubmissions_createInstance(ReviewSubmissionCreateRequest request)
+        public Task<ReviewSubmissionResponse> ReviewSubmissions_createInstance(ReviewSubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<ReviewSubmissionResponse>(message);
+            return SendAsync<ReviewSubmissionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -49881,7 +49879,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/reviewSubmissions/{id}
-        public Task<ReviewSubmissionResponse> ReviewSubmissions_getInstance(string id, ReviewSubmissions_getInstanceFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, ReviewSubmissions_getInstanceFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, ReviewSubmissions_getInstanceInclude[]? include = default, int? limitItems = default)
+        public Task<ReviewSubmissionResponse> ReviewSubmissions_getInstance(string id, ReviewSubmissions_getInstanceFieldsReviewSubmissions[]? fieldsReviewSubmissions = default, ReviewSubmissions_getInstanceFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, ReviewSubmissions_getInstanceInclude[]? include = default, int? limitItems = default, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49896,11 +49894,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[items]", limitItems.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ReviewSubmissionResponse>(message);
+            return SendAsync<ReviewSubmissionResponse>(message, log);
         }
 
         // /v1/reviewSubmissions/{id}
-        public Task<ReviewSubmissionResponse> ReviewSubmissions_updateInstance(string id, ReviewSubmissionUpdateRequest request)
+        public Task<ReviewSubmissionResponse> ReviewSubmissions_updateInstance(string id, ReviewSubmissionUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -49908,7 +49906,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<ReviewSubmissionResponse>(message);
+            return SendAsync<ReviewSubmissionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50005,7 +50003,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/reviewSubmissions/{id}/items
-        public Task<ReviewSubmissionItemsResponse> ReviewSubmissions_items_getToManyRelated(string id, ReviewSubmissions_items_getToManyRelatedFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, ReviewSubmissions_items_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, ReviewSubmissions_items_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, ReviewSubmissions_items_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, ReviewSubmissions_items_getToManyRelatedFieldsAppEvents[]? fieldsAppEvents = default, int? limit = default, ReviewSubmissions_items_getToManyRelatedInclude[]? include = default)
+        public Task<ReviewSubmissionItemsResponse> ReviewSubmissions_items_getToManyRelated(string id, ReviewSubmissions_items_getToManyRelatedFieldsReviewSubmissionItems[]? fieldsReviewSubmissionItems = default, ReviewSubmissions_items_getToManyRelatedFieldsAppStoreVersions[]? fieldsAppStoreVersions = default, ReviewSubmissions_items_getToManyRelatedFieldsAppCustomProductPageVersions[]? fieldsAppCustomProductPageVersions = default, ReviewSubmissions_items_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, ReviewSubmissions_items_getToManyRelatedFieldsAppEvents[]? fieldsAppEvents = default, int? limit = default, ReviewSubmissions_items_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/reviewSubmissions/{id}/items";
             path = path.Replace("{id}", id.ToString());
@@ -50026,18 +50024,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ReviewSubmissionItemsResponse>(message);
+            return SendAsync<ReviewSubmissionItemsResponse>(message, log);
         }
 
         // /v1/routingAppCoverages
-        public Task<RoutingAppCoverageResponse> RoutingAppCoverages_createInstance(RoutingAppCoverageCreateRequest request)
+        public Task<RoutingAppCoverageResponse> RoutingAppCoverages_createInstance(RoutingAppCoverageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/routingAppCoverages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<RoutingAppCoverageResponse>(message);
+            return SendAsync<RoutingAppCoverageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50052,7 +50050,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/routingAppCoverages/{id}
-        public Task<RoutingAppCoverageResponse> RoutingAppCoverages_getInstance(string id, RoutingAppCoverages_getInstanceFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, string[]? include = default)
+        public Task<RoutingAppCoverageResponse> RoutingAppCoverages_getInstance(string id, RoutingAppCoverages_getInstanceFieldsRoutingAppCoverages[]? fieldsRoutingAppCoverages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/routingAppCoverages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50063,11 +50061,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<RoutingAppCoverageResponse>(message);
+            return SendAsync<RoutingAppCoverageResponse>(message, log);
         }
 
         // /v1/routingAppCoverages/{id}
-        public Task<RoutingAppCoverageResponse> RoutingAppCoverages_updateInstance(string id, RoutingAppCoverageUpdateRequest request)
+        public Task<RoutingAppCoverageResponse> RoutingAppCoverages_updateInstance(string id, RoutingAppCoverageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/routingAppCoverages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50075,18 +50073,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<RoutingAppCoverageResponse>(message);
+            return SendAsync<RoutingAppCoverageResponse>(message, log);
         }
 
         // /v1/routingAppCoverages/{id}
-        public Task RoutingAppCoverages_deleteInstance(string id)
+        public Task RoutingAppCoverages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/routingAppCoverages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50124,7 +50122,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/salesReports
-        public Task SalesReports_getCollection(string[] filterVendorNumber, SalesReports_getCollectionFilterReportType[] filterReportType, SalesReports_getCollectionFilterReportSubType[] filterReportSubType, SalesReports_getCollectionFilterFrequency[] filterFrequency, string[]? filterReportDate = default, string[]? filterVersion = default)
+        public Task SalesReports_getCollection(string[] filterVendorNumber, SalesReports_getCollectionFilterReportType[] filterReportType, SalesReports_getCollectionFilterReportSubType[] filterReportSubType, SalesReports_getCollectionFilterFrequency[] filterFrequency, string[]? filterReportDate = default, string[]? filterVersion = default, INestedLog? log = null)
         {
             string path = "/v1/salesReports";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -50142,7 +50140,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("filter[version]", string.Join(",", filterVersion));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50156,7 +50154,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmGitReferences/{id}
-        public Task<ScmGitReferenceResponse> ScmGitReferences_getInstance(string id, ScmGitReferences_getInstanceFieldsScmGitReferences[]? fieldsScmGitReferences = default, string[]? include = default)
+        public Task<ScmGitReferenceResponse> ScmGitReferences_getInstance(string id, ScmGitReferences_getInstanceFieldsScmGitReferences[]? fieldsScmGitReferences = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/scmGitReferences/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50167,7 +50165,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmGitReferenceResponse>(message);
+            return SendAsync<ScmGitReferenceResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50179,7 +50177,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmProviders
-        public Task<ScmProvidersResponse> ScmProviders_getCollection(ScmProviders_getCollectionFieldsScmProviders[]? fieldsScmProviders = default, int? limit = default)
+        public Task<ScmProvidersResponse> ScmProviders_getCollection(ScmProviders_getCollectionFieldsScmProviders[]? fieldsScmProviders = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/scmProviders";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -50189,7 +50187,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmProvidersResponse>(message);
+            return SendAsync<ScmProvidersResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50201,7 +50199,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmProviders/{id}
-        public Task<ScmProviderResponse> ScmProviders_getInstance(string id, ScmProviders_getInstanceFieldsScmProviders[]? fieldsScmProviders = default)
+        public Task<ScmProviderResponse> ScmProviders_getInstance(string id, ScmProviders_getInstanceFieldsScmProviders[]? fieldsScmProviders = default, INestedLog? log = null)
         {
             string path = "/v1/scmProviders/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50210,7 +50208,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("fields[scmProviders]", string.Join(",", fieldsScmProviders));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmProviderResponse>(message);
+            return SendAsync<ScmProviderResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50253,7 +50251,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmProviders/{id}/repositories
-        public Task<ScmRepositoriesResponse> ScmProviders_repositories_getToManyRelated(string id, string[]? filterId = default, ScmProviders_repositories_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, ScmProviders_repositories_getToManyRelatedFieldsScmProviders[]? fieldsScmProviders = default, ScmProviders_repositories_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, int? limit = default, ScmProviders_repositories_getToManyRelatedInclude[]? include = default)
+        public Task<ScmRepositoriesResponse> ScmProviders_repositories_getToManyRelated(string id, string[]? filterId = default, ScmProviders_repositories_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, ScmProviders_repositories_getToManyRelatedFieldsScmProviders[]? fieldsScmProviders = default, ScmProviders_repositories_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, int? limit = default, ScmProviders_repositories_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/scmProviders/{id}/repositories";
             path = path.Replace("{id}", id.ToString());
@@ -50272,7 +50270,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmRepositoriesResponse>(message);
+            return SendAsync<ScmRepositoriesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50293,7 +50291,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmPullRequests/{id}
-        public Task<ScmPullRequestResponse> ScmPullRequests_getInstance(string id, ScmPullRequests_getInstanceFieldsScmPullRequests[]? fieldsScmPullRequests = default, string[]? include = default)
+        public Task<ScmPullRequestResponse> ScmPullRequests_getInstance(string id, ScmPullRequests_getInstanceFieldsScmPullRequests[]? fieldsScmPullRequests = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/scmPullRequests/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50304,7 +50302,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmPullRequestResponse>(message);
+            return SendAsync<ScmPullRequestResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50329,7 +50327,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmRepositories
-        public Task<ScmRepositoriesResponse> ScmRepositories_getCollection(string[]? filterId = default, ScmRepositories_getCollectionFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, ScmRepositories_getCollectionInclude[]? include = default)
+        public Task<ScmRepositoriesResponse> ScmRepositories_getCollection(string[]? filterId = default, ScmRepositories_getCollectionFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, ScmRepositories_getCollectionInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/scmRepositories";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -50343,7 +50341,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmRepositoriesResponse>(message);
+            return SendAsync<ScmRepositoriesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50368,7 +50366,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmRepositories/{id}
-        public Task<ScmRepositoryResponse> ScmRepositories_getInstance(string id, ScmRepositories_getInstanceFieldsScmRepositories[]? fieldsScmRepositories = default, ScmRepositories_getInstanceInclude[]? include = default)
+        public Task<ScmRepositoryResponse> ScmRepositories_getInstance(string id, ScmRepositories_getInstanceFieldsScmRepositories[]? fieldsScmRepositories = default, ScmRepositories_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/scmRepositories/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50379,7 +50377,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmRepositoryResponse>(message);
+            return SendAsync<ScmRepositoryResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50407,7 +50405,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmRepositories/{id}/gitReferences
-        public Task<ScmGitReferencesResponse> ScmRepositories_gitReferences_getToManyRelated(string id, ScmRepositories_gitReferences_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, ScmRepositories_gitReferences_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, string[]? include = default)
+        public Task<ScmGitReferencesResponse> ScmRepositories_gitReferences_getToManyRelated(string id, ScmRepositories_gitReferences_getToManyRelatedFieldsScmGitReferences[]? fieldsScmGitReferences = default, ScmRepositories_gitReferences_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/scmRepositories/{id}/gitReferences";
             path = path.Replace("{id}", id.ToString());
@@ -50422,7 +50420,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmGitReferencesResponse>(message);
+            return SendAsync<ScmGitReferencesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50457,7 +50455,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/scmRepositories/{id}/pullRequests
-        public Task<ScmPullRequestsResponse> ScmRepositories_pullRequests_getToManyRelated(string id, ScmRepositories_pullRequests_getToManyRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, ScmRepositories_pullRequests_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, string[]? include = default)
+        public Task<ScmPullRequestsResponse> ScmRepositories_pullRequests_getToManyRelated(string id, ScmRepositories_pullRequests_getToManyRelatedFieldsScmPullRequests[]? fieldsScmPullRequests = default, ScmRepositories_pullRequests_getToManyRelatedFieldsScmRepositories[]? fieldsScmRepositories = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/scmRepositories/{id}/pullRequests";
             path = path.Replace("{id}", id.ToString());
@@ -50472,18 +50470,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<ScmPullRequestsResponse>(message);
+            return SendAsync<ScmPullRequestsResponse>(message, log);
         }
 
         // /v1/subscriptionAppStoreReviewScreenshots
-        public Task<SubscriptionAppStoreReviewScreenshotResponse> SubscriptionAppStoreReviewScreenshots_createInstance(SubscriptionAppStoreReviewScreenshotCreateRequest request)
+        public Task<SubscriptionAppStoreReviewScreenshotResponse> SubscriptionAppStoreReviewScreenshots_createInstance(SubscriptionAppStoreReviewScreenshotCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50501,7 +50499,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionAppStoreReviewScreenshots/{id}
-        public Task<SubscriptionAppStoreReviewScreenshotResponse> SubscriptionAppStoreReviewScreenshots_getInstance(string id, SubscriptionAppStoreReviewScreenshots_getInstanceFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, string[]? include = default)
+        public Task<SubscriptionAppStoreReviewScreenshotResponse> SubscriptionAppStoreReviewScreenshots_getInstance(string id, SubscriptionAppStoreReviewScreenshots_getInstanceFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50512,11 +50510,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message, log);
         }
 
         // /v1/subscriptionAppStoreReviewScreenshots/{id}
-        public Task<SubscriptionAppStoreReviewScreenshotResponse> SubscriptionAppStoreReviewScreenshots_updateInstance(string id, SubscriptionAppStoreReviewScreenshotUpdateRequest request)
+        public Task<SubscriptionAppStoreReviewScreenshotResponse> SubscriptionAppStoreReviewScreenshots_updateInstance(string id, SubscriptionAppStoreReviewScreenshotUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50524,29 +50522,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message, log);
         }
 
         // /v1/subscriptionAppStoreReviewScreenshots/{id}
-        public Task SubscriptionAppStoreReviewScreenshots_deleteInstance(string id)
+        public Task SubscriptionAppStoreReviewScreenshots_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionAppStoreReviewScreenshots/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptionAvailabilities
-        public Task<SubscriptionAvailabilityResponse> SubscriptionAvailabilities_createInstance(SubscriptionAvailabilityCreateRequest request)
+        public Task<SubscriptionAvailabilityResponse> SubscriptionAvailabilities_createInstance(SubscriptionAvailabilityCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionAvailabilities";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionAvailabilityResponse>(message);
+            return SendAsync<SubscriptionAvailabilityResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50557,7 +50555,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionAvailabilities/{id}
-        public Task<SubscriptionAvailabilityResponse> SubscriptionAvailabilities_getInstance(string id, SubscriptionAvailabilities_getInstanceFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default)
+        public Task<SubscriptionAvailabilityResponse> SubscriptionAvailabilities_getInstance(string id, SubscriptionAvailabilities_getInstanceFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50572,11 +50570,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[availableTerritories]", limitAvailableTerritories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionAvailabilityResponse>(message);
+            return SendAsync<SubscriptionAvailabilityResponse>(message, log);
         }
 
         // /v1/subscriptionAvailabilities/{id}/availableTerritories
-        public Task<TerritoriesResponse> SubscriptionAvailabilities_availableTerritories_getToManyRelated(string id, string[]? fieldsTerritories = default, int? limit = default)
+        public Task<TerritoriesResponse> SubscriptionAvailabilities_availableTerritories_getToManyRelated(string id, string[]? fieldsTerritories = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionAvailabilities/{id}/availableTerritories";
             path = path.Replace("{id}", id.ToString());
@@ -50587,7 +50585,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<TerritoriesResponse>(message);
+            return SendAsync<TerritoriesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50600,7 +50598,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionGracePeriods/{id}
-        public Task<SubscriptionGracePeriodResponse> SubscriptionGracePeriods_getInstance(string id, SubscriptionGracePeriods_getInstanceFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default)
+        public Task<SubscriptionGracePeriodResponse> SubscriptionGracePeriods_getInstance(string id, SubscriptionGracePeriods_getInstanceFieldsSubscriptionGracePeriods[]? fieldsSubscriptionGracePeriods = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGracePeriods/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50609,11 +50607,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("fields[subscriptionGracePeriods]", string.Join(",", fieldsSubscriptionGracePeriods));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionGracePeriodResponse>(message);
+            return SendAsync<SubscriptionGracePeriodResponse>(message, log);
         }
 
         // /v1/subscriptionGracePeriods/{id}
-        public Task<SubscriptionGracePeriodResponse> SubscriptionGracePeriods_updateInstance(string id, SubscriptionGracePeriodUpdateRequest request)
+        public Task<SubscriptionGracePeriodResponse> SubscriptionGracePeriods_updateInstance(string id, SubscriptionGracePeriodUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGracePeriods/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50621,18 +50619,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionGracePeriodResponse>(message);
+            return SendAsync<SubscriptionGracePeriodResponse>(message, log);
         }
 
         // /v1/subscriptionGroupLocalizations
-        public Task<SubscriptionGroupLocalizationResponse> SubscriptionGroupLocalizations_createInstance(SubscriptionGroupLocalizationCreateRequest request)
+        public Task<SubscriptionGroupLocalizationResponse> SubscriptionGroupLocalizations_createInstance(SubscriptionGroupLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroupLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionGroupLocalizationResponse>(message);
+            return SendAsync<SubscriptionGroupLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50646,7 +50644,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionGroupLocalizations/{id}
-        public Task<SubscriptionGroupLocalizationResponse> SubscriptionGroupLocalizations_getInstance(string id, SubscriptionGroupLocalizations_getInstanceFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, string[]? include = default)
+        public Task<SubscriptionGroupLocalizationResponse> SubscriptionGroupLocalizations_getInstance(string id, SubscriptionGroupLocalizations_getInstanceFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroupLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50657,11 +50655,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionGroupLocalizationResponse>(message);
+            return SendAsync<SubscriptionGroupLocalizationResponse>(message, log);
         }
 
         // /v1/subscriptionGroupLocalizations/{id}
-        public Task<SubscriptionGroupLocalizationResponse> SubscriptionGroupLocalizations_updateInstance(string id, SubscriptionGroupLocalizationUpdateRequest request)
+        public Task<SubscriptionGroupLocalizationResponse> SubscriptionGroupLocalizations_updateInstance(string id, SubscriptionGroupLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroupLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50669,29 +50667,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionGroupLocalizationResponse>(message);
+            return SendAsync<SubscriptionGroupLocalizationResponse>(message, log);
         }
 
         // /v1/subscriptionGroupLocalizations/{id}
-        public Task SubscriptionGroupLocalizations_deleteInstance(string id)
+        public Task SubscriptionGroupLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroupLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptionGroups
-        public Task<SubscriptionGroupResponse> SubscriptionGroups_createInstance(SubscriptionGroupCreateRequest request)
+        public Task<SubscriptionGroupResponse> SubscriptionGroups_createInstance(SubscriptionGroupCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroups";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionGroupResponse>(message);
+            return SendAsync<SubscriptionGroupResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50744,7 +50742,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionGroups/{id}
-        public Task<SubscriptionGroupResponse> SubscriptionGroups_getInstance(string id, SubscriptionGroups_getInstanceFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, SubscriptionGroups_getInstanceFieldsSubscriptions[]? fieldsSubscriptions = default, SubscriptionGroups_getInstanceFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, SubscriptionGroups_getInstanceInclude[]? include = default, int? limitSubscriptionGroupLocalizations = default, int? limitSubscriptions = default)
+        public Task<SubscriptionGroupResponse> SubscriptionGroups_getInstance(string id, SubscriptionGroups_getInstanceFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, SubscriptionGroups_getInstanceFieldsSubscriptions[]? fieldsSubscriptions = default, SubscriptionGroups_getInstanceFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, SubscriptionGroups_getInstanceInclude[]? include = default, int? limitSubscriptionGroupLocalizations = default, int? limitSubscriptions = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroups/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50763,11 +50761,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[subscriptions]", limitSubscriptions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionGroupResponse>(message);
+            return SendAsync<SubscriptionGroupResponse>(message, log);
         }
 
         // /v1/subscriptionGroups/{id}
-        public Task<SubscriptionGroupResponse> SubscriptionGroups_updateInstance(string id, SubscriptionGroupUpdateRequest request)
+        public Task<SubscriptionGroupResponse> SubscriptionGroups_updateInstance(string id, SubscriptionGroupUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroups/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -50775,18 +50773,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionGroupResponse>(message);
+            return SendAsync<SubscriptionGroupResponse>(message, log);
         }
 
         // /v1/subscriptionGroups/{id}
-        public Task SubscriptionGroups_deleteInstance(string id)
+        public Task SubscriptionGroups_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroups/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -50808,7 +50806,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionGroups/{id}/subscriptionGroupLocalizations
-        public Task<SubscriptionGroupLocalizationsResponse> SubscriptionGroups_subscriptionGroupLocalizations_getToManyRelated(string id, SubscriptionGroups_subscriptionGroupLocalizations_getToManyRelatedFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, SubscriptionGroups_subscriptionGroupLocalizations_getToManyRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, int? limit = default, string[]? include = default)
+        public Task<SubscriptionGroupLocalizationsResponse> SubscriptionGroups_subscriptionGroupLocalizations_getToManyRelated(string id, SubscriptionGroups_subscriptionGroupLocalizations_getToManyRelatedFieldsSubscriptionGroupLocalizations[]? fieldsSubscriptionGroupLocalizations = default, SubscriptionGroups_subscriptionGroupLocalizations_getToManyRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroups/{id}/subscriptionGroupLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -50823,7 +50821,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionGroupLocalizationsResponse>(message);
+            return SendAsync<SubscriptionGroupLocalizationsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51022,7 +51020,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionGroups/{id}/subscriptions
-        public Task<SubscriptionsResponse> SubscriptionGroups_subscriptions_getToManyRelated(string id, string[]? filterProductId = default, string[]? filterName = default, SubscriptionGroups_subscriptions_getToManyRelatedFilterState[]? filterState = default, SubscriptionGroups_subscriptions_getToManyRelatedSort[]? sort = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionIntroductoryOffers[]? fieldsSubscriptionIntroductoryOffers = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionPrices[]? fieldsSubscriptionPrices = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsWinBackOffers[]? fieldsWinBackOffers = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, int? limit = default, SubscriptionGroups_subscriptions_getToManyRelatedInclude[]? include = default, int? limitSubscriptionLocalizations = default, int? limitIntroductoryOffers = default, int? limitPromotionalOffers = default, int? limitOfferCodes = default, int? limitPrices = default, int? limitWinBackOffers = default, int? limitImages = default)
+        public Task<SubscriptionsResponse> SubscriptionGroups_subscriptions_getToManyRelated(string id, string[]? filterProductId = default, string[]? filterName = default, SubscriptionGroups_subscriptions_getToManyRelatedFilterState[]? filterState = default, SubscriptionGroups_subscriptions_getToManyRelatedSort[]? sort = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionGroups[]? fieldsSubscriptionGroups = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionIntroductoryOffers[]? fieldsSubscriptionIntroductoryOffers = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionPrices[]? fieldsSubscriptionPrices = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsWinBackOffers[]? fieldsWinBackOffers = default, SubscriptionGroups_subscriptions_getToManyRelatedFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, int? limit = default, SubscriptionGroups_subscriptions_getToManyRelatedInclude[]? include = default, int? limitSubscriptionLocalizations = default, int? limitIntroductoryOffers = default, int? limitPromotionalOffers = default, int? limitOfferCodes = default, int? limitPrices = default, int? limitWinBackOffers = default, int? limitImages = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroups/{id}/subscriptions";
             path = path.Replace("{id}", id.ToString());
@@ -51079,29 +51077,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[images]", limitImages.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionsResponse>(message);
+            return SendAsync<SubscriptionsResponse>(message, log);
         }
 
         // /v1/subscriptionGroupSubmissions
-        public Task<SubscriptionGroupSubmissionResponse> SubscriptionGroupSubmissions_createInstance(SubscriptionGroupSubmissionCreateRequest request)
+        public Task<SubscriptionGroupSubmissionResponse> SubscriptionGroupSubmissions_createInstance(SubscriptionGroupSubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionGroupSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionGroupSubmissionResponse>(message);
+            return SendAsync<SubscriptionGroupSubmissionResponse>(message, log);
         }
 
         // /v1/subscriptionImages
-        public Task<SubscriptionImageResponse> SubscriptionImages_createInstance(SubscriptionImageCreateRequest request)
+        public Task<SubscriptionImageResponse> SubscriptionImages_createInstance(SubscriptionImageCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionImages";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionImageResponse>(message);
+            return SendAsync<SubscriptionImageResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51118,7 +51116,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionImages/{id}
-        public Task<SubscriptionImageResponse> SubscriptionImages_getInstance(string id, SubscriptionImages_getInstanceFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, string[]? include = default)
+        public Task<SubscriptionImageResponse> SubscriptionImages_getInstance(string id, SubscriptionImages_getInstanceFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51129,11 +51127,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionImageResponse>(message);
+            return SendAsync<SubscriptionImageResponse>(message, log);
         }
 
         // /v1/subscriptionImages/{id}
-        public Task<SubscriptionImageResponse> SubscriptionImages_updateInstance(string id, SubscriptionImageUpdateRequest request)
+        public Task<SubscriptionImageResponse> SubscriptionImages_updateInstance(string id, SubscriptionImageUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionImages/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51141,33 +51139,33 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionImageResponse>(message);
+            return SendAsync<SubscriptionImageResponse>(message, log);
         }
 
         // /v1/subscriptionImages/{id}
-        public Task SubscriptionImages_deleteInstance(string id)
+        public Task SubscriptionImages_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionImages/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptionIntroductoryOffers
-        public Task<SubscriptionIntroductoryOfferResponse> SubscriptionIntroductoryOffers_createInstance(SubscriptionIntroductoryOfferCreateRequest request)
+        public Task<SubscriptionIntroductoryOfferResponse> SubscriptionIntroductoryOffers_createInstance(SubscriptionIntroductoryOfferCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionIntroductoryOffers";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionIntroductoryOfferResponse>(message);
+            return SendAsync<SubscriptionIntroductoryOfferResponse>(message, log);
         }
 
         // /v1/subscriptionIntroductoryOffers/{id}
-        public Task<SubscriptionIntroductoryOfferResponse> SubscriptionIntroductoryOffers_updateInstance(string id, SubscriptionIntroductoryOfferUpdateRequest request)
+        public Task<SubscriptionIntroductoryOfferResponse> SubscriptionIntroductoryOffers_updateInstance(string id, SubscriptionIntroductoryOfferUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionIntroductoryOffers/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51175,29 +51173,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionIntroductoryOfferResponse>(message);
+            return SendAsync<SubscriptionIntroductoryOfferResponse>(message, log);
         }
 
         // /v1/subscriptionIntroductoryOffers/{id}
-        public Task SubscriptionIntroductoryOffers_deleteInstance(string id)
+        public Task SubscriptionIntroductoryOffers_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionIntroductoryOffers/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptionLocalizations
-        public Task<SubscriptionLocalizationResponse> SubscriptionLocalizations_createInstance(SubscriptionLocalizationCreateRequest request)
+        public Task<SubscriptionLocalizationResponse> SubscriptionLocalizations_createInstance(SubscriptionLocalizationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionLocalizations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionLocalizationResponse>(message);
+            return SendAsync<SubscriptionLocalizationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51211,7 +51209,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionLocalizations/{id}
-        public Task<SubscriptionLocalizationResponse> SubscriptionLocalizations_getInstance(string id, SubscriptionLocalizations_getInstanceFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, string[]? include = default)
+        public Task<SubscriptionLocalizationResponse> SubscriptionLocalizations_getInstance(string id, SubscriptionLocalizations_getInstanceFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51222,11 +51220,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionLocalizationResponse>(message);
+            return SendAsync<SubscriptionLocalizationResponse>(message, log);
         }
 
         // /v1/subscriptionLocalizations/{id}
-        public Task<SubscriptionLocalizationResponse> SubscriptionLocalizations_updateInstance(string id, SubscriptionLocalizationUpdateRequest request)
+        public Task<SubscriptionLocalizationResponse> SubscriptionLocalizations_updateInstance(string id, SubscriptionLocalizationUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51234,29 +51232,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionLocalizationResponse>(message);
+            return SendAsync<SubscriptionLocalizationResponse>(message, log);
         }
 
         // /v1/subscriptionLocalizations/{id}
-        public Task SubscriptionLocalizations_deleteInstance(string id)
+        public Task SubscriptionLocalizations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionLocalizations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptionOfferCodeCustomCodes
-        public Task<SubscriptionOfferCodeCustomCodeResponse> SubscriptionOfferCodeCustomCodes_createInstance(SubscriptionOfferCodeCustomCodeCreateRequest request)
+        public Task<SubscriptionOfferCodeCustomCodeResponse> SubscriptionOfferCodeCustomCodes_createInstance(SubscriptionOfferCodeCustomCodeCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodeCustomCodes";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionOfferCodeCustomCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeCustomCodeResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51271,7 +51269,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionOfferCodeCustomCodes/{id}
-        public Task<SubscriptionOfferCodeCustomCodeResponse> SubscriptionOfferCodeCustomCodes_getInstance(string id, SubscriptionOfferCodeCustomCodes_getInstanceFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, string[]? include = default)
+        public Task<SubscriptionOfferCodeCustomCodeResponse> SubscriptionOfferCodeCustomCodes_getInstance(string id, SubscriptionOfferCodeCustomCodes_getInstanceFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodeCustomCodes/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51282,11 +51280,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionOfferCodeCustomCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeCustomCodeResponse>(message, log);
         }
 
         // /v1/subscriptionOfferCodeCustomCodes/{id}
-        public Task<SubscriptionOfferCodeCustomCodeResponse> SubscriptionOfferCodeCustomCodes_updateInstance(string id, SubscriptionOfferCodeCustomCodeUpdateRequest request)
+        public Task<SubscriptionOfferCodeCustomCodeResponse> SubscriptionOfferCodeCustomCodes_updateInstance(string id, SubscriptionOfferCodeCustomCodeUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodeCustomCodes/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51294,18 +51292,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionOfferCodeCustomCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeCustomCodeResponse>(message, log);
         }
 
         // /v1/subscriptionOfferCodeOneTimeUseCodes
-        public Task<SubscriptionOfferCodeOneTimeUseCodeResponse> SubscriptionOfferCodeOneTimeUseCodes_createInstance(SubscriptionOfferCodeOneTimeUseCodeCreateRequest request)
+        public Task<SubscriptionOfferCodeOneTimeUseCodeResponse> SubscriptionOfferCodeOneTimeUseCodes_createInstance(SubscriptionOfferCodeOneTimeUseCodeCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionOfferCodeOneTimeUseCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeOneTimeUseCodeResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51320,7 +51318,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionOfferCodeOneTimeUseCodes/{id}
-        public Task<SubscriptionOfferCodeOneTimeUseCodeResponse> SubscriptionOfferCodeOneTimeUseCodes_getInstance(string id, SubscriptionOfferCodeOneTimeUseCodes_getInstanceFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, string[]? include = default)
+        public Task<SubscriptionOfferCodeOneTimeUseCodeResponse> SubscriptionOfferCodeOneTimeUseCodes_getInstance(string id, SubscriptionOfferCodeOneTimeUseCodes_getInstanceFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51331,11 +51329,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionOfferCodeOneTimeUseCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeOneTimeUseCodeResponse>(message, log);
         }
 
         // /v1/subscriptionOfferCodeOneTimeUseCodes/{id}
-        public Task<SubscriptionOfferCodeOneTimeUseCodeResponse> SubscriptionOfferCodeOneTimeUseCodes_updateInstance(string id, SubscriptionOfferCodeOneTimeUseCodeUpdateRequest request)
+        public Task<SubscriptionOfferCodeOneTimeUseCodeResponse> SubscriptionOfferCodeOneTimeUseCodes_updateInstance(string id, SubscriptionOfferCodeOneTimeUseCodeUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51343,29 +51341,29 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionOfferCodeOneTimeUseCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeOneTimeUseCodeResponse>(message, log);
         }
 
         // /v1/subscriptionOfferCodeOneTimeUseCodes/{id}/values
-        public Task SubscriptionOfferCodeOneTimeUseCodes_values_getToOneRelated(string id)
+        public Task SubscriptionOfferCodeOneTimeUseCodes_values_getToOneRelated(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodeOneTimeUseCodes/{id}/values";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptionOfferCodes
-        public Task<SubscriptionOfferCodeResponse> SubscriptionOfferCodes_createInstance(SubscriptionOfferCodeCreateRequest request)
+        public Task<SubscriptionOfferCodeResponse> SubscriptionOfferCodes_createInstance(SubscriptionOfferCodeCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodes";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionOfferCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51424,7 +51422,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionOfferCodes/{id}
-        public Task<SubscriptionOfferCodeResponse> SubscriptionOfferCodes_getInstance(string id, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodePrices[]? fieldsSubscriptionOfferCodePrices = default, SubscriptionOfferCodes_getInstanceInclude[]? include = default, int? limitCustomCodes = default, int? limitOneTimeUseCodes = default, int? limitPrices = default)
+        public Task<SubscriptionOfferCodeResponse> SubscriptionOfferCodes_getInstance(string id, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, SubscriptionOfferCodes_getInstanceFieldsSubscriptionOfferCodePrices[]? fieldsSubscriptionOfferCodePrices = default, SubscriptionOfferCodes_getInstanceInclude[]? include = default, int? limitCustomCodes = default, int? limitOneTimeUseCodes = default, int? limitPrices = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodes/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51447,11 +51445,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[prices]", limitPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionOfferCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeResponse>(message, log);
         }
 
         // /v1/subscriptionOfferCodes/{id}
-        public Task<SubscriptionOfferCodeResponse> SubscriptionOfferCodes_updateInstance(string id, SubscriptionOfferCodeUpdateRequest request)
+        public Task<SubscriptionOfferCodeResponse> SubscriptionOfferCodes_updateInstance(string id, SubscriptionOfferCodeUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodes/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51459,7 +51457,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionOfferCodeResponse>(message);
+            return SendAsync<SubscriptionOfferCodeResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51491,7 +51489,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionOfferCodes/{id}/customCodes
-        public Task<SubscriptionOfferCodeCustomCodesResponse> SubscriptionOfferCodes_customCodes_getToManyRelated(string id, SubscriptionOfferCodes_customCodes_getToManyRelatedFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, SubscriptionOfferCodes_customCodes_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, int? limit = default, string[]? include = default)
+        public Task<SubscriptionOfferCodeCustomCodesResponse> SubscriptionOfferCodes_customCodes_getToManyRelated(string id, SubscriptionOfferCodes_customCodes_getToManyRelatedFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, SubscriptionOfferCodes_customCodes_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodes/{id}/customCodes";
             path = path.Replace("{id}", id.ToString());
@@ -51506,7 +51504,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionOfferCodeCustomCodesResponse>(message);
+            return SendAsync<SubscriptionOfferCodeCustomCodesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51538,7 +51536,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionOfferCodes/{id}/oneTimeUseCodes
-        public Task<SubscriptionOfferCodeOneTimeUseCodesResponse> SubscriptionOfferCodes_oneTimeUseCodes_getToManyRelated(string id, SubscriptionOfferCodes_oneTimeUseCodes_getToManyRelatedFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, SubscriptionOfferCodes_oneTimeUseCodes_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, int? limit = default, string[]? include = default)
+        public Task<SubscriptionOfferCodeOneTimeUseCodesResponse> SubscriptionOfferCodes_oneTimeUseCodes_getToManyRelated(string id, SubscriptionOfferCodes_oneTimeUseCodes_getToManyRelatedFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, SubscriptionOfferCodes_oneTimeUseCodes_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodes/{id}/oneTimeUseCodes";
             path = path.Replace("{id}", id.ToString());
@@ -51553,7 +51551,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionOfferCodeOneTimeUseCodesResponse>(message);
+            return SendAsync<SubscriptionOfferCodeOneTimeUseCodesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51581,7 +51579,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionOfferCodes/{id}/prices
-        public Task<SubscriptionOfferCodePricesResponse> SubscriptionOfferCodes_prices_getToManyRelated(string id, string[]? filterTerritory = default, SubscriptionOfferCodes_prices_getToManyRelatedFieldsSubscriptionOfferCodePrices[]? fieldsSubscriptionOfferCodePrices = default, string[]? fieldsTerritories = default, SubscriptionOfferCodes_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, SubscriptionOfferCodes_prices_getToManyRelatedInclude[]? include = default)
+        public Task<SubscriptionOfferCodePricesResponse> SubscriptionOfferCodes_prices_getToManyRelated(string id, string[]? filterTerritory = default, SubscriptionOfferCodes_prices_getToManyRelatedFieldsSubscriptionOfferCodePrices[]? fieldsSubscriptionOfferCodePrices = default, string[]? fieldsTerritories = default, SubscriptionOfferCodes_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, SubscriptionOfferCodes_prices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionOfferCodes/{id}/prices";
             path = path.Replace("{id}", id.ToString());
@@ -51600,7 +51598,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionOfferCodePricesResponse>(message);
+            return SendAsync<SubscriptionOfferCodePricesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51614,7 +51612,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionPricePoints/{id}
-        public Task<SubscriptionPricePointResponse> SubscriptionPricePoints_getInstance(string id, SubscriptionPricePoints_getInstanceFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, string[]? include = default)
+        public Task<SubscriptionPricePointResponse> SubscriptionPricePoints_getInstance(string id, SubscriptionPricePoints_getInstanceFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPricePoints/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51625,7 +51623,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPricePointResponse>(message);
+            return SendAsync<SubscriptionPricePointResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51639,7 +51637,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionPricePoints/{id}/equalizations
-        public Task<SubscriptionPricePointsResponse> SubscriptionPricePoints_equalizations_getToManyRelated(string id, string[]? filterTerritory = default, string[]? filterSubscription = default, SubscriptionPricePoints_equalizations_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default)
+        public Task<SubscriptionPricePointsResponse> SubscriptionPricePoints_equalizations_getToManyRelated(string id, string[]? filterTerritory = default, string[]? filterSubscription = default, SubscriptionPricePoints_equalizations_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPricePoints/{id}/equalizations";
             path = path.Replace("{id}", id.ToString());
@@ -51658,40 +51656,40 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPricePointsResponse>(message);
+            return SendAsync<SubscriptionPricePointsResponse>(message, log);
         }
 
         // /v1/subscriptionPrices
-        public Task<SubscriptionPriceResponse> SubscriptionPrices_createInstance(SubscriptionPriceCreateRequest request)
+        public Task<SubscriptionPriceResponse> SubscriptionPrices_createInstance(SubscriptionPriceCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPrices";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionPriceResponse>(message);
+            return SendAsync<SubscriptionPriceResponse>(message, log);
         }
 
         // /v1/subscriptionPrices/{id}
-        public Task SubscriptionPrices_deleteInstance(string id)
+        public Task SubscriptionPrices_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPrices/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptionPromotionalOffers
-        public Task<SubscriptionPromotionalOfferResponse> SubscriptionPromotionalOffers_createInstance(SubscriptionPromotionalOfferCreateRequest request)
+        public Task<SubscriptionPromotionalOfferResponse> SubscriptionPromotionalOffers_createInstance(SubscriptionPromotionalOfferCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPromotionalOffers";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionPromotionalOfferResponse>(message);
+            return SendAsync<SubscriptionPromotionalOfferResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51721,7 +51719,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionPromotionalOffers/{id}
-        public Task<SubscriptionPromotionalOfferResponse> SubscriptionPromotionalOffers_getInstance(string id, SubscriptionPromotionalOffers_getInstanceFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, SubscriptionPromotionalOffers_getInstanceFieldsSubscriptionPromotionalOfferPrices[]? fieldsSubscriptionPromotionalOfferPrices = default, SubscriptionPromotionalOffers_getInstanceInclude[]? include = default, int? limitPrices = default)
+        public Task<SubscriptionPromotionalOfferResponse> SubscriptionPromotionalOffers_getInstance(string id, SubscriptionPromotionalOffers_getInstanceFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, SubscriptionPromotionalOffers_getInstanceFieldsSubscriptionPromotionalOfferPrices[]? fieldsSubscriptionPromotionalOfferPrices = default, SubscriptionPromotionalOffers_getInstanceInclude[]? include = default, int? limitPrices = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51736,11 +51734,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[prices]", limitPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPromotionalOfferResponse>(message);
+            return SendAsync<SubscriptionPromotionalOfferResponse>(message, log);
         }
 
         // /v1/subscriptionPromotionalOffers/{id}
-        public Task<SubscriptionPromotionalOfferResponse> SubscriptionPromotionalOffers_updateInstance(string id, SubscriptionPromotionalOfferUpdateRequest request)
+        public Task<SubscriptionPromotionalOfferResponse> SubscriptionPromotionalOffers_updateInstance(string id, SubscriptionPromotionalOfferUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -51748,18 +51746,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionPromotionalOfferResponse>(message);
+            return SendAsync<SubscriptionPromotionalOfferResponse>(message, log);
         }
 
         // /v1/subscriptionPromotionalOffers/{id}
-        public Task SubscriptionPromotionalOffers_deleteInstance(string id)
+        public Task SubscriptionPromotionalOffers_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51787,7 +51785,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptionPromotionalOffers/{id}/prices
-        public Task<SubscriptionPromotionalOfferPricesResponse> SubscriptionPromotionalOffers_prices_getToManyRelated(string id, string[]? filterTerritory = default, SubscriptionPromotionalOffers_prices_getToManyRelatedFieldsSubscriptionPromotionalOfferPrices[]? fieldsSubscriptionPromotionalOfferPrices = default, string[]? fieldsTerritories = default, SubscriptionPromotionalOffers_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, SubscriptionPromotionalOffers_prices_getToManyRelatedInclude[]? include = default)
+        public Task<SubscriptionPromotionalOfferPricesResponse> SubscriptionPromotionalOffers_prices_getToManyRelated(string id, string[]? filterTerritory = default, SubscriptionPromotionalOffers_prices_getToManyRelatedFieldsSubscriptionPromotionalOfferPrices[]? fieldsSubscriptionPromotionalOfferPrices = default, string[]? fieldsTerritories = default, SubscriptionPromotionalOffers_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, SubscriptionPromotionalOffers_prices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptionPromotionalOffers/{id}/prices";
             path = path.Replace("{id}", id.ToString());
@@ -51806,18 +51804,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPromotionalOfferPricesResponse>(message);
+            return SendAsync<SubscriptionPromotionalOfferPricesResponse>(message, log);
         }
 
         // /v1/subscriptions
-        public Task<SubscriptionResponse> Subscriptions_createInstance(SubscriptionCreateRequest request)
+        public Task<SubscriptionResponse> Subscriptions_createInstance(SubscriptionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionResponse>(message);
+            return SendAsync<SubscriptionResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -51985,7 +51983,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}
-        public Task<SubscriptionResponse> Subscriptions_getInstance(string id, Subscriptions_getInstanceFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_getInstanceFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, Subscriptions_getInstanceFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, Subscriptions_getInstanceFieldsSubscriptionIntroductoryOffers[]? fieldsSubscriptionIntroductoryOffers = default, Subscriptions_getInstanceFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, Subscriptions_getInstanceFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, Subscriptions_getInstanceFieldsSubscriptionPrices[]? fieldsSubscriptionPrices = default, Subscriptions_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Subscriptions_getInstanceFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, Subscriptions_getInstanceFieldsWinBackOffers[]? fieldsWinBackOffers = default, Subscriptions_getInstanceFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, Subscriptions_getInstanceInclude[]? include = default, int? limitImages = default, int? limitIntroductoryOffers = default, int? limitOfferCodes = default, int? limitPrices = default, int? limitPromotionalOffers = default, int? limitSubscriptionLocalizations = default, int? limitWinBackOffers = default)
+        public Task<SubscriptionResponse> Subscriptions_getInstance(string id, Subscriptions_getInstanceFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_getInstanceFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, Subscriptions_getInstanceFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, Subscriptions_getInstanceFieldsSubscriptionIntroductoryOffers[]? fieldsSubscriptionIntroductoryOffers = default, Subscriptions_getInstanceFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, Subscriptions_getInstanceFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, Subscriptions_getInstanceFieldsSubscriptionPrices[]? fieldsSubscriptionPrices = default, Subscriptions_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Subscriptions_getInstanceFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, Subscriptions_getInstanceFieldsWinBackOffers[]? fieldsWinBackOffers = default, Subscriptions_getInstanceFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, Subscriptions_getInstanceInclude[]? include = default, int? limitImages = default, int? limitIntroductoryOffers = default, int? limitOfferCodes = default, int? limitPrices = default, int? limitPromotionalOffers = default, int? limitSubscriptionLocalizations = default, int? limitWinBackOffers = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -52030,11 +52028,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[winBackOffers]", limitWinBackOffers.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionResponse>(message);
+            return SendAsync<SubscriptionResponse>(message, log);
         }
 
         // /v1/subscriptions/{id}
-        public Task<SubscriptionResponse> Subscriptions_updateInstance(string id, SubscriptionUpdateRequest request)
+        public Task<SubscriptionResponse> Subscriptions_updateInstance(string id, SubscriptionUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -52042,18 +52040,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionResponse>(message);
+            return SendAsync<SubscriptionResponse>(message, log);
         }
 
         // /v1/subscriptions/{id}
-        public Task Subscriptions_deleteInstance(string id)
+        public Task Subscriptions_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52095,7 +52093,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/appStoreReviewScreenshot
-        public Task<SubscriptionAppStoreReviewScreenshotResponse> Subscriptions_appStoreReviewScreenshot_getToOneRelated(string id, Subscriptions_appStoreReviewScreenshot_getToOneRelatedFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, Subscriptions_appStoreReviewScreenshot_getToOneRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, string[]? include = default)
+        public Task<SubscriptionAppStoreReviewScreenshotResponse> Subscriptions_appStoreReviewScreenshot_getToOneRelated(string id, Subscriptions_appStoreReviewScreenshot_getToOneRelatedFieldsSubscriptionAppStoreReviewScreenshots[]? fieldsSubscriptionAppStoreReviewScreenshots = default, Subscriptions_appStoreReviewScreenshot_getToOneRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/appStoreReviewScreenshot";
             path = path.Replace("{id}", id.ToString());
@@ -52108,7 +52106,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<SubscriptionAppStoreReviewScreenshotResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52149,7 +52147,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/images
-        public Task<SubscriptionImagesResponse> Subscriptions_images_getToManyRelated(string id, Subscriptions_images_getToManyRelatedFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, Subscriptions_images_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, int? limit = default, string[]? include = default)
+        public Task<SubscriptionImagesResponse> Subscriptions_images_getToManyRelated(string id, Subscriptions_images_getToManyRelatedFieldsSubscriptionImages[]? fieldsSubscriptionImages = default, Subscriptions_images_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/images";
             path = path.Replace("{id}", id.ToString());
@@ -52164,7 +52162,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionImagesResponse>(message);
+            return SendAsync<SubscriptionImagesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52223,7 +52221,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/introductoryOffers
-        public Task<SubscriptionIntroductoryOffersResponse> Subscriptions_introductoryOffers_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_introductoryOffers_getToManyRelatedFieldsSubscriptionIntroductoryOffers[]? fieldsSubscriptionIntroductoryOffers = default, Subscriptions_introductoryOffers_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, string[]? fieldsTerritories = default, Subscriptions_introductoryOffers_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, Subscriptions_introductoryOffers_getToManyRelatedInclude[]? include = default)
+        public Task<SubscriptionIntroductoryOffersResponse> Subscriptions_introductoryOffers_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_introductoryOffers_getToManyRelatedFieldsSubscriptionIntroductoryOffers[]? fieldsSubscriptionIntroductoryOffers = default, Subscriptions_introductoryOffers_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, string[]? fieldsTerritories = default, Subscriptions_introductoryOffers_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, Subscriptions_introductoryOffers_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/introductoryOffers";
             path = path.Replace("{id}", id.ToString());
@@ -52244,7 +52242,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionIntroductoryOffersResponse>(message);
+            return SendAsync<SubscriptionIntroductoryOffersResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52327,7 +52325,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/offerCodes
-        public Task<SubscriptionOfferCodesResponse> Subscriptions_offerCodes_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodePrices[]? fieldsSubscriptionOfferCodePrices = default, int? limit = default, Subscriptions_offerCodes_getToManyRelatedInclude[]? include = default, int? limitOneTimeUseCodes = default, int? limitCustomCodes = default, int? limitPrices = default)
+        public Task<SubscriptionOfferCodesResponse> Subscriptions_offerCodes_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodes[]? fieldsSubscriptionOfferCodes = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodeOneTimeUseCodes[]? fieldsSubscriptionOfferCodeOneTimeUseCodes = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodeCustomCodes[]? fieldsSubscriptionOfferCodeCustomCodes = default, Subscriptions_offerCodes_getToManyRelatedFieldsSubscriptionOfferCodePrices[]? fieldsSubscriptionOfferCodePrices = default, int? limit = default, Subscriptions_offerCodes_getToManyRelatedInclude[]? include = default, int? limitOneTimeUseCodes = default, int? limitCustomCodes = default, int? limitPrices = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/offerCodes";
             path = path.Replace("{id}", id.ToString());
@@ -52356,7 +52354,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[prices]", limitPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionOfferCodesResponse>(message);
+            return SendAsync<SubscriptionOfferCodesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52370,7 +52368,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/pricePoints
-        public Task<SubscriptionPricePointsResponse> Subscriptions_pricePoints_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_pricePoints_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default)
+        public Task<SubscriptionPricePointsResponse> Subscriptions_pricePoints_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_pricePoints_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/pricePoints";
             path = path.Replace("{id}", id.ToString());
@@ -52387,7 +52385,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPricePointsResponse>(message);
+            return SendAsync<SubscriptionPricePointsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52417,7 +52415,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/prices
-        public Task<SubscriptionPricesResponse> Subscriptions_prices_getToManyRelated(string id, string[]? filterSubscriptionPricePoint = default, string[]? filterTerritory = default, Subscriptions_prices_getToManyRelatedFieldsSubscriptionPrices[]? fieldsSubscriptionPrices = default, string[]? fieldsTerritories = default, Subscriptions_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, Subscriptions_prices_getToManyRelatedInclude[]? include = default)
+        public Task<SubscriptionPricesResponse> Subscriptions_prices_getToManyRelated(string id, string[]? filterSubscriptionPricePoint = default, string[]? filterTerritory = default, Subscriptions_prices_getToManyRelatedFieldsSubscriptionPrices[]? fieldsSubscriptionPrices = default, string[]? fieldsTerritories = default, Subscriptions_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, Subscriptions_prices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/prices";
             path = path.Replace("{id}", id.ToString());
@@ -52438,7 +52436,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPricesResponse>(message);
+            return SendAsync<SubscriptionPricesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52519,7 +52517,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/promotedPurchase
-        public Task<PromotedPurchaseResponse> Subscriptions_promotedPurchase_getToOneRelated(string id, Subscriptions_promotedPurchase_getToOneRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Subscriptions_promotedPurchase_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Subscriptions_promotedPurchase_getToOneRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_promotedPurchase_getToOneRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, Subscriptions_promotedPurchase_getToOneRelatedInclude[]? include = default)
+        public Task<PromotedPurchaseResponse> Subscriptions_promotedPurchase_getToOneRelated(string id, Subscriptions_promotedPurchase_getToOneRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, Subscriptions_promotedPurchase_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, Subscriptions_promotedPurchase_getToOneRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_promotedPurchase_getToOneRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, Subscriptions_promotedPurchase_getToOneRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/promotedPurchase";
             path = path.Replace("{id}", id.ToString());
@@ -52536,7 +52534,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PromotedPurchaseResponse>(message);
+            return SendAsync<PromotedPurchaseResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52590,7 +52588,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/promotionalOffers
-        public Task<SubscriptionPromotionalOffersResponse> Subscriptions_promotionalOffers_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_promotionalOffers_getToManyRelatedFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, Subscriptions_promotionalOffers_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_promotionalOffers_getToManyRelatedFieldsSubscriptionPromotionalOfferPrices[]? fieldsSubscriptionPromotionalOfferPrices = default, int? limit = default, Subscriptions_promotionalOffers_getToManyRelatedInclude[]? include = default, int? limitPrices = default)
+        public Task<SubscriptionPromotionalOffersResponse> Subscriptions_promotionalOffers_getToManyRelated(string id, string[]? filterTerritory = default, Subscriptions_promotionalOffers_getToManyRelatedFieldsSubscriptionPromotionalOffers[]? fieldsSubscriptionPromotionalOffers = default, Subscriptions_promotionalOffers_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, Subscriptions_promotionalOffers_getToManyRelatedFieldsSubscriptionPromotionalOfferPrices[]? fieldsSubscriptionPromotionalOfferPrices = default, int? limit = default, Subscriptions_promotionalOffers_getToManyRelatedInclude[]? include = default, int? limitPrices = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/promotionalOffers";
             path = path.Replace("{id}", id.ToString());
@@ -52611,11 +52609,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[prices]", limitPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPromotionalOffersResponse>(message);
+            return SendAsync<SubscriptionPromotionalOffersResponse>(message, log);
         }
 
         // /v1/subscriptions/{id}/relationships/introductoryOffers
-        public Task<SubscriptionIntroductoryOffersLinkagesResponse> Subscriptions_introductoryOffers_getToManyRelationship(string id, int? limit = default)
+        public Task<SubscriptionIntroductoryOffersLinkagesResponse> Subscriptions_introductoryOffers_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/relationships/introductoryOffers";
             path = path.Replace("{id}", id.ToString());
@@ -52624,7 +52622,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionIntroductoryOffersLinkagesResponse>(message);
+            return SendAsync<SubscriptionIntroductoryOffersLinkagesResponse>(message, log);
         }
 
         public class Subscriptions_introductoryOffers_deleteToManyRelationshipRequest
@@ -52639,7 +52637,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/relationships/introductoryOffers
-        public Task Subscriptions_introductoryOffers_deleteToManyRelationship(string id, SubscriptionIntroductoryOffersLinkagesRequest request)
+        public Task Subscriptions_introductoryOffers_deleteToManyRelationship(string id, SubscriptionIntroductoryOffersLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/relationships/introductoryOffers";
             path = path.Replace("{id}", id.ToString());
@@ -52647,11 +52645,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/subscriptions/{id}/relationships/prices
-        public Task<SubscriptionPricesLinkagesResponse> Subscriptions_prices_getToManyRelationship(string id, int? limit = default)
+        public Task<SubscriptionPricesLinkagesResponse> Subscriptions_prices_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/relationships/prices";
             path = path.Replace("{id}", id.ToString());
@@ -52660,7 +52658,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionPricesLinkagesResponse>(message);
+            return SendAsync<SubscriptionPricesLinkagesResponse>(message, log);
         }
 
         public class Subscriptions_prices_deleteToManyRelationshipRequest
@@ -52675,7 +52673,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/relationships/prices
-        public Task Subscriptions_prices_deleteToManyRelationship(string id, SubscriptionPricesLinkagesRequest request)
+        public Task Subscriptions_prices_deleteToManyRelationship(string id, SubscriptionPricesLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/relationships/prices";
             path = path.Replace("{id}", id.ToString());
@@ -52683,7 +52681,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52694,7 +52692,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/subscriptionAvailability
-        public Task<SubscriptionAvailabilityResponse> Subscriptions_subscriptionAvailability_getToOneRelated(string id, Subscriptions_subscriptionAvailability_getToOneRelatedFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default)
+        public Task<SubscriptionAvailabilityResponse> Subscriptions_subscriptionAvailability_getToOneRelated(string id, Subscriptions_subscriptionAvailability_getToOneRelatedFieldsSubscriptionAvailabilities[]? fieldsSubscriptionAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/subscriptionAvailability";
             path = path.Replace("{id}", id.ToString());
@@ -52709,7 +52707,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[availableTerritories]", limitAvailableTerritories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionAvailabilityResponse>(message);
+            return SendAsync<SubscriptionAvailabilityResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52747,7 +52745,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/subscriptionLocalizations
-        public Task<SubscriptionLocalizationsResponse> Subscriptions_subscriptionLocalizations_getToManyRelated(string id, Subscriptions_subscriptionLocalizations_getToManyRelatedFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, Subscriptions_subscriptionLocalizations_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, int? limit = default, string[]? include = default)
+        public Task<SubscriptionLocalizationsResponse> Subscriptions_subscriptionLocalizations_getToManyRelated(string id, Subscriptions_subscriptionLocalizations_getToManyRelatedFieldsSubscriptionLocalizations[]? fieldsSubscriptionLocalizations = default, Subscriptions_subscriptionLocalizations_getToManyRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/subscriptionLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -52762,7 +52760,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SubscriptionLocalizationsResponse>(message);
+            return SendAsync<SubscriptionLocalizationsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52791,7 +52789,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/subscriptions/{id}/winBackOffers
-        public Task<WinBackOffersResponse> Subscriptions_winBackOffers_getToManyRelated(string id, Subscriptions_winBackOffers_getToManyRelatedFieldsWinBackOffers[]? fieldsWinBackOffers = default, Subscriptions_winBackOffers_getToManyRelatedFieldsWinBackOfferPrices[]? fieldsWinBackOfferPrices = default, int? limit = default, string[]? include = default, int? limitPrices = default)
+        public Task<WinBackOffersResponse> Subscriptions_winBackOffers_getToManyRelated(string id, Subscriptions_winBackOffers_getToManyRelatedFieldsWinBackOffers[]? fieldsWinBackOffers = default, Subscriptions_winBackOffers_getToManyRelatedFieldsWinBackOfferPrices[]? fieldsWinBackOfferPrices = default, int? limit = default, string[]? include = default, int? limitPrices = default, INestedLog? log = null)
         {
             string path = "/v1/subscriptions/{id}/winBackOffers";
             path = path.Replace("{id}", id.ToString());
@@ -52808,22 +52806,22 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[prices]", limitPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<WinBackOffersResponse>(message);
+            return SendAsync<WinBackOffersResponse>(message, log);
         }
 
         // /v1/subscriptionSubmissions
-        public Task<SubscriptionSubmissionResponse> SubscriptionSubmissions_createInstance(SubscriptionSubmissionCreateRequest request)
+        public Task<SubscriptionSubmissionResponse> SubscriptionSubmissions_createInstance(SubscriptionSubmissionCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/subscriptionSubmissions";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SubscriptionSubmissionResponse>(message);
+            return SendAsync<SubscriptionSubmissionResponse>(message, log);
         }
 
         // /v1/territories
-        public Task<TerritoriesResponse> Territories_getCollection(string[]? fieldsTerritories = default, int? limit = default)
+        public Task<TerritoriesResponse> Territories_getCollection(string[]? fieldsTerritories = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/territories";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -52833,11 +52831,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<TerritoriesResponse>(message);
+            return SendAsync<TerritoriesResponse>(message, log);
         }
 
         // /v1/territoryAvailabilities/{id}
-        public Task<TerritoryAvailabilityResponse> TerritoryAvailabilities_updateInstance(string id, TerritoryAvailabilityUpdateRequest request)
+        public Task<TerritoryAvailabilityResponse> TerritoryAvailabilities_updateInstance(string id, TerritoryAvailabilityUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/territoryAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -52845,7 +52843,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<TerritoryAvailabilityResponse>(message);
+            return SendAsync<TerritoryAvailabilityResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -52939,7 +52937,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/userInvitations
-        public Task<UserInvitationsResponse> UserInvitations_getCollection(string[]? filterEmail = default, UserInvitations_getCollectionFilterRoles[]? filterRoles = default, string[]? filterVisibleApps = default, UserInvitations_getCollectionSort[]? sort = default, UserInvitations_getCollectionFieldsUserInvitations[]? fieldsUserInvitations = default, UserInvitations_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitVisibleApps = default)
+        public Task<UserInvitationsResponse> UserInvitations_getCollection(string[]? filterEmail = default, UserInvitations_getCollectionFilterRoles[]? filterRoles = default, string[]? filterVisibleApps = default, UserInvitations_getCollectionSort[]? sort = default, UserInvitations_getCollectionFieldsUserInvitations[]? fieldsUserInvitations = default, UserInvitations_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitVisibleApps = default, INestedLog? log = null)
         {
             string path = "/v1/userInvitations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -52963,18 +52961,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[visibleApps]", limitVisibleApps.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<UserInvitationsResponse>(message);
+            return SendAsync<UserInvitationsResponse>(message, log);
         }
 
         // /v1/userInvitations
-        public Task<UserInvitationResponse> UserInvitations_createInstance(UserInvitationCreateRequest request)
+        public Task<UserInvitationResponse> UserInvitations_createInstance(UserInvitationCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/userInvitations";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<UserInvitationResponse>(message);
+            return SendAsync<UserInvitationResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53039,7 +53037,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/userInvitations/{id}
-        public Task<UserInvitationResponse> UserInvitations_getInstance(string id, UserInvitations_getInstanceFieldsUserInvitations[]? fieldsUserInvitations = default, UserInvitations_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default, int? limitVisibleApps = default)
+        public Task<UserInvitationResponse> UserInvitations_getInstance(string id, UserInvitations_getInstanceFieldsUserInvitations[]? fieldsUserInvitations = default, UserInvitations_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default, int? limitVisibleApps = default, INestedLog? log = null)
         {
             string path = "/v1/userInvitations/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53054,18 +53052,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[visibleApps]", limitVisibleApps.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<UserInvitationResponse>(message);
+            return SendAsync<UserInvitationResponse>(message, log);
         }
 
         // /v1/userInvitations/{id}
-        public Task UserInvitations_deleteInstance(string id)
+        public Task UserInvitations_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/userInvitations/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53117,7 +53115,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/userInvitations/{id}/visibleApps
-        public Task<AppsWithoutIncludesResponse> UserInvitations_visibleApps_getToManyRelated(string id, UserInvitations_visibleApps_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default)
+        public Task<AppsWithoutIncludesResponse> UserInvitations_visibleApps_getToManyRelated(string id, UserInvitations_visibleApps_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/userInvitations/{id}/visibleApps";
             path = path.Replace("{id}", id.ToString());
@@ -53128,7 +53126,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppsWithoutIncludesResponse>(message);
+            return SendAsync<AppsWithoutIncludesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53221,7 +53219,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/users
-        public Task<UsersResponse> Users_getCollection(string[]? filterUsername = default, Users_getCollectionFilterRoles[]? filterRoles = default, string[]? filterVisibleApps = default, Users_getCollectionSort[]? sort = default, Users_getCollectionFieldsUsers[]? fieldsUsers = default, Users_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitVisibleApps = default)
+        public Task<UsersResponse> Users_getCollection(string[]? filterUsername = default, Users_getCollectionFilterRoles[]? filterRoles = default, string[]? filterVisibleApps = default, Users_getCollectionSort[]? sort = default, Users_getCollectionFieldsUsers[]? fieldsUsers = default, Users_getCollectionFieldsApps[]? fieldsApps = default, int? limit = default, string[]? include = default, int? limitVisibleApps = default, INestedLog? log = null)
         {
             string path = "/v1/users";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -53245,7 +53243,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[visibleApps]", limitVisibleApps.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<UsersResponse>(message);
+            return SendAsync<UsersResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53309,7 +53307,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/users/{id}
-        public Task<UserResponse> Users_getInstance(string id, Users_getInstanceFieldsUsers[]? fieldsUsers = default, Users_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default, int? limitVisibleApps = default)
+        public Task<UserResponse> Users_getInstance(string id, Users_getInstanceFieldsUsers[]? fieldsUsers = default, Users_getInstanceFieldsApps[]? fieldsApps = default, string[]? include = default, int? limitVisibleApps = default, INestedLog? log = null)
         {
             string path = "/v1/users/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53324,11 +53322,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[visibleApps]", limitVisibleApps.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<UserResponse>(message);
+            return SendAsync<UserResponse>(message, log);
         }
 
         // /v1/users/{id}
-        public Task<UserResponse> Users_updateInstance(string id, UserUpdateRequest request)
+        public Task<UserResponse> Users_updateInstance(string id, UserUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/users/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53336,22 +53334,22 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<UserResponse>(message);
+            return SendAsync<UserResponse>(message, log);
         }
 
         // /v1/users/{id}
-        public Task Users_deleteInstance(string id)
+        public Task Users_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/users/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         // /v1/users/{id}/relationships/visibleApps
-        public Task<UserVisibleAppsLinkagesResponse> Users_visibleApps_getToManyRelationship(string id, int? limit = default)
+        public Task<UserVisibleAppsLinkagesResponse> Users_visibleApps_getToManyRelationship(string id, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
@@ -53360,7 +53358,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<UserVisibleAppsLinkagesResponse>(message);
+            return SendAsync<UserVisibleAppsLinkagesResponse>(message, log);
         }
 
         public class Users_visibleApps_createToManyRelationshipRequest
@@ -53375,7 +53373,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/users/{id}/relationships/visibleApps
-        public Task Users_visibleApps_createToManyRelationship(string id, UserVisibleAppsLinkagesRequest request)
+        public Task Users_visibleApps_createToManyRelationship(string id, UserVisibleAppsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
@@ -53383,7 +53381,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class Users_visibleApps_replaceToManyRelationshipRequest
@@ -53398,7 +53396,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/users/{id}/relationships/visibleApps
-        public Task Users_visibleApps_replaceToManyRelationship(string id, UserVisibleAppsLinkagesRequest request)
+        public Task Users_visibleApps_replaceToManyRelationship(string id, UserVisibleAppsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
@@ -53406,7 +53404,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         public class Users_visibleApps_deleteToManyRelationshipRequest
@@ -53421,7 +53419,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/users/{id}/relationships/visibleApps
-        public Task Users_visibleApps_deleteToManyRelationship(string id, UserVisibleAppsLinkagesRequest request)
+        public Task Users_visibleApps_deleteToManyRelationship(string id, UserVisibleAppsLinkagesRequest request, INestedLog? log = null)
         {
             string path = "/v1/users/{id}/relationships/visibleApps";
             path = path.Replace("{id}", id.ToString());
@@ -53429,7 +53427,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53481,7 +53479,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/users/{id}/visibleApps
-        public Task<AppsWithoutIncludesResponse> Users_visibleApps_getToManyRelated(string id, Users_visibleApps_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default)
+        public Task<AppsWithoutIncludesResponse> Users_visibleApps_getToManyRelated(string id, Users_visibleApps_getToManyRelatedFieldsApps[]? fieldsApps = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v1/users/{id}/visibleApps";
             path = path.Replace("{id}", id.ToString());
@@ -53492,18 +53490,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppsWithoutIncludesResponse>(message);
+            return SendAsync<AppsWithoutIncludesResponse>(message, log);
         }
 
         // /v1/winBackOffers
-        public Task<WinBackOfferResponse> WinBackOffers_createInstance(WinBackOfferCreateRequest request)
+        public Task<WinBackOfferResponse> WinBackOffers_createInstance(WinBackOfferCreateRequest request, INestedLog? log = null)
         {
             string path = "/v1/winBackOffers";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<WinBackOfferResponse>(message);
+            return SendAsync<WinBackOfferResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53532,7 +53530,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/winBackOffers/{id}
-        public Task<WinBackOfferResponse> WinBackOffers_getInstance(string id, WinBackOffers_getInstanceFieldsWinBackOffers[]? fieldsWinBackOffers = default, WinBackOffers_getInstanceFieldsWinBackOfferPrices[]? fieldsWinBackOfferPrices = default, string[]? include = default, int? limitPrices = default)
+        public Task<WinBackOfferResponse> WinBackOffers_getInstance(string id, WinBackOffers_getInstanceFieldsWinBackOffers[]? fieldsWinBackOffers = default, WinBackOffers_getInstanceFieldsWinBackOfferPrices[]? fieldsWinBackOfferPrices = default, string[]? include = default, int? limitPrices = default, INestedLog? log = null)
         {
             string path = "/v1/winBackOffers/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53547,11 +53545,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[prices]", limitPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<WinBackOfferResponse>(message);
+            return SendAsync<WinBackOfferResponse>(message, log);
         }
 
         // /v1/winBackOffers/{id}
-        public Task<WinBackOfferResponse> WinBackOffers_updateInstance(string id, WinBackOfferUpdateRequest request)
+        public Task<WinBackOfferResponse> WinBackOffers_updateInstance(string id, WinBackOfferUpdateRequest request, INestedLog? log = null)
         {
             string path = "/v1/winBackOffers/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53559,18 +53557,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<WinBackOfferResponse>(message);
+            return SendAsync<WinBackOfferResponse>(message, log);
         }
 
         // /v1/winBackOffers/{id}
-        public Task WinBackOffers_deleteInstance(string id)
+        public Task WinBackOffers_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v1/winBackOffers/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53598,7 +53596,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v1/winBackOffers/{id}/prices
-        public Task<WinBackOfferPricesResponse> WinBackOffers_prices_getToManyRelated(string id, string[]? filterTerritory = default, WinBackOffers_prices_getToManyRelatedFieldsWinBackOfferPrices[]? fieldsWinBackOfferPrices = default, string[]? fieldsTerritories = default, WinBackOffers_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, WinBackOffers_prices_getToManyRelatedInclude[]? include = default)
+        public Task<WinBackOfferPricesResponse> WinBackOffers_prices_getToManyRelated(string id, string[]? filterTerritory = default, WinBackOffers_prices_getToManyRelatedFieldsWinBackOfferPrices[]? fieldsWinBackOfferPrices = default, string[]? fieldsTerritories = default, WinBackOffers_prices_getToManyRelatedFieldsSubscriptionPricePoints[]? fieldsSubscriptionPricePoints = default, int? limit = default, WinBackOffers_prices_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v1/winBackOffers/{id}/prices";
             path = path.Replace("{id}", id.ToString());
@@ -53617,18 +53615,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<WinBackOfferPricesResponse>(message);
+            return SendAsync<WinBackOfferPricesResponse>(message, log);
         }
 
         // /v2/appAvailabilities
-        public Task<AppAvailabilityV2Response> AppAvailabilitiesV2_createInstance(AppAvailabilityV2CreateRequest request)
+        public Task<AppAvailabilityV2Response> AppAvailabilitiesV2_createInstance(AppAvailabilityV2CreateRequest request, INestedLog? log = null)
         {
             string path = "/v2/appAvailabilities";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppAvailabilityV2Response>(message);
+            return SendAsync<AppAvailabilityV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53650,7 +53648,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/appAvailabilities/{id}
-        public Task<AppAvailabilityV2Response> AppAvailabilitiesV2_getInstance(string id, AppAvailabilitiesV2_getInstanceFieldsAppAvailabilities[]? fieldsAppAvailabilities = default, AppAvailabilitiesV2_getInstanceFieldsTerritoryAvailabilities[]? fieldsTerritoryAvailabilities = default, string[]? include = default, int? limitTerritoryAvailabilities = default)
+        public Task<AppAvailabilityV2Response> AppAvailabilitiesV2_getInstance(string id, AppAvailabilitiesV2_getInstanceFieldsAppAvailabilities[]? fieldsAppAvailabilities = default, AppAvailabilitiesV2_getInstanceFieldsTerritoryAvailabilities[]? fieldsTerritoryAvailabilities = default, string[]? include = default, int? limitTerritoryAvailabilities = default, INestedLog? log = null)
         {
             string path = "/v2/appAvailabilities/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53665,7 +53663,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[territoryAvailabilities]", limitTerritoryAvailabilities.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppAvailabilityV2Response>(message);
+            return SendAsync<AppAvailabilityV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53680,7 +53678,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/appAvailabilities/{id}/territoryAvailabilities
-        public Task<TerritoryAvailabilitiesResponse> AppAvailabilitiesV2_territoryAvailabilities_getToManyRelated(string id, AppAvailabilitiesV2_territoryAvailabilities_getToManyRelatedFieldsTerritoryAvailabilities[]? fieldsTerritoryAvailabilities = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default)
+        public Task<TerritoryAvailabilitiesResponse> AppAvailabilitiesV2_territoryAvailabilities_getToManyRelated(string id, AppAvailabilitiesV2_territoryAvailabilities_getToManyRelatedFieldsTerritoryAvailabilities[]? fieldsTerritoryAvailabilities = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v2/appAvailabilities/{id}/territoryAvailabilities";
             path = path.Replace("{id}", id.ToString());
@@ -53695,18 +53693,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<TerritoryAvailabilitiesResponse>(message);
+            return SendAsync<TerritoryAvailabilitiesResponse>(message, log);
         }
 
         // /v2/appStoreVersionExperiments
-        public Task<AppStoreVersionExperimentV2Response> AppStoreVersionExperimentsV2_createInstance(AppStoreVersionExperimentV2CreateRequest request)
+        public Task<AppStoreVersionExperimentV2Response> AppStoreVersionExperimentsV2_createInstance(AppStoreVersionExperimentV2CreateRequest request, INestedLog? log = null)
         {
             string path = "/v2/appStoreVersionExperiments";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionExperimentV2Response>(message);
+            return SendAsync<AppStoreVersionExperimentV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53747,7 +53745,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/appStoreVersionExperiments/{id}
-        public Task<AppStoreVersionExperimentV2Response> AppStoreVersionExperimentsV2_getInstance(string id, AppStoreVersionExperimentsV2_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperimentsV2_getInstanceFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentsV2_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentTreatments = default, int? limitControlVersions = default)
+        public Task<AppStoreVersionExperimentV2Response> AppStoreVersionExperimentsV2_getInstance(string id, AppStoreVersionExperimentsV2_getInstanceFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperimentsV2_getInstanceFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentsV2_getInstanceInclude[]? include = default, int? limitAppStoreVersionExperimentTreatments = default, int? limitControlVersions = default, INestedLog? log = null)
         {
             string path = "/v2/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53764,11 +53762,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[controlVersions]", limitControlVersions.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentV2Response>(message);
+            return SendAsync<AppStoreVersionExperimentV2Response>(message, log);
         }
 
         // /v2/appStoreVersionExperiments/{id}
-        public Task<AppStoreVersionExperimentV2Response> AppStoreVersionExperimentsV2_updateInstance(string id, AppStoreVersionExperimentV2UpdateRequest request)
+        public Task<AppStoreVersionExperimentV2Response> AppStoreVersionExperimentsV2_updateInstance(string id, AppStoreVersionExperimentV2UpdateRequest request, INestedLog? log = null)
         {
             string path = "/v2/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -53776,18 +53774,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<AppStoreVersionExperimentV2Response>(message);
+            return SendAsync<AppStoreVersionExperimentV2Response>(message, log);
         }
 
         // /v2/appStoreVersionExperiments/{id}
-        public Task AppStoreVersionExperimentsV2_deleteInstance(string id)
+        public Task AppStoreVersionExperimentsV2_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v2/appStoreVersionExperiments/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53837,7 +53835,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments
-        public Task<AppStoreVersionExperimentTreatmentsResponse> AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelated(string id, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, int? limit = default, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionExperimentTreatmentLocalizations = default)
+        public Task<AppStoreVersionExperimentTreatmentsResponse> AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelated(string id, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatments[]? fieldsAppStoreVersionExperimentTreatments = default, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperiments[]? fieldsAppStoreVersionExperiments = default, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedFieldsAppStoreVersionExperimentTreatmentLocalizations[]? fieldsAppStoreVersionExperimentTreatmentLocalizations = default, int? limit = default, AppStoreVersionExperimentsV2_appStoreVersionExperimentTreatments_getToManyRelatedInclude[]? include = default, int? limitAppStoreVersionExperimentTreatmentLocalizations = default, INestedLog? log = null)
         {
             string path = "/v2/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments";
             path = path.Replace("{id}", id.ToString());
@@ -53856,18 +53854,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[appStoreVersionExperimentTreatmentLocalizations]", limitAppStoreVersionExperimentTreatmentLocalizations.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppStoreVersionExperimentTreatmentsResponse>(message);
+            return SendAsync<AppStoreVersionExperimentTreatmentsResponse>(message, log);
         }
 
         // /v2/inAppPurchases
-        public Task<InAppPurchaseV2Response> InAppPurchasesV2_createInstance(InAppPurchaseV2CreateRequest request)
+        public Task<InAppPurchaseV2Response> InAppPurchasesV2_createInstance(InAppPurchaseV2CreateRequest request, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseV2Response>(message);
+            return SendAsync<InAppPurchaseV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -53986,7 +53984,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}
-        public Task<InAppPurchaseV2Response> InAppPurchasesV2_getInstance(string id, InAppPurchasesV2_getInstanceFieldsInAppPurchases[]? fieldsInAppPurchases = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, InAppPurchasesV2_getInstanceFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, InAppPurchasesV2_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, InAppPurchasesV2_getInstanceFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, InAppPurchasesV2_getInstanceInclude[]? include = default, int? limitImages = default, int? limitInAppPurchaseLocalizations = default, int? limitPricePoints = default)
+        public Task<InAppPurchaseV2Response> InAppPurchasesV2_getInstance(string id, InAppPurchasesV2_getInstanceFieldsInAppPurchases[]? fieldsInAppPurchases = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, InAppPurchasesV2_getInstanceFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, InAppPurchasesV2_getInstanceFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, InAppPurchasesV2_getInstanceFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, InAppPurchasesV2_getInstanceFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, InAppPurchasesV2_getInstanceInclude[]? include = default, int? limitImages = default, int? limitInAppPurchaseLocalizations = default, int? limitPricePoints = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -54019,11 +54017,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[pricePoints]", limitPricePoints.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseV2Response>(message);
+            return SendAsync<InAppPurchaseV2Response>(message, log);
         }
 
         // /v2/inAppPurchases/{id}
-        public Task<InAppPurchaseV2Response> InAppPurchasesV2_updateInstance(string id, InAppPurchaseV2UpdateRequest request)
+        public Task<InAppPurchaseV2Response> InAppPurchasesV2_updateInstance(string id, InAppPurchaseV2UpdateRequest request, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -54031,18 +54029,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<InAppPurchaseV2Response>(message);
+            return SendAsync<InAppPurchaseV2Response>(message, log);
         }
 
         // /v2/inAppPurchases/{id}
-        public Task InAppPurchasesV2_deleteInstance(string id)
+        public Task InAppPurchasesV2_deleteInstance(string id, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}";
             path = path.Replace("{id}", id.ToString());
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Delete, uriBuilder.uri);
-            return SendAsync(message);
+            return SendAsync(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54080,7 +54078,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/appStoreReviewScreenshot
-        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchasesV2_appStoreReviewScreenshot_getToOneRelated(string id, InAppPurchasesV2_appStoreReviewScreenshot_getToOneRelatedFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, InAppPurchasesV2_appStoreReviewScreenshot_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, string[]? include = default)
+        public Task<InAppPurchaseAppStoreReviewScreenshotResponse> InAppPurchasesV2_appStoreReviewScreenshot_getToOneRelated(string id, InAppPurchasesV2_appStoreReviewScreenshot_getToOneRelatedFieldsInAppPurchaseAppStoreReviewScreenshots[]? fieldsInAppPurchaseAppStoreReviewScreenshots = default, InAppPurchasesV2_appStoreReviewScreenshot_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/appStoreReviewScreenshot";
             path = path.Replace("{id}", id.ToString());
@@ -54093,7 +54091,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message);
+            return SendAsync<InAppPurchaseAppStoreReviewScreenshotResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54127,7 +54125,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/content
-        public Task<InAppPurchaseContentResponse> InAppPurchasesV2_content_getToOneRelated(string id, InAppPurchasesV2_content_getToOneRelatedFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, InAppPurchasesV2_content_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, string[]? include = default)
+        public Task<InAppPurchaseContentResponse> InAppPurchasesV2_content_getToOneRelated(string id, InAppPurchasesV2_content_getToOneRelatedFieldsInAppPurchaseContents[]? fieldsInAppPurchaseContents = default, InAppPurchasesV2_content_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/content";
             path = path.Replace("{id}", id.ToString());
@@ -54140,7 +54138,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseContentResponse>(message);
+            return SendAsync<InAppPurchaseContentResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54170,7 +54168,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/iapPriceSchedule
-        public Task<InAppPurchasePriceScheduleResponse> InAppPurchasesV2_iapPriceSchedule_getToOneRelated(string id, InAppPurchasesV2_iapPriceSchedule_getToOneRelatedFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, string[]? fieldsTerritories = default, InAppPurchasesV2_iapPriceSchedule_getToOneRelatedFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasesV2_iapPriceSchedule_getToOneRelatedInclude[]? include = default, int? limitManualPrices = default, int? limitAutomaticPrices = default)
+        public Task<InAppPurchasePriceScheduleResponse> InAppPurchasesV2_iapPriceSchedule_getToOneRelated(string id, InAppPurchasesV2_iapPriceSchedule_getToOneRelatedFieldsInAppPurchasePriceSchedules[]? fieldsInAppPurchasePriceSchedules = default, string[]? fieldsTerritories = default, InAppPurchasesV2_iapPriceSchedule_getToOneRelatedFieldsInAppPurchasePrices[]? fieldsInAppPurchasePrices = default, InAppPurchasesV2_iapPriceSchedule_getToOneRelatedInclude[]? include = default, int? limitManualPrices = default, int? limitAutomaticPrices = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/iapPriceSchedule";
             path = path.Replace("{id}", id.ToString());
@@ -54189,7 +54187,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[automaticPrices]", limitAutomaticPrices.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasePriceScheduleResponse>(message);
+            return SendAsync<InAppPurchasePriceScheduleResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54226,7 +54224,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/images
-        public Task<InAppPurchaseImagesResponse> InAppPurchasesV2_images_getToManyRelated(string id, InAppPurchasesV2_images_getToManyRelatedFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, InAppPurchasesV2_images_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, int? limit = default, string[]? include = default)
+        public Task<InAppPurchaseImagesResponse> InAppPurchasesV2_images_getToManyRelated(string id, InAppPurchasesV2_images_getToManyRelatedFieldsInAppPurchaseImages[]? fieldsInAppPurchaseImages = default, InAppPurchasesV2_images_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/images";
             path = path.Replace("{id}", id.ToString());
@@ -54241,7 +54239,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseImagesResponse>(message);
+            return SendAsync<InAppPurchaseImagesResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54252,7 +54250,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/inAppPurchaseAvailability
-        public Task<InAppPurchaseAvailabilityResponse> InAppPurchasesV2_inAppPurchaseAvailability_getToOneRelated(string id, InAppPurchasesV2_inAppPurchaseAvailability_getToOneRelatedFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default)
+        public Task<InAppPurchaseAvailabilityResponse> InAppPurchasesV2_inAppPurchaseAvailability_getToOneRelated(string id, InAppPurchasesV2_inAppPurchaseAvailability_getToOneRelatedFieldsInAppPurchaseAvailabilities[]? fieldsInAppPurchaseAvailabilities = default, string[]? fieldsTerritories = default, string[]? include = default, int? limitAvailableTerritories = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/inAppPurchaseAvailability";
             path = path.Replace("{id}", id.ToString());
@@ -54267,7 +54265,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit[availableTerritories]", limitAvailableTerritories.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseAvailabilityResponse>(message);
+            return SendAsync<InAppPurchaseAvailabilityResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54301,7 +54299,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/inAppPurchaseLocalizations
-        public Task<InAppPurchaseLocalizationsResponse> InAppPurchasesV2_inAppPurchaseLocalizations_getToManyRelated(string id, InAppPurchasesV2_inAppPurchaseLocalizations_getToManyRelatedFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, InAppPurchasesV2_inAppPurchaseLocalizations_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, int? limit = default, string[]? include = default)
+        public Task<InAppPurchaseLocalizationsResponse> InAppPurchasesV2_inAppPurchaseLocalizations_getToManyRelated(string id, InAppPurchasesV2_inAppPurchaseLocalizations_getToManyRelatedFieldsInAppPurchaseLocalizations[]? fieldsInAppPurchaseLocalizations = default, InAppPurchasesV2_inAppPurchaseLocalizations_getToManyRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/inAppPurchaseLocalizations";
             path = path.Replace("{id}", id.ToString());
@@ -54316,7 +54314,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchaseLocalizationsResponse>(message);
+            return SendAsync<InAppPurchaseLocalizationsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54329,7 +54327,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/pricePoints
-        public Task<InAppPurchasePricePointsResponse> InAppPurchasesV2_pricePoints_getToManyRelated(string id, string[]? filterTerritory = default, InAppPurchasesV2_pricePoints_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default)
+        public Task<InAppPurchasePricePointsResponse> InAppPurchasesV2_pricePoints_getToManyRelated(string id, string[]? filterTerritory = default, InAppPurchasesV2_pricePoints_getToManyRelatedFieldsInAppPurchasePricePoints[]? fieldsInAppPurchasePricePoints = default, string[]? fieldsTerritories = default, int? limit = default, string[]? include = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/pricePoints";
             path = path.Replace("{id}", id.ToString());
@@ -54346,7 +54344,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<InAppPurchasePricePointsResponse>(message);
+            return SendAsync<InAppPurchasePricePointsResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54427,7 +54425,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/inAppPurchases/{id}/promotedPurchase
-        public Task<PromotedPurchaseResponse> InAppPurchasesV2_promotedPurchase_getToOneRelated(string id, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedInclude[]? include = default)
+        public Task<PromotedPurchaseResponse> InAppPurchasesV2_promotedPurchase_getToOneRelated(string id, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsPromotedPurchases[]? fieldsPromotedPurchases = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsInAppPurchases[]? fieldsInAppPurchases = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsSubscriptions[]? fieldsSubscriptions = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedFieldsPromotedPurchaseImages[]? fieldsPromotedPurchaseImages = default, InAppPurchasesV2_promotedPurchase_getToOneRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v2/inAppPurchases/{id}/promotedPurchase";
             path = path.Replace("{id}", id.ToString());
@@ -54444,7 +54442,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<PromotedPurchaseResponse>(message);
+            return SendAsync<PromotedPurchaseResponse>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54460,7 +54458,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v2/sandboxTesters
-        public Task<SandboxTestersV2Response> SandboxTestersV2_getCollection(SandboxTestersV2_getCollectionFieldsSandboxTesters[]? fieldsSandboxTesters = default, int? limit = default)
+        public Task<SandboxTestersV2Response> SandboxTestersV2_getCollection(SandboxTestersV2_getCollectionFieldsSandboxTesters[]? fieldsSandboxTesters = default, int? limit = default, INestedLog? log = null)
         {
             string path = "/v2/sandboxTesters";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
@@ -54470,11 +54468,11 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("limit", limit.Value.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<SandboxTestersV2Response>(message);
+            return SendAsync<SandboxTestersV2Response>(message, log);
         }
 
         // /v2/sandboxTesters/{id}
-        public Task<SandboxTesterV2Response> SandboxTestersV2_updateInstance(string id, SandboxTesterV2UpdateRequest request)
+        public Task<SandboxTesterV2Response> SandboxTestersV2_updateInstance(string id, SandboxTesterV2UpdateRequest request, INestedLog? log = null)
         {
             string path = "/v2/sandboxTesters/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -54482,18 +54480,18 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
 
             var message = new HttpRequestMessage(HttpMethod.Patch, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SandboxTesterV2Response>(message);
+            return SendAsync<SandboxTesterV2Response>(message, log);
         }
 
         // /v2/sandboxTestersClearPurchaseHistoryRequest
-        public Task<SandboxTestersClearPurchaseHistoryRequestV2Response> SandboxTestersClearPurchaseHistoryRequestV2_createInstance(SandboxTestersClearPurchaseHistoryRequestV2CreateRequest request)
+        public Task<SandboxTestersClearPurchaseHistoryRequestV2Response> SandboxTestersClearPurchaseHistoryRequestV2_createInstance(SandboxTestersClearPurchaseHistoryRequestV2CreateRequest request, INestedLog? log = null)
         {
             string path = "/v2/sandboxTestersClearPurchaseHistoryRequest";
             var uriBuilder = new UriBuilder(m_BaseUri, path);
 
             var message = new HttpRequestMessage(HttpMethod.Post, uriBuilder.uri);
             message.Content = Serialize(request);
-            return SendAsync<SandboxTestersClearPurchaseHistoryRequestV2Response>(message);
+            return SendAsync<SandboxTestersClearPurchaseHistoryRequestV2Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54514,7 +54512,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v3/appPricePoints/{id}
-        public Task<AppPricePointV3Response> AppPricePointsV3_getInstance(string id, AppPricePointsV3_getInstanceFieldsAppPricePoints[]? fieldsAppPricePoints = default, AppPricePointsV3_getInstanceInclude[]? include = default)
+        public Task<AppPricePointV3Response> AppPricePointsV3_getInstance(string id, AppPricePointsV3_getInstanceFieldsAppPricePoints[]? fieldsAppPricePoints = default, AppPricePointsV3_getInstanceInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v3/appPricePoints/{id}";
             path = path.Replace("{id}", id.ToString());
@@ -54525,7 +54523,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPricePointV3Response>(message);
+            return SendAsync<AppPricePointV3Response>(message, log);
         }
 
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -54594,7 +54592,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
         }
 
         // /v3/appPricePoints/{id}/equalizations
-        public Task<AppPricePointsV3Response> AppPricePointsV3_equalizations_getToManyRelated(string id, string[]? filterTerritory = default, AppPricePointsV3_equalizations_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, AppPricePointsV3_equalizations_getToManyRelatedFieldsApps[]? fieldsApps = default, string[]? fieldsTerritories = default, int? limit = default, AppPricePointsV3_equalizations_getToManyRelatedInclude[]? include = default)
+        public Task<AppPricePointsV3Response> AppPricePointsV3_equalizations_getToManyRelated(string id, string[]? filterTerritory = default, AppPricePointsV3_equalizations_getToManyRelatedFieldsAppPricePoints[]? fieldsAppPricePoints = default, AppPricePointsV3_equalizations_getToManyRelatedFieldsApps[]? fieldsApps = default, string[]? fieldsTerritories = default, int? limit = default, AppPricePointsV3_equalizations_getToManyRelatedInclude[]? include = default, INestedLog? log = null)
         {
             string path = "/v3/appPricePoints/{id}/equalizations";
             path = path.Replace("{id}", id.ToString());
@@ -54613,7 +54611,7 @@ uriBuilder.AddParameter("granularity", granularity.ToString());
                 uriBuilder.AddParameter("include", string.Join(",", include));
 
             var message = new HttpRequestMessage(HttpMethod.Get, uriBuilder.uri);
-            return SendAsync<AppPricePointsV3Response>(message);
+            return SendAsync<AppPricePointsV3Response>(message, log);
         }
 
     }
