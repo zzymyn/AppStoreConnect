@@ -31,8 +31,8 @@ namespace StudioDrydock.AppStoreConnect.Api
 					}
 					else if (m_RequestsRemainingThisHour - m_OutstandingRequests > 1500)
 					{
-						// more than 3000 requests remaining, allow 16 requests at a time:
-						if (m_OutstandingRequests < 16)
+						// more than 3000 requests remaining, allow 8 requests at a time:
+						if (m_OutstandingRequests < 8)
 						{
 							token = new Token(this);
 						}

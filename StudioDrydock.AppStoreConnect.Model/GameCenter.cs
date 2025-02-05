@@ -1,11 +1,11 @@
 ﻿namespace StudioDrydock.AppStoreConnect.Model
 {
-    public class GameCenter(GameCenterDetail detail, GameCenterGroup? group, GameCenterAchievement[] achievements, GameCenterLeaderboard[] leaderboards, GameCenterLeaderboardSet[] leaderboardSets)
+    public class GameCenter
 	{
-		public GameCenterDetail detail { get; set; } = detail;
-		public GameCenterGroup? group { get; set; } = group;
-		public GameCenterAchievement[] achievements { get; set; } = achievements;
-		public GameCenterLeaderboard[] leaderboards { get; set; } = leaderboards;
-		public GameCenterLeaderboardSet[] leaderboardSets { get; set; } = leaderboardSets;
+		public required GameCenterDetail detail { get; set; }
+		public required GameCenterGroup? group { get; set; }
+		public required GameCenterAchievement[] achievements { get; set; }
+		public required GameCenterLeaderboard[] leaderboards { get; set; }
+		public required GameCenterLeaderboardSet[] leaderboardSets { get; set; }
 	}
 }
