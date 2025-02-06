@@ -7,7 +7,7 @@ using StudioDrydock.AppStoreConnect.Model.Files;
 
 namespace StudioDrydock.AppStoreConnect.Lib;
 
-public static class Tasks
+public static class AscTasks
 {
     public static async Task<AppInfoList> GetAppInfoList(AppStoreClient api, INestedLog? log)
     {

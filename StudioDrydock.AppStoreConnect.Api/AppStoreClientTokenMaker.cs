@@ -120,5 +120,4 @@ public static class AppStoreClientTokenMakerFactory
         msEcp.Validate();
         ecDSA.ImportParameters(msEcp);
     }
-
 }

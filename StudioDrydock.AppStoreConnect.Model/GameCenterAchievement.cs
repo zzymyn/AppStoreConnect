@@ -92,7 +92,7 @@ public class GameCenterAchievement
                 attributes = new()
                 {
                     referenceName = referenceName,
-                    points = points,
+                    points = (live == true) ? null : points, // Fix for: the field 'points' can not be modified in the current state
                     showBeforeEarned = showBeforeEarned,
                     repeatable = repeatable,
                     archived = archived

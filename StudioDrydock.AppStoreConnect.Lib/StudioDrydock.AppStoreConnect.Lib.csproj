@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.68.0.3658" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\StudioDrydock.AppStoreConnect.Api\StudioDrydock.AppStoreConnect.Api.csproj" />
     <ProjectReference Include="..\StudioDrydock.AppStoreConnect.Model\StudioDrydock.AppStoreConnect.Model.csproj" />
   </ItemGroup>

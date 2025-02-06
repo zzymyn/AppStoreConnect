@@ -49,18 +49,11 @@ internal sealed class ConsoleLogger : INestedLog
 
             }
 
-            for (var i = 0; i < path.Length - 1; ++i)
-            {
-                m_TextWriter.Write("  ");
-            }
-            if (path.Length > 0)
-            {
-                m_TextWriter.Write(path.Last());
-                m_TextWriter.Write(" ");
-            }
+            m_TextWriter.Write(string.Join(" > ", path));
+
             if (!string.IsNullOrEmpty(caption))
             {
-                m_TextWriter.Write(" ");
+                m_TextWriter.Write(" > ");
                 m_TextWriter.Write(caption);
             }
             m_TextWriter.WriteLine();
@@ -111,15 +104,7 @@ internal sealed class ConsoleLogger : INestedLog
                     break;
             }
 
-            for (var i = 0; i < path.Length - 1; ++i)
-            {
-                m_TextWriter.Write("  ");
-            }
-            if (path.Length > 0)
-            {
-                m_TextWriter.Write(path.Last());
-                m_TextWriter.Write(" ");
-            }
+            m_TextWriter.Write(string.Join(" > ", path));
             m_TextWriter.WriteLine();
             m_TextWriter.Flush();
         }

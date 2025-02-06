@@ -124,8 +124,8 @@ public class GameCenterLeaderboard
                 {
                     defaultFormatter = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.DefaultFormatter>.Convert(defaultFormatter),
                     referenceName = referenceName,
-                    submissionType = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.SubmissionType>.Convert(submissionType),
-                    scoreSortType = EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.ScoreSortType>.Convert(scoreSortType),
+                    submissionType = (live == true) ? null : EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.SubmissionType>.Convert(submissionType),
+                    scoreSortType = (live == true) ? null : EnumExtensions<AppStoreClient.GameCenterLeaderboardUpdateRequest.Data.Attributes.ScoreSortType>.Convert(scoreSortType),
                     scoreRangeStart = scoreRangeStart,
                     scoreRangeEnd = scoreRangeEnd,
                     recurrenceStartDate = recurrenceStartDate,

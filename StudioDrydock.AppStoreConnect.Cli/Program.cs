@@ -27,7 +27,7 @@ internal static class Program
 
     // --config=<config.json>
     private static readonly Option<FileInfo> ConfigOpt = new("--config",
-        getDefaultValue: () => new FileInfo(Environment.ExpandEnvironmentVariables("%USERPROFILE%/.config/AppStoreConnect.json")))
+        getDefaultValue: GetDefaultConfigFile)
     {
         Description = "JSON configuration file for authorization",
     };
@@ -76,11 +76,49 @@ internal static class Program
         Description = "Limit the number of versions to fetch for each platform",
     };
 
+    private static readonly Option<FileInfo> GoogleSecretsOpt = new("--googleClientSecrets",
+        getDefaultValue: GetDefaultGoogleClientSecretsFile)
+    {
+        Description = "Google OAuth secrets file",
+    };
+
+    private static readonly Option<DirectoryInfo> GoogleDataStoreOpt = new("--googleDataStore",
+        getDefaultValue: GetDefaultGoogleDataStoreFolder)
+    {
+        Description = "Google OAuth data store directory",
+    };
+
+    private static readonly Option<string?> SpreadsheetId = new("--spreadsheetId")
+    {
+        Description = "Google Sheets spreadsheet ID",
+    };
+
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
         WriteIndented = true
     };
+
+    private static FileInfo GetDefaultConfigFile()
+    {
+        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config");
+        Directory.CreateDirectory(folder);
+        return new FileInfo(Path.Combine(folder, "AppStoreConnect.json"));
+    }
+
+    private static FileInfo GetDefaultGoogleClientSecretsFile()
+    {
+        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config");
+        Directory.CreateDirectory(folder);
+        return new FileInfo(Path.Combine(folder, "GoogleClientSecrets.json"));
+    }
+
+    private static DirectoryInfo GetDefaultGoogleDataStoreFolder()
+    {
+        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config");
+        Directory.CreateDirectory(folder);
+        return new DirectoryInfo(Path.Combine(folder, "GoogleDataStore"));
+    }
 
     private static async Task Main(string[] args)
     {
@@ -161,11 +199,31 @@ internal static class Program
         setGameCenterCommand.SetHandler(SetGameCenter);
         rootCommand.AddCommand(setGameCenterCommand);
 
+        // put-game-center-on-sheets --input=file.json
+        var putGameCenterOnSheetsCmd = new Command("put-game-center-on-sheets", "Test Google Sheets API");
+        putGameCenterOnSheetsCmd.AddOption(InputOpt);
+        putGameCenterOnSheetsCmd.AddOption(GoogleSecretsOpt);
+        putGameCenterOnSheetsCmd.AddOption(GoogleDataStoreOpt);
+        putGameCenterOnSheetsCmd.AddOption(SpreadsheetId);
+        putGameCenterOnSheetsCmd.SetHandler(PutGameCenterOnSheets);
+        rootCommand.AddCommand(putGameCenterOnSheetsCmd);
+
+        // update-game-center-from-sheets --input=file.json --output=file.json
+        var updateGameCenterFromSheetsCmd = new Command("update-game-center-from-sheets", "Update Game Center data from Google Sheets");
+        updateGameCenterFromSheetsCmd.AddOption(InputOpt);
+        updateGameCenterFromSheetsCmd.AddOption(OutputOpt);
+        updateGameCenterFromSheetsCmd.AddOption(GoogleSecretsOpt);
+        updateGameCenterFromSheetsCmd.AddOption(GoogleDataStoreOpt);
+        updateGameCenterFromSheetsCmd.AddOption(SpreadsheetId);
+        updateGameCenterFromSheetsCmd.SetHandler(UpdateGameCenterFromSheets);
+        rootCommand.AddCommand(updateGameCenterFromSheetsCmd);
+
         await rootCommand.InvokeAsync(args);
     }
 
-    private static AppStoreClient CreateClient(InvocationContext context, out INestedLog log)
+    private static INestedLog CreateLog(InvocationContext context)
     {
+        INestedLog log;
         if (context.ParseResult.GetValueForOption(VerboseOpt))
         {
             log = new ConsoleLogger(3);
@@ -175,6 +233,11 @@ internal static class Program
             log = new ConsoleLogger(0);
         }
 
+        return log;
+    }
+
+    private static AppStoreClient CreateClient(InvocationContext context)
+    {
         var configFile = context.ParseResult.GetValueForOption(ConfigOpt) ?? throw new Exception("config.json is required");
         var tokenMaker = CreateTokenMaker(configFile);
 
@@ -247,11 +310,12 @@ internal static class Program
     // get-apps
     private static async Task GetApps(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
+        var log = CreateLog(context);
+        var api = CreateClient(context);
 
         var appInfoList = await LogEx.StdLog(
             log?.SubPath(nameof(GetApps)),
-            log => Tasks.GetAppInfoList(api, log)
+            log => AscTasks.GetAppInfoList(api, log)
         );
 
         Output(context, appInfoList);
@@ -260,17 +324,18 @@ internal static class Program
     // get-app-versions
     private static async Task GetAppVersions(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
+        var log = CreateLog(context);
+        var api = CreateClient(context);
         var ad = CreateAssetDatabaseNextToFile(context.ParseResult.GetValueForOption(OutputOpt));
 
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var platform = context.ParseResult.GetValueForOption(PlatformOpt);
         var appStoreState = context.ParseResult.GetValueForOption(AppStoreStateOpt);
         var limit = context.ParseResult.GetValueForOption(VersionLimitOpt);
 
         var app = await LogEx.StdLog(
             log?.SubPath(nameof(GetAppVersions)),
-            log => Tasks.GetApp(api, ad, appId, platform, appStoreState, limit, log)
+            log => AscTasks.GetApp(api, ad, appId, platform, appStoreState, limit, log)
         );
 
         Output(context, app);
@@ -279,16 +344,17 @@ internal static class Program
     // set-app-versions
     private static async Task SetAppVersions(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
-        var ad = CreateAssetDatabaseNextToFile(context.ParseResult.GetValueForOption(InputOpt))!;
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var log = CreateLog(context);
+        var api = CreateClient(context);
+        var ad = CreateAssetDatabaseNextToFile(context.ParseResult.GetValueForOption(InputOpt)) ?? throw new Exception($"{InputOpt.Name} is required");
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var versions = Input<App>(context);
 
         try
         {
             await LogEx.StdLog(
                 log?.SubPath(nameof(SetAppVersions)),
-                log => Tasks.PutApp(api, ad, appId, versions, log)
+                log => AscTasks.PutApp(api, ad, appId, versions, log)
             );
         }
         finally
@@ -300,13 +366,14 @@ internal static class Program
     // get-app-iaps
     private static async Task GetAppIaps(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var log = CreateLog(context);
+        var api = CreateClient(context);
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var state = context.ParseResult.GetValueForOption(IapStateOpt);
 
         var iapList = await LogEx.StdLog(
             log?.SubPath(nameof(GetAppIaps)),
-            log => Tasks.GetIaps(api, appId, state, log)
+            log => AscTasks.GetIaps(api, appId, state, log)
         );
 
         Output(context, iapList);
@@ -315,15 +382,16 @@ internal static class Program
     // set-app-iaps
     private static async Task SetAppIaps(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var log = CreateLog(context);
+        var api = CreateClient(context);
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var iaps = Input<IapList>(context);
 
         try
         {
             await LogEx.StdLog(
                 log?.SubPath(nameof(SetAppIaps)),
-                log => Tasks.PutIaps(api, appId, iaps, log)
+                log => AscTasks.PutIaps(api, appId, iaps, log)
             );
         }
         finally
@@ -335,12 +403,13 @@ internal static class Program
     // get-app-events
     private static async Task GetAppEvents(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var log = CreateLog(context);
+        var api = CreateClient(context);
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
 
         var events = await LogEx.StdLog(
             log?.SubPath(nameof(GetAppEvents)),
-            log => Tasks.GetEventList(log, api, appId)
+            log => AscTasks.GetEventList(log, api, appId)
         );
 
         Output(context, events);
@@ -349,15 +418,16 @@ internal static class Program
     // set-app-events
     private static async Task SetAppEvents(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var log = CreateLog(context);
+        var api = CreateClient(context);
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var events = Input<EventList>(context);
 
         try
         {
             await LogEx.StdLog(
                 log?.SubPath(nameof(SetAppEvents)),
-                log => Tasks.PutEventList(api, log, appId, events)
+                log => AscTasks.PutEventList(api, log, appId, events)
             );
         }
         finally
@@ -369,12 +439,13 @@ internal static class Program
     // get-game-center
     private static async Task GetGameCenter(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var log = CreateLog(context);
+        var api = CreateClient(context);
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
 
         var gc = await LogEx.StdLog(
             log?.SubPath(nameof(GetGameCenter)),
-            log => Tasks.GetGameCenter(log, api, appId)
+            log => AscTasks.GetGameCenter(log, api, appId)
         );
 
         Output(context, gc);
@@ -382,20 +453,51 @@ internal static class Program
 
     private static async Task SetGameCenter(InvocationContext context)
     {
-        var api = CreateClient(context, out var log);
-        var appId = context.ParseResult.GetValueForOption(AppIdOpt)!;
+        var log = CreateLog(context);
+        var api = CreateClient(context);
+        var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var gc = Input<GameCenter>(context);
 
         try
         {
             await LogEx.StdLog(
                 log?.SubPath(nameof(SetGameCenter)),
-                log => Tasks.PutGameCenter(api, log, appId, gc)
+                log => AscTasks.PutGameCenter(api, log, appId, gc)
             );
         }
         finally
         {
             Output(context, gc);
         }
+    }
+
+    private static async Task PutGameCenterOnSheets(InvocationContext context)
+    {
+        var log = CreateLog(context);
+        var gc = Input<GameCenter>(context);
+        var secrets = context.ParseResult.GetValueForOption(GoogleSecretsOpt) ?? throw new Exception($"{GoogleSecretsOpt.Name} is required");
+        var dataStore = context.ParseResult.GetValueForOption(GoogleDataStoreOpt) ?? throw new Exception($"{GoogleDataStoreOpt.Name} is required");
+        var spreadsheetId = context.ParseResult.GetValueForOption(SpreadsheetId);
+
+        await LogEx.StdLog(
+            log?.SubPath(nameof(PutGameCenterOnSheets)),
+            log => GoogleTasks.PutGameCenterOnSheets(gc, spreadsheetId, secrets, dataStore, log)
+        );
+    }
+
+    private static async Task UpdateGameCenterFromSheets(InvocationContext context)
+    {
+        var log = CreateLog(context);
+        var gc = Input<GameCenter>(context);
+        var secrets = context.ParseResult.GetValueForOption(GoogleSecretsOpt) ?? throw new Exception($"{GoogleSecretsOpt.Name} is required");
+        var dataStore = context.ParseResult.GetValueForOption(GoogleDataStoreOpt) ?? throw new Exception($"{GoogleDataStoreOpt.Name} is required");
+        var spreadsheetId = context.ParseResult.GetValueForOption(SpreadsheetId) ?? throw new Exception($"{SpreadsheetId.Name} is required");
+
+        await LogEx.StdLog(
+            log?.SubPath(nameof(UpdateGameCenterFromSheets)),
+            log => GoogleTasks.UpdateGameCenterFromSheets(gc, spreadsheetId, secrets, dataStore, log)
+        );
+
+        Output(context, gc);
     }
 }
