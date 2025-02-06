@@ -3,13 +3,12 @@ using Microsoft.OpenApi.Models;
 
 namespace StudioDrydock.AppStoreConnect.ApiGenerator;
 
-class ApiWriter : IDisposable
+internal class ApiWriter : IDisposable
 {
     public readonly CsWriter cs;
-
-    Dictionary<string, OpenApiSchema> schemas = [];
-    Dictionary<string, OpenApiSchema> enums = [];
-    HashSet<string> methodNames = [];
+    private readonly Dictionary<string, OpenApiSchema> schemas = [];
+    private readonly Dictionary<string, OpenApiSchema> enums = [];
+    private readonly HashSet<string> methodNames = [];
 
     public ApiWriter(TextWriter writer)
     {
@@ -72,7 +71,7 @@ class ApiWriter : IDisposable
         cs.EndLine();
     }
 
-    bool GenerateEnum(string nameHint, OpenApiSchema schema, bool trailingNewLine = true)
+    private bool GenerateEnum(string nameHint, OpenApiSchema schema, bool trailingNewLine = true)
     {
         if (schema.Type == "array")
             return GenerateEnum(nameHint, schema.Items);
@@ -83,8 +82,8 @@ class ApiWriter : IDisposable
             cs.BeginBlock($"public enum {nameHint.TitleCase()}");
             foreach (var value in schema.Enum)
             {
-                string stringValue = ((OpenApiString)value).Value;
-                string identifierValue = stringValue.MakeValidEnumIdentifier();
+                var stringValue = ((OpenApiString)value).Value;
+                var identifierValue = stringValue.MakeValidEnumIdentifier();
                 if (stringValue != identifierValue)
                     cs.WriteLine($"[EnumMember(Value = \"{stringValue}\")]");
                 cs.WriteLine($"{identifierValue},");
@@ -96,7 +95,7 @@ class ApiWriter : IDisposable
         return false;
     }
 
-    bool IsEnumCompatible(OpenApiSchema a, OpenApiSchema b)
+    private bool IsEnumCompatible(OpenApiSchema a, OpenApiSchema b)
     {
         if (a.Enum.Count != b.Enum.Count)
             return false;
@@ -111,7 +110,7 @@ class ApiWriter : IDisposable
             .Select(x => x.Value)
             .OrderBy(x => x)
             .ToArray();
-        for (int i = 0; i < valuesA.Length; ++i)
+        for (var i = 0; i < valuesA.Length; ++i)
         {
             if (valuesA[i] != valuesB[i])
                 return false;
@@ -168,7 +167,7 @@ class ApiWriter : IDisposable
         }
     }
 
-    void WriteDefaultValue(string nameHint, OpenApiSchema schema)
+    private void WriteDefaultValue(string nameHint, OpenApiSchema schema)
     {
         if (schema.Type == null && schema.OneOf.Count >= 1)
         {
@@ -218,7 +217,7 @@ class ApiWriter : IDisposable
         }
     }
 
-    void GenerateAnonymousPropertyTypes(string nameHint, OpenApiSchema schema)
+    private void GenerateAnonymousPropertyTypes(string nameHint, OpenApiSchema schema)
     {
         if (schema.Reference != null)
             return;
@@ -245,7 +244,7 @@ class ApiWriter : IDisposable
         }
     }
 
-    bool IsReferenceType(OpenApiSchema schema)
+    private bool IsReferenceType(OpenApiSchema schema)
     {
         if (schema.Type == null && schema.OneOf.Count >= 1)
         {
@@ -280,9 +279,9 @@ class ApiWriter : IDisposable
         }
     }
 
-    bool IsSuccessStatusCode(int statusCode) => statusCode >= 200 && statusCode < 300;
+    private bool IsSuccessStatusCode(int statusCode) => statusCode >= 200 && statusCode < 300;
 
-    string FormatRequestMethodName(OperationType operationType, string operationId)
+    private string FormatRequestMethodName(OperationType operationType, string operationId)
     {
         //string method = operationType.ToString();
         //if (operationId.Contains('-'))
@@ -297,7 +296,7 @@ class ApiWriter : IDisposable
         return $"{operationId}";
     }
 
-    void GenerateTopLevelEnum(string name, OpenApiSchema schema)
+    private void GenerateTopLevelEnum(string name, OpenApiSchema schema)
     {
         if (enums.TryGetValue(name, out var existing))
         {
@@ -310,7 +309,7 @@ class ApiWriter : IDisposable
             enums[name] = schema;
     }
 
-    void GenerateTopLevelClass(string name, OpenApiSchema schema)
+    private void GenerateTopLevelClass(string name, OpenApiSchema schema)
     {
         if (schemas.TryGetValue(name, out var existing))
         {
@@ -329,8 +328,8 @@ class ApiWriter : IDisposable
         if (response == null)
             throw new NotSupportedException($"No response with success status code for {operation.OperationId}");
 
-        string methodName = FormatRequestMethodName(operationType, operation.OperationId);
-        string methodNameSuffix = "";
+        var methodName = FormatRequestMethodName(operationType, operation.OperationId);
+        var methodNameSuffix = "";
 
         // check if we already have a method with the same name, if we do, append the version number as a suffix:
         if (!methodNames.Add($"{operationType}{operation.OperationId}"))
@@ -343,7 +342,7 @@ class ApiWriter : IDisposable
 
         // Request type
         OpenApiSchema? requestSchema = null;
-        string requestSchemaName = $"{methodName}Request{methodNameSuffix}";
+        var requestSchemaName = $"{methodName}Request{methodNameSuffix}";
         if (operation.RequestBody != null && operation.RequestBody.Content.TryGetValue("application/json", out var requestBodyContent))
         {
             requestSchema = requestBodyContent.Schema;
@@ -354,7 +353,7 @@ class ApiWriter : IDisposable
 
         // Response type
         OpenApiSchema? responseSchema = null;
-        string responseSchemaName = $"{methodName}Response{methodNameSuffix}";
+        var responseSchemaName = $"{methodName}Response{methodNameSuffix}";
         if (response.Content.TryGetValue("application/json", out var responseContent))
         {
             responseSchema = responseContent.Schema;
@@ -480,7 +479,7 @@ class ApiWriter : IDisposable
         }
     }
 
-    void WriteParameterToString(OpenApiParameter param)
+    private void WriteParameterToString(OpenApiParameter param)
     {
         var schema = param.Schema;
         if (schema.Type == null && schema.OneOf.Count >= 1)

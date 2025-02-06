@@ -1,14 +1,10 @@
-using System.IO;
-using System.Net;
-using Microsoft.OpenApi.Models;
-
 namespace StudioDrydock.AppStoreConnect.ApiGenerator;
 
-class CsWriter
+internal class CsWriter
 {
-    TextWriter writer;
-    int indent = 0;
-    bool commaRequired;
+    private readonly TextWriter writer;
+    private int indent = 0;
+    private bool commaRequired;
 
     public CsWriter(TextWriter writer)
     {
@@ -17,7 +13,7 @@ class CsWriter
 
     public void BeginLine()
     {
-        for (int i = 0; i < indent; ++i)
+        for (var i = 0; i < indent; ++i)
             writer.Write("    ");
     }
 

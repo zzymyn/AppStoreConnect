@@ -1,5 +1,4 @@
-﻿using Microsoft.OpenApi;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
 using StudioDrydock.AppStoreConnect.ApiGenerator;
 

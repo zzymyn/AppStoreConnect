@@ -1,15 +1,8 @@
-using System;
-using System.Diagnostics;
 using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using Microsoft.IdentityModel.Tokens;
-using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.OpenSsl;
 using StudioDrydock.AppStoreConnect.Core;
 
 namespace StudioDrydock.AppStoreConnect.Api;
@@ -37,7 +30,7 @@ public partial class AppStoreClient
 
     private static StringContent Serialize(object obj)
     {
-        string text = JsonSerializer.Serialize(obj, options: JsonSerializerOptions);
+        var text = JsonSerializer.Serialize(obj, options: JsonSerializerOptions);
         return new StringContent(text, encoding: Encoding.UTF8, mediaType: "application/json");
     }
 
@@ -50,7 +43,7 @@ public partial class AppStoreClient
     {
         var response = await SendInternal(request, log);
 
-        string responseText = await response.Content.ReadAsStringAsync();
+        var responseText = await response.Content.ReadAsStringAsync();
         var responseObject = JsonSerializer.Deserialize<T>(responseText);
         if (responseObject == null)
         {

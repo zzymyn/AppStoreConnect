@@ -4,8 +4,8 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using StudioDrydock.AppStoreConnect.Api;
-using StudioDrydock.AppStoreConnect.Lib;
 using StudioDrydock.AppStoreConnect.Core;
+using StudioDrydock.AppStoreConnect.Lib;
 using StudioDrydock.AppStoreConnect.Model.Files;
 
 namespace StudioDrydock.AppStoreConnect.Cli;

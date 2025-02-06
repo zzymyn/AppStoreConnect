@@ -12,7 +12,7 @@ public static class StringExtensions
     // Sanitize an OpenAPI parameter like "fields[appClipHeaderImages]" into "fieldsAppClipHeaderImages"
     public static string MakeValidIdentifier(this string @this)
     {
-        bool upper = false;
+        var upper = false;
         var sb = new StringBuilder();
         foreach (var c in @this)
         {

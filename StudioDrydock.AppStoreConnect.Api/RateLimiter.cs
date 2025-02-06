@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudioDrydock.AppStoreConnect.Api;
+﻿namespace StudioDrydock.AppStoreConnect.Api;
 
 internal sealed class RateLimiter
 {
