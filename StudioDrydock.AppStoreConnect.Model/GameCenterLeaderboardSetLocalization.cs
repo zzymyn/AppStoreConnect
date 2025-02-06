@@ -1,75 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudioDrydock.AppStoreConnect.Api;
+﻿using StudioDrydock.AppStoreConnect.Api;
 
-namespace StudioDrydock.AppStoreConnect.Model
+namespace StudioDrydock.AppStoreConnect.Model;
+
+public class GameCenterLeaderboardSetLocalization
 {
-    public class GameCenterLeaderboardSetLocalization
-	{
-        public string? id { get; set; }
-        public string? locale { get; set; }
-        public string? name { get; set; }
-        public GameCenterLeaderboardSetImage? image { get; set; }
+    public string? id { get; set; }
+    public string? locale { get; set; }
+    public string? name { get; set; }
+    public GameCenterLeaderboardSetImage? image { get; set; }
 
-		public GameCenterLeaderboardSetLocalization()
-		{
-		}
+    public GameCenterLeaderboardSetLocalization()
+    {
+    }
 
-		public GameCenterLeaderboardSetLocalization(AppStoreClient.GameCenterLeaderboardSetLocalization data)
+    public GameCenterLeaderboardSetLocalization(AppStoreClient.GameCenterLeaderboardSetLocalization data)
+    {
+        id = data.id;
+        locale = data.attributes?.locale;
+        name = data.attributes?.name;
+    }
+
+    public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboardSetLocalization data)
+    {
+        id = data.id;
+        locale = data.attributes?.locale;
+        name = data.attributes?.name;
+    }
+
+    public AppStoreClient.GameCenterLeaderboardSetLocalizationCreateRequest CreateCreateRequest(string lbsetId)
+    {
+        return new()
         {
-            id = data.id;
-            locale = data.attributes?.locale;
-            name = data.attributes?.name;
-        }
+            data = new()
+            {
+                attributes = new()
+                {
+                    locale = locale!,
+                    name = name!,
+                },
+                relationships = new()
+                {
+                    gameCenterLeaderboardSet = new()
+                    {
+                        data = new()
+                        {
+                            id = lbsetId
+                        }
+                    }
+                }
+            }
+        };
+    }
 
-		public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboardSetLocalization data)
-		{
-			id = data.id;
-			locale = data.attributes?.locale;
-			name = data.attributes?.name;
-		}
-
-		public AppStoreClient.GameCenterLeaderboardSetLocalizationCreateRequest CreateCreateRequest(string lbsetId)
-		{
-			return new()
-			{
-				data = new()
-				{
-					attributes = new()
-					{
-						locale = locale!,
-						name = name!,
-					},
-					relationships = new()
-					{
-						gameCenterLeaderboardSet = new()
-						{
-							data = new()
-							{
-								id = lbsetId
-							}
-						}
-					}
-				}
-			};
-		}
-
-		public AppStoreClient.GameCenterLeaderboardSetLocalizationUpdateRequest CreateUpdateRequest()
-		{
-			return new()
-			{
-				data = new()
-				{
-					id = id!,
-					attributes = new()
-					{
-						name = name
-					}
-				}
-			};
-		}
-	}
+    public AppStoreClient.GameCenterLeaderboardSetLocalizationUpdateRequest CreateUpdateRequest()
+    {
+        return new()
+        {
+            data = new()
+            {
+                id = id!,
+                attributes = new()
+                {
+                    name = name
+                }
+            }
+        };
+    }
 }

@@ -1,79 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudioDrydock.AppStoreConnect.Api;
+﻿using StudioDrydock.AppStoreConnect.Api;
 
-namespace StudioDrydock.AppStoreConnect.Model
+namespace StudioDrydock.AppStoreConnect.Model;
+
+public class Screenshot
 {
-    public class Screenshot
+    public string? id { get; set; }
+    public int? fileSize { get; set; }
+    public string? fileName { get; set; }
+    public string? sourceFileChecksum { get; set; }
+
+    public Screenshot()
     {
-        public string? id { get; set; }
-        public int? fileSize { get; set; }
-        public string? fileName { get; set; }
-        public string? sourceFileChecksum { get; set; }
+    }
 
-        public Screenshot()
-        {
-        }
+    public Screenshot(AppStoreClient.AppScreenshot data)
+    {
+        id = data.id;
+        fileSize = data.attributes?.fileSize;
+        fileName = data.attributes?.fileName;
+        sourceFileChecksum = data.attributes?.sourceFileChecksum;
+    }
 
-        public Screenshot(AppStoreClient.AppScreenshot data)
-        {
-            id = data.id;
-            fileSize = data.attributes?.fileSize;
-            fileName = data.attributes?.fileName;
-            sourceFileChecksum = data.attributes?.sourceFileChecksum;
-        }
+    public void UpdateWithResponse(AppStoreClient.AppScreenshot data)
+    {
+        id = data.id;
+        fileSize = data.attributes?.fileSize;
+        fileName = data.attributes?.fileName;
+        sourceFileChecksum = data.attributes?.sourceFileChecksum;
+    }
 
-		public void UpdateWithResponse(AppStoreClient.AppScreenshot data)
+    public AppStoreClient.AppScreenshotUpdateRequest CreateUploadCompleteRequest(string fileHash)
+    {
+        return new()
         {
-            id = data.id;
-            fileSize = data.attributes?.fileSize;
-            fileName = data.attributes?.fileName;
-            sourceFileChecksum = data.attributes?.sourceFileChecksum;
-        }
-
-		public AppStoreClient.AppScreenshotUpdateRequest CreateUploadCompleteRequest(string fileHash)
-        {
-            return new()
+            data = new()
             {
-                data = new()
+                id = id!,
+                attributes = new()
                 {
-                    id = id!,
-                    attributes = new()
-                    {
-                        uploaded = true,
-                        sourceFileChecksum = fileHash,
-                    }
+                    uploaded = true,
+                    sourceFileChecksum = fileHash,
                 }
-            };
-        }
+            }
+        };
+    }
 
-		public AppStoreClient.AppScreenshotCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
+    public AppStoreClient.AppScreenshotCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
+    {
+        return new()
         {
-            return new()
+            data = new()
             {
-                data = new()
+                attributes = new()
                 {
-                    attributes = new()
+                    fileName = fileName,
+                    fileSize = fileSize,
+                },
+                relationships = new()
+                {
+                    appScreenshotSet = new()
                     {
-                        fileName = fileName,
-                        fileSize = fileSize,
-                    },
-                    relationships = new()
-                    {
-                        appScreenshotSet = new()
+                        data = new()
                         {
-                            data = new()
-                            {
-                                id = setId,
-                            }
+                            id = setId,
                         }
                     }
                 }
-            };
-        }
-
+            }
+        };
     }
+
 }

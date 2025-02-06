@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudioDrydock.AppStoreConnect.Api\StudioDrydock.AppStoreConnect.Api.csproj" />
+    <ProjectReference Include="..\StudioDrydock.AppStoreConnect.ApiTasks\StudioDrydock.AppStoreConnect.ApiTasks.csproj" />
     <ProjectReference Include="..\StudioDrydock.AppStoreConnect.Model\StudioDrydock.AppStoreConnect.Model.csproj" />
   </ItemGroup>
 

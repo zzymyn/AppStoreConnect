@@ -1,96 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudioDrydock.AppStoreConnect.Api;
+﻿using StudioDrydock.AppStoreConnect.Api;
 
-namespace StudioDrydock.AppStoreConnect.Model
+namespace StudioDrydock.AppStoreConnect.Model;
+
+public class AppPreview
 {
-    public class AppPreview
+    public string? id { get; set; }
+    public int? fileSize { get; set; }
+    public string? fileName { get; set; }
+    public string? sourceFileChecksum { get; set; }
+    public string? previewFrameTimeCode { get; set; }
+
+    public AppPreview()
     {
-        public string? id { get; set; }
-        public int? fileSize { get; set; }
-        public string? fileName { get; set; }
-        public string? sourceFileChecksum { get; set; }
-        public string? previewFrameTimeCode { get; set; }
+    }
 
-        public AppPreview()
-        {
-        }
+    public AppPreview(AppStoreClient.AppPreview data)
+    {
+        id = data.id;
+        fileSize = data.attributes?.fileSize;
+        fileName = data.attributes?.fileName;
+        sourceFileChecksum = data.attributes?.sourceFileChecksum;
+        previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
+    }
 
-        public AppPreview(AppStoreClient.AppPreview data)
-        {
-            id = data.id;
-            fileSize = data.attributes?.fileSize;
-            fileName = data.attributes?.fileName;
-            sourceFileChecksum = data.attributes?.sourceFileChecksum;
-            previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
-        }
+    public void UpdateWithResponse(AppStoreClient.AppPreview data)
+    {
+        id = data.id;
+        fileSize = data.attributes?.fileSize;
+        fileName = data.attributes?.fileName;
+        sourceFileChecksum = data.attributes?.sourceFileChecksum;
+        previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
+    }
 
-		public void UpdateWithResponse(AppStoreClient.AppPreview data)
+    public AppStoreClient.AppPreviewUpdateRequest CreateUpdateRequest()
+    {
+        return new()
         {
-            id = data.id;
-            fileSize = data.attributes?.fileSize;
-            fileName = data.attributes?.fileName;
-            sourceFileChecksum = data.attributes?.sourceFileChecksum;
-            previewFrameTimeCode = data.attributes?.previewFrameTimeCode;
-        }
-
-		public AppStoreClient.AppPreviewUpdateRequest CreateUpdateRequest()
-        {
-            return new()
+            data = new()
             {
-                data = new()
+                id = id!,
+                attributes = new()
                 {
-                    id = id!,
-					attributes = new()
-                    {
-                        previewFrameTimeCode = previewFrameTimeCode
-                    }
+                    previewFrameTimeCode = previewFrameTimeCode
                 }
-            };
-        }
+            }
+        };
+    }
 
-		public AppStoreClient.AppPreviewUpdateRequest CreateUploadCompleteRequest(string fileHash)
+    public AppStoreClient.AppPreviewUpdateRequest CreateUploadCompleteRequest(string fileHash)
+    {
+        return new()
         {
-            return new()
+            data = new()
             {
-                data = new()
+                id = id!,
+                attributes = new()
                 {
-                    id = id!,
-                    attributes = new()
-                    {
-                        uploaded = true,
-                        sourceFileChecksum = fileHash,
-                    }
+                    uploaded = true,
+                    sourceFileChecksum = fileHash,
                 }
-            };
-        }
+            }
+        };
+    }
 
-		public AppStoreClient.AppPreviewCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
+    public AppStoreClient.AppPreviewCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
+    {
+        return new()
         {
-            return new()
+            data = new()
             {
-                data = new()
+                attributes = new()
                 {
-                    attributes = new()
+                    fileName = fileName,
+                    fileSize = fileSize,
+                },
+                relationships = new()
+                {
+                    appPreviewSet = new()
                     {
-                        fileName = fileName,
-                        fileSize = fileSize,
-                    },
-                    relationships = new()
-                    {
-                        appPreviewSet = new()
+                        data = new()
                         {
-                            data = new()
-                            {
-                                id = setId,
-                            }
+                            id = setId,
                         }
                     }
                 }
-            };
-        }
+            }
+        };
     }
 }

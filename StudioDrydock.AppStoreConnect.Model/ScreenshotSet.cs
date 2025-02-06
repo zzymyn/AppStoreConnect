@@ -1,67 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudioDrydock.AppStoreConnect.Api;
+﻿using StudioDrydock.AppStoreConnect.Api;
 
-namespace StudioDrydock.AppStoreConnect.Model
+namespace StudioDrydock.AppStoreConnect.Model;
+
+public class ScreenshotSet
 {
-    public class ScreenshotSet
+    public string? id { get; set; }
+    public AppStoreClient.AppScreenshotSet.Attributes.ScreenshotDisplayType? screenshotDisplayType { get; set; }
+    public Screenshot[]? screenshots { get; set; }
+
+    public ScreenshotSet()
     {
-        public string? id { get; set; }
-        public AppStoreClient.AppScreenshotSet.Attributes.ScreenshotDisplayType? screenshotDisplayType { get; set; }
-        public Screenshot[]? screenshots { get; set; }
+    }
 
-        public ScreenshotSet()
-        {
-        }
+    public ScreenshotSet(AppStoreClient.AppScreenshotSet data)
+    {
+        id = data.id;
+        screenshotDisplayType = data.attributes?.screenshotDisplayType;
+    }
 
-        public ScreenshotSet(AppStoreClient.AppScreenshotSet data)
-        {
-            id = data.id;
-            screenshotDisplayType = data.attributes?.screenshotDisplayType;
-        }
+    public void UpdateWithResponse(AppStoreClient.AppScreenshotSet data)
+    {
+        id = data.id;
+        screenshotDisplayType = data.attributes?.screenshotDisplayType;
+    }
 
-		public void UpdateWithResponse(AppStoreClient.AppScreenshotSet data)
+    public AppStoreClient.AppScreenshotSetCreateRequest CreateCreateRequest(string id)
+    {
+        return new()
         {
-            id = data.id;
-            screenshotDisplayType = data.attributes?.screenshotDisplayType;
-        }
-
-		public AppStoreClient.AppScreenshotSetCreateRequest CreateCreateRequest(string id)
-        {
-            return new()
+            data = new()
             {
-                data = new()
+                attributes = new()
                 {
-                    attributes = new()
+                    screenshotDisplayType = EnumExtensions<AppStoreClient.AppScreenshotSetCreateRequest.Data.Attributes.ScreenshotDisplayType>.Convert(screenshotDisplayType)!.Value,
+                },
+                relationships = new()
+                {
+                    appStoreVersionLocalization = new()
                     {
-                        screenshotDisplayType = EnumExtensions<AppStoreClient.AppScreenshotSetCreateRequest.Data.Attributes.ScreenshotDisplayType>.Convert(screenshotDisplayType)!.Value,
-                    },
-                    relationships = new()
-                    {
-                        appStoreVersionLocalization = new()
+                        data = new()
                         {
-                            data = new()
-                            {
-                                id = id,
-                            }
+                            id = id,
                         }
                     }
                 }
-            };
-        }
+            }
+        };
+    }
 
-		public AppStoreClient.AppScreenshotSetAppScreenshotsLinkagesRequest CreateUpdateRequest()
+    public AppStoreClient.AppScreenshotSetAppScreenshotsLinkagesRequest CreateUpdateRequest()
+    {
+        return new()
         {
-            return new()
+            data = screenshots!.Select(a => new AppStoreClient.AppScreenshotSetAppScreenshotsLinkagesRequest.Data
             {
-                data = screenshots!.Select(a => new AppStoreClient.AppScreenshotSetAppScreenshotsLinkagesRequest.Data
-                {
-                    id = a.id!
-                }).ToArray(),
-            };
-        }
+                id = a.id!
+            }).ToArray(),
+        };
     }
 }

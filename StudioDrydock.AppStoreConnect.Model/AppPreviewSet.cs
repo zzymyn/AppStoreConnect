@@ -1,67 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudioDrydock.AppStoreConnect.Api;
+﻿using StudioDrydock.AppStoreConnect.Api;
 
-namespace StudioDrydock.AppStoreConnect.Model
+namespace StudioDrydock.AppStoreConnect.Model;
+
+public class AppPreviewSet
 {
-    public class AppPreviewSet
+    public string? id { get; set; }
+    public AppStoreClient.AppPreviewSet.Attributes.PreviewType? previewType { get; set; }
+    public AppPreview[]? appPreviews { get; set; }
+
+    public AppPreviewSet()
     {
-        public string? id { get; set; }
-        public AppStoreClient.AppPreviewSet.Attributes.PreviewType? previewType { get; set; }
-        public AppPreview[]? appPreviews { get; set; }
+    }
 
-        public AppPreviewSet()
-        {
-        }
+    public AppPreviewSet(AppStoreClient.AppPreviewSet data)
+    {
+        id = data.id;
+        previewType = data.attributes?.previewType;
+    }
 
-        public AppPreviewSet(AppStoreClient.AppPreviewSet data)
-        {
-            id = data.id;
-            previewType = data.attributes?.previewType;
-        }
+    public void UpdateWithResponse(AppStoreClient.AppPreviewSet data)
+    {
+        id = data.id;
+        previewType = data.attributes?.previewType;
+    }
 
-		public void UpdateWithResponse(AppStoreClient.AppPreviewSet data)
+    public AppStoreClient.AppPreviewSetCreateRequest CreateCreateRequest(string id)
+    {
+        return new()
         {
-            id = data.id;
-            previewType = data.attributes?.previewType;
-        }
-
-		public AppStoreClient.AppPreviewSetCreateRequest CreateCreateRequest(string id)
-        {
-            return new()
+            data = new()
             {
-                data = new()
+                attributes = new()
                 {
-                    attributes = new()
+                    previewType = EnumExtensions<AppStoreClient.AppPreviewSetCreateRequest.Data.Attributes.PreviewType>.Convert(previewType)!.Value,
+                },
+                relationships = new()
+                {
+                    appStoreVersionLocalization = new()
                     {
-                        previewType = EnumExtensions<AppStoreClient.AppPreviewSetCreateRequest.Data.Attributes.PreviewType>.Convert(previewType)!.Value,
-                    },
-                    relationships = new()
-                    {
-                        appStoreVersionLocalization = new()
+                        data = new()
                         {
-                            data = new()
-                            {
-                                id = id,
-                            }
+                            id = id,
                         }
                     }
                 }
-            };
-        }
+            }
+        };
+    }
 
-		public AppStoreClient.AppPreviewSetAppPreviewsLinkagesRequest CreateUpdateRequest()
+    public AppStoreClient.AppPreviewSetAppPreviewsLinkagesRequest CreateUpdateRequest()
+    {
+        return new()
         {
-			return new()
+            data = appPreviews!.Select(a => new AppStoreClient.AppPreviewSetAppPreviewsLinkagesRequest.Data
             {
-                data = appPreviews!.Select(a => new AppStoreClient.AppPreviewSetAppPreviewsLinkagesRequest.Data
-                {
-                    id = a.id!,
-				}).ToArray(),
-            };
-        }
+                id = a.id!,
+            }).ToArray(),
+        };
     }
 }

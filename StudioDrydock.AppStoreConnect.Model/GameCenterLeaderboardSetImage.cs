@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudioDrydock.AppStoreConnect.Api;
+﻿using StudioDrydock.AppStoreConnect.Api;
 
-namespace StudioDrydock.AppStoreConnect.Model
+namespace StudioDrydock.AppStoreConnect.Model;
+
+public class GameCenterLeaderboardSetImage
 {
-    public class GameCenterLeaderboardSetImage
-	{
-        public string? id { get; set; }
-        public int? fileSize { get; set; }
-        public string? fileName { get; set; }
+    public string? id { get; set; }
+    public int? fileSize { get; set; }
+    public string? fileName { get; set; }
 
-        public GameCenterLeaderboardSetImage()
-        {
-        }
+    public GameCenterLeaderboardSetImage()
+    {
+    }
 
-        public GameCenterLeaderboardSetImage(AppStoreClient.GameCenterLeaderboardSetImage data)
-        {
-            id = data.id;
-            fileSize = data.attributes?.fileSize;
-            fileName = data.attributes?.fileName;
-        }
+    public GameCenterLeaderboardSetImage(AppStoreClient.GameCenterLeaderboardSetImage data)
+    {
+        id = data.id;
+        fileSize = data.attributes?.fileSize;
+        fileName = data.attributes?.fileName;
     }
 }

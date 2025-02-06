@@ -1,7 +1,6 @@
-﻿namespace StudioDrydock.AppStoreConnect.Api
+﻿namespace StudioDrydock.AppStoreConnect.Api;
+
+public interface IAppStoreClientTokenMaker
 {
-	public interface IAppStoreClientTokenMaker
-	{
-		string MakeToken();
-	}
+    string MakeToken();
 }

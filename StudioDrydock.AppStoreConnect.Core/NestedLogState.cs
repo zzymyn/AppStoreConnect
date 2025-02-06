@@ -1,19 +1,18 @@
-﻿namespace StudioDrydock.AppStoreConnect.Core
-{
-    public enum NestedLogState
-    {
-        Pending,
-        Processing,
-        Success,
-        Failure,
-        Warning,
-    }
+﻿namespace StudioDrydock.AppStoreConnect.Core;
 
-    public enum NestedLogLevel
-    {
-        Error,
-        Warning,
-        Note,
-        VerboseNote,
-    }
+public enum NestedLogState
+{
+    Pending,
+    Processing,
+    Success,
+    Failure,
+    Warning,
+}
+
+public enum NestedLogLevel
+{
+    Error,
+    Warning,
+    Note,
+    VerboseNote,
 }
