@@ -5,7 +5,7 @@ using StudioDrydock.AppStoreConnect.Core;
 using StudioDrydock.AppStoreConnect.Model;
 using StudioDrydock.AppStoreConnect.Model.Files;
 
-namespace StudioDrydock.AppStoreConnect.ApiTasks;
+namespace StudioDrydock.AppStoreConnect.Lib;
 
 public static class Tasks
 {

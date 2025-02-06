@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace StudioDrydock.AppStoreConnect.ApiTasks;
+namespace StudioDrydock.AppStoreConnect.Lib;
 
 public class AssetDatabase
 {

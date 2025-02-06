@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioDrydock.AppStoreConne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioDrydock.AppStoreConnect.Core", "StudioDrydock.AppStoreConnect.Core\StudioDrydock.AppStoreConnect.Core.csproj", "{755ADF88-5142-4CF1-8536-EE916ACF2066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioDrydock.AppStoreConnect.ApiTasks", "StudioDrydock.AppStoreConnect.ApiTasks\StudioDrydock.AppStoreConnect.ApiTasks.csproj", "{B7D6B1AC-ABD5-4A8A-BC07-15E94C4C396C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioDrydock.AppStoreConnect.Lib", "StudioDrydock.AppStoreConnect.Lib\StudioDrydock.AppStoreConnect.Lib.csproj", "{B7D6B1AC-ABD5-4A8A-BC07-15E94C4C396C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
