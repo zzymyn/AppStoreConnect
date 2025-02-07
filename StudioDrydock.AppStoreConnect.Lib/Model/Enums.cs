@@ -11,7 +11,7 @@ public static class EnumExtensions<Dest>
             return null;
         }
 
-        string? name = Enum.GetName(src.Value);
+        var name = Enum.GetName(src.Value);
 
         if (name == null)
         {
