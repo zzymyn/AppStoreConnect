@@ -4,9 +4,8 @@ using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using StudioDrydock.AppStoreConnect.Api;
-using StudioDrydock.AppStoreConnect.Core;
-using StudioDrydock.AppStoreConnect.Model;
-using StudioDrydock.AppStoreConnect.Model.Files;
+using StudioDrydock.AppStoreConnect.Lib.Model;
+using StudioDrydock.AppStoreConnect.Lib.Files;
 
 namespace StudioDrydock.AppStoreConnect.Lib;
 
@@ -18,15 +17,15 @@ public static class GoogleTasks
 
         if (string.IsNullOrEmpty(spreadsheetId))
         {
-            log?.Log(NestedLogLevel.Note, "No spreadsheet ID provided. Creating a new spreadsheet...");
+            log?.Log(LogLevel.Note, "No spreadsheet ID provided. Creating a new spreadsheet...");
             spreadsheetId = await CreateSpreadsheet(log, service);
             var spreadsheetUri = new Uri($"https://docs.google.com/spreadsheets/d/{spreadsheetId}");
-            log?.Log(NestedLogLevel.Note, $"Spreadsheet created! ID: {spreadsheetId}");
-            log?.Log(NestedLogLevel.Note, $"Link: {spreadsheetUri}");
+            log?.Log(LogLevel.Note, $"Spreadsheet created! ID: {spreadsheetId}");
+            log?.Log(LogLevel.Note, $"Link: {spreadsheetUri}");
         }
         else
         {
-            log?.Log(NestedLogLevel.Note, $"Using existing spreadsheet: {spreadsheetId}");
+            log?.Log(LogLevel.Note, $"Using existing spreadsheet: {spreadsheetId}");
         }
 
         var spreadsheet = await service.Spreadsheets.Get(spreadsheetId).ExecuteAsync();
@@ -66,7 +65,7 @@ public static class GoogleTasks
         var secrets = await GoogleClientSecrets.FromFileAsync(clientSecretsFile.FullName);
         var fileDataStore = new FileDataStore(dataStoreDir.FullName, true);
 
-        log?.Log(NestedLogLevel.VerboseNote, "Logging in...");
+        log?.Log(LogLevel.VerboseNote, "Logging in...");
 
         var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
             secrets.Secrets,
@@ -75,7 +74,7 @@ public static class GoogleTasks
             CancellationToken.None,
             fileDataStore);
 
-        log?.Log(NestedLogLevel.Note, $"Successfully logged in as {credential.UserId}");
+        log?.Log(LogLevel.Note, $"Successfully logged in as {credential.UserId}");
 
         var service = new SheetsService(new BaseClientService.Initializer()
         {
@@ -103,12 +102,12 @@ public static class GoogleTasks
 
     private static async Task EnsureSheetCreated(SheetsService service, string spreadsheetId, string sheetName, INestedLog? log, Spreadsheet spreadsheet)
     {
-        log?.Log(NestedLogLevel.Note, $"Checking if sheet exists: {sheetName}");
+        log?.Log(LogLevel.Note, $"Checking if sheet exists: {sheetName}");
         var sheet = spreadsheet.Sheets.FirstOrDefault(s => s.Properties.Title == sheetName);
 
         if (sheet == null)
         {
-            log?.Log(NestedLogLevel.Note, $"Creating sheet: {sheetName}");
+            log?.Log(LogLevel.Note, $"Creating sheet: {sheetName}");
 
             var addSheetRequest = new Request
             {
@@ -127,17 +126,17 @@ public static class GoogleTasks
 
             await service.Spreadsheets.BatchUpdate(batchUpdateAdd, spreadsheetId).ExecuteAsync();
 
-            log?.Log(NestedLogLevel.Note, $"Sheet created: {sheetName}");
+            log?.Log(LogLevel.Note, $"Sheet created: {sheetName}");
         }
         else
         {
-            log?.Log(NestedLogLevel.Note, $"Sheet already exists, no need to create: {sheetName}");
+            log?.Log(LogLevel.Note, $"Sheet already exists, no need to create: {sheetName}");
         }
     }
 
     private static async Task WriteSheetData(IList<IList<object>> data, SheetsService service, string spreadsheetId, string sheetName, INestedLog? log)
     {
-        log?.Log(NestedLogLevel.Note, $"Writing data to {sheetName}...");
+        log?.Log(LogLevel.Note, $"Writing data to {sheetName}...");
 
         var range = $"{sheetName}"; // overwrite whole sheet
 
@@ -153,7 +152,7 @@ public static class GoogleTasks
         updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
         await updateRequest.ExecuteAsync();
 
-        log?.Log(NestedLogLevel.Note, $"Data written to {sheetName}");
+        log?.Log(LogLevel.Note, $"Data written to {sheetName}");
     }
 
     private static List<IList<object>> CreateAchievementTable(GameCenter gc)
@@ -228,7 +227,7 @@ public static class GoogleTasks
 
             if (vendorIdentifier == null)
             {
-                log?.Log(NestedLogLevel.Warning, $"Row {r + 1} has no vendorIdentifier, skipping.");
+                log?.Log(LogLevel.Warning, $"Row {r + 1} has no vendorIdentifier, skipping.");
                 continue;
             }
 
@@ -344,7 +343,7 @@ public static class GoogleTasks
 
             if (vendorIdentifier == null)
             {
-                log?.Log(NestedLogLevel.Warning, $"Row {r + 1} has no vendorIdentifier, skipping.");
+                log?.Log(LogLevel.Warning, $"Row {r + 1} has no vendorIdentifier, skipping.");
                 continue;
             }
 

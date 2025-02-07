@@ -17,7 +17,6 @@ internal class ApiWriter : IDisposable
         cs.WriteLine();
         cs.WriteLine("using System.Runtime.Serialization;");
         cs.WriteLine("using System.Text.Json.Serialization;");
-        cs.WriteLine("using StudioDrydock.AppStoreConnect.Core;");
         cs.WriteLine();
         cs.WriteLine("namespace StudioDrydock.AppStoreConnect.Api;");
         cs.WriteLine();
@@ -422,7 +421,7 @@ internal class ApiWriter : IDisposable
         }
 
         cs.WriteCommaIfRequired();
-        cs.Write("INestedLog? log = null");
+        cs.Write("ILog? log = null");
 
         cs.Write(")");
         cs.EndLine();

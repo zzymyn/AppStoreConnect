@@ -4,9 +4,8 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using StudioDrydock.AppStoreConnect.Api;
-using StudioDrydock.AppStoreConnect.Core;
 using StudioDrydock.AppStoreConnect.Lib;
-using StudioDrydock.AppStoreConnect.Model.Files;
+using StudioDrydock.AppStoreConnect.Lib.Files;
 
 namespace StudioDrydock.AppStoreConnect.Cli;
 
@@ -17,10 +16,15 @@ internal static class Program
         @"(by default in ~/.config/AppStoreConnect.json) with the following structure:\n" +
         @"\n" +
         @"  {\n" +
+        @"    ""isUser"": false,\n" +
         @"    ""keyId"": ""xxxxxxxxxx"",\n" +
         @"    ""keyPath"": ""AppStoreConnect_xxxxxxxxxx.p8"",\n" +
         @"    ""issuerId"": ""xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx""\n" +
         @"  }\n" +
+        @"\n" +
+        @"For a user token, set isUser to true and issuerId to null. For a team token, set isUser to false\n" +
+        @"and issuerId to the issuer ID of the team. The keyPath should be the name of the key file, and\n" +
+        @"keyId should be the key ID. The keyPath is relative to the directory of the config file.\n" +
         @"\n" +
         @"You can obtain these values, and the key file, from the Keys section in \n" +
         @"https://appstoreconnect.apple.com/access/api";
@@ -314,9 +318,9 @@ internal static class Program
         var api = CreateClient(context);
 
         var appInfoList = await LogEx.StdLog(
-            log?.SubPath(nameof(GetApps)),
-            log => AscTasks.GetAppInfoList(api, log)
-        );
+            log,
+            nameof(GetApps),
+            log => AscTasks.GetAppInfoList(api, log));
 
         Output(context, appInfoList);
     }
@@ -334,9 +338,9 @@ internal static class Program
         var limit = context.ParseResult.GetValueForOption(VersionLimitOpt);
 
         var app = await LogEx.StdLog(
-            log?.SubPath(nameof(GetAppVersions)),
-            log => AscTasks.GetApp(api, ad, appId, platform, appStoreState, limit, log)
-        );
+            log,
+            nameof(GetAppVersions),
+            log => AscTasks.GetApp(api, ad, appId, platform, appStoreState, limit, log));
 
         Output(context, app);
     }
@@ -353,9 +357,9 @@ internal static class Program
         try
         {
             await LogEx.StdLog(
-                log?.SubPath(nameof(SetAppVersions)),
-                log => AscTasks.PutApp(api, ad, appId, versions, log)
-            );
+                log,
+                nameof(SetAppVersions),
+                log => AscTasks.PutApp(api, ad, appId, versions, log));
         }
         finally
         {
@@ -372,9 +376,9 @@ internal static class Program
         var state = context.ParseResult.GetValueForOption(IapStateOpt);
 
         var iapList = await LogEx.StdLog(
-            log?.SubPath(nameof(GetAppIaps)),
-            log => AscTasks.GetIaps(api, appId, state, log)
-        );
+            log,
+            nameof(GetAppIaps),
+            log => AscTasks.GetIaps(api, appId, state, log));
 
         Output(context, iapList);
     }
@@ -390,9 +394,9 @@ internal static class Program
         try
         {
             await LogEx.StdLog(
-                log?.SubPath(nameof(SetAppIaps)),
-                log => AscTasks.PutIaps(api, appId, iaps, log)
-            );
+                log,
+                nameof(SetAppIaps),
+                log => AscTasks.PutIaps(api, appId, iaps, log));
         }
         finally
         {
@@ -408,9 +412,9 @@ internal static class Program
         var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
 
         var events = await LogEx.StdLog(
-            log?.SubPath(nameof(GetAppEvents)),
-            log => AscTasks.GetEventList(log, api, appId)
-        );
+            log,
+            nameof(GetAppEvents),
+            log => AscTasks.GetEventList(log, api, appId));
 
         Output(context, events);
     }
@@ -426,9 +430,9 @@ internal static class Program
         try
         {
             await LogEx.StdLog(
-                log?.SubPath(nameof(SetAppEvents)),
-                log => AscTasks.PutEventList(api, log, appId, events)
-            );
+                log,
+                nameof(SetAppEvents),
+                log => AscTasks.PutEventList(api, log, appId, events));
         }
         finally
         {
@@ -444,9 +448,9 @@ internal static class Program
         var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
 
         var gc = await LogEx.StdLog(
-            log?.SubPath(nameof(GetGameCenter)),
-            log => AscTasks.GetGameCenter(log, api, appId)
-        );
+            log,
+            nameof(GetGameCenter),
+            log => AscTasks.GetGameCenter(log, api, appId));
 
         Output(context, gc);
     }
@@ -461,9 +465,9 @@ internal static class Program
         try
         {
             await LogEx.StdLog(
-                log?.SubPath(nameof(SetGameCenter)),
-                log => AscTasks.PutGameCenter(api, log, appId, gc)
-            );
+                log,
+                nameof(SetGameCenter),
+                log => AscTasks.PutGameCenter(api, log, appId, gc));
         }
         finally
         {
@@ -480,9 +484,9 @@ internal static class Program
         var spreadsheetId = context.ParseResult.GetValueForOption(SpreadsheetId);
 
         await LogEx.StdLog(
-            log?.SubPath(nameof(PutGameCenterOnSheets)),
-            log => GoogleTasks.PutGameCenterOnSheets(gc, spreadsheetId, secrets, dataStore, log)
-        );
+            log,
+            nameof(PutGameCenterOnSheets),
+            log => GoogleTasks.PutGameCenterOnSheets(gc, spreadsheetId, secrets, dataStore, log));
     }
 
     private static async Task UpdateGameCenterFromSheets(InvocationContext context)
@@ -494,9 +498,9 @@ internal static class Program
         var spreadsheetId = context.ParseResult.GetValueForOption(SpreadsheetId) ?? throw new Exception($"{SpreadsheetId.Name} is required");
 
         await LogEx.StdLog(
-            log?.SubPath(nameof(UpdateGameCenterFromSheets)),
-            log => GoogleTasks.UpdateGameCenterFromSheets(gc, spreadsheetId, secrets, dataStore, log)
-        );
+            log,
+            nameof(UpdateGameCenterFromSheets),
+            log => GoogleTasks.UpdateGameCenterFromSheets(gc, spreadsheetId, secrets, dataStore, log));
 
         Output(context, gc);
     }

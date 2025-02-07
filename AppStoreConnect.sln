@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudioDrydock.AppStoreConne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudioDrydock.AppStoreConnect.ApiGenerator", "StudioDrydock.AppStoreConnect.ApiGenerator\StudioDrydock.AppStoreConnect.ApiGenerator.csproj", "{6A047629-440E-4E89-A5B0-4F364C2C9746}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioDrydock.AppStoreConnect.Model", "StudioDrydock.AppStoreConnect.Model\StudioDrydock.AppStoreConnect.Model.csproj", "{7B8837D7-129E-49A6-8541-3EAB5A88055C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioDrydock.AppStoreConnect.Core", "StudioDrydock.AppStoreConnect.Core\StudioDrydock.AppStoreConnect.Core.csproj", "{755ADF88-5142-4CF1-8536-EE916ACF2066}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioDrydock.AppStoreConnect.Lib", "StudioDrydock.AppStoreConnect.Lib\StudioDrydock.AppStoreConnect.Lib.csproj", "{B7D6B1AC-ABD5-4A8A-BC07-15E94C4C396C}"
 EndProject
 Global
@@ -33,14 +29,6 @@ Global
 		{6A047629-440E-4E89-A5B0-4F364C2C9746}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A047629-440E-4E89-A5B0-4F364C2C9746}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A047629-440E-4E89-A5B0-4F364C2C9746}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B8837D7-129E-49A6-8541-3EAB5A88055C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B8837D7-129E-49A6-8541-3EAB5A88055C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B8837D7-129E-49A6-8541-3EAB5A88055C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B8837D7-129E-49A6-8541-3EAB5A88055C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{755ADF88-5142-4CF1-8536-EE916ACF2066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{755ADF88-5142-4CF1-8536-EE916ACF2066}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{755ADF88-5142-4CF1-8536-EE916ACF2066}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{755ADF88-5142-4CF1-8536-EE916ACF2066}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7D6B1AC-ABD5-4A8A-BC07-15E94C4C396C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7D6B1AC-ABD5-4A8A-BC07-15E94C4C396C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7D6B1AC-ABD5-4A8A-BC07-15E94C4C396C}.Release|Any CPU.ActiveCfg = Release|Any CPU

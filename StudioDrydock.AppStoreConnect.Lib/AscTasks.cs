@@ -1,9 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using System.Text.Json;
 using StudioDrydock.AppStoreConnect.Api;
-using StudioDrydock.AppStoreConnect.Core;
-using StudioDrydock.AppStoreConnect.Model;
-using StudioDrydock.AppStoreConnect.Model.Files;
+using StudioDrydock.AppStoreConnect.Lib.Model;
+using StudioDrydock.AppStoreConnect.Lib.Files;
 
 namespace StudioDrydock.AppStoreConnect.Lib;
 
@@ -585,7 +584,7 @@ public static class AscTasks
             gameCenterGroup = new(group.data);
         }
 
-        var a = LogEx.StdLog(log?.SubPath("Achievements"), async log =>
+        var a = LogEx.StdLog(log, "Achievements", async log =>
         {
             if (group.data != null)
             {
@@ -627,7 +626,7 @@ public static class AscTasks
                 ach.localizations = [.. locs.OrderBy(a => a.locale)];
             });
         });
-        var b = LogEx.StdLog(log?.SubPath("Leaderboards"), async log =>
+        var b = LogEx.StdLog(log, "Leaderboards", async log =>
         {
             if (group.data != null)
             {
@@ -681,7 +680,7 @@ public static class AscTasks
                 lb.localizations = [.. locs.OrderBy(a => a.locale)];
             });
         });
-        var c = LogEx.StdLog(log?.SubPath("LeaderboardSets"), async log =>
+        var c = LogEx.StdLog(log, "LeaderboardSets", async log =>
         {
             if (group.data != null)
             {

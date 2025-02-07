@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using StudioDrydock.AppStoreConnect.Core;
 
 namespace StudioDrydock.AppStoreConnect.Api;
 
@@ -34,12 +33,12 @@ public partial class AppStoreClient
         return new StringContent(text, encoding: Encoding.UTF8, mediaType: "application/json");
     }
 
-    private async Task SendAsync(HttpRequestMessage request, INestedLog? log = null)
+    private async Task SendAsync(HttpRequestMessage request, ILog? log = null)
     {
         await SendInternal(request, log);
     }
 
-    private async Task<T> SendAsync<T>(HttpRequestMessage request, INestedLog? log = null)
+    private async Task<T> SendAsync<T>(HttpRequestMessage request, ILog? log = null)
     {
         var response = await SendInternal(request, log);
 
@@ -47,27 +46,27 @@ public partial class AppStoreClient
         var responseObject = JsonSerializer.Deserialize<T>(responseText);
         if (responseObject == null)
         {
-            log?.Log(NestedLogLevel.Error, "Deserialization failed");
-            log?.Log(NestedLogLevel.Error, await response.Content.ReadAsStringAsync());
+            log?.Log(LogLevel.Error, "Deserialization failed");
+            log?.Log(LogLevel.Error, await response.Content.ReadAsStringAsync());
             throw new Exception($"Deserialization failed");
         }
 
         return responseObject;
     }
 
-    private async Task<HttpResponseMessage> SendInternal(HttpRequestMessage request, INestedLog? log = null)
+    private async Task<HttpResponseMessage> SendInternal(HttpRequestMessage request, ILog? log = null)
     {
         using var token = await m_RateLimiter.Begin();
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", m_TokenMaker.MakeToken());
 
-        log?.Log(NestedLogLevel.Note, $"{request.Method} {request.RequestUri}");
+        log?.Log(LogLevel.Note, $"{request.Method} {request.RequestUri}");
 
         var response = await m_Client.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
         {
-            log?.Log(NestedLogLevel.Error, await response.Content.ReadAsStringAsync());
+            log?.Log(LogLevel.Error, await response.Content.ReadAsStringAsync());
             throw new Exception($"Status code {response.StatusCode}");
         }
 
@@ -81,7 +80,7 @@ public partial class AppStoreClient
                 if (match.Success)
                 {
                     var remaining = int.Parse(match.Groups[2].Value);
-                    log?.Log(NestedLogLevel.VerboseNote, $"Req left this hour: {remaining}");
+                    log?.Log(LogLevel.VerboseNote, $"Req left this hour: {remaining}");
                     m_RateLimiter.SetRequestsRemainingThisHour(remaining);
                 }
             }
@@ -90,7 +89,7 @@ public partial class AppStoreClient
         return response;
     }
 
-    public async Task UploadPortion(string method, string url, byte[] data, Dictionary<string, string> requestHeaders, INestedLog? log = null)
+    public async Task UploadPortion(string method, string url, byte[] data, Dictionary<string, string> requestHeaders, ILog? log = null)
     {
         HttpMethod httpMethod;
         switch (method.ToUpperInvariant())
@@ -117,18 +116,18 @@ public partial class AppStoreClient
             request.Headers.Add(header.Key, header.Value);
         }
 
-        log?.Log(NestedLogLevel.Note, $"{request.Method} {request.RequestUri}");
+        log?.Log(LogLevel.Note, $"{request.Method} {request.RequestUri}");
 
         var response = await m_UploadClient.SendAsync(request);
         if (!response.IsSuccessStatusCode)
         {
-            log?.Log(NestedLogLevel.Error, $"Status code {response.StatusCode}");
-            log?.Log(NestedLogLevel.Error, await response.Content.ReadAsStringAsync());
+            log?.Log(LogLevel.Error, $"Status code {response.StatusCode}");
+            log?.Log(LogLevel.Error, await response.Content.ReadAsStringAsync());
             throw new Exception($"Status code {response.StatusCode}");
         }
     }
 
-    public Task<T> GetNextPage<T>(T prevPage, INestedLog? log = null)
+    public Task<T> GetNextPage<T>(T prevPage, ILog? log = null)
         where T : IHasNextLink
     {
         if (prevPage.links.next == null)

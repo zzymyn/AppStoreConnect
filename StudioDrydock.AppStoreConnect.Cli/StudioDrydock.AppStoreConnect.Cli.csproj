@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StudioDrydock.AppStoreConnect.Lib\StudioDrydock.AppStoreConnect.Lib.csproj" />
-    <ProjectReference Include="..\StudioDrydock.AppStoreConnect.Model\StudioDrydock.AppStoreConnect.Model.csproj" />
   </ItemGroup>
 
 </Project>

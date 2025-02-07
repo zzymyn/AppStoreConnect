@@ -1,4 +1,4 @@
-﻿using StudioDrydock.AppStoreConnect.Core;
+﻿using StudioDrydock.AppStoreConnect.Api;
 
 namespace StudioDrydock.AppStoreConnect.Cli;
 
@@ -12,38 +12,38 @@ internal sealed class ConsoleLogger : INestedLog
         m_Verbosity = verbosity;
     }
 
-    public void Log(NestedLogLevel state, string caption, params string[] path)
+    public void Log(LogLevel state, string caption, params string[] path)
     {
         lock (m_TextWriter)
         {
             switch (state)
             {
-                case NestedLogLevel.VerboseNote:
-                case NestedLogLevel.Note:
+                case LogLevel.VerboseNote:
+                case LogLevel.Note:
                     if (m_Verbosity < 3)
                         return;
                     break;
-                case NestedLogLevel.Warning:
+                case LogLevel.Warning:
                     if (m_Verbosity < 2)
                         return;
                     break;
-                case NestedLogLevel.Error:
+                case LogLevel.Error:
                     break;
             }
 
             // use emojis for state:
             switch (state)
             {
-                case NestedLogLevel.Note:
+                case LogLevel.Note:
                     m_TextWriter.Write("📝 ");
                     break;
-                case NestedLogLevel.Warning:
+                case LogLevel.Warning:
                     m_TextWriter.Write("⚠️ ");
                     break;
-                case NestedLogLevel.Error:
+                case LogLevel.Error:
                     m_TextWriter.Write("❌ ");
                     break;
-                case NestedLogLevel.VerboseNote:
+                case LogLevel.VerboseNote:
                     m_TextWriter.Write("🔍 ");
                     break;
 
