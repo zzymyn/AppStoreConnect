@@ -139,7 +139,7 @@ internal static class Program
         getAppsCommand.SetHandler(GetApps);
         rootCommand.AddCommand(getAppsCommand);
 
-        // get-app-versions --appId=xxx [--platform=xxx] [--state=xxx]
+        // get-app-versions --appId=xxx --platform=xxx --state=xxx --limitVersions=xxx --output=file.json
         var getAppVersionsCommand = new Command("get-app-versions", "Get information about specific app versions");
         getAppVersionsCommand.AddOption(AppIdOpt);
         getAppVersionsCommand.AddOption(PlatformOpt);
@@ -149,7 +149,7 @@ internal static class Program
         getAppVersionsCommand.SetHandler(GetAppVersions);
         rootCommand.AddCommand(getAppVersionsCommand);
 
-        // set-app-versions --input=file.json
+        // set-app-versions --appId=xxx --input=file.json --output=file.json
         var setAppVersionsCommand = new Command("set-app-versions", "Update localizations for specific app versions. The input format matches the output of get-app-versions.");
         setAppVersionsCommand.AddOption(AppIdOpt);
         setAppVersionsCommand.AddOption(InputOpt);
@@ -157,7 +157,7 @@ internal static class Program
         setAppVersionsCommand.SetHandler(SetAppVersions);
         rootCommand.AddCommand(setAppVersionsCommand);
 
-        // get-app-iaps --appId=xxx
+        // get-app-iaps --appId=xxx --state=xxx --output=file.json
         var getAppIapsCommand = new Command("get-app-iaps", "Get information about specific app in-app purchases");
         getAppIapsCommand.AddOption(AppIdOpt);
         getAppIapsCommand.AddOption(IapStateOpt);
@@ -165,7 +165,7 @@ internal static class Program
         getAppIapsCommand.SetHandler(GetAppIaps);
         rootCommand.AddCommand(getAppIapsCommand);
 
-        // set-app-iaps --appId=xxx --input=file.json
+        // set-app-iaps --appId=xxx --input=file.json --output=file.json
         var setAppIapsCommand = new Command("set-app-iaps", "Update information about specific app in-app purchases. The input format matches the output of get-app-iaps.");
         setAppIapsCommand.AddOption(AppIdOpt);
         setAppIapsCommand.AddOption(InputOpt);
@@ -173,14 +173,14 @@ internal static class Program
         setAppIapsCommand.SetHandler(SetAppIaps);
         rootCommand.AddCommand(setAppIapsCommand);
 
-        // get-app-events --appId=xxx
+        // get-app-events --appId=xxx --output=file.json
         var getEventsCommand = new Command("get-app-events", "Get information about specific app events");
         getEventsCommand.AddOption(AppIdOpt);
         getEventsCommand.AddOption(OutputOpt);
         getEventsCommand.SetHandler(GetAppEvents);
         rootCommand.AddCommand(getEventsCommand);
 
-        // set-app-events --appId=xxx --input=file.json
+        // set-app-events --appId=xxx --input=file.json --output=file.json
         var setEventsCommand = new Command("set-app-events", "Update information about specific app events. The input format matches the output of get-events.");
         setEventsCommand.AddOption(AppIdOpt);
         setEventsCommand.AddOption(InputOpt);
@@ -188,14 +188,14 @@ internal static class Program
         setEventsCommand.SetHandler(SetAppEvents);
         rootCommand.AddCommand(setEventsCommand);
 
-        // get-game-center --appId=xxx
+        // get-game-center --appId=xxx --output=file.json
         var getGameCenterCommand = new Command("get-game-center", "Get information about specific app Game Center");
         getGameCenterCommand.AddOption(AppIdOpt);
         getGameCenterCommand.AddOption(OutputOpt);
         getGameCenterCommand.SetHandler(GetGameCenter);
         rootCommand.AddCommand(getGameCenterCommand);
 
-        // set-game-center --appId=xxx --input=file.json
+        // set-game-center --appId=xxx --input=file.json --output=file.json
         var setGameCenterCommand = new Command("set-game-center", "Update information about specific app Game Center. The input format matches the output of get-game-center.");
         setGameCenterCommand.AddOption(AppIdOpt);
         setGameCenterCommand.AddOption(InputOpt);
@@ -203,7 +203,7 @@ internal static class Program
         setGameCenterCommand.SetHandler(SetGameCenter);
         rootCommand.AddCommand(setGameCenterCommand);
 
-        // put-game-center-on-sheets --input=file.json
+        // put-game-center-on-sheets --input=file.json --googleClientSecrets=file.json --googleDataStore=folder --spreadsheetId=xxx
         var putGameCenterOnSheetsCmd = new Command("put-game-center-on-sheets", "Test Google Sheets API");
         putGameCenterOnSheetsCmd.AddOption(InputOpt);
         putGameCenterOnSheetsCmd.AddOption(GoogleSecretsOpt);
@@ -212,7 +212,7 @@ internal static class Program
         putGameCenterOnSheetsCmd.SetHandler(PutGameCenterOnSheets);
         rootCommand.AddCommand(putGameCenterOnSheetsCmd);
 
-        // update-game-center-from-sheets --input=file.json --output=file.json
+        // update-game-center-from-sheets --input=file.json --output=file.json --googleClientSecrets=file.json --googleDataStore=folder --spreadsheetId=xxx
         var updateGameCenterFromSheetsCmd = new Command("update-game-center-from-sheets", "Update Game Center data from Google Sheets");
         updateGameCenterFromSheetsCmd.AddOption(InputOpt);
         updateGameCenterFromSheetsCmd.AddOption(OutputOpt);
@@ -455,6 +455,7 @@ internal static class Program
         Output(context, gc);
     }
 
+    // set-game-center
     private static async Task SetGameCenter(InvocationContext context)
     {
         var log = CreateLog(context);
@@ -475,6 +476,7 @@ internal static class Program
         }
     }
 
+    // put-game-center-on-sheets
     private static async Task PutGameCenterOnSheets(InvocationContext context)
     {
         var log = CreateLog(context);
@@ -489,6 +491,7 @@ internal static class Program
             log => GoogleTasks.PutGameCenterOnSheets(gc, spreadsheetId, secrets, dataStore, log));
     }
 
+    // update-game-center-from-sheets
     private static async Task UpdateGameCenterFromSheets(InvocationContext context)
     {
         var log = CreateLog(context);
