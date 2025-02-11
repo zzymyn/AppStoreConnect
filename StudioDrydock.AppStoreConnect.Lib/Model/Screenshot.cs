@@ -45,7 +45,7 @@ public class Screenshot
         };
     }
 
-    public AppStoreClient.AppScreenshotCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
+    public static AppStoreClient.AppScreenshotCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
     {
         return new()
         {

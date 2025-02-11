@@ -18,4 +18,51 @@ public class GameCenterAchievementImage
         fileSize = data.attributes?.fileSize;
         fileName = data.attributes?.fileName;
     }
+
+    public void UpdateWithResponse(AppStoreClient.GameCenterAchievementImage data)
+    {
+        id = data.id;
+        fileSize = data.attributes?.fileSize;
+        fileName = data.attributes?.fileName;
+    }
+
+    public AppStoreClient.GameCenterAchievementImageUpdateRequest CreateUploadCompleteRequest()
+    {
+        return new()
+        {
+            data = new()
+            {
+                id = id!,
+                attributes = new()
+                {
+                    uploaded = true,
+                }
+            }
+        };
+    }
+
+    public static AppStoreClient.GameCenterAchievementImageCreateRequest CreateCreateRequest(string achLocId, int fileSize, string fileName)
+    {
+        return new()
+        {
+            data = new()
+            {
+                attributes = new()
+                {
+                    fileName = fileName,
+                    fileSize = fileSize,
+                },
+                relationships = new()
+                {
+                    gameCenterAchievementLocalization = new()
+                    {
+                        data = new()
+                        {
+                            id = achLocId
+                        }
+                    }
+                }
+            }
+        };
+    }
 }

@@ -273,7 +273,7 @@ public static class AscTasks
                                             throw new Exception("fileName is required");
 
                                         var fi = ad.GetFileByName(ss.fileName, out var fileHash);
-                                        var response = await api.AppScreenshots_createInstance(ss.CreateCreateRequest(ssSet.id!, (int)fi.Length, fi.Name), log: log);
+                                        var response = await api.AppScreenshots_createInstance(Screenshot.CreateCreateRequest(ssSet.id!, (int)fi.Length, fi.Name), log: log);
                                         ss.UpdateWithResponse(response.data);
 
                                         await UploadFile(api, fi, response.data.attributes!.uploadOperations!);
@@ -352,7 +352,7 @@ public static class AscTasks
                                         var fi = ad.GetFileByName(ap.fileName, out var fileHash);
                                         var previewFrameTimeCode = ap.previewFrameTimeCode;
 
-                                        var response = await api.AppPreviews_createInstance(ap.CreateCreateRequest(apSet.id!, (int)fi.Length, fi.Name), log: log);
+                                        var response = await api.AppPreviews_createInstance(AppPreview.CreateCreateRequest(apSet.id!, (int)fi.Length, fi.Name), log: log);
                                         ap.UpdateWithResponse(response.data);
 
                                         await UploadFile(api, fi, response.data.attributes!.uploadOperations!);
@@ -735,7 +735,7 @@ public static class AscTasks
         );
     }
 
-    public static async Task PutGameCenter(AppStoreClient api, INestedLog? log, string appId, bool skipLocs, GameCenter gc)
+    public static async Task PutGameCenter(AppStoreClient api, AssetDatabase ad, INestedLog? log, string appId, bool skipLocs, GameCenter gc)
     {
         if (appId != gc.appId)
             throw new Exception("appId mismatch");
@@ -764,7 +764,10 @@ public static class AscTasks
             {
                 var locs = new List<GameCenterAchievementLocalization>();
 
-                var locResp = await api.GameCenterAchievements_localizations_getToManyRelated(ach.id!, log: log);
+                var locResp = await api.GameCenterAchievements_localizations_getToManyRelated(
+                    ach.id!,
+                    include: [AppStoreClient.GameCenterAchievements_localizations_getToManyRelatedInclude.gameCenterAchievementImage],
+                    log: log);
                 AddGameCenterAchievementLocalizations(locs, locResp);
 
                 while (locResp.links.next != null)
@@ -787,6 +790,27 @@ public static class AscTasks
                     {
                         var response = await api.GameCenterAchievementLocalizations_updateInstance(loc.id, loc.CreateUpdateRequest(), log: log);
                         loc.UpdateWithResponse(response.data);
+                    }
+
+                    // achievement image upload:
+                    if (loc.image != null && string.IsNullOrEmpty(loc.image.id))
+                    {
+                        if (string.IsNullOrEmpty(loc.image.fileName))
+                            throw new Exception("fileName is required");
+
+                        if (existing?.image != null)
+                        {
+                            await api.GameCenterAchievementImages_deleteInstance(existing.image.id!, log: log);
+                        }
+
+                        var fi = ad.GetFileByName(loc.image.fileName, out var fileHash);
+                        var response = await api.GameCenterAchievementImages_createInstance(GameCenterAchievementImage.CreateCreateRequest(loc.id!, (int)fi.Length, fi.Name), log: log);
+                        loc.image.UpdateWithResponse(response.data);
+
+                        await UploadFile(api, fi, response.data.attributes!.uploadOperations!);
+
+                        response = await api.GameCenterAchievementImages_updateInstance(loc.image.id!, loc.image.CreateUploadCompleteRequest(), log: log);
+                        loc.image.UpdateWithResponse(response.data);
                     }
                 });
             }

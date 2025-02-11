@@ -63,7 +63,7 @@ public class AppPreview
         };
     }
 
-    public AppStoreClient.AppPreviewCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
+    public static AppStoreClient.AppPreviewCreateRequest CreateCreateRequest(string setId, int fileSize, string fileName)
     {
         return new()
         {

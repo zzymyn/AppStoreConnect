@@ -467,6 +467,7 @@ internal static class Program
     {
         var log = CreateLog(context);
         var api = CreateClient(context);
+        var ad = CreateAssetDatabaseNextToFile(context.ParseResult.GetValueForOption(InputOpt)) ?? throw new Exception($"{InputOpt.Name} is required");
         var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var skipLocalization = context.ParseResult.GetValueForOption(SkipLocalizationOpt);
         var gc = Input<GameCenter>(context);
@@ -476,7 +477,7 @@ internal static class Program
             await LogEx.StdLog(
                 log,
                 nameof(SetGameCenter),
-                log => AscTasks.PutGameCenter(api, log, appId, skipLocalization, gc));
+                log => AscTasks.PutGameCenter(api, ad, log, appId, skipLocalization, gc));
         }
         finally
         {
