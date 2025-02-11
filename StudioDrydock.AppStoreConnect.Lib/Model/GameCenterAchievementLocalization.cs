@@ -24,6 +24,13 @@ public class GameCenterAchievementLocalization
         afterEarnedDescription = data.attributes?.afterEarnedDescription;
     }
 
+    public bool Matches(GameCenterAchievementLocalization other)
+    {
+        return (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(other.name) || name == other.name)
+                && (string.IsNullOrEmpty(beforeEarnedDescription) && string.IsNullOrEmpty(other.beforeEarnedDescription) || beforeEarnedDescription == other.beforeEarnedDescription)
+                && (string.IsNullOrEmpty(afterEarnedDescription) && string.IsNullOrEmpty(other.afterEarnedDescription) || afterEarnedDescription == other.afterEarnedDescription);
+    }
+
     public void UpdateWithResponse(AppStoreClient.GameCenterAchievementLocalization data)
     {
         id = data.id;

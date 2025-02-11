@@ -378,7 +378,7 @@ internal class ApiWriter : IDisposable
             cs.EndLine();
         }
         cs.BeginLine();
-        cs.Write("public ");
+        cs.Write("public async ");
         if (responseSchema != null)
         {
             cs.Write("Task<");
@@ -422,11 +422,18 @@ internal class ApiWriter : IDisposable
 
         cs.WriteCommaIfRequired();
         cs.Write("ILog? log = null");
+        cs.WriteCommaIfRequired();
+        cs.Write("int retries = 1");
 
         cs.Write(")");
         cs.EndLine();
 
         cs.BeginBlock();
+
+        cs.WriteLine("retry:");
+        cs.WriteLine("try");
+        cs.BeginBlock();
+
         cs.WriteLine($"string path = \"{path}\";");
         foreach (var param in pathItem.Parameters)
             cs.WriteLine($"path = path.Replace(\"{{{param.Name}}}\", {param.Name.MakeValidIdentifier()}.ToString());");
@@ -457,9 +464,19 @@ internal class ApiWriter : IDisposable
             cs.WriteLine("message.Content = Serialize(request);");
 
         if (responseSchema != null)
-            cs.WriteLine($"return SendAsync<{responseSchemaName}>(message, log);");
+            cs.WriteLine($"return await SendAsync<{responseSchemaName}>(message, log);");
         else
-            cs.WriteLine("return SendAsync(message, log);");
+            cs.WriteLine("await SendAsync(message, log);");
+
+        cs.EndBlock(trailingNewLine: false);
+        cs.WriteLine("catch");
+        cs.BeginBlock();
+        cs.WriteLine("if (retries-- <= 0)");
+        cs.WriteLine("    throw;");
+        cs.WriteLine("log?.Log(LogLevel.Note, \"Retrying in 250ms...\");");
+        cs.WriteLine("await Task.Delay(250);");
+        cs.WriteLine("goto retry;");
+        cs.EndBlock(trailingNewLine: false);
         cs.EndBlock();
     }
 

@@ -35,6 +35,9 @@ public static class GoogleTasks
 
         await EnsureSheetCreated(service, spreadsheetId, "Leaderboards", log, spreadsheet);
         await WriteSheetData(CreateLeaderboardTable(gc), service, spreadsheetId, "Leaderboards", log);
+
+        await EnsureSheetCreated(service, spreadsheetId, "LeaderboardSets", log, spreadsheet);
+        await WriteSheetData(CreateLeaderboardSetTable(gc), service, spreadsheetId, "LeaderboardSets", log);
     }
 
     public static async Task UpdateGameCenterFromSheets(GameCenter gc, string spreadsheetId, FileInfo clientSecretsFile, DirectoryInfo dataStoreDir, INestedLog? log)
@@ -42,20 +45,22 @@ public static class GoogleTasks
         var service = await GetService(clientSecretsFile, dataStoreDir, log);
 
         var achievementsData = await service.Spreadsheets.Values.Get(spreadsheetId, "Achievements").ExecuteAsync();
-        if (achievementsData.Values == null)
+        if (achievementsData.Values != null)
         {
-            throw new Exception("Achievements sheet is empty");
+            UpdateAchievementsFromTable(gc, achievementsData.Values, log);
         }
-
-        UpdateAchievementsFromTable(gc, achievementsData.Values, log);
 
         var leaderboardsData = await service.Spreadsheets.Values.Get(spreadsheetId, "Leaderboards").ExecuteAsync();
-        if (leaderboardsData.Values == null)
+        if (leaderboardsData.Values != null)
         {
-            throw new Exception("Leaderboards sheet is empty");
+            UpdateLeaderboardsFromTable(gc, leaderboardsData.Values, log);
         }
 
-        UpdateLeaderboardsFromTable(gc, leaderboardsData.Values, log);
+        var leaderboardSetsData = await service.Spreadsheets.Values.Get(spreadsheetId, "LeaderboardSets").ExecuteAsync();
+        if (leaderboardSetsData.Values != null)
+        {
+            UpdateLeaderboardSetsFromTable(gc, leaderboardSetsData.Values, log);
+        }
     }
 
     private static async Task<SheetsService> GetService(FileInfo clientSecretsFile, DirectoryInfo dataStoreDir, INestedLog? log)
@@ -174,12 +179,18 @@ public static class GoogleTasks
         };
         foreach (var locale in allLocales)
         {
-            row0.AddRange([locale, locale, locale]);
-            row1.AddRange([
-                nameof(GameCenterAchievementLocalization.name),
-                nameof(GameCenterAchievementLocalization.beforeEarnedDescription),
-                nameof(GameCenterAchievementLocalization.afterEarnedDescription),
-            ]);
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterAchievementLocalization.name));
+        }
+        foreach (var locale in allLocales)
+        {
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterAchievementLocalization.beforeEarnedDescription));
+        }
+        foreach (var locale in allLocales)
+        {
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterAchievementLocalization.afterEarnedDescription));
         }
         table.Add(row0);
         table.Add(row1);
@@ -197,18 +208,17 @@ public static class GoogleTasks
             foreach (var locale in allLocales)
             {
                 var loc = achievement.localizations?.FirstOrDefault(l => l.locale == locale);
-                if (loc != null)
-                {
-                    row.AddRange([
-                        loc.name ?? "",
-                        loc.beforeEarnedDescription ?? "",
-                        loc.afterEarnedDescription ?? "",
-                    ]);
-                }
-                else
-                {
-                    row.AddRange(["", "", ""]);
-                }
+                row.Add(loc?.name ?? "");
+            }
+            foreach (var locale in allLocales)
+            {
+                var loc = achievement.localizations?.FirstOrDefault(l => l.locale == locale);
+                row.Add(loc?.beforeEarnedDescription ?? "");
+            }
+            foreach (var locale in allLocales)
+            {
+                var loc = achievement.localizations?.FirstOrDefault(l => l.locale == locale);
+                row.Add(loc?.afterEarnedDescription ?? "");
             }
             table.Add(row);
         }
@@ -285,16 +295,27 @@ public static class GoogleTasks
             nameof(GameCenterLeaderboard.defaultFormatter),
             nameof(GameCenterLeaderboard.submissionType),
             nameof(GameCenterLeaderboard.scoreSortType),
+            nameof(GameCenterLeaderboard.leaderboardSets),
         };
         foreach (var locale in allLocales)
         {
-            row0.AddRange([locale, locale, locale, locale]);
-            row1.AddRange([
-                nameof(GameCenterLeaderboardLocalization.name),
-                nameof(GameCenterLeaderboardLocalization.formatterOverride),
-                nameof(GameCenterLeaderboardLocalization.formatterSuffix),
-                nameof(GameCenterLeaderboardLocalization.formatterSuffixSingular),
-                ]);
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterLeaderboardLocalization.name));
+        }
+        foreach (var locale in allLocales)
+        {
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterLeaderboardLocalization.formatterOverride));
+        }
+        foreach (var locale in allLocales)
+        {
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterLeaderboardLocalization.formatterSuffix));
+        }
+        foreach (var locale in allLocales)
+        {
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterLeaderboardLocalization.formatterSuffixSingular));
         }
         table.Add(row0);
         table.Add(row1);
@@ -309,22 +330,42 @@ public static class GoogleTasks
                 leaderboard.submissionType?.ToString() ?? "",
                 leaderboard.scoreSortType?.ToString() ?? "",
             };
+
+            var lbSetsStr = "";
+            if (leaderboard.leaderboardSets != null)
+            {
+                foreach (var lbSetId in leaderboard.leaderboardSets)
+                {
+                    var lbSet = gc.leaderboardSets.FirstOrDefault(l => l.vendorIdentifier == lbSetId);
+                    if (lbSet != null)
+                    {
+                        if (lbSetsStr != "")
+                            lbSetsStr += "\n";
+                        lbSetsStr += lbSet.referenceName;
+                    }
+                }
+            }
+            row.Add(lbSetsStr);
+
             foreach (var locale in allLocales)
             {
                 var loc = leaderboard.localizations?.FirstOrDefault(l => l.locale == locale);
-                if (loc != null)
-                {
-                    row.AddRange([
-                        loc.name ?? "",
-                        loc.formatterOverride?.ToString() ?? "",
-                        loc.formatterSuffix ?? "",
-                        loc.formatterSuffixSingular ?? "",
-                    ]);
-                }
-                else
-                {
-                    row.AddRange(["", "", "", ""]);
-                }
+                row.Add(loc?.name ?? "");
+            }
+            foreach (var locale in allLocales)
+            {
+                var loc = leaderboard.localizations?.FirstOrDefault(l => l.locale == locale);
+                row.Add(loc?.formatterOverride?.ToString() ?? "");
+            }
+            foreach (var locale in allLocales)
+            {
+                var loc = leaderboard.localizations?.FirstOrDefault(l => l.locale == locale);
+                row.Add(loc?.formatterSuffix ?? "");
+            }
+            foreach (var locale in allLocales)
+            {
+                var loc = leaderboard.localizations?.FirstOrDefault(l => l.locale == locale);
+                row.Add(loc?.formatterSuffixSingular ?? "");
             }
             table.Add(row);
         }
@@ -359,6 +400,22 @@ public static class GoogleTasks
             leaderboard.submissionType = ParseEnum<AppStoreClient.GameCenterLeaderboard.Attributes.SubmissionType>(ReadDataValue(data, r, nameof(GameCenterLeaderboard.submissionType), ""));
             leaderboard.scoreSortType = ParseEnum<AppStoreClient.GameCenterLeaderboard.Attributes.ScoreSortType>(ReadDataValue(data, r, nameof(GameCenterLeaderboard.scoreSortType), ""));
 
+            var newLeaderboardSets = new List<string>();
+            var lbSetsStr = ReadDataValue(data, r, nameof(GameCenterLeaderboard.leaderboardSets), "");
+            if (!string.IsNullOrEmpty(lbSetsStr))
+            {
+                var lbSetVIds = lbSetsStr.Split('\n');
+                foreach (var lbSetVId in lbSetVIds)
+                {
+                    var lbSet = gc.leaderboardSets.FirstOrDefault(l => l.vendorIdentifier == lbSetVId);
+                    if (lbSet != null)
+                    {
+                        newLeaderboardSets.Add(lbSet.id!);
+                    }
+                }
+            }
+            leaderboard.leaderboardSets = [.. newLeaderboardSets];
+
             var newLocales = new List<GameCenterLeaderboardLocalization>();
             foreach (var locale in allLocales)
             {
@@ -380,6 +437,90 @@ public static class GoogleTasks
             leaderboard.localizations = [.. newLocales.OrderBy(l => l.locale)];
         }
         gc.leaderboards = newLeaderboards;
+    }
+
+    private static List<IList<object>> CreateLeaderboardSetTable(GameCenter gc)
+    {
+        var table = new List<IList<object>>();
+
+        var allLocales = gc.leaderboardSets
+            .Where(a => a.localizations != null).SelectMany(a => a.localizations!)
+            .Where(loc => loc.locale != null).Select(loc => loc.locale!)
+            .Distinct().OrderBy(a => a).ToList();
+
+        var row0 = new List<object> { "", "", };
+        var row1 = new List<object> {
+            nameof(GameCenterLeaderboardSet.referenceName),
+            nameof(GameCenterLeaderboardSet.vendorIdentifier),
+        };
+        foreach (var locale in allLocales)
+        {
+            row0.Add(locale);
+            row1.Add(nameof(GameCenterLeaderboardSetLocalization.name));
+        }
+        table.Add(row0);
+        table.Add(row1);
+
+        foreach (var leaderboardSet in gc.leaderboardSets)
+        {
+            var row = new List<object>
+            {
+                leaderboardSet.referenceName ?? "",
+                leaderboardSet.vendorIdentifier ?? "",
+            };
+            foreach (var locale in allLocales)
+            {
+                var loc = leaderboardSet.localizations?.FirstOrDefault(l => l.locale == locale);
+                row.Add(loc?.name ?? "");
+            }
+            table.Add(row);
+        }
+
+        return table;
+    }
+
+    private static void UpdateLeaderboardSetsFromTable(GameCenter gc, IList<IList<object>> data, INestedLog? log)
+    {
+        var allLocales = data[0].OfType<string>().Where(s => s != "").ToHashSet();
+        var newLeaderboardSets = new List<GameCenterLeaderboardSet>();
+
+        for (var r = 2; r < data.Count; ++r)
+        {
+            var vendorIdentifier = ReadDataValue(data, r, nameof(GameCenterLeaderboardSet.vendorIdentifier), "");
+
+            if (vendorIdentifier == null)
+            {
+                log?.Log(LogLevel.Warning, $"Row {r + 1} has no vendorIdentifier, skipping.");
+                continue;
+            }
+
+            var leaderboardSet = gc.leaderboardSets.FirstOrDefault(a => a.vendorIdentifier == vendorIdentifier);
+            leaderboardSet ??= new()
+            {
+                vendorIdentifier = vendorIdentifier
+            };
+            newLeaderboardSets.Add(leaderboardSet);
+
+            leaderboardSet.referenceName = ReadDataValue(data, r, nameof(GameCenterLeaderboardSet.referenceName), "");
+
+            var newLocales = new List<GameCenterLeaderboardSetLocalization>();
+            foreach (var locale in allLocales)
+            {
+                var name = ReadDataValue(data, r, nameof(GameCenterLeaderboardSetLocalization.name), locale);
+
+                var loc = leaderboardSet.localizations?.FirstOrDefault(l => l.locale == locale);
+                loc ??= new()
+                {
+                    locale = locale
+                };
+
+                newLocales.Add(loc);
+
+                loc.name = name;
+            }
+            leaderboardSet.localizations = [.. newLocales.OrderBy(l => l.locale)];
+        }
+        gc.leaderboardSets = newLeaderboardSets;
     }
 
     private static string? ReadDataValue(IList<IList<object>> data, int r, string name, string locale)

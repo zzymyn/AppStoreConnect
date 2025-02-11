@@ -26,6 +26,14 @@ public class GameCenterLeaderboardLocalization
         formatterSuffixSingular = data.attributes?.formatterSuffixSingular;
     }
 
+    public bool Matches(GameCenterLeaderboardLocalization other)
+    {
+        return (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(other.name) || name == other.name)
+                && (formatterOverride == other.formatterOverride)
+                && (string.IsNullOrEmpty(formatterSuffix) && string.IsNullOrEmpty(other.formatterSuffix) || formatterSuffix == other.formatterSuffix)
+                && (string.IsNullOrEmpty(formatterSuffixSingular) && string.IsNullOrEmpty(other.formatterSuffixSingular) || formatterSuffixSingular == other.formatterSuffixSingular);
+    }
+
     public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboardLocalization data)
     {
         id = data.id;

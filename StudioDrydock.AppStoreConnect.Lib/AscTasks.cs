@@ -48,7 +48,7 @@ public static class AscTasks
         // TODO: just request the first N versions from the API:
         if (limit.HasValue)
         {
-            versions = versions.GroupBy(a => a.platform).Select(a => a.First()).ToList();
+            versions = [.. versions.GroupBy(a => a.platform).Select(a => a.First())];
         }
 
         await LogEx.ForEachAsyncLog(versions, log, v => $"{v.platform}/{v.versionString}", async (version, log) =>
@@ -735,7 +735,7 @@ public static class AscTasks
         );
     }
 
-    public static async Task PutGameCenter(AppStoreClient api, INestedLog? log, string appId, GameCenter gc)
+    public static async Task PutGameCenter(AppStoreClient api, INestedLog? log, string appId, bool skipLocs, GameCenter gc)
     {
         if (appId != gc.appId)
             throw new Exception("appId mismatch");
@@ -743,7 +743,7 @@ public static class AscTasks
         var detailId = gc.detail.id!;
         var groupId = gc.group?.id;
 
-        var a = LogEx.ForEachAsyncLog(gc.achievements, log, a => $"{a.referenceName}", async (ach, log) =>
+        var a = LogEx.StdLog(log, "Achievements", log => LogEx.ForEachAsyncLog(gc.achievements, log, a => $"{a.referenceName}", async (ach, log) =>
         {
             // TODO: make this a cli switch:
             if (ach.live == true)
@@ -760,24 +760,38 @@ public static class AscTasks
                 ach.UpdateWithResponse(response.data);
             }
 
-            if (ach.localizations != null)
+            if (!skipLocs && ach.localizations != null)
             {
+                var locs = new List<GameCenterAchievementLocalization>();
+
+                var locResp = await api.GameCenterAchievements_localizations_getToManyRelated(ach.id!, log: log);
+                AddGameCenterAchievementLocalizations(locs, locResp);
+
+                while (locResp.links.next != null)
+                {
+                    locResp = await api.GetNextPage(locResp, log: log);
+                    AddGameCenterAchievementLocalizations(locs, locResp);
+                }
+
                 await LogEx.ForEachAsyncLog(ach.localizations, log, l => $"{l.locale}", async (loc, log) =>
                 {
+                    var existing = locs.FirstOrDefault(a => a.locale == loc.locale);
+                    loc.id = existing?.id ?? loc.id;
+
                     if (string.IsNullOrEmpty(loc.id))
                     {
                         var response = await api.GameCenterAchievementLocalizations_createInstance(loc.CreateCreateRequest(ach.id!), log: log);
                         loc.UpdateWithResponse(response.data);
                     }
-                    else
+                    else if (existing == null || !loc.Matches(existing))
                     {
                         var response = await api.GameCenterAchievementLocalizations_updateInstance(loc.id, loc.CreateUpdateRequest(), log: log);
                         loc.UpdateWithResponse(response.data);
                     }
                 });
             }
-        });
-        var b = LogEx.ForEachAsyncLog(gc.leaderboards, log, l => $"{l.referenceName}", async (lb, log) =>
+        }));
+        var b = LogEx.StdLog(log, "Leaderboards", log => LogEx.ForEachAsyncLog(gc.leaderboards, log, l => $"{l.referenceName}", async (lb, log) =>
         {
             // TODO: make this a cli switch:
             if (lb.live == true)
@@ -794,24 +808,38 @@ public static class AscTasks
                 lb.UpdateWithResponse(response.data);
             }
 
-            if (lb.localizations != null)
+            if (!skipLocs && lb.localizations != null)
             {
+                var locs = new List<GameCenterLeaderboardLocalization>();
+
+                var locResp = await api.GameCenterLeaderboards_localizations_getToManyRelated(lb.id!, log: log);
+                AddGameCenterLeaderboardLocalizations(locs, locResp);
+
+                while (locResp.links.next != null)
+                {
+                    locResp = await api.GetNextPage(locResp, log: log);
+                    AddGameCenterLeaderboardLocalizations(locs, locResp);
+                }
+
                 await LogEx.ForEachAsyncLog(lb.localizations, log, l => $"{l.locale}", async (loc, log) =>
                 {
+                    var existing = locs.FirstOrDefault(a => a.locale == loc.locale);
+                    loc.id = existing?.id ?? loc.id;
+
                     if (string.IsNullOrEmpty(loc.id))
                     {
                         var response = await api.GameCenterLeaderboardLocalizations_createInstance(loc.CreateCreateRequest(lb.id!), log: log);
                         loc.UpdateWithResponse(response.data);
                     }
-                    else
+                    else if (existing == null || !loc.Matches(existing))
                     {
                         var response = await api.GameCenterLeaderboardLocalizations_updateInstance(loc.id, loc.CreateUpdateRequest(), log: log);
                         loc.UpdateWithResponse(response.data);
                     }
                 });
             }
-        });
-        var c = LogEx.ForEachAsyncLog(gc.leaderboardSets, log, s => $"{s.referenceName}", async (lbs, log) =>
+        }));
+        var c = LogEx.StdLog(log, "LeaderboardSets", log => LogEx.ForEachAsyncLog(gc.leaderboardSets, log, s => $"{s.referenceName}", async (lbs, log) =>
         {
             // TODO: make this a cli switch:
             if (lbs.live == true)
@@ -828,88 +856,105 @@ public static class AscTasks
                 lbs.UpdateWithResponse(response.data);
             }
 
-            if (lbs.localizations != null)
+            if (!skipLocs && lbs.localizations != null)
             {
+                var locs = new List<GameCenterLeaderboardSetLocalization>();
+
+                var locResp = await api.GameCenterLeaderboardSets_localizations_getToManyRelated(lbs.id!, log: log);
+                AddGameCenterLeaderboardSetLocalizations(locs, locResp);
+
+                while (locResp.links.next != null)
+                {
+                    locResp = await api.GetNextPage(locResp, log: log);
+                    AddGameCenterLeaderboardSetLocalizations(locs, locResp);
+                }
+
                 await LogEx.ForEachAsyncLog(lbs.localizations, log, l => $"{l.locale}", async (loc, log) =>
                 {
+                    var existing = locs.FirstOrDefault(a => a.locale == loc.locale);
+                    loc.id = existing?.id ?? loc.id;
+
                     if (string.IsNullOrEmpty(loc.id))
                     {
                         var response = await api.GameCenterLeaderboardSetLocalizations_createInstance(loc.CreateCreateRequest(lbs.id!), log: log);
                         loc.UpdateWithResponse(response.data);
                     }
-                    else
+                    else if (existing == null || !loc.Matches(existing))
                     {
                         var response = await api.GameCenterLeaderboardSetLocalizations_updateInstance(loc.id, loc.CreateUpdateRequest(), log: log);
                         loc.UpdateWithResponse(response.data);
                     }
                 });
             }
-        });
+        }));
 
         await Task.WhenAll(a, b, c);
 
-        var postLbsetActions = new ConcurrentBag<Func<Task>>();
-
-        await LogEx.ForEachAsyncLog(gc.leaderboardSets, log, s => $"{s.referenceName}", async (lbs, log) =>
+        await LogEx.StdLog(log, "LeaderboardSetsPost", async log =>
         {
-            // TODO: make this a cli switch:
-            if (lbs.live == true)
-                return;
+            var postLbsetActions = new ConcurrentBag<Func<Task>>();
 
-            // add new leaderboards to leaderboard set (removal and reordering is handled later):
-            var newLbIds = gc.leaderboards
-                .Where(x => x.leaderboardSets?.Contains(lbs.id) == true)
-                .Select(x => x.id!)
-                .ToArray();
-
-            // limit 200 because this endpoint doesn't paginate (boo):
-            var currentLbIdsReq = await api.GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelationship(
-                lbs.id!,
-                limit: 200,
-                log: log);
-            var currentLbIds = currentLbIdsReq.data.Select(x => x.id).ToArray();
-
-            var createLbIds = newLbIds.Except(currentLbIds).ToArray();
-            var deleteLbIds = currentLbIds.Except(newLbIds).ToArray();
-
-            if (createLbIds.Length > 0)
+            await LogEx.ForEachAsyncLog(gc.leaderboardSets, log, s => $"{s.referenceName}", async (lbs, log) =>
             {
-                await api.GameCenterLeaderboardSets_gameCenterLeaderboards_createToManyRelationship(lbs.id!, new()
+                // TODO: make this a cli switch:
+                if (lbs.live == true)
+                    return;
+
+                // add new leaderboards to leaderboard set (removal and reordering is handled later):
+                var newLbIds = gc.leaderboards
+                    .Where(x => x.leaderboardSets?.Contains(lbs.id) == true)
+                    .Select(x => x.id!)
+                    .ToArray();
+
+                // limit 200 because this endpoint doesn't paginate (boo):
+                var currentLbIdsReq = await api.GameCenterLeaderboardSets_gameCenterLeaderboards_getToManyRelationship(
+                    lbs.id!,
+                    limit: 200,
+                    log: log);
+                var currentLbIds = currentLbIdsReq.data.Select(x => x.id).ToArray();
+
+                var createLbIds = newLbIds.Except(currentLbIds).ToArray();
+                var deleteLbIds = currentLbIds.Except(newLbIds).ToArray();
+
+                if (createLbIds.Length > 0)
                 {
-                    data = createLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
+                    await api.GameCenterLeaderboardSets_gameCenterLeaderboards_createToManyRelationship(lbs.id!, new()
+                    {
+                        data = [.. createLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
                     {
                         id = x,
-                    }).ToArray()
-                }, log: log);
-            }
-
-            postLbsetActions.Add(async () =>
-            {
-                if (deleteLbIds.Length > 0)
-                {
-                    await api.GameCenterLeaderboardSets_gameCenterLeaderboards_deleteToManyRelationship(lbs.id!, new()
-                    {
-                        data = deleteLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
-                        {
-                            id = x,
-                        }).ToArray()
+                    })]
                     }, log: log);
                 }
 
-                if (!newLbIds.SequenceEqual(currentLbIds))
+                postLbsetActions.Add(async () =>
                 {
-                    await api.GameCenterLeaderboardSets_gameCenterLeaderboards_replaceToManyRelationship(lbs.id!, new()
+                    if (deleteLbIds.Length > 0)
                     {
-                        data = newLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
+                        await api.GameCenterLeaderboardSets_gameCenterLeaderboards_deleteToManyRelationship(lbs.id!, new()
+                        {
+                            data = [.. deleteLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
                         {
                             id = x,
-                        }).ToArray()
-                    }, log: log);
-                }
+                        })]
+                        }, log: log);
+                    }
+
+                    if (!newLbIds.SequenceEqual(currentLbIds))
+                    {
+                        await api.GameCenterLeaderboardSets_gameCenterLeaderboards_replaceToManyRelationship(lbs.id!, new()
+                        {
+                            data = [.. newLbIds.Select(x => new AppStoreClient.GameCenterLeaderboardSetGameCenterLeaderboardsLinkagesRequest.Data()
+                        {
+                            id = x,
+                        })]
+                        }, log: log);
+                    }
+                });
             });
-        });
 
-        await LogEx.ForEachAsync(postLbsetActions.ToArray(), a => a());
+            await LogEx.ForEachAsync(postLbsetActions.ToArray(), a => a());
+        });
 
         // update order of leaderboard sets:
         if (gc.leaderboardSets != null)
@@ -918,10 +963,10 @@ public static class AscTasks
             {
                 var req = new AppStoreClient.GameCenterGroupGameCenterLeaderboardSetsLinkagesRequest
                 {
-                    data = gc.leaderboardSets.Select(x => new AppStoreClient.GameCenterGroupGameCenterLeaderboardSetsLinkagesRequest.Data()
+                    data = [.. gc.leaderboardSets.Select(x => new AppStoreClient.GameCenterGroupGameCenterLeaderboardSetsLinkagesRequest.Data()
                     {
                         id = x.id!,
-                    }).ToArray()
+                    })]
                 };
 
                 await api.GameCenterGroups_gameCenterLeaderboardSets_replaceToManyRelationship(groupId, req, log: log);
@@ -930,10 +975,10 @@ public static class AscTasks
             {
                 var req = new AppStoreClient.GameCenterDetailGameCenterLeaderboardSetsLinkagesRequest
                 {
-                    data = gc.leaderboardSets.Select(x => new AppStoreClient.GameCenterDetailGameCenterLeaderboardSetsLinkagesRequest.Data()
+                    data = [.. gc.leaderboardSets.Select(x => new AppStoreClient.GameCenterDetailGameCenterLeaderboardSetsLinkagesRequest.Data()
                     {
                         id = x.id!,
-                    }).ToArray()
+                    })]
                 };
 
                 await api.GameCenterDetails_gameCenterLeaderboardSets_replaceToManyRelationship(detailId, req, log: log);
@@ -1036,7 +1081,7 @@ public static class AscTasks
 
             if (data.relationships?.gameCenterLeaderboardSets?.data?.Length > 0)
             {
-                gameCenterLeaderboard.leaderboardSets = data.relationships.gameCenterLeaderboardSets.data.Select(x => x.id).ToArray();
+                gameCenterLeaderboard.leaderboardSets = [.. data.relationships.gameCenterLeaderboardSets.data.Select(x => x.id)];
             }
 
             if (leaderboardReleasesMap.TryGetValue(data.id, out var leaderboardRelease))

@@ -20,6 +20,11 @@ public class GameCenterLeaderboardSetLocalization
         name = data.attributes?.name;
     }
 
+    public bool Matches(GameCenterLeaderboardSetLocalization other)
+    {
+        return string.IsNullOrEmpty(name) && string.IsNullOrEmpty(other.name) || name == other.name;
+    }
+
     public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboardSetLocalization data)
     {
         id = data.id;

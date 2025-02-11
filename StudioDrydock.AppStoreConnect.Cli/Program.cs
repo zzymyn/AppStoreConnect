@@ -97,6 +97,12 @@ internal static class Program
         Description = "Google Sheets spreadsheet ID",
     };
 
+    private static readonly Option<bool> SkipLocalizationOpt = new("--skipLocalization",
+        getDefaultValue: () => false)
+    {
+        Description = "Skip uploading localization data",
+    };
+
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
@@ -200,6 +206,7 @@ internal static class Program
         setGameCenterCommand.AddOption(AppIdOpt);
         setGameCenterCommand.AddOption(InputOpt);
         setGameCenterCommand.AddOption(OutputOpt);
+        setGameCenterCommand.AddOption(SkipLocalizationOpt);
         setGameCenterCommand.SetHandler(SetGameCenter);
         rootCommand.AddCommand(setGameCenterCommand);
 
@@ -461,6 +468,7 @@ internal static class Program
         var log = CreateLog(context);
         var api = CreateClient(context);
         var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
+        var skipLocalization = context.ParseResult.GetValueForOption(SkipLocalizationOpt);
         var gc = Input<GameCenter>(context);
 
         try
@@ -468,7 +476,7 @@ internal static class Program
             await LogEx.StdLog(
                 log,
                 nameof(SetGameCenter),
-                log => AscTasks.PutGameCenter(api, log, appId, gc));
+                log => AscTasks.PutGameCenter(api, log, appId, skipLocalization, gc));
         }
         finally
         {
