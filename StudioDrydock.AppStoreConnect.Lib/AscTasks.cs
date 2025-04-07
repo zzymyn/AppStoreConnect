@@ -48,7 +48,7 @@ public static class AscTasks
         // TODO: just request the first N versions from the API:
         if (limit.HasValue)
         {
-            versions = [.. versions.GroupBy(a => a.platform).Select(a => a.First())];
+            versions = [.. versions.GroupBy(a => a.platform).SelectMany(a => a.Take(limit.Value))];
         }
 
         await LogEx.ForEachAsyncLog(versions, log, v => $"{v.platform}/{v.versionString}", async (version, log) =>
@@ -186,7 +186,7 @@ public static class AscTasks
         if (appId != versions.appId)
             throw new Exception("appId mismatch");
 
-        foreach (var version in versions.appVersions)
+        await LogEx.ForEachAsyncLog(versions.appVersions, log, v => $"{v.platform}/{v.versionString}", async (version, log) =>
         {
             // TODO: make this a cli switch:
             switch (version.appStoreState)
@@ -194,7 +194,7 @@ public static class AscTasks
                 case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.READY_FOR_SALE:
                 case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.REPLACED_WITH_NEW_VERSION:
                 case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.REMOVED_FROM_SALE:
-                    continue;
+                    return;
             }
 
             if (string.IsNullOrEmpty(version.id))
@@ -210,28 +210,28 @@ public static class AscTasks
 
             if (version.localizations != null)
             {
-                foreach (var localization in version.localizations)
+                await LogEx.ForEachAsyncLog(version.localizations, log, l => $"{l.locale}", async (loc, log) =>
                 {
-                    if (string.IsNullOrEmpty(localization.id))
+                    if (string.IsNullOrEmpty(loc.id))
                     {
-                        var response = await api.AppStoreVersionLocalizations_createInstance(localization.CreateCreateRequest(version.id!), log: log);
-                        localization.UpdateWithResponse(response.data);
+                        var response = await api.AppStoreVersionLocalizations_createInstance(loc.CreateCreateRequest(version.id!), log: log);
+                        loc.UpdateWithResponse(response.data);
                     }
                     else
                     {
-                        var response = await api.AppStoreVersionLocalizations_updateInstance(localization.id, localization.CreateUpdateRequest(), log: log);
-                        localization.UpdateWithResponse(response.data);
+                        var response = await api.AppStoreVersionLocalizations_updateInstance(loc.id, loc.CreateUpdateRequest(), log: log);
+                        loc.UpdateWithResponse(response.data);
                     }
 
-                    if (localization.screenshotSets != null && localization.screenshotSets.Length > 0)
+                    if (loc.screenshotSets != null && loc.screenshotSets.Length > 0)
                     {
                         // delete sets that no longer exist:
                         {
-                            var ssSetsResponse = await api.AppStoreVersionLocalizations_appScreenshotSets_getToManyRelated(localization.id!, log: log);
+                            var ssSetsResponse = await api.AppStoreVersionLocalizations_appScreenshotSets_getToManyRelated(loc.id!, log: log);
 
                             foreach (var ssSetResponse in ssSetsResponse.data)
                             {
-                                var ssSet = localization.screenshotSets.FirstOrDefault(a => a.id == ssSetResponse.id);
+                                var ssSet = loc.screenshotSets.FirstOrDefault(a => a.id == ssSetResponse.id);
 
                                 if (ssSet == null)
                                 {
@@ -240,11 +240,11 @@ public static class AscTasks
                             }
                         }
 
-                        foreach (var ssSet in localization.screenshotSets)
+                        await LogEx.ForEachAsyncLog(loc.screenshotSets, log, ss => $"{ss.screenshotDisplayType}", async (ssSet, log) =>
                         {
                             if (string.IsNullOrEmpty(ssSet.id))
                             {
-                                var response = await api.AppScreenshotSets_createInstance(ssSet.CreateCreateRequest(localization.id!), log: log);
+                                var response = await api.AppScreenshotSets_createInstance(ssSet.CreateCreateRequest(loc.id!), log: log);
                                 ssSet.UpdateWithResponse(response.data);
                             }
 
@@ -297,18 +297,18 @@ public static class AscTasks
                             }
 
                             await api.AppScreenshotSets_appScreenshots_replaceToManyRelationship(ssSet.id!, ssSet.CreateUpdateRequest(), log: log);
-                        }
+                        });
                     }
 
-                    if (localization.appPreviewSets != null && localization.appPreviewSets.Length > 0)
+                    if (loc.appPreviewSets != null && loc.appPreviewSets.Length > 0)
                     {
                         // delete sets that no longer exist:
                         {
-                            var apSetsResponse = await api.AppStoreVersionLocalizations_appPreviewSets_getToManyRelated(localization.id!, log: log);
+                            var apSetsResponse = await api.AppStoreVersionLocalizations_appPreviewSets_getToManyRelated(loc.id!, log: log);
 
                             foreach (var apSetResponse in apSetsResponse.data)
                             {
-                                var apSet = localization.appPreviewSets.FirstOrDefault(a => a.id == apSetResponse.id);
+                                var apSet = loc.appPreviewSets.FirstOrDefault(a => a.id == apSetResponse.id);
 
                                 if (apSet == null)
                                 {
@@ -317,11 +317,11 @@ public static class AscTasks
                             }
                         }
 
-                        foreach (var apSet in localization.appPreviewSets)
+                        await LogEx.ForEachAsyncLog(loc.appPreviewSets, log, ss => $"{ss.previewType}", async (apSet, log) =>
                         {
                             if (string.IsNullOrEmpty(apSet.id))
                             {
-                                var response = await api.AppPreviewSets_createInstance(apSet.CreateCreateRequest(localization.id!), log: log);
+                                var response = await api.AppPreviewSets_createInstance(apSet.CreateCreateRequest(loc.id!), log: log);
                                 apSet.UpdateWithResponse(response.data);
                             }
 
@@ -386,11 +386,11 @@ public static class AscTasks
                             }
 
                             await api.AppPreviewSets_appPreviews_replaceToManyRelationship(apSet.id!, apSet.CreateUpdateRequest(), log: log);
-                        }
+                        });
                     }
-                }
+                });
             }
-        }
+        });
     }
 
     public static async Task<IapList> GetIaps(AppStoreClient api, string appId, AppStoreClient.Apps_inAppPurchasesV2_getToManyRelatedFilterState? state, INestedLog? log)
