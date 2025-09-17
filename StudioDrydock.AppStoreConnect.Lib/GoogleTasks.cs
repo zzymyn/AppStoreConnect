@@ -177,6 +177,7 @@ public static class GoogleTasks
             nameof(GameCenterAchievement.showBeforeEarned),
             nameof(GameCenterAchievement.repeatable),
         };
+        var row2 = new List<object> { };
         foreach (var locale in allLocales)
         {
             row0.Add(locale);
@@ -194,6 +195,7 @@ public static class GoogleTasks
         }
         table.Add(row0);
         table.Add(row1);
+        table.Add(row2);
 
         foreach (var achievement in gc.achievements)
         {
@@ -231,7 +233,7 @@ public static class GoogleTasks
         var allLocales = data[0].OfType<string>().Where(s => s != "").ToHashSet();
         var newAchievements = new List<GameCenterAchievement>();
 
-        for (var r = 2; r < data.Count; ++r)
+        for (var r = 3; r < data.Count; ++r)
         {
             var vendorIdentifier = ReadDataValue(data, r, nameof(GameCenterAchievement.vendorIdentifier), "");
 
@@ -354,7 +356,7 @@ public static class GoogleTasks
             {
                 foreach (var lbSetId in leaderboard.leaderboardSets)
                 {
-                    var lbSet = gc.leaderboardSets.FirstOrDefault(l => l.vendorIdentifier == lbSetId);
+                    var lbSet = gc.leaderboardSets.FirstOrDefault(l => l.id == lbSetId);
                     if (lbSet != null)
                     {
                         if (lbSetsStr != "")
@@ -511,6 +513,7 @@ public static class GoogleTasks
             nameof(GameCenterLeaderboardSet.referenceName),
             nameof(GameCenterLeaderboardSet.vendorIdentifier),
         };
+        var row2 = new List<object> {};
         foreach (var locale in allLocales)
         {
             row0.Add(locale);
@@ -518,6 +521,7 @@ public static class GoogleTasks
         }
         table.Add(row0);
         table.Add(row1);
+        table.Add(row2);
 
         foreach (var leaderboardSet in gc.leaderboardSets)
         {
@@ -542,7 +546,7 @@ public static class GoogleTasks
         var allLocales = data[0].OfType<string>().Where(s => s != "").ToHashSet();
         var newLeaderboardSets = new List<GameCenterLeaderboardSet>();
 
-        for (var r = 2; r < data.Count; ++r)
+        for (var r = 3; r < data.Count; ++r)
         {
             var vendorIdentifier = ReadDataValue(data, r, nameof(GameCenterLeaderboardSet.vendorIdentifier), "");
 

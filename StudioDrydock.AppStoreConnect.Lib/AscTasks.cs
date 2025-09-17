@@ -633,6 +633,8 @@ public static class AscTasks
                 // find leaderboards:
                 var leaderboards = await api.GameCenterGroups_gameCenterLeaderboards_getToManyRelated(
                     group.data.id,
+                    limit: 50,
+                    limitGameCenterLeaderboardSets: 50,
                     include: [AppStoreClient.GameCenterGroups_gameCenterLeaderboards_getToManyRelatedInclude.gameCenterLeaderboardSets],
                     fieldsGameCenterLeaderboardSets: [],
                     log: log);
@@ -649,9 +651,11 @@ public static class AscTasks
                 // find leaderboards:
                 var leaderboards = await api.GameCenterDetails_gameCenterLeaderboards_getToManyRelated(
                     detail.data.id,
+                    limit: 50,
+                    limitGameCenterLeaderboardSets: 50,
                     include: [AppStoreClient.GameCenterDetails_gameCenterLeaderboards_getToManyRelatedInclude.gameCenterLeaderboardSets],
                     fieldsGameCenterLeaderboardSets: [],
-                    log: log);
+                log: log);
                 AddGameCenterLeaderboards(gameCenterLeaderboards, leaderboards, leaderboardReleasesMap);
 
                 while (leaderboards.links.next != null)
