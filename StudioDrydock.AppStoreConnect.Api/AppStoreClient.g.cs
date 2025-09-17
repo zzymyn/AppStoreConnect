@@ -13545,7 +13545,7 @@ public partial class AppStoreClient
                     MONEY_KRONER,
                     MONEY_YEN,
                 }
-                public Dictionary<string, string> @activityProperties { get; set; } = default;
+                public Dictionary<string, string>? @activityProperties { get; set; } = default;
                 public DefaultFormatter @defaultFormatter { get; set; } = default;
                 public string @referenceName { get; set; } = "";
                 public string @vendorIdentifier { get; set; } = "";

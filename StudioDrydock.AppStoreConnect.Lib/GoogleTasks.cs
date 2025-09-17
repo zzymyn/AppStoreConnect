@@ -390,7 +390,7 @@ public static class GoogleTasks
 
             foreach (var prop in allActivityPropertyIDs)
             {
-                if (leaderboard.activityProperties != null && leaderboard.activityProperties.TryGetValue(prop, out string v))
+                if (leaderboard.activityProperties != null && leaderboard.activityProperties.TryGetValue(prop, out string? v))
                 {
                     row.Add(v);
                 }
