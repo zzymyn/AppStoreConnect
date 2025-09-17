@@ -102,6 +102,24 @@ internal static class Program
     {
         Description = "Skip uploading localization data",
     };
+    
+    private static readonly Option<bool> SkipLiveAchievementsOpt = new("--skipLiveAchievements",
+        getDefaultValue: () => true)
+    {
+        Description = "Skip uploading live achievements",
+    };
+    
+    private static readonly Option<bool> SkipLiveLeaderboardsOpt = new("--skipLiveLeaderboards",
+        getDefaultValue: () => true)
+    {
+        Description = "Skip uploading live leaderboards",
+    };
+    
+    private static readonly Option<bool> SkipLiveLeaderboardSetsOpt = new("--skipLiveLeaderboardSets",
+        getDefaultValue: () => true)
+    {
+        Description = "Skip uploading live leaderboards sets",
+    };
 
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
@@ -207,6 +225,9 @@ internal static class Program
         setGameCenterCommand.AddOption(InputOpt);
         setGameCenterCommand.AddOption(OutputOpt);
         setGameCenterCommand.AddOption(SkipLocalizationOpt);
+        setGameCenterCommand.AddOption(SkipLiveAchievementsOpt);
+        setGameCenterCommand.AddOption(SkipLiveLeaderboardsOpt);
+        setGameCenterCommand.AddOption(SkipLiveLeaderboardSetsOpt);
         setGameCenterCommand.SetHandler(SetGameCenter);
         rootCommand.AddCommand(setGameCenterCommand);
 
@@ -470,6 +491,9 @@ internal static class Program
         var ad = CreateAssetDatabaseNextToFile(context.ParseResult.GetValueForOption(InputOpt)) ?? throw new Exception($"{InputOpt.Name} is required");
         var appId = context.ParseResult.GetValueForOption(AppIdOpt) ?? throw new Exception($"{AppIdOpt.Name} is required");
         var skipLocalization = context.ParseResult.GetValueForOption(SkipLocalizationOpt);
+        var skipLiveAchievements = context.ParseResult.GetValueForOption(SkipLiveAchievementsOpt);
+        var skipLiveLeaderboards = context.ParseResult.GetValueForOption(SkipLiveLeaderboardsOpt);
+        var skipLiveLeaderboardSets = context.ParseResult.GetValueForOption(SkipLiveLeaderboardSetsOpt);
         var gc = Input<GameCenter>(context);
 
         try
@@ -477,7 +501,7 @@ internal static class Program
             await LogEx.StdLog(
                 log,
                 nameof(SetGameCenter),
-                log => AscTasks.PutGameCenter(api, ad, log, appId, skipLocalization, gc));
+                log => AscTasks.PutGameCenter(api, ad, log, appId, skipLocalization, skipLiveAchievements, skipLiveLeaderboards, skipLiveLeaderboardSets, gc));
         }
         finally
         {

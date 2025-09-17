@@ -735,7 +735,7 @@ public static class AscTasks
         );
     }
 
-    public static async Task PutGameCenter(AppStoreClient api, AssetDatabase ad, INestedLog? log, string appId, bool skipLocs, GameCenter gc)
+    public static async Task PutGameCenter(AppStoreClient api, AssetDatabase ad, INestedLog? log, string appId, bool skipLocs, bool skipLiveAch, bool skipLiveLBs, bool skipLiveLBSets, GameCenter gc)
     {
         if (appId != gc.appId)
             throw new Exception("appId mismatch");
@@ -746,7 +746,7 @@ public static class AscTasks
         var a = LogEx.StdLog(log, "Achievements", log => LogEx.ForEachAsyncLog(gc.achievements, log, a => $"{a.referenceName}", async (ach, log) =>
         {
             // TODO: make this a cli switch:
-            if (ach.live == true)
+            if (ach.live == true && skipLiveAch)
                 return;
 
             if (string.IsNullOrEmpty(ach.id))
@@ -818,7 +818,7 @@ public static class AscTasks
         var b = LogEx.StdLog(log, "Leaderboards", log => LogEx.ForEachAsyncLog(gc.leaderboards, log, l => $"{l.referenceName}", async (lb, log) =>
         {
             // TODO: make this a cli switch:
-            if (lb.live == true)
+            if (lb.live == true && skipLiveLBs)
                 return;
 
             if (string.IsNullOrEmpty(lb.id))
@@ -866,7 +866,7 @@ public static class AscTasks
         var c = LogEx.StdLog(log, "LeaderboardSets", log => LogEx.ForEachAsyncLog(gc.leaderboardSets, log, s => $"{s.referenceName}", async (lbs, log) =>
         {
             // TODO: make this a cli switch:
-            if (lbs.live == true)
+            if (lbs.live == true && skipLiveLBSets)
                 return;
 
             if (string.IsNullOrEmpty(lbs.id))
