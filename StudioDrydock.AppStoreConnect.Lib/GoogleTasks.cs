@@ -438,10 +438,10 @@ public static class GoogleTasks
             var lbSetsStr = ReadDataValue(data, r, nameof(GameCenterLeaderboard.leaderboardSets), "");
             if (!string.IsNullOrEmpty(lbSetsStr))
             {
-                var lbSetVIds = lbSetsStr.Split('\n');
-                foreach (var lbSetVId in lbSetVIds)
+                var lbSetIds = lbSetsStr.Split('\n');
+                foreach (var lbSetVId in lbSetIds)
                 {
-                    var lbSet = gc.leaderboardSets.FirstOrDefault(l => l.vendorIdentifier == lbSetVId);
+                    var lbSet = gc.leaderboardSets.FirstOrDefault(l => l.referenceName == lbSetVId);
                     if (lbSet != null)
                     {
                         newLeaderboardSets.Add(lbSet.id!);
