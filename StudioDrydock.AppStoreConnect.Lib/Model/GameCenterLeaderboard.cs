@@ -19,6 +19,7 @@ public class GameCenterLeaderboard
     public bool? live { get; set; }
     public string[]? leaderboardSets { get; set; }
     public GameCenterLeaderboardLocalization[]? localizations { get; set; }
+    public Dictionary<string, string>? activityProperties { get; set; }
 
     public GameCenterLeaderboard()
     {
@@ -38,6 +39,7 @@ public class GameCenterLeaderboard
         recurrenceDuration = data.attributes?.recurrenceDuration;
         recurrenceRule = data.attributes?.recurrenceRule;
         archived = data.attributes?.archived;
+        activityProperties = data.attributes?.activityProperties;
     }
 
     public void UpdateWithResponse(AppStoreClient.GameCenterLeaderboard data)
@@ -54,6 +56,7 @@ public class GameCenterLeaderboard
         recurrenceDuration = data.attributes?.recurrenceDuration;
         recurrenceRule = data.attributes?.recurrenceRule;
         archived = data.attributes?.archived;
+        activityProperties = data.attributes?.activityProperties;
     }
 
     public AppStoreClient.GameCenterLeaderboardCreateRequest CreateCreateRequest(string detailId, string? groupId)
@@ -74,6 +77,7 @@ public class GameCenterLeaderboard
                     recurrenceStartDate = recurrenceStartDate,
                     recurrenceDuration = recurrenceDuration,
                     recurrenceRule = recurrenceRule,
+                    activityProperties = activityProperties
                 },
                 relationships = new()
                 {
@@ -132,6 +136,7 @@ public class GameCenterLeaderboard
                     recurrenceDuration = recurrenceDuration,
                     recurrenceRule = recurrenceRule,
                     archived = archived,
+                    activityProperties = activityProperties
                 },
             }
         };

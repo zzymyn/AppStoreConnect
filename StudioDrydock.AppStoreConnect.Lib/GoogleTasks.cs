@@ -287,8 +287,14 @@ public static class GoogleTasks
             .Where(a => a.localizations != null).SelectMany(a => a.localizations!)
             .Where(loc => loc.locale != null).Select(loc => loc.locale!)
             .Distinct().OrderBy(a => a).ToList();
+            
+        var allActivityPropertyIDs = gc.leaderboards
+            .Where(a => a.activityProperties != null).SelectMany(a => a.activityProperties!)
+            .Where(kvp => kvp.Key != "").Select(kvp => kvp.Key)
+            .Distinct().OrderBy(a => a).ToList();
+        
 
-        var row0 = new List<object> { "", "", "", "", "", };
+        var row0 = new List<object> { "", "", "", "", "","" };
         var row1 = new List<object> {
             nameof(GameCenterLeaderboard.referenceName),
             nameof(GameCenterLeaderboard.vendorIdentifier),
@@ -297,28 +303,40 @@ public static class GoogleTasks
             nameof(GameCenterLeaderboard.scoreSortType),
             nameof(GameCenterLeaderboard.leaderboardSets),
         };
+        var row2 = new List<object> { "", "", "", "", "","" };
         foreach (var locale in allLocales)
         {
             row0.Add(locale);
             row1.Add(nameof(GameCenterLeaderboardLocalization.name));
+            row2.Add("");
         }
         foreach (var locale in allLocales)
         {
             row0.Add(locale);
             row1.Add(nameof(GameCenterLeaderboardLocalization.formatterOverride));
+            row2.Add("");
         }
         foreach (var locale in allLocales)
         {
             row0.Add(locale);
             row1.Add(nameof(GameCenterLeaderboardLocalization.formatterSuffix));
+            row2.Add("");
         }
         foreach (var locale in allLocales)
         {
             row0.Add(locale);
             row1.Add(nameof(GameCenterLeaderboardLocalization.formatterSuffixSingular));
+            row2.Add("");
         }
+
+        foreach(var prop in allActivityPropertyIDs)
+        {
+            row2.Add(prop);
+        }
+
         table.Add(row0);
         table.Add(row1);
+        table.Add(row2);
 
         foreach (var leaderboard in gc.leaderboards)
         {
@@ -367,6 +385,19 @@ public static class GoogleTasks
                 var loc = leaderboard.localizations?.FirstOrDefault(l => l.locale == locale);
                 row.Add(loc?.formatterSuffixSingular ?? "");
             }
+
+            foreach (var prop in allActivityPropertyIDs)
+            {
+                if (leaderboard.activityProperties != null && leaderboard.activityProperties.TryGetValue(prop, out string v))
+                {
+                    row.Add(v);
+                }
+                else
+                {
+                    row.Add("");
+                }
+            }
+
             table.Add(row);
         }
 
@@ -376,9 +407,10 @@ public static class GoogleTasks
     private static void UpdateLeaderboardsFromTable(GameCenter gc, IList<IList<object>> data, INestedLog? log)
     {
         var allLocales = data[0].OfType<string>().Where(s => s != "").ToHashSet();
+        var allActivityPropertyIDs = data[2].OfType<string>().Where(s => s != "").ToHashSet();
         var newLeaderboards = new List<GameCenterLeaderboard>();
 
-        for (var r = 2; r < data.Count; ++r)
+        for (var r = 3; r < data.Count; ++r)
         {
             var vendorIdentifier = ReadDataValue(data, r, nameof(GameCenterLeaderboard.vendorIdentifier), "");
 
@@ -435,6 +467,32 @@ public static class GoogleTasks
                 loc.formatterSuffixSingular = ReadDataValue(data, r, nameof(GameCenterLeaderboardLocalization.formatterSuffixSingular), locale);
             }
             leaderboard.localizations = [.. newLocales.OrderBy(l => l.locale)];
+
+            foreach (var activityProperty in allActivityPropertyIDs)
+            {
+                var propValue = ReadDataValue(data, r, "", "", activityProperty);
+                
+                //If this key exists and the prop value is empty. Remove the key from the dictionary.
+                //We dont want to submit properties with empty values as this will make an entry to the properties field
+                //if that specific key doesnt currently exist in asc
+                /*NOTE: We are currently using HTTPMethod.Patch to update ASC entries so if a new json object removes keys
+                 then it will not remove the existing key since patch does not remove entries*/
+                if (leaderboard.activityProperties != null && 
+                    leaderboard.activityProperties.ContainsKey(activityProperty) && 
+                    propValue is null or "")
+                {
+                    leaderboard.activityProperties.Remove(activityProperty);
+                }
+                //otherwise, try adding the key. If it exists then apply the values.
+                else if (leaderboard.activityProperties != null && 
+                        propValue is not null or "" &&
+                        !leaderboard.activityProperties.TryAdd(activityProperty, propValue)) 
+                {
+                    //If key already exists then apply the value
+                    leaderboard.activityProperties[activityProperty] = propValue;
+                }
+            }
+
         }
         gc.leaderboards = newLeaderboards;
     }
@@ -523,15 +581,16 @@ public static class GoogleTasks
         gc.leaderboardSets = newLeaderboardSets;
     }
 
-    private static string? ReadDataValue(IList<IList<object>> data, int r, string name, string locale)
+    private static string? ReadDataValue(IList<IList<object>> data, int r, string name, string locale, string activityProperty = "")
     {
-        var cMax = Math.Max(Math.Max(data[0].Count, data[1].Count), data[r].Count);
+        var cMax = Math.Max(Math.Max(data[0].Count, data[2].Count), data[r].Count);
         for (var c = 0; c < cMax; ++c)
         {
             var h0 = data[0]?.ElementAtOrDefault(c)?.ToString() ?? "";
             var h1 = data[1]?.ElementAtOrDefault(c)?.ToString() ?? "";
+            var h2 = data[2]?.ElementAtOrDefault(c)?.ToString() ?? "";
             var hV = data[r]?.ElementAtOrDefault(c)?.ToString() ?? "";
-            if (locale == h0 && name == h1)
+            if (locale == h0 && name == h1 && activityProperty == h2)
             {
                 // return null if the cell is empty:
                 if (string.IsNullOrEmpty(hV))
