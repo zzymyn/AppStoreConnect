@@ -191,10 +191,10 @@ public static class AscTasks
             // TODO: make this a cli switch:
             switch (version.appStoreState)
             {
-                case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.READY_FOR_SALE:
-                case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.REPLACED_WITH_NEW_VERSION:
-                case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.REMOVED_FROM_SALE:
-                    return;
+            case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.READY_FOR_SALE:
+            case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.REPLACED_WITH_NEW_VERSION:
+            case AppStoreClient.AppStoreVersion.Attributes.AppStoreState.REMOVED_FROM_SALE:
+                return;
             }
 
             if (string.IsNullOrEmpty(version.id))
@@ -520,14 +520,14 @@ public static class AscTasks
             // TODO: make this a cli switch:
             switch (ev.eventState)
             {
-                case AppStoreClient.AppEvent.Attributes.EventState.WAITING_FOR_REVIEW:
-                case AppStoreClient.AppEvent.Attributes.EventState.IN_REVIEW:
-                case AppStoreClient.AppEvent.Attributes.EventState.ACCEPTED:
-                case AppStoreClient.AppEvent.Attributes.EventState.APPROVED:
-                case AppStoreClient.AppEvent.Attributes.EventState.PUBLISHED:
-                case AppStoreClient.AppEvent.Attributes.EventState.PAST:
-                case AppStoreClient.AppEvent.Attributes.EventState.ARCHIVED:
-                    continue;
+            case AppStoreClient.AppEvent.Attributes.EventState.WAITING_FOR_REVIEW:
+            case AppStoreClient.AppEvent.Attributes.EventState.IN_REVIEW:
+            case AppStoreClient.AppEvent.Attributes.EventState.ACCEPTED:
+            case AppStoreClient.AppEvent.Attributes.EventState.APPROVED:
+            case AppStoreClient.AppEvent.Attributes.EventState.PUBLISHED:
+            case AppStoreClient.AppEvent.Attributes.EventState.PAST:
+            case AppStoreClient.AppEvent.Attributes.EventState.ARCHIVED:
+                continue;
             }
 
             if (string.IsNullOrEmpty(ev.id))

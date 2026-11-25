@@ -289,14 +289,14 @@ public static class GoogleTasks
             .Where(a => a.localizations != null).SelectMany(a => a.localizations!)
             .Where(loc => loc.locale != null).Select(loc => loc.locale!)
             .Distinct().OrderBy(a => a).ToList();
-            
+
         var allActivityPropertyIDs = gc.leaderboards
             .Where(a => a.activityProperties != null).SelectMany(a => a.activityProperties!)
             .Where(kvp => kvp.Key != "").Select(kvp => kvp.Key)
             .Distinct().OrderBy(a => a).ToList();
-        
 
-        var row0 = new List<object> { "", "", "", "", "","" };
+
+        var row0 = new List<object> { "", "", "", "", "", "" };
         var row1 = new List<object> {
             nameof(GameCenterLeaderboard.referenceName),
             nameof(GameCenterLeaderboard.vendorIdentifier),
@@ -305,7 +305,7 @@ public static class GoogleTasks
             nameof(GameCenterLeaderboard.scoreSortType),
             nameof(GameCenterLeaderboard.leaderboardSets),
         };
-        var row2 = new List<object> { "", "", "", "", "","" };
+        var row2 = new List<object> { "", "", "", "", "", "" };
         foreach (var locale in allLocales)
         {
             row0.Add(locale);
@@ -331,7 +331,7 @@ public static class GoogleTasks
             row2.Add("");
         }
 
-        foreach(var prop in allActivityPropertyIDs)
+        foreach (var prop in allActivityPropertyIDs)
         {
             row2.Add(prop);
         }
@@ -473,22 +473,22 @@ public static class GoogleTasks
             foreach (var activityProperty in allActivityPropertyIDs)
             {
                 var propValue = ReadDataValue(data, r, "", "", activityProperty);
-                
+
                 //If this key exists and the prop value is empty. Remove the key from the dictionary.
                 //We dont want to submit properties with empty values as this will make an entry to the properties field
                 //if that specific key doesnt currently exist in asc
                 /*NOTE: We are currently using HTTPMethod.Patch to update ASC entries so if a new json object removes keys
                  then it will not remove the existing key since patch does not remove entries*/
-                if (leaderboard.activityProperties != null && 
-                    leaderboard.activityProperties.ContainsKey(activityProperty) && 
+                if (leaderboard.activityProperties != null &&
+                    leaderboard.activityProperties.ContainsKey(activityProperty) &&
                     propValue is null or "")
                 {
                     leaderboard.activityProperties.Remove(activityProperty);
                 }
                 //otherwise, try adding the key. If it exists then apply the values.
-                else if (leaderboard.activityProperties != null && 
+                else if (leaderboard.activityProperties != null &&
                         propValue is not null and not "" &&
-                        !leaderboard.activityProperties.TryAdd(activityProperty, propValue)) 
+                        !leaderboard.activityProperties.TryAdd(activityProperty, propValue))
                 {
                     //If key already exists then apply the value
                     leaderboard.activityProperties[activityProperty] = propValue;
@@ -513,7 +513,7 @@ public static class GoogleTasks
             nameof(GameCenterLeaderboardSet.referenceName),
             nameof(GameCenterLeaderboardSet.vendorIdentifier),
         };
-        var row2 = new List<object> {};
+        var row2 = new List<object> { };
         foreach (var locale in allLocales)
         {
             row0.Add(locale);

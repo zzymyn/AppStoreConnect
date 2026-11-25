@@ -1,5 +1,4 @@
 ﻿using System.CommandLine;
-using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -103,25 +102,25 @@ internal static class Program
         Description = "Skip uploading localization data",
         DefaultValueFactory = _ => false,
     };
-    
+
     private static readonly Option<bool> SkipLiveAchievementsOpt = new("--skipLiveAchievements")
     {
         Description = "Skip uploading live achievements",
         DefaultValueFactory = _ => true,
     };
-    
+
     private static readonly Option<bool> SkipLiveLeaderboardsOpt = new("--skipLiveLeaderboards")
     {
         Description = "Skip uploading live leaderboards",
         DefaultValueFactory = _ => true,
     };
-    
+
     private static readonly Option<bool> SkipLiveLeaderboardSetsOpt = new("--skipLiveLeaderboardSets")
     {
         Description = "Skip uploading live leaderboards sets",
         DefaultValueFactory = _ => true,
     };
-    
+
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
