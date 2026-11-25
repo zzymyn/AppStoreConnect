@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -15,6 +16,9 @@ public partial class AppStoreClient
         // text for an initial version).
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
+
+    [GeneratedRegex("user-hour-lim:(\\d+);user-hour-rem:(\\d+);", RegexOptions.Compiled | RegexOptions.IgnoreCase)]
+    private static partial Regex RateLimitMatch();
 
     private readonly Uri m_BaseUri = new("https://api.appstoreconnect.apple.com");
     private readonly HttpClient m_Client = new();
@@ -64,26 +68,42 @@ public partial class AppStoreClient
 
         var response = await m_Client.SendAsync(request);
 
-        if (!response.IsSuccessStatusCode)
-        {
-            log?.Log(LogLevel.Error, await response.Content.ReadAsStringAsync());
-            throw new Exception($"Status code {response.StatusCode}");
-        }
-
         // see: https://developer.apple.com/documentation/appstoreconnectapi/identifying-rate-limits
         if (response.Headers.TryGetValues("X-Rate-Limit", out var contentRange))
         {
             var rateLimit = contentRange.LastOrDefault();
             if (rateLimit != null)
             {
-                var match = Regex.Match(rateLimit, @"user-hour-lim:(\d+);user-hour-rem:(\d+);");
+                var match = RateLimitMatch().Match(rateLimit);
                 if (match.Success)
                 {
                     var remaining = int.Parse(match.Groups[2].Value);
                     log?.Log(LogLevel.VerboseNote, $"Req left this hour: {remaining}");
                     m_RateLimiter.SetRequestsRemainingThisHour(remaining);
                 }
+                else
+                {
+                    log?.Log(LogLevel.VerboseNote, $"Unexpected rate limit header: {rateLimit}");
+                }
             }
+        }
+
+        if (response.StatusCode == HttpStatusCode.TooManyRequests)
+        {
+            var retryAfter = response.Headers.RetryAfter?.Delta ?? TimeSpan.FromSeconds(15);
+            var throttleFor = TimeSpan.FromSeconds(10);
+
+            log?.Log(LogLevel.Error, $"Rate Limit Exceeded. Retry-After: {retryAfter.TotalSeconds}s");
+
+            m_RateLimiter.NotifyRateLimitExceeded(retryAfter, throttleFor);
+
+            throw new Exception($"Rate limit reached (429).");
+        }
+
+        if (!response.IsSuccessStatusCode)
+        {
+            log?.Log(LogLevel.Error, await response.Content.ReadAsStringAsync());
+            throw new Exception($"Status code {response.StatusCode}");
         }
 
         return response;
@@ -94,14 +114,14 @@ public partial class AppStoreClient
         HttpMethod httpMethod;
         switch (method.ToUpperInvariant())
         {
-            case "POST":
-                httpMethod = HttpMethod.Post;
-                break;
-            case "PUT":
-                httpMethod = HttpMethod.Put;
-                break;
-            default:
-                throw new Exception($"Unknown method {method}");
+        case "POST":
+            httpMethod = HttpMethod.Post;
+            break;
+        case "PUT":
+            httpMethod = HttpMethod.Put;
+            break;
+        default:
+            throw new Exception($"Unknown method {method}");
         }
 
         var request = new HttpRequestMessage(httpMethod, url);
