@@ -13400,7 +13400,7 @@ public partial class AppStoreClient
                 MONEY_YEN,
             }
 
-            public Dictionary<string, string> @activityProperties { get; set; }
+            public Dictionary<string, string>? @activityProperties { get; set; }
             public DefaultFormatter? @defaultFormatter { get; set; }
             public string? @referenceName { get; set; }
             public string? @vendorIdentifier { get; set; }

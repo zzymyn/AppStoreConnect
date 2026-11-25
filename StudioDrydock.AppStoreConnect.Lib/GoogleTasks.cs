@@ -487,7 +487,7 @@ public static class GoogleTasks
                 }
                 //otherwise, try adding the key. If it exists then apply the values.
                 else if (leaderboard.activityProperties != null && 
-                        propValue is not null or "" &&
+                        propValue is not null and not "" &&
                         !leaderboard.activityProperties.TryAdd(activityProperty, propValue)) 
                 {
                     //If key already exists then apply the value
